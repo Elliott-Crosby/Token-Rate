@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Token Conversion Rate',
+  title: 'Token Rate',
   description: 'Convert between money, tokens, and characters across AI models.',
 }
 

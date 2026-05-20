@@ -98,10 +98,11 @@ export default async function Home() {
           {/* Header */}
           <div className="flex items-start justify-between mb-10">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-                Token Conversion Rate
+              <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+                <span className="text-emerald-500">Token</span>
+                <span className="text-zinc-900 dark:text-zinc-50"> Rate</span>
               </h1>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+              <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
                 Live pricing from OpenRouter · ~4 chars per token
               </p>
             </div>
