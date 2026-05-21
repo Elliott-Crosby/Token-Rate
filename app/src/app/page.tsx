@@ -23,6 +23,16 @@ interface OpenRouterModel {
   context_length?: number
 }
 
+const PROVIDER_MAP: { prefix: string; label: string }[] = [
+  { prefix: 'anthropic/', label: 'Anthropic' },
+  { prefix: 'openai/', label: 'OpenAI' },
+  { prefix: 'google/', label: 'Google' },
+  { prefix: 'meta-llama/', label: 'Meta' },
+  { prefix: 'deepseek/', label: 'DeepSeek' },
+  { prefix: 'mistralai/', label: 'Mistral' },
+  { prefix: 'x-ai/', label: 'xAI' },
+]
+
 async function fetchModels(): Promise<ProviderGroup[]> {
   try {
     const res = await fetch('https://openrouter.ai/api/v1/models', {
@@ -33,55 +43,38 @@ async function fetchModels(): Promise<ProviderGroup[]> {
 
     const json: { data: OpenRouterModel[] } = await res.json()
 
-    const providers: Record<string, { label: string; prefix: string }> = {
-      'anthropic/': { label: 'Anthropic', prefix: 'anthropic/' },
-      'openai/': { label: 'OpenAI', prefix: 'openai/' },
-      'google/': { label: 'Google', prefix: 'google/' },
-      'mistralai/': { label: 'Mistral', prefix: 'mistralai/' },
-    }
-
     const groups: Record<string, ModelPricing[]> = {}
     const seen: Record<string, Set<string>> = {}
-
-    for (const [prefix, meta] of Object.entries(providers)) {
-      groups[meta.label] = []
-      seen[meta.label] = new Set()
-    }
+    PROVIDER_MAP.forEach(({ label }) => { groups[label] = []; seen[label] = new Set() })
 
     for (const m of json.data) {
-      const entry = Object.entries(providers).find(([prefix]) => m.id.startsWith(prefix))
+      const entry = PROVIDER_MAP.find(({ prefix }) => m.id.startsWith(prefix))
       if (!entry) continue
-      const [, meta] = entry
 
       if (!m.pricing?.prompt || !m.pricing?.completion) continue
       const input = parseFloat(m.pricing.prompt)
       const output = parseFloat(m.pricing.completion)
       if (input <= 0 || output <= 0) continue
 
-      const name = m.name
-        .replace(/^Anthropic:\s*/i, '')
-        .replace(/^OpenAI:\s*/i, '')
-        .replace(/^Google:\s*/i, '')
-        .replace(/^Mistral:\s*/i, '')
+      const name = m.name.replace(/^[^:]+:\s*/i, '')
+      if (seen[entry.label].has(name)) continue
+      seen[entry.label].add(name)
 
-      if (seen[meta.label].has(name)) continue
-      seen[meta.label].add(name)
-
-      groups[meta.label].push({
+      groups[entry.label].push({
         id: m.id,
         name,
-        provider: meta.label,
+        provider: entry.label,
         inputPricePerToken: input,
         outputPricePerToken: output,
         contextLength: m.context_length,
       })
     }
 
-    return Object.entries(groups)
-      .filter(([, models]) => models.length > 0)
-      .map(([name, models]) => ({
-        name,
-        models: models.sort((a, b) => b.inputPricePerToken - a.inputPricePerToken),
+    return PROVIDER_MAP
+      .filter(({ label }) => groups[label].length > 0)
+      .map(({ label }) => ({
+        name: label,
+        models: groups[label].sort((a, b) => b.inputPricePerToken - a.inputPricePerToken),
       }))
   } catch {
     return [
