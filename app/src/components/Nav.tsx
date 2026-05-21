@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { href: '/compare/cheapest-ai-models-2025', label: 'Compare' },
   { href: '/guides', label: 'Guides' },
   { href: '/tools/words-to-tokens', label: 'Tools' },
+  { href: '/blog', label: 'Blog' },
 ]
 
 export default function Nav() {
