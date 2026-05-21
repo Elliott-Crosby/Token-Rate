@@ -1,0 +1,62 @@
+{
+  "slug": "how-to-reduce-ai-api-costs",
+  "keyword": "reduce AI API costs",
+  "title": "7 Ways to Cut Your AI API Bill Without Sacrificing Quality",
+  "description": "Practical techniques developers use to reduce LLM API costs by 30–80% — from prompt caching to model routing and smarter context management.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-05-16",
+  "tags": ["Cost Optimization", "Tips"],
+  "sections": [
+    {
+      "heading": "Why AI costs spiral out of control",
+      "body": "Most teams discover their AI costs are too high only after the first invoice. The culprit is usually one of three things: over-engineering prompts that repeat on every call, using a frontier model for tasks that a cheap model handles just as well, or accumulating conversation history that balloons input token counts.\n\nThe good news: fixing these is straightforward once you know where to look. Here are seven techniques, ordered from easiest to implement to most impactful."
+    },
+    {
+      "heading": "1. Use prompt caching for large repeated context",
+      "body": "If your app sends the same system prompt, document, or background context on every request, you're paying full price for those tokens every single time. Anthropic and OpenAI both offer prompt caching that reduces repeated-context costs by up to 90%.\n\nFor Claude, prefix your cache-able content with a cache_control: ephemeral breakpoint. A 10,000-token system prompt that runs 50,000 times per month costs ~$1,500 uncached vs. ~$150 cached. That's $1,350/month for one line of code."
+    },
+    {
+      "heading": "2. Route tasks to the right model tier",
+      "body": "Not every task needs a frontier model. Build a simple routing layer that sends:\n\n- Complex reasoning, multi-step analysis → frontier model (Claude Opus, GPT-4o)\n- Standard Q&A, summarization, extraction → mid-tier (Claude Sonnet, GPT-4o)\n- Classification, simple rewrites, short answers → mini model (Claude Haiku, GPT-4o Mini)\n\nGPT-4o Mini costs $0.15/$0.60 per million tokens. Claude Haiku 4.5 costs $0.80/$4.00. Routing even 50% of your traffic to mini models can cut your bill in half."
+    },
+    {
+      "heading": "3. Trim conversation history aggressively",
+      "body": "Every turn of conversation history you include costs input tokens. A chat app that preserves the full history quickly accumulates thousands of tokens per request — and most of it isn't relevant to the current question.\n\nStrategies: keep only the last N turns (3–5 usually suffices), summarize older turns into a compressed memory block, or use a vector database to retrieve only relevant past context rather than sending everything."
+    },
+    {
+      "heading": "4. Shorten and deduplicate system prompts",
+      "body": "System prompts grow silently over time as teams add edge-case instructions. Audit yours regularly. Remove redundant rules, collapse similar instructions, and cut any guidance the model already follows by default.\n\nA system prompt audit often reveals 30–50% of the content is either duplicated or unnecessary. On a high-volume app, that's a direct cost reduction with zero quality impact."
+    },
+    {
+      "heading": "5. Request structured output to reduce verbosity",
+      "body": "Models produce shorter, more predictable outputs when you ask for structured responses (JSON, tables, bullet lists) rather than free-form prose. For extraction and classification tasks, requiring JSON output typically reduces output token counts by 20–40% compared to asking for a written explanation.\n\nClaude and GPT-4o both support native JSON mode or tool-use schemas that enforce structured output without extra prompting."
+    },
+    {
+      "heading": "6. Batch non-real-time requests",
+      "body": "If you process documents, run evaluations, or generate content at scale — and the results aren't needed immediately — use batch APIs. Anthropic's Message Batches API and OpenAI's Batch API both offer 50% discounts on processing that can tolerate up to 24-hour turnaround. For data pipelines and offline workloads, this is free money."
+    },
+    {
+      "heading": "7. Measure before you optimize",
+      "body": "Token cost without quality measurement is meaningless. A model that produces worse output and requires human review or retries is more expensive in practice than a pricier model that gets it right first time.\n\nSet up logging to track: cost per task, output quality scores, and retry rates. Use the [TokenRate calculator](/) to benchmark your current prompts and model choices. Then optimize the biggest line items first."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What is prompt caching and how much does it save?",
+      "answer": "Prompt caching lets you mark repeated context (system prompts, documents) so the provider re-uses the cached computation instead of reprocessing it. Anthropic charges 90% less for cached input tokens. For apps with large system prompts, this can save thousands of dollars per month."
+    },
+    {
+      "question": "How do I know which model tier to use for my task?",
+      "answer": "Start with the mid-tier model and run a quality evaluation on your task. Then test the mini/cheap model on the same benchmark. If quality is acceptable (>90% match), switch to the cheaper model. Most classification, extraction, and simple Q&A tasks can use mini models."
+    },
+    {
+      "question": "Does reducing context length hurt model performance?",
+      "answer": "It depends on the task. For most conversational apps, keeping the last 3–5 turns is sufficient. For tasks that reference earlier content, use retrieval-augmented generation (RAG) to include only the relevant past context instead of everything."
+    },
+    {
+      "question": "How much can I realistically save by optimizing AI API costs?",
+      "answer": "Teams that haven't optimized before typically achieve 40–70% cost reductions by combining prompt caching, model routing, and context trimming. The highest-leverage change varies by app, which is why measurement comes first."
+    }
+  ],
+  "ctaText": "Use the calculator to see exactly what your current prompts cost and compare across providers to find your cheapest option."
+}

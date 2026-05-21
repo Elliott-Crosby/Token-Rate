@@ -1,0 +1,54 @@
+{
+  "slug": "what-are-ai-tokens",
+  "keyword": "what are AI tokens",
+  "title": "What Are AI Tokens? A Developer's Plain-English Guide",
+  "description": "Tokens are the unit of measure behind every AI API bill. Here's exactly what they are, how models count them, and why it matters for your costs.",
+  "readTime": "5 min read",
+  "publishedAt": "2026-05-10",
+  "tags": ["Tokens", "Fundamentals"],
+  "sections": [
+    {
+      "heading": "The short answer",
+      "body": "A token is a chunk of text — roughly 3–4 characters or about ¾ of a word in English. When you send a message to a language model, the model doesn't read characters or words; it reads tokens. Every API provider charges per token, so understanding tokens is the same as understanding your bill.\n\nA simple rule of thumb: 1,000 tokens ≈ 750 words ≈ 4,000 characters."
+    },
+    {
+      "heading": "How tokenization works",
+      "body": "Models use a process called Byte-Pair Encoding (BPE) or similar algorithms to split text into tokens. Common words like \"the\" or \"API\" are usually one token. Rare words, proper nouns, and code identifiers often split into multiple tokens. For example, \"tokenization\" might be split into \"token\" + \"ization\" — two tokens.\n\nThis matters practically: code and technical writing often tokenizes less efficiently than plain prose, so a 500-word code snippet might cost more than a 500-word blog paragraph."
+    },
+    {
+      "heading": "Input tokens vs output tokens",
+      "body": "Every API call has two token counts: input (what you send) and output (what the model generates). Output tokens almost always cost more — typically 3–5× the input price — because generating tokens requires more compute than reading them.\n\nFor example, Claude Sonnet 4 charges $3.00 per million input tokens and $15.00 per million output tokens. If you send a 500-token prompt and get a 200-token reply, your cost is: (500 × $0.000003) + (200 × $0.000015) = $0.0015 + $0.003 = $0.0045."
+    },
+    {
+      "heading": "Context window: the token budget you can't exceed",
+      "body": "Every model has a context window — the maximum number of tokens it can hold at once, including your prompt, conversation history, and its response. If you exceed it, the API returns an error or silently truncates the oldest messages.\n\nContext windows range from 8K tokens (older models) to 1M tokens (Gemini 1.5 Pro). Larger windows let you work with long documents but don't change the per-token price."
+    },
+    {
+      "heading": "Why token counts vary by language",
+      "body": "English is the most tokenization-efficient language for most models because they were trained primarily on English text. Non-Latin scripts (Chinese, Arabic, Japanese) and languages with complex morphology (Finnish, Turkish) often require more tokens for the same semantic content. A sentence in Chinese might use 2–3× as many tokens as its English equivalent, significantly increasing costs for multilingual applications."
+    },
+    {
+      "heading": "Practical tips to reduce your token usage",
+      "body": "1. Be concise in system prompts — every word costs money on every call.\n2. Use structured data formats (JSON) over verbose prose where possible.\n3. Trim conversation history — only keep recent or relevant turns.\n4. Use cheaper models for simple tasks (summarization, classification) and save expensive models for reasoning.\n5. Use [TokenRate's calculator](/) to estimate costs before you scale."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How many tokens is 1,000 words?",
+      "answer": "Approximately 1,333 tokens for typical English prose. The conversion is roughly 0.75 words per token, or 1,000 tokens per 750 words."
+    },
+    {
+      "question": "Do tokens include whitespace and punctuation?",
+      "answer": "Yes. Spaces, newlines, punctuation, and special characters all consume tokens. A newline character is typically 1 token by itself."
+    },
+    {
+      "question": "Is there a free way to count tokens before sending to the API?",
+      "answer": "Yes — Anthropic, OpenAI, and Google all offer token-counting endpoints or client-side tokenizer libraries. For a quick estimate without writing code, use the TokenRate calculator."
+    },
+    {
+      "question": "Why do different models count tokens differently for the same text?",
+      "answer": "Each model family uses its own tokenizer vocabulary. GPT models use tiktoken, Claude uses its own BPE vocabulary, and Gemini uses SentencePiece. The same text can produce slightly different token counts across providers."
+    }
+  ],
+  "ctaText": "Paste your prompt and see exactly what it will cost across Claude, GPT-4o, Gemini, and more — before you ship."
+}

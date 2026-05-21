@@ -1,0 +1,50 @@
+{
+  "slug": "tokens-to-dollars-conversion",
+  "keyword": "tokens to dollars",
+  "title": "Tokens to Dollars: How to Convert AI Token Counts to Real Costs",
+  "description": "A step-by-step guide to converting token counts into dollar amounts for Claude, GPT-4o, Gemini, and other LLM APIs — with formulas and worked examples.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-18",
+  "tags": ["Pricing", "Fundamentals"],
+  "sections": [
+    {
+      "heading": "The basic formula",
+      "body": "All major AI APIs price tokens in units of one million (1M). To convert a token count to dollars:\n\nCost = (tokens ÷ 1,000,000) × price_per_million\n\nFor example: 50,000 input tokens on Claude Sonnet 4 ($3.00/M):\n(50,000 ÷ 1,000,000) × $3.00 = 0.05 × $3.00 = $0.15\n\nSimple — but most API calls have both input and output tokens, each priced differently."
+    },
+    {
+      "heading": "Full cost calculation with input and output",
+      "body": "Every LLM API call has two costs: input (what you send) and output (what the model generates). Output tokens typically cost 3–5× more than input tokens.\n\nFull formula:\nTotal cost = (input_tokens / 1,000,000 × input_price) + (output_tokens / 1,000,000 × output_price)\n\nExample: 2,000 input tokens + 500 output tokens on GPT-4o ($2.50 input / $10.00 output):\n(2,000/1,000,000 × $2.50) + (500/1,000,000 × $10.00)\n= $0.005 + $0.005\n= $0.01 per call"
+    },
+    {
+      "heading": "Current pricing for major models (2025)",
+      "body": "Claude Haiku 4.5: $0.80 input / $4.00 output per million tokens\nClaude Sonnet 4: $3.00 input / $15.00 output per million tokens\nClaude Opus 4: $15.00 input / $75.00 output per million tokens\n\nGPT-4o Mini: $0.15 input / $0.60 output per million tokens\nGPT-4o: $2.50 input / $10.00 output per million tokens\nGPT-4.5 Turbo: $75.00 input / $150.00 output per million tokens\n\nGemini 1.5 Flash: $0.075 input / $0.30 output per million tokens\nGemini 1.5 Pro: $1.25 input / $5.00 output per million tokens\nGemini 2.0 Flash: $0.10 input / $0.40 output per million tokens"
+    },
+    {
+      "heading": "Scaling to production: monthly cost estimation",
+      "body": "To estimate monthly costs for a production app:\n\n1. Measure average input tokens per call (your prompt + context)\n2. Measure average output tokens per call (model response length)\n3. Multiply by your expected daily call volume\n4. Multiply by 30 for monthly totals\n\nExample: An app with 1,500 input tokens + 300 output tokens per call, 10,000 calls/day on Claude Sonnet 4:\nInput: (1,500 × 10,000 × 30) / 1,000,000 × $3.00 = 450M tokens / 1M × $3 = $1,350/month\nOutput: (300 × 10,000 × 30) / 1,000,000 × $15.00 = 90M tokens / 1M × $15 = $1,350/month\nTotal: $2,700/month\n\nUse the [TokenRate calculator](/) to run these numbers without the math."
+    },
+    {
+      "heading": "Quick reference: tokens to dollars at a glance",
+      "body": "1,000 tokens on Claude Sonnet 4 (input): $0.003\n1,000 tokens on GPT-4o (input): $0.0025\n1,000 tokens on Gemini 1.5 Flash (input): $0.000075\n\n1,000 tokens on Claude Sonnet 4 (output): $0.015\n1,000 tokens on GPT-4o (output): $0.01\n1,000 tokens on Gemini 1.5 Flash (output): $0.0003\n\nFor real-time conversion across all models, enter any token count into the TokenRate calculator."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I convert 1 million tokens to dollars?",
+      "answer": "Multiply 1,000,000 by the price per million tokens for your model. For Claude Sonnet 4 input, that's 1 × $3.00 = $3.00. For GPT-4o output, that's 1 × $10.00 = $10.00."
+    },
+    {
+      "question": "How much does 1,000 API calls cost?",
+      "answer": "It depends on your prompt and response length. A typical chatbot call with 1,500 input + 300 output tokens on GPT-4o costs about $0.00675 per call, or $6.75 for 1,000 calls. Use the calculator with your actual token counts for an accurate estimate."
+    },
+    {
+      "question": "Are input tokens or output tokens more expensive?",
+      "answer": "Output tokens are always more expensive, typically 3–5× the input price. For Claude Sonnet 4, output tokens ($15.00/M) cost 5× input tokens ($3.00/M). For GPT-4o, output ($10.00/M) costs 4× input ($2.50/M)."
+    },
+    {
+      "question": "Does the API charge for tokens in the system prompt?",
+      "answer": "Yes. System prompt tokens count as input tokens and are billed at the input rate on every call. This is why large system prompts are expensive at scale, and why prompt caching can save a significant amount for apps with long system prompts."
+    }
+  ],
+  "ctaText": "Enter any token count and see the exact dollar cost across Claude, GPT-4o, Gemini, and more — instantly."
+}

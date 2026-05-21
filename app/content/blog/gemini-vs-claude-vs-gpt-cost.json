@@ -1,0 +1,58 @@
+{
+  "slug": "gemini-vs-claude-vs-gpt-cost",
+  "keyword": "Gemini vs Claude vs GPT cost comparison",
+  "title": "Gemini vs Claude vs GPT: Full Cost Comparison for 2025",
+  "description": "A complete pricing breakdown comparing Google Gemini, Anthropic Claude, and OpenAI GPT models — with real-world cost examples across common developer tasks.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-20",
+  "tags": ["Comparison", "Gemini", "Claude", "GPT"],
+  "sections": [
+    {
+      "heading": "Three providers, three pricing philosophies",
+      "body": "Google, Anthropic, and OpenAI have each converged on a three-tier model lineup (cheap/fast, balanced, frontier), but their pricing strategies differ. Google leads on raw price-per-token, especially at the cheap tier. Anthropic charges more at list price but offsets this with strong caching discounts. OpenAI sits in the middle and competes more on ecosystem and tooling than on price.\n\nHere's how they stack up in 2025."
+    },
+    {
+      "heading": "Cheap/fast tier: where Gemini dominates",
+      "body": "Gemini 1.5 Flash: $0.075 input / $0.30 output per million tokens\nGemini 2.0 Flash: $0.10 input / $0.40 output per million tokens\nGPT-4o Mini: $0.15 input / $0.60 output per million tokens\nClaude Haiku 4.5: $0.80 input / $4.00 output per million tokens\n\nGemini 1.5 Flash is the cheapest model at scale — up to 10× cheaper than Claude Haiku on input tokens. For high-volume classification, extraction, or simple Q&A tasks where quality requirements are modest, Gemini Flash is hard to beat on price."
+    },
+    {
+      "heading": "Mid-tier: the workhorse models",
+      "body": "GPT-4o: $2.50 input / $10.00 output per million tokens\nGemini 1.5 Pro: $1.25 input / $5.00 output per million tokens\nClaude Sonnet 4: $3.00 input / $15.00 output per million tokens\n\nGemini 1.5 Pro is the cheapest mid-tier model at roughly half the price of GPT-4o. Claude Sonnet 4 is the most expensive at list price, but its prompt caching (90% discount on repeated context) and typically shorter outputs close the gap significantly for production workloads with large system prompts.\n\nFor most apps, GPT-4o and Claude Sonnet 4 are within 20% of each other in real-world cost. Gemini 1.5 Pro is meaningfully cheaper if quality is comparable for your use case."
+    },
+    {
+      "heading": "Frontier tier: for when you need the best",
+      "body": "Claude Opus 4: $15.00 input / $75.00 output per million tokens\nGPT-4.5 Turbo: $75.00 input / $150.00 output per million tokens\nGemini Ultra 1.5: $7.00 input / $21.00 output per million tokens (with 2K context limit on cheap tier)\n\nAt the frontier tier, Claude Opus 4 is significantly cheaper than GPT-4.5 Turbo. Gemini Ultra sits between them. For reasoning-heavy tasks — complex analysis, multi-step coding, research — the frontier tier produces measurably better results, and Claude Opus 4 is the most cost-effective option."
+    },
+    {
+      "heading": "Context window comparison",
+      "body": "All three providers now offer large context windows for their main models:\n\nClaude Sonnet 4 / Opus 4: 200K tokens\nGPT-4o: 128K tokens\nGemini 1.5 Pro / Flash: 1M tokens (Gemini 1.5 Pro supports up to 2M in some configurations)\n\nGemini's 1M token context is unique in the industry and enables use cases impossible with other providers — like analyzing an entire codebase or a full book in a single call. However, latency and cost increase with context length, so this isn't a free lunch."
+    },
+    {
+      "heading": "Real-world cost example: customer support chatbot",
+      "body": "Assumptions: 5,000 input tokens per call (including system prompt + history), 500 output tokens, 100,000 calls/month.\n\nGemini 1.5 Flash: ($0.075 × 5M + $0.30 × 0.5M) = $375 + $150 = $525/month\nGPT-4o Mini: ($0.15 × 5M + $0.60 × 0.5M) = $750 + $300 = $1,050/month\nClaude Haiku 4.5: ($0.80 × 5M + $4.00 × 0.5M) = $4,000 + $2,000 = $6,000/month\nGPT-4o: ($2.50 × 5M + $10.00 × 0.5M) = $12,500 + $5,000 = $17,500/month\nClaude Sonnet 4: ($3.00 × 5M + $15.00 × 0.5M) = $15,000 + $7,500 = $22,500/month\n\nWith Claude prompt caching on the 4,000-token system prompt portion: the cached input cost drops to 10%, reducing Claude Sonnet 4 to approximately $9,000/month — much more competitive."
+    },
+    {
+      "heading": "Which provider should you choose?",
+      "body": "High volume, cost-sensitive tasks: Gemini Flash or GPT-4o Mini. Gemini is cheapest, GPT-4o Mini has the best ecosystem support.\n\nBalanced quality and cost: GPT-4o or Claude Sonnet 4. They're comparable in quality; GPT-4o wins on list price, Claude Sonnet 4 wins when prompt caching applies.\n\nBest reasoning, don't mind the cost: Claude Opus 4 for long contexts and complex reasoning. Avoid GPT-4.5 Turbo unless you have a specific reason — it's 5× more expensive.\n\nDocument-heavy use cases (1M+ tokens): Gemini 1.5 Pro is the only option with a context window this large.\n\nUse the [TokenRate calculator](/) to enter your actual token counts and get a precise cost comparison for your workload."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which AI API is cheapest in 2025?",
+      "answer": "Gemini 1.5 Flash is the cheapest major model at $0.075/$0.30 per million input/output tokens. For cheap-tier models, it's significantly cheaper than GPT-4o Mini and Claude Haiku."
+    },
+    {
+      "question": "Is Claude more expensive than GPT-4o?",
+      "answer": "At list price, yes — Claude Sonnet 4 ($3.00/$15.00) is slightly more expensive than GPT-4o ($2.50/$10.00). However, Claude's prompt caching (90% discount on repeated input) and often-shorter output lengths make it cost-competitive in practice."
+    },
+    {
+      "question": "Does Gemini have a context window advantage?",
+      "answer": "Yes. Gemini 1.5 Pro and Flash support up to 1M tokens context, far exceeding Claude's 200K and GPT-4o's 128K. This is a meaningful advantage for document-heavy applications."
+    },
+    {
+      "question": "How do I compare exact costs for my app?",
+      "answer": "Use the TokenRate calculator — enter your average input token count and output token count to see the exact monthly cost for each provider at your expected call volume."
+    }
+  ],
+  "ctaText": "Plug in your prompt length and call volume to see the exact monthly cost across Gemini, Claude, and GPT — all in one place."
+}
