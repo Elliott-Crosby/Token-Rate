@@ -1,0 +1,46 @@
+name: Auto Blog Generator
+
+on:
+  schedule:
+    # Every 2 hours
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+    # Allow manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run blog generator
+        working-directory: app
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/blog-generator.mjs
+
+      - name: Commit post if created
+        run: |
+          git config user.name "TokenRate BlogBot"
+          git config user.email "bot@tokenrate.dev"
+          git add app/content/blog/
+          if git diff --cached --quiet; then
+            echo "No new posts to commit."
+          else
+            SLUG=$(git diff --cached --name-only | head -1 | xargs basename 2>/dev/null || echo "post")
+            git commit -m "blog: auto-publish — ${SLUG}"
+            git push
+          fi

@@ -66,8 +66,8 @@ export default function TermsPage() {
           <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">Contact</h2>
           <p>
             Questions about these terms? Email{' '}
-            <a href="mailto:hello@tokenrate.dev" className="text-emerald-600 dark:text-emerald-400 hover:underline">
-              hello@tokenrate.dev
+            <a href="mailto:nodea.ai@gmail.com" className="text-emerald-600 dark:text-emerald-400 hover:underline">
+              nodea.ai@gmail.com
             </a>
           </p>
         </section>

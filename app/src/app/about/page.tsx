@@ -45,14 +45,17 @@ export default function AboutPage() {
         <section>
           <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">Is TokenRate free?</h2>
           <p>
-            Yes. TokenRate is completely free to use — no account, no sign-up, no credit card. We may display ads in the future to support hosting costs, but the core tool will always be free.
+            Yes. TokenRate is completely free to use — no account, no sign-up, no credit card. Ads served by Google AdSense help support hosting costs, but the core tool will always be free. See our <Link href="/privacy" className="text-emerald-600 dark:text-emerald-400 hover:underline">privacy policy</Link> for details on how advertising cookies work.
           </p>
         </section>
 
         <section>
           <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">Contact</h2>
           <p>
-            Questions, suggestions, or pricing corrections? <Link href="/contact" className="text-emerald-600 dark:text-emerald-400 hover:underline">Get in touch →</Link>
+            Questions, suggestions, or pricing corrections?{' '}
+            <Link href="/contact" className="text-emerald-600 dark:text-emerald-400 hover:underline">Get in touch →</Link>{' '}
+            or email{' '}
+            <a href="mailto:nodea.ai@gmail.com" className="text-emerald-600 dark:text-emerald-400 hover:underline">nodea.ai@gmail.com</a>.
           </p>
         </section>
       </div>

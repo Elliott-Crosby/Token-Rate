@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { ALL_MODELS } from '@/lib/models'
 import { ALL_COMPARISONS } from '@/lib/comparisons'
 import { ALL_GUIDES } from '@/lib/guides'
+import { getAllBlogPosts } from '@/lib/blog'
 
 const BASE = 'https://tokenrate.dev'
 
@@ -38,5 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...staticPages, ...modelPages, ...comparisonPages, ...guidePages]
+  const blogPages: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
+    url: `${BASE}/blog/${post.slug}`,
+    lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.75,
+  }))
+
+  return [...staticPages, ...modelPages, ...comparisonPages, ...guidePages, ...blogPages]
 }
