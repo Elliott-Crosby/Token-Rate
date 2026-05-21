@@ -218,11 +218,11 @@ async function main() {
   const post = await generateBlogPost(keyword)
   const slug = slugify(post.title ?? keyword)
 
-  const outPath = path.join(DRAFTS_DIR, `${slug}.json`)
-  fs.mkdirSync(DRAFTS_DIR, { recursive: true })
+  const outPath = path.join(BLOG_DIR, `${slug}.json`)
+  fs.mkdirSync(BLOG_DIR, { recursive: true })
   fs.writeFileSync(outPath, JSON.stringify({ slug, keyword, ...post }, null, 2))
 
-  console.log(`Draft saved: content/drafts/${slug}.json`)
+  console.log(`Published: content/blog/${slug}.json`)
   console.log(`Title: ${post.title}`)
   console.log(`Sections: ${post.sections?.length ?? 0} | FAQ: ${post.faq?.length ?? 0}`)
 }
