@@ -5,7 +5,7 @@ const NAV_LINKS = [
   { href: '/', label: 'Calculator' },
   { href: '/models/claude-sonnet-4', label: 'Models' },
   { href: '/compare/cheapest-ai-models-2025', label: 'Compare' },
-  { href: '/guides/what-are-ai-tokens', label: 'Guides' },
+  { href: '/guides', label: 'Guides' },
   { href: '/tools/words-to-tokens', label: 'Tools' },
 ]
 
