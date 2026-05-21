@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProvider from '@/components/ThemeProvider'
+import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,8 +16,44 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Token Rate',
-  description: 'Convert between money, tokens, and characters across AI models.',
+  metadataBase: new URL('https://tokenrate.dev'),
+  title: {
+    default: 'TokenRate — AI Token Calculator & Pricing Comparison',
+    template: '%s | TokenRate',
+  },
+  description:
+    'Free AI token calculator and live pricing comparison. Convert between money, tokens, and characters for Claude, GPT-4o, Gemini, and more. See exactly what your AI API calls cost.',
+  keywords: [
+    'AI token calculator',
+    'AI pricing comparison',
+    'Claude pricing',
+    'GPT-4o pricing',
+    'Gemini pricing',
+    'tokens to dollars',
+    'AI API cost',
+    'LLM pricing',
+    'tokens per dollar',
+  ],
+  authors: [{ name: 'TokenRate' }],
+  creator: 'TokenRate',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://tokenrate.dev',
+    siteName: 'TokenRate',
+    title: 'TokenRate — AI Token Calculator & Pricing Comparison',
+    description:
+      'Free AI token calculator. Convert money, tokens, and characters across Claude, GPT-4o, Gemini, and more with live pricing.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'TokenRate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'TokenRate — AI Token Calculator & Pricing Comparison',
+    description: 'Free AI token calculator with live pricing across Claude, GPT-4o, Gemini, and more.',
+    images: ['/og-image.png'],
+  },
+  robots: { index: true, follow: true },
+  alternates: { canonical: 'https://tokenrate.dev' },
 }
 
 export default function RootLayout({
@@ -34,7 +72,12 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased bg-zinc-50 dark:bg-zinc-950 transition-colors">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <div className="h-0.5 w-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-sky-400" />
+          <Nav />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
