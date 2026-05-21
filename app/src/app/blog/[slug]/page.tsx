@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { getAllBlogPosts, getBlogPost } from '@/lib/blog'
 import { buildMetadata } from '@/lib/seo'
@@ -24,7 +25,7 @@ export async function generateMetadata({
 // Render inline links like [text](/path) in body text
 function renderBody(body: string) {
   const parts = body.split(/(\[([^\]]+)\]\(([^)]+)\))/g)
-  const elements: React.ReactNode[] = []
+  const elements: ReactNode[] = []
   let i = 0
   while (i < parts.length) {
     const part = parts[i]
