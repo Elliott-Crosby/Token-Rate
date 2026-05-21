@@ -99,7 +99,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
   }, [allModels, activeProvider, sort])
 
   const results: CalculationResult[] = useMemo(() => {
-    if (!numericValue) return []
+    if (!numericValue) return filteredSorted.map((m) => calculate(mode, 1, m))
     return filteredSorted.map((m) => calculate(mode, numericValue, m))
   }, [filteredSorted, mode, numericValue])
 
@@ -248,92 +248,91 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
 
         {/* Results table */}
         <div className="border-t border-zinc-100 dark:border-zinc-800 overflow-x-auto">
-          {numericValue === 0 ? (
-            <div className="px-5 py-10 text-center text-sm text-zinc-400 dark:text-zinc-500">
-              Enter an amount above to see live pricing across {allModels.length} models
-            </div>
-          ) : (
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/40">
-                  <th className="px-4 py-2.5 text-left font-semibold text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider">Model</th>
-                  <th className="px-3 py-2.5 text-left font-semibold text-zinc-400 dark:text-zinc-500 text-xs uppercase tracking-wider">Tier</th>
-                  <th className="px-3 py-2.5 text-left font-semibold text-zinc-400 dark:text-zinc-500 text-xs uppercase tracking-wider whitespace-nowrap">Rate in / out / 1M</th>
-                  {mode === 'money' ? (
-                    <>
-                      <th className="px-3 py-2.5 text-right font-semibold text-emerald-700 dark:text-emerald-400 text-xs uppercase tracking-wider whitespace-nowrap">Tokens In</th>
-                      <th className="px-3 py-2.5 text-right font-semibold text-sky-700 dark:text-sky-400 text-xs uppercase tracking-wider whitespace-nowrap">Tokens Out</th>
-                    </>
-                  ) : (
-                    <>
-                      <th className="px-3 py-2.5 text-right font-semibold text-emerald-700 dark:text-emerald-400 text-xs uppercase tracking-wider whitespace-nowrap">Cost In</th>
-                      <th className="px-3 py-2.5 text-right font-semibold text-sky-700 dark:text-sky-400 text-xs uppercase tracking-wider whitespace-nowrap">Cost Out</th>
-                    </>
-                  )}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60">
-                {results.map((result, i) => {
-                  const tier = detectTier(result.model.name)
-                  return (
-                    <tr key={result.model.id} className={`${i % 2 === 0 ? 'bg-white dark:bg-zinc-900' : 'bg-zinc-50/40 dark:bg-zinc-800/20'} hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors`}>
-                      <td className="px-4 py-3 font-medium text-zinc-800 dark:text-zinc-200 whitespace-nowrap">
-                        {result.model.name}
-                      </td>
-                      <td className="px-3 py-3">
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap ${TIER_COLOR[tier]}`}>
-                          {TIER_LABEL[tier]}
-                        </span>
-                      </td>
-                      <td className="px-3 py-3 whitespace-nowrap">
-                        <span className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
-                          {fmtRate(result.model.inputPricePerToken)} – {fmtRate(result.model.outputPricePerToken)}
-                        </span>
-                      </td>
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/40">
+                <th className="px-4 py-2.5 text-left font-semibold text-zinc-500 dark:text-zinc-400 text-xs uppercase tracking-wider">Model</th>
+                <th className="px-3 py-2.5 text-left font-semibold text-zinc-400 dark:text-zinc-500 text-xs uppercase tracking-wider">Tier</th>
+                <th className="px-3 py-2.5 text-left font-semibold text-zinc-400 dark:text-zinc-500 text-xs uppercase tracking-wider whitespace-nowrap">Rate in / out / 1M</th>
+                {mode === 'money' ? (
+                  <>
+                    <th className="px-3 py-2.5 text-right font-semibold text-emerald-700 dark:text-emerald-400 text-xs uppercase tracking-wider whitespace-nowrap">Tokens In</th>
+                    <th className="px-3 py-2.5 text-right font-semibold text-sky-700 dark:text-sky-400 text-xs uppercase tracking-wider whitespace-nowrap">Tokens Out</th>
+                  </>
+                ) : (
+                  <>
+                    <th className="px-3 py-2.5 text-right font-semibold text-emerald-700 dark:text-emerald-400 text-xs uppercase tracking-wider whitespace-nowrap">Cost In</th>
+                    <th className="px-3 py-2.5 text-right font-semibold text-sky-700 dark:text-sky-400 text-xs uppercase tracking-wider whitespace-nowrap">Cost Out</th>
+                  </>
+                )}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60">
+              {results.map((result, i) => {
+                const tier = detectTier(result.model.name)
+                return (
+                  <tr key={result.model.id} className={`${i % 2 === 0 ? 'bg-white dark:bg-zinc-900' : 'bg-zinc-50/40 dark:bg-zinc-800/20'} hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors`}>
+                    <td className="px-4 py-3 font-medium text-zinc-800 dark:text-zinc-200 whitespace-nowrap">
+                      {result.model.name}
+                    </td>
+                    <td className="px-3 py-3">
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap ${TIER_COLOR[tier]}`}>
+                        {TIER_LABEL[tier]}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <span className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
+                        {fmtRate(result.model.inputPricePerToken)} – {fmtRate(result.model.outputPricePerToken)}
+                      </span>
+                    </td>
 
-                      {mode === 'money' ? (() => {
-                        const r = result as MoneyResult
-                        return (
-                          <>
-                            <td className="px-3 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
-                              {fmtTokens(r.inputTokens)}
-                            </td>
-                            <td className="px-3 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">
-                              {fmtTokens(r.outputTokens)}
-                            </td>
-                          </>
-                        )
-                      })() : mode === 'tokens' ? (() => {
-                        const r = result as TokensResult
-                        return (
-                          <>
-                            <td className="px-3 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
-                              {fmtMoney(r.inputCost)}
-                            </td>
-                            <td className="px-3 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">
-                              {fmtMoney(r.outputCost)}
-                            </td>
-                          </>
-                        )
-                      })() : (() => {
-                        const r = result as CharsResult
-                        return (
-                          <>
-                            <td className="px-3 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
-                              {fmtMoney(r.inputCost)}
-                            </td>
-                            <td className="px-3 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">
-                              {fmtMoney(r.outputCost)}
-                            </td>
-                          </>
-                        )
-                      })()}
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          )}
+                    {numericValue === 0 ? (
+                      <>
+                        <td className="px-3 py-3 text-right font-mono text-zinc-300 dark:text-zinc-600 whitespace-nowrap">—</td>
+                        <td className="px-3 py-3 text-right font-mono text-zinc-300 dark:text-zinc-600 whitespace-nowrap">—</td>
+                      </>
+                    ) : mode === 'money' ? (() => {
+                      const r = result as MoneyResult
+                      return (
+                        <>
+                          <td className="px-3 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
+                            {fmtTokens(r.inputTokens)}
+                          </td>
+                          <td className="px-3 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">
+                            {fmtTokens(r.outputTokens)}
+                          </td>
+                        </>
+                      )
+                    })() : mode === 'tokens' ? (() => {
+                      const r = result as TokensResult
+                      return (
+                        <>
+                          <td className="px-3 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
+                            {fmtMoney(r.inputCost)}
+                          </td>
+                          <td className="px-3 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">
+                            {fmtMoney(r.outputCost)}
+                          </td>
+                        </>
+                      )
+                    })() : (() => {
+                      const r = result as CharsResult
+                      return (
+                        <>
+                          <td className="px-3 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
+                            {fmtMoney(r.inputCost)}
+                          </td>
+                          <td className="px-3 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">
+                            {fmtMoney(r.outputCost)}
+                          </td>
+                        </>
+                      )
+                    })()}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
         </div>
 
         {/* Footer note */}
