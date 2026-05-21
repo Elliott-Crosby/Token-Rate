@@ -70,6 +70,13 @@ export default function RootLayout({
             __html: `(function(){try{var s=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s==='dark'||(s===null&&p)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
           }}
         />
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNFQWB6MV1" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZNFQWB6MV1');`,
+          }}
+        />
       </head>
       <body className="antialiased bg-zinc-50 dark:bg-zinc-950 transition-colors">
         <ThemeProvider>
