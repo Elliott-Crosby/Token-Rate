@@ -7,6 +7,8 @@ on:
   workflow_dispatch:
     # Allow manual trigger from GitHub Actions UI
 
+# NOTE: This project uses `main` as the default branch. Always push to main, never master.
+
 permissions:
   contents: write
 
@@ -19,6 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
@@ -42,5 +45,5 @@ jobs:
           else
             SLUG=$(git diff --cached --name-only | head -1 | xargs basename 2>/dev/null || echo "post")
             git commit -m "blog: auto-publish — ${SLUG}"
-            git push
+            git push origin main
           fi
