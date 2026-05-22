@@ -13,16 +13,29 @@ const FOOTER_COLS = [
   {
     label: 'Models',
     links: [
+      { href: '/models', label: 'All Models' },
       { href: '/models/claude-sonnet-4', label: 'Claude Sonnet 4' },
       { href: '/models/gpt-4o', label: 'GPT-4o' },
       { href: '/models/gemini-2-5-pro', label: 'Gemini 2.5 Pro' },
-      { href: '/models/gemini-2-0-flash', label: 'Gemini 2.0 Flash' },
+      { href: '/models/deepseek-v3', label: 'DeepSeek V3' },
+      { href: '/models/llama-3-1-405b', label: 'Llama 3.1 405B' },
+    ],
+  },
+  {
+    label: 'Providers',
+    links: [
+      { href: '/providers/anthropic', label: 'Anthropic' },
+      { href: '/providers/openai', label: 'OpenAI' },
+      { href: '/providers/google', label: 'Google' },
+      { href: '/providers/meta', label: 'Meta (Llama)' },
+      { href: '/providers/deepseek', label: 'DeepSeek' },
+      { href: '/providers/xai', label: 'xAI (Grok)' },
     ],
   },
   {
     label: 'Compare',
     links: [
-      { href: '/compare/cheapest-ai-models-2025', label: 'Cheapest AI Models' },
+      { href: '/compare/cheapest-ai-models', label: 'Cheapest AI Models' },
       { href: '/compare/gpt-4o-vs-claude-sonnet-4', label: 'GPT-4o vs Claude' },
       { href: '/compare/best-models-for-coding', label: 'Best for Coding' },
     ],

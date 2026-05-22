@@ -36,7 +36,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
   const models = getComparisonModels(comp)
   const breadcrumbs = [
     { name: 'TokenRate', url: 'https://tokenrate.dev' },
-    { name: 'Compare', url: 'https://tokenrate.dev/compare/cheapest-ai-models-2025' },
+    { name: 'Compare', url: 'https://tokenrate.dev/compare' },
     { name: comp.title, url: `https://tokenrate.dev/compare/${slug}` },
   ]
 
@@ -49,7 +49,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
         <Breadcrumb
           crumbs={[
             { label: 'Home', href: '/' },
-            { label: 'Compare' },
+            { label: 'Compare', href: '/compare' },
             { label: comp.title },
           ]}
         />

@@ -3,8 +3,8 @@ import ThemeToggle from './ThemeToggle'
 
 const NAV_LINKS = [
   { href: '/', label: 'Calculator' },
-  { href: '/models/claude-sonnet-4', label: 'Models' },
-  { href: '/compare/cheapest-ai-models-2025', label: 'Compare' },
+  { href: '/models', label: 'Models' },
+  { href: '/compare', label: 'Compare' },
   { href: '/guides', label: 'Guides' },
   { href: '/tools/words-to-tokens', label: 'Tools' },
   { href: '/blog', label: 'Blog' },

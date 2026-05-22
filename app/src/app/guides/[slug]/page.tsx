@@ -38,20 +38,29 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   const breadcrumbs = [
     { name: 'TokenRate', url: 'https://tokenrate.dev' },
-    { name: 'Guides', url: 'https://tokenrate.dev/guides/what-are-ai-tokens' },
+    { name: 'Guides', url: 'https://tokenrate.dev/guides' },
     { name: guide.title, url: `https://tokenrate.dev/guides/${slug}` },
   ]
 
   return (
     <>
-      <JsonLd data={articleSchema({ title: guide.title, description: guide.description, url: `https://tokenrate.dev/guides/${slug}` })} />
+      <JsonLd
+        data={articleSchema({
+          title: guide.title,
+          description: guide.description,
+          url: `https://tokenrate.dev/guides/${slug}`,
+          datePublished: guide.publishedAt,
+          dateModified: guide.updatedAt,
+          imageUrl: `https://tokenrate.dev/guides/${slug}/opengraph-image`,
+        })}
+      />
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
 
       <div className="mx-auto max-w-3xl px-6 py-10">
         <Breadcrumb
           crumbs={[
             { label: 'Home', href: '/' },
-            { label: 'Guides' },
+            { label: 'Guides', href: '/guides' },
             { label: guide.title },
           ]}
         />

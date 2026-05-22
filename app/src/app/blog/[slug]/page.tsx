@@ -72,7 +72,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   return (
     <>
       <JsonLd
-        data={articleSchema({ title: post.title, description: post.description, url: `https://tokenrate.dev/blog/${slug}` })}
+        data={articleSchema({
+          title: post.title,
+          description: post.description,
+          url: `https://tokenrate.dev/blog/${slug}`,
+          datePublished: post.publishedAt,
+          dateModified: post.publishedAt,
+          imageUrl: `https://tokenrate.dev/blog/${slug}/opengraph-image`,
+        })}
       />
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
 

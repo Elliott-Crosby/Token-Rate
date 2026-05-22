@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import ThemeProvider from '@/components/ThemeProvider'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import JsonLd, { siteSchemas } from '@/components/JsonLd'
 import { Analytics } from '@vercel/analytics/next'
 
 const geistSans = Geist({
@@ -45,16 +47,17 @@ export const metadata: Metadata = {
     title: 'TokenRate — AI Token Calculator & Pricing Comparison',
     description:
       'Free AI token calculator. Convert money, tokens, and characters across Claude, GPT-4o, Gemini, and more with live pricing.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'TokenRate' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'TokenRate — AI Token Calculator & Pricing Comparison',
     description: 'Free AI token calculator with live pricing across Claude, GPT-4o, Gemini, and more.',
-    images: ['/og-image.png'],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://tokenrate.dev' },
+  verification: process.env.NEXT_PUBLIC_GSC_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION }
+    : undefined,
 }
 
 export default function RootLayout({
@@ -71,17 +74,11 @@ export default function RootLayout({
             __html: `(function(){try{var s=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s==='dark'||(s===null&&p)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
           }}
         />
-        {/* Google AdSense */}
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8739160864788471" crossOrigin="anonymous" />
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZNFQWB6MV1" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZNFQWB6MV1');`,
-          }}
-        />
       </head>
       <body className="antialiased bg-zinc-50 dark:bg-zinc-950 transition-colors">
+        {siteSchemas().map((s, i) => (
+          <JsonLd key={i} data={s} />
+        ))}
         <ThemeProvider>
           <div className="h-0.5 w-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-sky-400" />
           <Nav />
@@ -89,6 +86,22 @@ export default function RootLayout({
           <Footer />
           <Analytics />
         </ThemeProvider>
+
+        {/* Google Analytics — afterInteractive: deferred until hydration */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-ZNFQWB6MV1"
+          strategy="afterInteractive"
+        />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZNFQWB6MV1');`}
+        </Script>
+
+        {/* Google AdSense — lazyOnload: deferred to browser idle */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8739160864788471"
+          strategy="lazyOnload"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   )

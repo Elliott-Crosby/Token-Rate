@@ -14,7 +14,7 @@ export default function TermsPage() {
       <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Terms of Use' }]} />
 
       <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">Terms of Use</h1>
-      <p className="text-xs text-zinc-400 dark:text-zinc-500 mb-8">Last updated: January 2025</p>
+      <p className="text-xs text-zinc-400 dark:text-zinc-500 mb-8">Last updated: May 2026</p>
 
       <div className="flex flex-col gap-6 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
         <section>

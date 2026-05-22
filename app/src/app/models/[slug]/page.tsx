@@ -6,8 +6,9 @@ import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import FAQSection from '@/components/FAQSection'
 import RelatedPages from '@/components/RelatedPages'
-import JsonLd, { faqSchema, breadcrumbSchema } from '@/components/JsonLd'
+import JsonLd, { faqSchema, breadcrumbSchema, productSchema } from '@/components/JsonLd'
 import { MODEL_FAQS } from '@/lib/faqs'
+import { getLivePricing, resolveModelPricing } from '@/lib/pricing-live'
 
 export function generateStaticParams() {
   return ALL_MODELS.map((m) => ({ slug: m.slug }))
@@ -54,8 +55,14 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
   const model = getModelBySlug(slug)
   if (!model) notFound()
 
+  const live = await getLivePricing(model)
+  const pricing = resolveModelPricing(model, live)
+  const inputPrice = pricing.inputPricePerMillion
+  const outputPrice = pricing.outputPricePerMillion
+  const isLive = pricing.source === 'live'
+
   const related = getRelatedModels(model)
-  const faqs = MODEL_FAQS(model.name, model.inputPricePerMillion, model.outputPricePerMillion)
+  const faqs = MODEL_FAQS(model.name, inputPrice, outputPrice)
 
   const ctxDisplay =
     model.contextWindow >= 1_000_000
@@ -70,7 +77,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
 
   const breadcrumbs = [
     { name: 'TokenRate', url: 'https://tokenrate.dev' },
-    { name: 'Models', url: 'https://tokenrate.dev/models/claude-sonnet-4' },
+    { name: 'Models', url: 'https://tokenrate.dev/models' },
     { name: model.name, url: `https://tokenrate.dev/models/${slug}` },
   ]
 
@@ -78,12 +85,22 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
     <>
       <JsonLd data={faqSchema(faqs)} />
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
+      <JsonLd
+        data={productSchema({
+          name: model.name,
+          description: model.description,
+          url: `https://tokenrate.dev/models/${slug}`,
+          brand: model.provider,
+          inputPrice,
+          outputPrice,
+        })}
+      />
 
       <div className="mx-auto max-w-5xl px-6 py-10">
         <Breadcrumb
           crumbs={[
             { label: 'Home', href: '/' },
-            { label: 'Models' },
+            { label: 'Models', href: '/models' },
             { label: model.name },
           ]}
         />
@@ -104,16 +121,30 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
           </p>
         </div>
 
+        {/* Pricing freshness badge */}
+        <div className="mb-4 flex items-center gap-2 text-xs">
+          {isLive ? (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-medium">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Live pricing from OpenRouter
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400">
+              Reference pricing · updated {model.updatedAt}
+            </span>
+          )}
+        </div>
+
         {/* Pricing cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           <div className="flex flex-col gap-1 p-5 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30">
             <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-500">Input Price</p>
-            <p className="text-3xl font-black font-mono text-emerald-700 dark:text-emerald-400">{fmt(model.inputPricePerMillion)}</p>
+            <p className="text-3xl font-black font-mono text-emerald-700 dark:text-emerald-400">{fmt(inputPrice)}</p>
             <p className="text-xs text-emerald-600/70 dark:text-emerald-500/70">per 1 million tokens</p>
           </div>
           <div className="flex flex-col gap-1 p-5 rounded-xl border border-sky-200 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/30">
             <p className="text-xs font-semibold uppercase tracking-widest text-sky-600 dark:text-sky-500">Output Price</p>
-            <p className="text-3xl font-black font-mono text-sky-700 dark:text-sky-400">{fmt(model.outputPricePerMillion)}</p>
+            <p className="text-3xl font-black font-mono text-sky-700 dark:text-sky-400">{fmt(outputPrice)}</p>
             <p className="text-xs text-sky-600/70 dark:text-sky-500/70">per 1 million tokens</p>
           </div>
           <div className="flex flex-col gap-1 p-5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
@@ -139,8 +170,8 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
                 </thead>
                 <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
                   {TOKEN_EXAMPLES.map((ex, i) => {
-                    const inputCost = (ex.tokens * model.inputPricePerMillion) / 1_000_000
-                    const outputCost = (ex.tokens * 0.3 * model.outputPricePerMillion) / 1_000_000
+                    const inputCost = (ex.tokens * inputPrice) / 1_000_000
+                    const outputCost = (ex.tokens * 0.3 * outputPrice) / 1_000_000
                     return (
                       <tr key={ex.label} className={i % 2 === 0 ? 'bg-white dark:bg-zinc-900' : 'bg-zinc-50/60 dark:bg-zinc-800/30'}>
                         <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300">{ex.label}</td>

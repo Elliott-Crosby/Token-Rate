@@ -5,6 +5,8 @@ export interface GuideData {
   readTime: string
   content: GuideSection[]
   relatedSlugs: string[]
+  publishedAt: string
+  updatedAt: string
 }
 
 export interface GuideSection {
@@ -19,6 +21,8 @@ export const ALL_GUIDES: GuideData[] = [
     description:
       'A clear, simple explanation of AI tokens — what they are, how models use them, and why token count matters for pricing and performance.',
     readTime: '4 min read',
+    publishedAt: '2026-01-15',
+    updatedAt: '2026-05-22',
     relatedSlugs: ['how-ai-api-pricing-works', 'how-many-tokens-in-1000-words'],
     content: [
       {
@@ -49,6 +53,8 @@ export const ALL_GUIDES: GuideData[] = [
     description:
       'A practical guide to understanding per-token pricing, input vs output costs, and how to estimate your AI API bill before it arrives.',
     readTime: '5 min read',
+    publishedAt: '2026-01-20',
+    updatedAt: '2026-05-22',
     relatedSlugs: ['what-are-ai-tokens', 'how-to-reduce-ai-api-costs'],
     content: [
       {
@@ -79,6 +85,8 @@ export const ALL_GUIDES: GuideData[] = [
     description:
       'Quick reference guide for converting between words, characters, pages, and AI tokens for any major language model.',
     readTime: '3 min read',
+    publishedAt: '2026-02-05',
+    updatedAt: '2026-05-22',
     relatedSlugs: ['what-are-ai-tokens', 'how-ai-api-pricing-works'],
     content: [
       {
@@ -109,6 +117,8 @@ export const ALL_GUIDES: GuideData[] = [
     description:
       'Practical strategies to cut your AI API spending without sacrificing quality — from prompt optimization to model routing and caching.',
     readTime: '6 min read',
+    publishedAt: '2026-02-18',
+    updatedAt: '2026-05-22',
     relatedSlugs: ['how-ai-api-pricing-works', 'what-are-ai-tokens'],
     content: [
       {

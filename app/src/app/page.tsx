@@ -95,7 +95,7 @@ const cheapest = getCheapestModels(6)
 const RELATED: { href: string; label: string; description: string }[] = [
   { href: '/tools/words-to-tokens', label: 'Words → Tokens Converter', description: 'Paste any text and see the token count instantly.' },
   { href: '/tools/token-to-usd', label: 'Token → USD Calculator', description: 'Convert a raw token count to dollars for any model.' },
-  { href: '/compare/cheapest-ai-models-2025', label: 'Cheapest AI Models 2025', description: 'Ranked list of the most affordable LLMs available via API.' },
+  { href: '/compare/cheapest-ai-models', label: 'Cheapest AI Models 2026', description: 'Ranked list of the most affordable LLMs available via API.' },
   { href: '/guides/what-are-ai-tokens', label: 'What Are AI Tokens?', description: 'A clear explanation of how tokens work and why they matter.' },
 ]
 
@@ -110,12 +110,17 @@ export default async function Home() {
       <div className="mx-auto max-w-5xl px-6 py-10">
         {/* Hero */}
         <div className="mb-10">
-          <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-emerald-500">
             <span className="text-emerald-500">Token</span>
-            <span className="text-zinc-900 dark:text-zinc-50"> Rate</span>
+            <span className="text-zinc-700 dark:text-zinc-300">Rate</span>
+            <span className="text-zinc-400 dark:text-zinc-500"> · tokenrate.dev</span>
+          </p>
+          <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+            AI Token Calculator &amp; Live Pricing Comparison
           </h1>
-          <p className="mt-2 text-base text-zinc-500 dark:text-zinc-400 max-w-xl">
-            Convert between money, tokens, and characters across Claude, GPT-4o, Gemini, and more — with live pricing from OpenRouter.
+          <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400 max-w-2xl">
+            Free, instant cost estimates for every major AI model. Convert money, tokens, and characters across
+            Claude, GPT-4o, Gemini, Llama, DeepSeek, Grok, and Mistral — with live pricing from OpenRouter.
           </p>
         </div>
 
@@ -187,7 +192,7 @@ export default async function Home() {
 
           {/* Cheapest models table */}
           <section>
-            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">Cheapest AI Models in 2025</h2>
+            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">Cheapest AI Models in 2026</h2>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-5">
               Ranked by input token price. All prices per 1 million tokens.
             </p>
@@ -229,7 +234,7 @@ export default async function Home() {
             </div>
             <p className="mt-3 text-xs text-zinc-400 dark:text-zinc-500">
               Prices are approximate and may change.{' '}
-              <Link href="/compare/cheapest-ai-models-2025" className="text-emerald-600 dark:text-emerald-400 hover:underline">
+              <Link href="/compare/cheapest-ai-models" className="text-emerald-600 dark:text-emerald-400 hover:underline">
                 See full comparison →
               </Link>
             </p>

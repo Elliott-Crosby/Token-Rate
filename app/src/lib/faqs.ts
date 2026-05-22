@@ -27,7 +27,7 @@ export const HOME_FAQS: FAQ[] = [
   {
     question: 'Which AI model is the cheapest?',
     answer:
-      'As of 2025, Gemini 1.5 Flash is among the cheapest major models at $0.075 per 1 million input tokens. GPT-4o mini ($0.15/1M) and Claude Haiku 4 ($0.25/1M) are also very affordable. For most simple tasks, any of these three will deliver quality output at minimal cost.',
+      'As of 2026, Llama 3.1 8B at ~$0.05/1M and Gemini 1.5 Flash at $0.075/1M are the cheapest mainstream models. GPT-4o mini ($0.15/1M) and Claude Haiku 4 ($0.25/1M) are also very affordable. For most simple tasks, any of these will deliver quality output at minimal cost.',
   },
   {
     question: 'What is "per million tokens" pricing?',
