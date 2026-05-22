@@ -4,7 +4,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Link from 'next/link'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'About TokenRate',
+  title: 'About',
   description:
     'TokenRate is a free AI token calculator and pricing comparison tool. Learn about how we source pricing data and why we built this.',
   path: '/about',

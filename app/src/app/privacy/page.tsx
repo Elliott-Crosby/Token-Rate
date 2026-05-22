@@ -3,7 +3,7 @@ import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Privacy Policy — TokenRate',
+  title: 'Privacy Policy',
   description: 'TokenRate privacy policy. Learn how we handle analytics, advertising cookies, and pricing data.',
   path: '/privacy',
   noIndex: false,

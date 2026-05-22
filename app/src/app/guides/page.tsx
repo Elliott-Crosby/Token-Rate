@@ -6,7 +6,7 @@ import { ALL_GUIDES } from '@/lib/guides'
 import { getAllBlogPosts } from '@/lib/blog'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Guides & Articles — TokenRate',
+  title: 'Guides & Articles',
   description: 'Practical guides on AI token pricing, model comparisons, and cost optimization — plus all published blog articles.',
   path: '/guides',
 })

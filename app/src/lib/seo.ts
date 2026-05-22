@@ -17,10 +17,9 @@ export function buildMetadata({
   noIndex?: boolean
 }): Metadata {
   const url = `${SITE_URL}${path}`
-  const fullTitle = path === '' ? `${SITE_NAME} — ${title}` : `${title} | ${SITE_NAME}`
-
+  // Title goes through layout's `%s | TokenRate` template, so we omit the brand here.
   return {
-    title: fullTitle,
+    title,
     description,
     metadataBase: new URL(SITE_URL),
     alternates: { canonical: url },
@@ -28,13 +27,13 @@ export function buildMetadata({
     openGraph: {
       type: 'website',
       url,
-      title: fullTitle,
+      title,
       description,
       siteName: SITE_NAME,
     },
     twitter: {
       card: 'summary_large_image',
-      title: fullTitle,
+      title,
       description,
     },
   }

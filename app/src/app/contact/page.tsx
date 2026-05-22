@@ -4,7 +4,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from './ContactForm'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Contact TokenRate',
+  title: 'Contact',
   description: 'Contact the TokenRate team with questions, pricing corrections, or feedback.',
   path: '/contact',
 })

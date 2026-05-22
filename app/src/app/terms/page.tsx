@@ -3,7 +3,7 @@ import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Terms of Use — TokenRate',
+  title: 'Terms of Use',
   description: 'Terms of use for TokenRate. Pricing data is for informational purposes only.',
   path: '/terms',
 })

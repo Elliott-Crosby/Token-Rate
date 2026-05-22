@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "token-conversion-rate",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3003,
+      "cwd": "C:\\Users\\ellio\\Token_Conversion_Rate\\app"
+    }
+  ]
+}
