@@ -16,7 +16,6 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment: ANTHROPIC_API_KEY
 
     steps:
       - name: Checkout
