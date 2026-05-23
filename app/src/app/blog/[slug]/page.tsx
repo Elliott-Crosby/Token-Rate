@@ -1,11 +1,15 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import Link from 'next/link'
 import { getAllBlogPosts, getBlogPost } from '@/lib/blog'
 import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import JsonLd, { articleSchema, breadcrumbSchema } from '@/components/JsonLd'
+import AdSlot from '@/components/AdSlot'
+
+const IN_ARTICLE_SLOT = process.env.NEXT_PUBLIC_ADSENSE_SLOT_IN_ARTICLE
+const ABOVE_CTA_SLOT = process.env.NEXT_PUBLIC_ADSENSE_SLOT_ABOVE_CTA
 
 export function generateStaticParams() {
   return getAllBlogPosts().map((p) => ({ slug: p.slug }))
@@ -130,15 +134,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           )}
         </div>
 
-        {/* Body sections */}
+        {/* Body sections — mid-article ad inserted after the 2nd section */}
         <article className="flex flex-col gap-8">
           {post.sections?.map((section, i) => (
-            <section key={i}>
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-3">{section.heading}</h2>
-              <div className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
-                {renderBody(section.body)}
-              </div>
-            </section>
+            <Fragment key={i}>
+              <section>
+                <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-3">{section.heading}</h2>
+                <div className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
+                  {renderBody(section.body)}
+                </div>
+              </section>
+              {i === 1 && IN_ARTICLE_SLOT && (
+                <AdSlot slot={IN_ARTICLE_SLOT} format="fluid" layout="in-article" />
+              )}
+            </Fragment>
           ))}
         </article>
 
@@ -154,6 +163,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Ad above CTA */}
+        {ABOVE_CTA_SLOT && (
+          <div className="mt-10">
+            <AdSlot slot={ABOVE_CTA_SLOT} format="auto" />
           </div>
         )}
 
