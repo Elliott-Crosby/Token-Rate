@@ -14,8 +14,8 @@ export const metadata: Metadata = buildMetadata({
 
 const RELATED = [
   { href: '/tools/token-to-usd', label: 'Token → USD Calculator', description: 'Convert a token count into dollars for any AI model.' },
-  { href: '/guides/what-are-ai-tokens', label: 'What Are AI Tokens?', description: 'Learn how tokens work and why they matter for AI costs.' },
-  { href: '/guides/how-many-tokens-in-1000-words', label: 'Token Reference Guide', description: 'Quick reference: words, pages, and characters to tokens.' },
+  { href: '/blog/fundamentals/what-are-ai-tokens', label: 'What Are AI Tokens?', description: 'Learn how tokens work and why they matter for AI costs.' },
+  { href: '/blog/fundamentals/how-many-tokens-in-1000-words', label: 'Token Reference Guide', description: 'Quick reference: words, pages, and characters to tokens.' },
   { href: '/', label: 'Full Token Calculator', description: 'Convert money, tokens, and characters across all models.' },
 ]
 

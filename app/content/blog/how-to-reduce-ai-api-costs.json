@@ -1,11 +1,45 @@
 {
+  "category": "cost-optimization",
+  "kind": "guide",
+  "tldr": "The largest cost-reduction lever is model routing — sending 80% of simple requests to a cheap model (Claude Haiku 4 at $0.25/1M, Gemini 2.0 Flash at $0.10/1M) and reserving flagship models for hard requests typically cuts costs 60–80%. Stack with prompt caching (90% discount on cached input tokens), Batch APIs (50% discount, 24-hour turnaround), output-length controls, and conversation-history summarization. Together these can cut an AI bill 5–10× without changing the user-facing product.",
+  "sources": [
+    {
+      "label": "Anthropic — Prompt caching (90% discount on cached tokens)",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
+    },
+    {
+      "label": "OpenAI — Prompt caching",
+      "url": "https://platform.openai.com/docs/guides/prompt-caching"
+    },
+    {
+      "label": "Anthropic — Batch API (50% discount)",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/batch-processing"
+    },
+    {
+      "label": "OpenAI — Batch API (50% discount, 24-hour SLA)",
+      "url": "https://platform.openai.com/docs/guides/batch"
+    },
+    {
+      "label": "OpenAI — Pricing",
+      "url": "https://openai.com/api/pricing/"
+    }
+  ],
+  "relatedSlugs": [
+    "how-ai-api-pricing-works",
+    "prompt-caching-save-90-percent-on-ai-costs",
+    "batch-api-cut-ai-costs-in-half"
+  ],
+  "updatedAt": "2026-05-22",
   "slug": "how-to-reduce-ai-api-costs",
   "keyword": "reduce AI API costs",
   "title": "7 Ways to Cut Your AI API Bill Without Sacrificing Quality",
   "description": "Practical techniques developers use to reduce LLM API costs by 30–80% — from prompt caching to model routing and smarter context management.",
   "readTime": "7 min read",
   "publishedAt": "2026-05-16",
-  "tags": ["Cost Optimization", "Tips"],
+  "tags": [
+    "Cost Optimization",
+    "Tips"
+  ],
   "sections": [
     {
       "heading": "Why AI costs spiral out of control",

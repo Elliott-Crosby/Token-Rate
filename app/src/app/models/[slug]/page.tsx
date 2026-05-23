@@ -346,8 +346,8 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
           <RelatedPages
             title="Related Guides"
             pages={[
-              { href: '/guides/how-ai-api-pricing-works', label: 'How AI API Pricing Works', description: 'Understand input vs output costs and how to estimate your bill.' },
-              { href: '/guides/how-to-reduce-ai-api-costs', label: 'How to Reduce AI API Costs', description: 'Practical strategies to cut spending without sacrificing quality.' },
+              { href: '/blog/fundamentals/how-ai-api-pricing-works', label: 'How AI API Pricing Works', description: 'Understand input vs output costs and how to estimate your bill.' },
+              { href: '/blog/cost-optimization/how-to-reduce-ai-api-costs', label: 'How to Reduce AI API Costs', description: 'Practical strategies to cut spending without sacrificing quality.' },
             ]}
           />
         </div>

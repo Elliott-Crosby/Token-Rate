@@ -1,11 +1,15 @@
 {
+  "category": "providers",
   "slug": "how-to-calculate-openai-api-costs",
   "keyword": "openai api cost calculator",
   "title": "How to Calculate Your OpenAI API Costs Before You Ship",
   "description": "Learn how to estimate OpenAI API costs before deploying to production. Covers GPT-4o and GPT-4o-mini pricing, token counting, per-request estimation, and monthly projection techniques.",
   "readTime": "7 min read",
   "publishedAt": "2026-05-22T00:00:00.000Z",
-  "tags": ["pricing", "openai"],
+  "tags": [
+    "pricing",
+    "openai"
+  ],
   "sections": [
     {
       "heading": "Why Cost Estimation Matters Before You Launch",

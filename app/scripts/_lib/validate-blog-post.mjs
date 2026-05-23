@@ -4,6 +4,10 @@
  * Returns an array of human-readable error strings; empty = valid.
  */
 
+// Mirror of CATEGORY_SLUGS in src/lib/categories.ts. Keep in sync.
+const CATEGORY_SLUGS = ['fundamentals', 'comparisons', 'cost-optimization', 'providers', 'building']
+const KINDS = ['article', 'guide']
+
 export function validateBlogPost(filename, data) {
   const errors = []
 
@@ -11,7 +15,7 @@ export function validateBlogPost(filename, data) {
     return ['post is not an object']
   }
 
-  const required = ['slug', 'title', 'description', 'publishedAt', 'sections', 'faq']
+  const required = ['slug', 'title', 'description', 'publishedAt', 'sections', 'faq', 'category']
   for (const field of required) {
     if (data[field] === undefined || data[field] === null || data[field] === '') {
       errors.push(`missing field: ${field}`)
@@ -28,8 +32,20 @@ export function validateBlogPost(filename, data) {
     }
   }
 
+  if (data.category !== undefined && !CATEGORY_SLUGS.includes(data.category)) {
+    errors.push(`invalid category: "${data.category}" (must be one of: ${CATEGORY_SLUGS.join(', ')})`)
+  }
+
+  if (data.kind !== undefined && !KINDS.includes(data.kind)) {
+    errors.push(`invalid kind: "${data.kind}" (must be one of: ${KINDS.join(', ')})`)
+  }
+
   if (data.publishedAt && Number.isNaN(Date.parse(data.publishedAt))) {
     errors.push(`publishedAt is not a valid date: "${data.publishedAt}"`)
+  }
+
+  if (data.updatedAt && Number.isNaN(Date.parse(data.updatedAt))) {
+    errors.push(`updatedAt is not a valid date: "${data.updatedAt}"`)
   }
 
   if (!Array.isArray(data.sections) || data.sections.length === 0) {
@@ -57,6 +73,22 @@ export function validateBlogPost(filename, data) {
 
   if (data.tags !== undefined && !Array.isArray(data.tags)) {
     errors.push('tags must be an array of strings')
+  }
+
+  if (data.sources !== undefined) {
+    if (!Array.isArray(data.sources)) {
+      errors.push('sources must be an array')
+    } else {
+      data.sources.forEach((s, i) => {
+        if (!s || typeof s.label !== 'string' || typeof s.url !== 'string') {
+          errors.push(`sources[${i}] missing label/url`)
+        }
+      })
+    }
+  }
+
+  if (data.relatedSlugs !== undefined && !Array.isArray(data.relatedSlugs)) {
+    errors.push('relatedSlugs must be an array of slug strings')
   }
 
   return errors

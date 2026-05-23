@@ -1,11 +1,15 @@
 {
+  "category": "comparisons",
   "slug": "claude-vs-gpt4o-pricing",
   "keyword": "Claude vs GPT-4o pricing",
   "title": "Claude vs GPT-4o Pricing: Which Is Cheaper in 2025?",
   "description": "A direct cost comparison between Anthropic's Claude models and OpenAI's GPT-4o for common developer use cases — with real numbers.",
   "readTime": "6 min read",
   "publishedAt": "2026-05-14",
-  "tags": ["Comparison", "Pricing"],
+  "tags": [
+    "Comparison",
+    "Pricing"
+  ],
   "sections": [
     {
       "heading": "The pricing landscape in 2025",

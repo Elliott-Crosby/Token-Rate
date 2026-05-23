@@ -1,11 +1,37 @@
 {
+  "category": "fundamentals",
+  "kind": "guide",
+  "tldr": "An AI token is the smallest unit of text a large language model processes — roughly 4 characters or three-quarters of a word in English. AI APIs (Claude, GPT-4o, Gemini) bill by the token, charging separately for input tokens (text you send) and output tokens (text generated), with output typically priced 3–5× higher than input.",
+  "sources": [
+    {
+      "label": "OpenAI — What are tokens and how to count them",
+      "url": "https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them"
+    },
+    {
+      "label": "Anthropic — Glossary: Tokens",
+      "url": "https://docs.anthropic.com/en/docs/resources/glossary"
+    },
+    {
+      "label": "Google AI — Understand and count tokens",
+      "url": "https://ai.google.dev/gemini-api/docs/tokens"
+    }
+  ],
+  "relatedSlugs": [
+    "how-ai-api-pricing-works",
+    "how-many-tokens-in-1000-words",
+    "tokens-to-dollars-conversion"
+  ],
+  "updatedAt": "2026-05-22",
   "slug": "what-are-ai-tokens",
   "keyword": "what are AI tokens",
   "title": "What Are AI Tokens? A Developer's Plain-English Guide",
   "description": "Tokens are the unit of measure behind every AI API bill. Here's exactly what they are, how models count them, and why it matters for your costs.",
   "readTime": "5 min read",
   "publishedAt": "2026-05-10",
-  "tags": ["Tokens", "Fundamentals"],
+  "tags": [
+    "Tokens",
+    "Fundamentals"
+  ],
   "sections": [
     {
       "heading": "The short answer",

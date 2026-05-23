@@ -41,12 +41,13 @@ const FOOTER_COLS = [
     ],
   },
   {
-    label: 'Guides',
+    label: 'Blog',
     links: [
-      { href: '/guides/what-are-ai-tokens', label: 'What Are AI Tokens?' },
-      { href: '/guides/how-ai-api-pricing-works', label: 'How Pricing Works' },
-      { href: '/guides/how-many-tokens-in-1000-words', label: 'Tokens in 1,000 Words' },
-      { href: '/guides/how-to-reduce-ai-api-costs', label: 'Reduce API Costs' },
+      { href: '/blog', label: 'All posts' },
+      { href: '/blog/fundamentals', label: 'Fundamentals' },
+      { href: '/blog/comparisons', label: 'Model Comparisons' },
+      { href: '/blog/cost-optimization', label: 'Cost Optimization' },
+      { href: '/blog/building', label: 'Building with AI' },
     ],
   },
   {

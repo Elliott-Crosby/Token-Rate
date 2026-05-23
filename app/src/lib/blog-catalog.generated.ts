@@ -25,6 +25,8 @@ import post_17_tokens_to_dollars_conversion from '../../content/blog/tokens-to-d
 import post_18_how_to_reduce_ai_api_costs from '../../content/blog/how-to-reduce-ai-api-costs.json'
 import post_19_claude_vs_gpt4o_pricing from '../../content/blog/claude-vs-gpt4o-pricing.json'
 import post_20_what_are_ai_tokens from '../../content/blog/what-are-ai-tokens.json'
+import post_21_how_many_tokens_in_1000_words from '../../content/blog/how-many-tokens-in-1000-words.json'
+import post_22_how_ai_api_pricing_works from '../../content/blog/how-ai-api-pricing-works.json'
 
 export const ALL_BLOG_POSTS = [
   post_0_building_cost_aware_ai_agent,
@@ -48,4 +50,6 @@ export const ALL_BLOG_POSTS = [
   post_18_how_to_reduce_ai_api_costs,
   post_19_claude_vs_gpt4o_pricing,
   post_20_what_are_ai_tokens,
+  post_21_how_many_tokens_in_1000_words,
+  post_22_how_ai_api_pricing_works,
 ] as unknown as readonly BlogPost[]

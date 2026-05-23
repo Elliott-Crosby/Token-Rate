@@ -1,11 +1,17 @@
 {
+  "category": "comparisons",
   "slug": "gemini-vs-claude-vs-gpt-cost",
   "keyword": "Gemini vs Claude vs GPT cost comparison",
   "title": "Gemini vs Claude vs GPT: Full Cost Comparison for 2025",
   "description": "A complete pricing breakdown comparing Google Gemini, Anthropic Claude, and OpenAI GPT models — with real-world cost examples across common developer tasks.",
   "readTime": "8 min read",
   "publishedAt": "2026-05-20",
-  "tags": ["Comparison", "Gemini", "Claude", "GPT"],
+  "tags": [
+    "Comparison",
+    "Gemini",
+    "Claude",
+    "GPT"
+  ],
   "sections": [
     {
       "heading": "Three providers, three pricing philosophies",

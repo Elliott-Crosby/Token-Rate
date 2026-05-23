@@ -1,11 +1,15 @@
 {
+  "category": "comparisons",
   "slug": "gpt4o-mini-vs-claude-haiku-cost",
   "keyword": "gpt-4o mini vs claude haiku cost",
   "title": "GPT-4o Mini vs Claude Haiku: Which Is Cheaper for High-Volume Tasks?",
   "description": "A detailed cost and capability comparison of GPT-4o-mini and Claude Haiku 4 for high-volume AI workloads. Includes real cost projections at 10 million tokens per day and guidance on which model wins for different task types.",
   "readTime": "7 min read",
   "publishedAt": "2026-05-22T08:00:00.000Z",
-  "tags": ["comparison", "budget models"],
+  "tags": [
+    "comparison",
+    "budget models"
+  ],
   "sections": [
     {
       "heading": "The Case for Budget Models at Scale",

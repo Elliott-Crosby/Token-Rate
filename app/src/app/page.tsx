@@ -111,7 +111,7 @@ const RELATED: { href: string; label: string; description: string }[] = [
   { href: '/tools/words-to-tokens', label: 'Words → Tokens Converter', description: 'Paste any text and see the token count instantly.' },
   { href: '/tools/token-to-usd', label: 'Token → USD Calculator', description: 'Convert a raw token count to dollars for any model.' },
   { href: '/compare/cheapest-ai-models', label: 'Cheapest AI Models 2026', description: 'Ranked list of the most affordable LLMs available via API.' },
-  { href: '/guides/what-are-ai-tokens', label: 'What Are AI Tokens?', description: 'A clear explanation of how tokens work and why they matter.' },
+  { href: '/blog/fundamentals/what-are-ai-tokens', label: 'What Are AI Tokens?', description: 'A clear explanation of how tokens work and why they matter.' },
 ]
 
 export default async function Home() {
@@ -199,7 +199,7 @@ export default async function Home() {
                 Every AI API — including Claude, GPT-4o, and Gemini — charges by the token. You pay for the text you <em>send</em> (input tokens) and the text the model <em>generates</em> (output tokens). Understanding tokens is the key to predicting and controlling your AI costs.
               </p>
               <p>
-                <Link href="/guides/what-are-ai-tokens" className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+                <Link href="/blog/fundamentals/what-are-ai-tokens" className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
                   Read the full guide →
                 </Link>
               </p>
@@ -227,7 +227,7 @@ export default async function Home() {
                 A typical 1,000-token request (about 750 words of prompt) with Claude Sonnet 4 costs $0.003 — less than a third of a cent. At scale, though, those fractions add up fast.
               </p>
               <p>
-                <Link href="/guides/how-ai-api-pricing-works" className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+                <Link href="/blog/fundamentals/how-ai-api-pricing-works" className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
                   Read the full pricing guide →
                 </Link>
               </p>
@@ -305,7 +305,7 @@ export default async function Home() {
             </div>
             <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
               Want more?{' '}
-              <Link href="/guides/how-many-tokens-in-1000-words" className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+              <Link href="/blog/fundamentals/how-many-tokens-in-1000-words" className="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
                 See the full token reference guide →
               </Link>
             </p>

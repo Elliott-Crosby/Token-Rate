@@ -15,7 +15,7 @@ export const metadata: Metadata = buildMetadata({
 const RELATED = [
   { href: '/tools/words-to-tokens', label: 'Words → Tokens', description: 'Estimate token count from pasted text.' },
   { href: '/tools/token-to-usd', label: 'Token → USD', description: 'Convert a token count to dollars.' },
-  { href: '/guides/how-to-reduce-ai-api-costs', label: 'Reduce API Costs', description: 'Practical strategies to cut your AI bill.' },
+  { href: '/blog/cost-optimization/how-to-reduce-ai-api-costs', label: 'Reduce API Costs', description: 'Practical strategies to cut your AI bill.' },
   { href: '/', label: 'Token Calculator', description: 'Full cross-model conversion tool.' },
 ]
 

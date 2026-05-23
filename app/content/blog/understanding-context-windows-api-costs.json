@@ -1,11 +1,15 @@
 {
+  "category": "fundamentals",
   "slug": "understanding-context-windows-api-costs",
   "keyword": "context window token cost",
   "title": "Context Windows Explained: What 200K Tokens Really Costs You",
   "description": "Understand what context windows are, how input tokens are counted across system prompts, history, and user messages, and what it actually costs to fill a 200K context window at current model pricing.",
   "readTime": "7 min read",
   "publishedAt": "2026-05-22T10:00:00.000Z",
-  "tags": ["context window", "pricing"],
+  "tags": [
+    "context window",
+    "pricing"
+  ],
   "sections": [
     {
       "heading": "What a Context Window Actually Is",

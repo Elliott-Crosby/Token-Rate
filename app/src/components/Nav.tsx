@@ -5,7 +5,6 @@ const NAV_LINKS = [
   { href: '/', label: 'Calculator' },
   { href: '/models', label: 'Models' },
   { href: '/compare', label: 'Compare' },
-  { href: '/guides', label: 'Guides' },
   { href: '/tools/words-to-tokens', label: 'Tools' },
   { href: '/blog', label: 'Blog' },
 ]

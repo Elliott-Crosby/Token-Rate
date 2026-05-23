@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { ALL_MODELS, PROVIDERS } from '@/lib/models'
 import { ALL_COMPARISONS } from '@/lib/comparisons'
-import { ALL_GUIDES } from '@/lib/guides'
 import { getAllBlogPosts } from '@/lib/blog'
+import { CATEGORIES } from '@/lib/categories'
 
 const BASE = 'https://tokenrate.dev'
 const INDEXNOW_HOST = 'tokenrate.dev'
@@ -14,7 +14,6 @@ function allUrls(): string[] {
     `${BASE}/models`,
     `${BASE}/compare`,
     `${BASE}/providers`,
-    `${BASE}/guides`,
     `${BASE}/blog`,
     `${BASE}/about`,
     `${BASE}/tools/words-to-tokens`,
@@ -24,9 +23,9 @@ function allUrls(): string[] {
   const modelUrls = ALL_MODELS.map((m) => `${BASE}/models/${m.slug}`)
   const compareUrls = ALL_COMPARISONS.map((c) => `${BASE}/compare/${c.slug}`)
   const providerUrls = PROVIDERS.map((p) => `${BASE}/providers/${p.slug}`)
-  const guideUrls = ALL_GUIDES.map((g) => `${BASE}/guides/${g.slug}`)
-  const blogUrls = getAllBlogPosts().map((p) => `${BASE}/blog/${p.slug}`)
-  return [...staticUrls, ...modelUrls, ...compareUrls, ...providerUrls, ...guideUrls, ...blogUrls]
+  const categoryUrls = CATEGORIES.map((c) => `${BASE}/blog/${c.slug}`)
+  const blogUrls = getAllBlogPosts().map((p) => `${BASE}/blog/${p.category}/${p.slug}`)
+  return [...staticUrls, ...modelUrls, ...compareUrls, ...providerUrls, ...categoryUrls, ...blogUrls]
 }
 
 export async function POST(req: Request) {

@@ -16,7 +16,7 @@ const RELATED = [
   { href: '/tools/words-to-tokens', label: 'Words → Tokens Converter', description: 'Paste text to estimate its token count.' },
   { href: '/', label: 'Full Token Calculator', description: 'Convert money, tokens, or characters across all models.' },
   { href: '/compare/cheapest-ai-models', label: 'Cheapest AI Models 2026', description: 'Ranked by input token price.' },
-  { href: '/guides/how-ai-api-pricing-works', label: 'How AI Pricing Works', description: 'Understand the per-token billing model.' },
+  { href: '/blog/fundamentals/how-ai-api-pricing-works', label: 'How AI Pricing Works', description: 'Understand the per-token billing model.' },
 ]
 
 const HOW_TO_STEPS = [

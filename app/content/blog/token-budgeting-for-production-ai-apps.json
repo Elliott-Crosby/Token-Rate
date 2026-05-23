@@ -1,11 +1,15 @@
 {
+  "category": "cost-optimization",
   "slug": "token-budgeting-for-production-ai-apps",
   "keyword": "token budget production ai app",
   "title": "Token Budgeting for Production AI Apps",
   "description": "A practical guide to setting and enforcing token budgets in production AI applications. Learn how to cap costs per request, monitor usage per endpoint, and alert on budget overruns before they hit your invoice.",
   "readTime": "7 min read",
   "publishedAt": "2026-05-22T06:00:00.000Z",
-  "tags": ["budgeting", "production"],
+  "tags": [
+    "budgeting",
+    "production"
+  ],
   "sections": [
     {
       "heading": "Why Token Budgets Are a Production Necessity",

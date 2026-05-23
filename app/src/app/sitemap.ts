@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next'
 import { ALL_MODELS, PROVIDERS } from '@/lib/models'
 import { ALL_COMPARISONS } from '@/lib/comparisons'
-import { ALL_GUIDES } from '@/lib/guides'
 import { getAllBlogPosts } from '@/lib/blog'
+import { CATEGORIES } from '@/lib/categories'
 
 const BASE = 'https://tokenrate.dev'
-const HUB_LAST_MODIFIED = new Date('2026-05-22')
+const HUB_LAST_MODIFIED = new Date('2026-05-23')
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -13,7 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/models`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.95 },
     { url: `${BASE}/compare`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/providers`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${BASE}/guides`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${BASE}/blog`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${BASE}/about`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/contact`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.4 },
@@ -45,19 +44,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }))
 
-  const guidePages: MetadataRoute.Sitemap = ALL_GUIDES.map((guide) => ({
-    url: `${BASE}/guides/${guide.slug}`,
-    lastModified: new Date(guide.updatedAt),
-    changeFrequency: 'monthly' as const,
+  const categoryPages: MetadataRoute.Sitemap = CATEGORIES.map((c) => ({
+    url: `${BASE}/blog/${c.slug}`,
+    lastModified: HUB_LAST_MODIFIED,
+    changeFrequency: 'weekly' as const,
     priority: 0.8,
   }))
 
   const blogPages: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
-    url: `${BASE}/blog/${post.slug}`,
-    lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date('2026-01-01'),
+    url: `${BASE}/blog/${post.category}/${post.slug}`,
+    lastModified: post.updatedAt
+      ? new Date(post.updatedAt)
+      : post.publishedAt
+        ? new Date(post.publishedAt)
+        : new Date('2026-01-01'),
     changeFrequency: 'monthly' as const,
-    priority: 0.75,
+    priority: post.kind === 'guide' ? 0.8 : 0.75,
   }))
 
-  return [...staticPages, ...providerPages, ...modelPages, ...comparisonPages, ...guidePages, ...blogPages]
+  return [
+    ...staticPages,
+    ...providerPages,
+    ...modelPages,
+    ...comparisonPages,
+    ...categoryPages,
+    ...blogPages,
+  ]
 }

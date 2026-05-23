@@ -4,7 +4,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Link from 'next/link'
 import { ALL_MODELS, MODELS_UPDATED_AT, PROVIDERS } from '@/lib/models'
 import { ALL_COMPARISONS } from '@/lib/comparisons'
-import { ALL_GUIDES } from '@/lib/guides'
+import { getAllBlogPosts } from '@/lib/blog'
 
 export const metadata: Metadata = buildMetadata({
   title: 'About',
@@ -16,7 +16,9 @@ export const metadata: Metadata = buildMetadata({
 export default function AboutPage() {
   const modelCount = ALL_MODELS.length
   const providerCount = PROVIDERS.length
-  const guideCount = ALL_GUIDES.length
+  const posts = getAllBlogPosts()
+  const guideCount = posts.filter((p) => p.kind === 'guide').length
+  const articleCount = posts.length - guideCount
   const comparisonCount = ALL_COMPARISONS.length
 
   return (
@@ -46,6 +48,7 @@ export default function AboutPage() {
             <strong className="text-zinc-800 dark:text-zinc-200">{comparisonCount} head-to-head
             comparisons</strong>, and maintains{' '}
             <strong className="text-zinc-800 dark:text-zinc-200">{guideCount} reference guides</strong>{' '}
+            and <strong className="text-zinc-800 dark:text-zinc-200">{articleCount} articles</strong>{' '}
             on tokenization and pricing. Every model has a dedicated page with input/output prices,
             context window, output limit, strengths, weaknesses, and cost examples.
           </p>

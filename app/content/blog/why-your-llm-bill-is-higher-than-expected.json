@@ -1,11 +1,15 @@
 {
+  "category": "cost-optimization",
   "slug": "why-your-llm-bill-is-higher-than-expected",
   "keyword": "why is my openai bill so high",
   "title": "Why Your LLM Bill Is Higher Than Expected — And How to Fix It",
   "description": "Discover the most common reasons AI API bills spike unexpectedly — from bloated system prompts to conversation history accumulation — and get practical fixes to reduce your costs immediately.",
   "readTime": "7 min read",
   "publishedAt": "2026-05-22T04:00:00.000Z",
-  "tags": ["cost optimization", "billing"],
+  "tags": [
+    "cost optimization",
+    "billing"
+  ],
   "sections": [
     {
       "heading": "Your System Prompt Is Costing More Than You Think",

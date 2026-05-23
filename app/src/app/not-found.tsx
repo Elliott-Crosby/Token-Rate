@@ -16,7 +16,7 @@ export default function NotFound() {
           Back to Calculator
         </Link>
         <Link
-          href="/guides/what-are-ai-tokens"
+          href="/blog/fundamentals/what-are-ai-tokens"
           className="px-5 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
         >
           Read the Guides

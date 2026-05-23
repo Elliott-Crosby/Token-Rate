@@ -1,11 +1,16 @@
 {
+  "category": "comparisons",
   "slug": "claude-sonnet-vs-gpt4o-cost-comparison",
   "keyword": "claude sonnet vs gpt-4o cost",
   "title": "Claude Sonnet vs GPT-4o: Real-World API Cost Comparison",
   "description": "A detailed cost comparison of Claude Sonnet 4 and GPT-4o for production API workloads. Covers pricing per token, typical request sizes, total cost of ownership, and which model wins for different use cases.",
   "readTime": "8 min read",
   "publishedAt": "2026-05-22T02:00:00.000Z",
-  "tags": ["comparison", "claude", "openai"],
+  "tags": [
+    "comparison",
+    "claude",
+    "openai"
+  ],
   "sections": [
     {
       "heading": "Two Strong Models, Very Different Price Points",

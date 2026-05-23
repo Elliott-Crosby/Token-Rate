@@ -1,11 +1,15 @@
 {
+  "category": "fundamentals",
   "slug": "tokens-to-dollars-conversion",
   "keyword": "tokens to dollars",
   "title": "Tokens to Dollars: How to Convert AI Token Counts to Real Costs",
   "description": "A step-by-step guide to converting token counts into dollar amounts for Claude, GPT-4o, Gemini, and other LLM APIs — with formulas and worked examples.",
   "readTime": "4 min read",
   "publishedAt": "2026-05-18",
-  "tags": ["Pricing", "Fundamentals"],
+  "tags": [
+    "Pricing",
+    "Fundamentals"
+  ],
   "sections": [
     {
       "heading": "The basic formula",
