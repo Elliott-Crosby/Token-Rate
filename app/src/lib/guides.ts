@@ -2,9 +2,21 @@ export interface GuideData {
   slug: string
   title: string
   description: string
+  /**
+   * Answer-first ("BLUF") summary rendered above the first section heading.
+   * 2–3 sentences that fully answer the guide's primary question with
+   * extractable facts — what AI retrieval engines pull as citations.
+   */
+  tldr: string
   readTime: string
   content: GuideSection[]
   relatedSlugs: string[]
+  /**
+   * Primary-source citations for the factual claims in this guide.
+   * Surfaced as a "Sources" block on the guide page and as link equity
+   * back to the authoritative origin.
+   */
+  sources?: GuideSource[]
   publishedAt: string
   updatedAt: string
 }
@@ -14,16 +26,29 @@ export interface GuideSection {
   body: string
 }
 
+export interface GuideSource {
+  label: string
+  url: string
+  note?: string
+}
+
 export const ALL_GUIDES: GuideData[] = [
   {
     slug: 'what-are-ai-tokens',
     title: 'What Are AI Tokens?',
     description:
       'A clear, simple explanation of AI tokens — what they are, how models use them, and why token count matters for pricing and performance.',
+    tldr: 'An AI token is the smallest unit of text that a large language model processes — roughly 4 characters or three-quarters of a word in English. The word "hamburger" tokenizes to 3 tokens ("ham", "bur", "ger"); "hi" is 1 token. AI APIs (Claude, GPT-4o, Gemini) bill by the token, charging separately for input tokens (text you send) and output tokens (text generated), with output typically priced 3–5× higher than input.',
     readTime: '4 min read',
     publishedAt: '2026-01-15',
     updatedAt: '2026-05-22',
     relatedSlugs: ['how-ai-api-pricing-works', 'how-many-tokens-in-1000-words'],
+    sources: [
+      { label: 'OpenAI — What are tokens and how to count them', url: 'https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them' },
+      { label: 'Anthropic — Glossary: Tokens', url: 'https://docs.anthropic.com/en/docs/resources/glossary' },
+      { label: 'Google AI — Understand and count tokens', url: 'https://ai.google.dev/gemini-api/docs/tokens' },
+      { label: 'Anthropic — Prompt caching', url: 'https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching', note: 'Caches can reduce input token costs by up to 90%.' },
+    ],
     content: [
       {
         heading: 'The Basic Definition',
@@ -52,10 +77,18 @@ export const ALL_GUIDES: GuideData[] = [
     title: 'How AI API Pricing Works',
     description:
       'A practical guide to understanding per-token pricing, input vs output costs, and how to estimate your AI API bill before it arrives.',
+    tldr: 'AI APIs price by the token, quoted as $/1 million tokens. Input tokens (the text you send) and output tokens (the text the model generates) are billed separately, with output costing 3–5× more. As of May 2026, Claude Sonnet 4 charges $3/1M input and $15/1M output — meaning a 1,000-input/500-output request costs about $0.0105. Batch APIs (Anthropic, OpenAI) cut that 50%, and prompt caching cuts cached input tokens by ~90%.',
     readTime: '5 min read',
     publishedAt: '2026-01-20',
     updatedAt: '2026-05-22',
     relatedSlugs: ['what-are-ai-tokens', 'how-to-reduce-ai-api-costs'],
+    sources: [
+      { label: 'Anthropic — API pricing', url: 'https://www.anthropic.com/pricing', note: 'Source of Claude Sonnet 4 $3/$15 reference price.' },
+      { label: 'OpenAI — API pricing', url: 'https://openai.com/api/pricing/' },
+      { label: 'Google — Gemini API pricing', url: 'https://ai.google.dev/pricing' },
+      { label: 'Anthropic — Batch API (50% discount)', url: 'https://docs.anthropic.com/en/docs/build-with-claude/batch-processing' },
+      { label: 'OpenAI — Batch API (50% discount)', url: 'https://platform.openai.com/docs/guides/batch' },
+    ],
     content: [
       {
         heading: 'The Per-Token Model',
@@ -84,10 +117,17 @@ export const ALL_GUIDES: GuideData[] = [
     title: 'How Many Tokens in 1,000 Words?',
     description:
       'Quick reference guide for converting between words, characters, pages, and AI tokens for any major language model.',
+    tldr: '1,000 words of English text is approximately 1,333 AI tokens — based on a ratio of ~1.33 tokens per word, or ~4 characters per token. A single page (250 words) is ~333 tokens, a 10-page document (2,500 words) is ~3,333 tokens, and a full novel (80,000 words) is ~106,667 tokens. The ratio varies less than 5% across the major tokenizers used by OpenAI (cl100k_base / o200k_base), Anthropic, and Google.',
     readTime: '3 min read',
     publishedAt: '2026-02-05',
     updatedAt: '2026-05-22',
     relatedSlugs: ['what-are-ai-tokens', 'how-ai-api-pricing-works'],
+    sources: [
+      { label: 'OpenAI tokenizer (cl100k_base / o200k_base)', url: 'https://platform.openai.com/tokenizer' },
+      { label: 'Anthropic — Token counting', url: 'https://docs.anthropic.com/en/docs/build-with-claude/token-counting' },
+      { label: 'Google — Count tokens with Gemini API', url: 'https://ai.google.dev/gemini-api/docs/tokens' },
+      { label: 'tiktoken (OpenAI tokenizer library)', url: 'https://github.com/openai/tiktoken' },
+    ],
     content: [
       {
         heading: 'The Quick Answer',
@@ -116,10 +156,18 @@ export const ALL_GUIDES: GuideData[] = [
     title: 'How to Reduce AI API Costs',
     description:
       'Practical strategies to cut your AI API spending without sacrificing quality — from prompt optimization to model routing and caching.',
+    tldr: 'The largest cost-reduction lever is model routing — sending 80% of simple requests to a cheap model (Claude Haiku 4 at $0.25/1M, Gemini 2.0 Flash at $0.10/1M) and reserving flagship models for hard requests typically cuts costs 60–80%. Stack with prompt caching (90% discount on cached input tokens), Batch APIs (50% discount, 24-hour turnaround), output-length controls, and conversation-history summarization. Together these can cut an AI bill 5–10× without changing the user-facing product.',
     readTime: '6 min read',
     publishedAt: '2026-02-18',
     updatedAt: '2026-05-22',
     relatedSlugs: ['how-ai-api-pricing-works', 'what-are-ai-tokens'],
+    sources: [
+      { label: 'Anthropic — Prompt caching (90% discount on cached tokens)', url: 'https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching' },
+      { label: 'OpenAI — Prompt caching', url: 'https://platform.openai.com/docs/guides/prompt-caching' },
+      { label: 'Anthropic — Batch API (50% discount)', url: 'https://docs.anthropic.com/en/docs/build-with-claude/batch-processing' },
+      { label: 'OpenAI — Batch API (50% discount, 24-hour SLA)', url: 'https://platform.openai.com/docs/guides/batch' },
+      { label: 'OpenAI — Pricing', url: 'https://openai.com/api/pricing/' },
+    ],
     content: [
       {
         heading: 'Choose the Right Model for Each Task',

@@ -66,11 +66,30 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         />
 
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <p className="text-xs font-semibold uppercase tracking-widest text-emerald-500 mb-2">Guide · {guide.readTime}</p>
           <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-3">{guide.title}</h1>
           <p className="text-zinc-500 dark:text-zinc-400 text-base leading-relaxed">{guide.description}</p>
+          <p className="mt-3 text-xs text-zinc-400 dark:text-zinc-500">
+            Published <time dateTime={guide.publishedAt}>{guide.publishedAt}</time>
+            {guide.updatedAt && guide.updatedAt !== guide.publishedAt && (
+              <> · Updated <time dateTime={guide.updatedAt}>{guide.updatedAt}</time></>
+            )}
+          </p>
         </div>
+
+        {/* Answer-first TL;DR — extractable summary for AI citation */}
+        <section
+          aria-label="Quick answer"
+          className="mb-8 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-5"
+        >
+          <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-2">
+            TL;DR
+          </p>
+          <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            {guide.tldr}
+          </p>
+        </section>
 
         {/* Content */}
         <article className="flex flex-col gap-8">
@@ -83,6 +102,32 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             </section>
           ))}
         </article>
+
+        {/* Primary sources */}
+        {guide.sources && guide.sources.length > 0 && (
+          <section className="mt-10 pt-6 border-t border-zinc-200 dark:border-zinc-800">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3">
+              Primary sources
+            </h2>
+            <ul className="flex flex-col gap-2">
+              {guide.sources.map((src) => (
+                <li key={src.url} className="text-sm">
+                  <a
+                    href={src.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-600 dark:text-emerald-400 hover:underline"
+                  >
+                    {src.label}
+                  </a>
+                  {src.note && (
+                    <span className="text-zinc-500 dark:text-zinc-400"> — {src.note}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* CTA */}
         <div className="mt-10 p-6 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/20 flex flex-col gap-3">

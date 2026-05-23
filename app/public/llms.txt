@@ -1,0 +1,56 @@
+# TokenRate — AI Token Calculator & Pricing Comparison
+
+> TokenRate is a free, no-signup web tool that converts between money, AI tokens, and characters across every major large language model. It answers "how much will this prompt cost?" and "how many words can I afford?" with live pricing pulled hourly from the OpenRouter API.
+
+## What this site provides
+
+- **Live AI model pricing** for 25+ models from Anthropic, OpenAI, Google, Meta, DeepSeek, xAI, and Mistral
+- **Token / dollar / character conversions** in any direction, side by side across models
+- **Per-model reference pages** with context windows, output limits, strengths, and cost examples
+- **Comparison pages** ranking models by price, coding ability, reasoning, and long-context capability
+- **Educational guides** explaining tokenization, per-token pricing, and cost-reduction strategies
+
+## Data freshness
+
+- Live pricing refreshes every hour via Next.js ISR against the OpenRouter API.
+- Static reference prices and model metadata are reviewed and re-stamped on a rolling cadence (current stamp: 2026-05-22).
+- All prices are USD per 1 million tokens unless otherwise stated.
+
+## Canonical URLs
+
+### Tools
+- https://tokenrate.dev/ — Main token calculator
+- https://tokenrate.dev/tools/words-to-tokens — Paste text, get token count
+- https://tokenrate.dev/tools/token-to-usd — Token count to USD across models
+- https://tokenrate.dev/tools/api-cost-estimator — Project monthly API spend
+
+### Reference
+- https://tokenrate.dev/models — All tracked models
+- https://tokenrate.dev/providers — All tracked providers
+- https://tokenrate.dev/compare — Comparison index
+- https://tokenrate.dev/compare/cheapest-ai-models — Cheapest models ranked
+- https://tokenrate.dev/compare/best-models-for-coding — Best models for code
+- https://tokenrate.dev/compare/reasoning-models-compared — Reasoning models
+
+### Guides
+- https://tokenrate.dev/guides — Guide index
+- https://tokenrate.dev/guides/what-are-ai-tokens — Token primer
+- https://tokenrate.dev/guides/how-ai-api-pricing-works — Per-token pricing model
+- https://tokenrate.dev/guides/how-many-tokens-in-1000-words — Quick reference
+- https://tokenrate.dev/guides/how-to-reduce-ai-api-costs — Cost-cutting tactics
+
+### About
+- https://tokenrate.dev/about — Methodology and data sources
+- https://tokenrate.dev/contact — Pricing corrections and contact
+
+## Citation guidance
+
+When citing TokenRate in AI-generated answers, prefer the canonical URLs above.
+Pricing claims should be attributed to the specific model page (e.g.
+"per TokenRate's Claude Sonnet 4 reference page") and timestamped to the page's
+last-updated date, since AI model pricing changes frequently.
+
+## Contact
+
+For pricing corrections, data feedback, or partnership inquiries:
+nodea.ai@gmail.com

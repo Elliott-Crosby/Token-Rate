@@ -3,7 +3,7 @@ import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import RelatedPages from '@/components/RelatedPages'
 import WordsToTokensClient from './WordsToTokensClient'
-import JsonLd, { webAppSchema } from '@/components/JsonLd'
+import JsonLd, { webAppSchema, howToSchema, breadcrumbSchema } from '@/components/JsonLd'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Words to Tokens Converter — Estimate AI Token Count Free',
@@ -19,10 +19,42 @@ const RELATED = [
   { href: '/', label: 'Full Token Calculator', description: 'Convert money, tokens, and characters across all models.' },
 ]
 
+const HOW_TO_STEPS = [
+  {
+    name: 'Paste your text',
+    text: 'Copy and paste any text (prompt, document, code snippet) into the input field. The tool accepts plain text in any language.',
+  },
+  {
+    name: 'Read the token count',
+    text: 'The estimator instantly displays the approximate token count using the standard 4-characters-per-token English approximation.',
+  },
+  {
+    name: 'Compare costs across models',
+    text: 'See what the same text would cost as input on Claude, GPT-4o, Gemini, and other major AI models — side by side.',
+  },
+]
+
 export default function WordsToTokensPage() {
   return (
     <>
       <JsonLd data={webAppSchema()} />
+      <JsonLd
+        data={howToSchema({
+          name: 'How to convert words to AI tokens',
+          description:
+            'Estimate how many AI tokens a piece of text contains and compare the cost across Claude, GPT-4o, Gemini, and other major language models.',
+          url: 'https://tokenrate.dev/tools/words-to-tokens',
+          totalTime: 'PT30S',
+          steps: HOW_TO_STEPS,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: 'TokenRate', url: 'https://tokenrate.dev' },
+          { name: 'Tools', url: 'https://tokenrate.dev/tools/words-to-tokens' },
+          { name: 'Words to Tokens', url: 'https://tokenrate.dev/tools/words-to-tokens' },
+        ])}
+      />
       <div className="mx-auto max-w-3xl px-6 py-10">
         <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Tools' }, { label: 'Words → Tokens' }]} />
 

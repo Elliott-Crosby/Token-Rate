@@ -5,7 +5,7 @@ import FAQSection from '@/components/FAQSection'
 import RelatedPages from '@/components/RelatedPages'
 import JsonLd, { webAppSchema, faqSchema } from '@/components/JsonLd'
 import { HOME_FAQS } from '@/lib/faqs'
-import { ALL_MODELS, getCheapestModels } from '@/lib/models'
+import { ALL_MODELS, MODELS_UPDATED_AT, getCheapestModels, getModelBySlug } from '@/lib/models'
 import { SITE_URL } from '@/lib/seo'
 import Link from 'next/link'
 
@@ -92,6 +92,21 @@ async function fetchModels(): Promise<ProviderGroup[]> {
 
 const cheapest = getCheapestModels(6)
 
+// Pre-computed BLUF reference prices — pulled from the source-of-truth model data
+// so the answer-first block stays in sync when prices are updated.
+const BLUF_REFS = {
+  haiku: getModelBySlug('claude-haiku-4'),
+  gpt4oMini: getModelBySlug('gpt-4o-mini'),
+  flash: getModelBySlug('gemini-2-0-flash'),
+  llama8b: getModelBySlug('llama-3-1-8b'),
+}
+
+function formatBlufDate(iso: string): string {
+  const [y, m] = iso.split('-')
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  return `${months[Number(m) - 1]} ${y}`
+}
+
 const RELATED: { href: string; label: string; description: string }[] = [
   { href: '/tools/words-to-tokens', label: 'Words → Tokens Converter', description: 'Paste any text and see the token count instantly.' },
   { href: '/tools/token-to-usd', label: 'Token → USD Calculator', description: 'Convert a raw token count to dollars for any model.' },
@@ -109,7 +124,7 @@ export default async function Home() {
 
       <div className="mx-auto max-w-5xl px-6 py-10">
         {/* Hero */}
-        <div className="mb-10">
+        <div className="mb-6">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-emerald-500">
             <span className="text-emerald-500">Token</span>
             <span className="text-zinc-700 dark:text-zinc-300">Rate</span>
@@ -123,6 +138,33 @@ export default async function Home() {
             Claude, GPT-4o, Gemini, Llama, DeepSeek, Grok, and Mistral — with live pricing from OpenRouter.
           </p>
         </div>
+
+        {/* Answer-first BLUF block — extractable facts for AI engines */}
+        <section
+          aria-label="Quick answer"
+          className="mb-10 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-5"
+        >
+          <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <strong className="text-zinc-900 dark:text-zinc-50">What is an AI token calculator?</strong>{' '}
+            An AI token calculator converts between dollars, token counts, and characters using live API
+            pricing from large language model providers. It answers two questions developers ask before
+            shipping with an LLM: <em>"how much will this prompt cost?"</em> and{' '}
+            <em>"how many tokens does my budget buy?"</em>
+          </p>
+          <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <strong className="text-zinc-900 dark:text-zinc-50">Current AI API pricing ({formatBlufDate(MODELS_UPDATED_AT)}):</strong>{' '}
+            {BLUF_REFS.llama8b && <>Llama 3.1 8B costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.llama8b.inputPricePerMillion.toFixed(2)}/1M</span> input tokens; </>}
+            {BLUF_REFS.flash && <>Gemini 2.0 Flash costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.flash.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
+            {BLUF_REFS.gpt4oMini && <>GPT-4o mini costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.gpt4oMini.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
+            {BLUF_REFS.haiku && <>Claude Haiku 4 costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.haiku.inputPricePerMillion.toFixed(2)}/1M</span>. </>}
+            Output tokens cost roughly 3–5× the input price across every major provider. A typical 1,000-token
+            request on a balanced model like Claude Sonnet 4 ($3/1M input) costs $0.003 — under a third of a
+            cent. Use the calculator below to convert any amount across {ALL_MODELS.length}+ tracked models.
+          </p>
+          <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-500">
+            Prices verified {MODELS_UPDATED_AT} · Live data refreshed hourly from OpenRouter
+          </p>
+        </section>
 
         {/* Calculator */}
         <ConverterClient providerGroups={providerGroups} />

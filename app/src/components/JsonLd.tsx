@@ -134,6 +134,7 @@ export function productSchema({
   brand,
   inputPrice,
   outputPrice,
+  updatedAt,
 }: {
   name: string
   description: string
@@ -141,7 +142,15 @@ export function productSchema({
   brand: string
   inputPrice: number
   outputPrice: number
+  updatedAt?: string
 }) {
+  // Default validity: 30 days from `updatedAt` (or 30 days from now if not provided).
+  // Crawlers use this to gauge whether listed prices are still authoritative.
+  const baseDate = updatedAt ? new Date(updatedAt) : new Date()
+  const validUntil = new Date(baseDate.getTime() + 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10)
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -156,12 +165,14 @@ export function productSchema({
         url,
         priceCurrency: 'USD',
         price: inputPrice.toString(),
+        priceValidUntil: validUntil,
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
           price: inputPrice,
           priceCurrency: 'USD',
           unitText: 'per 1,000,000 input tokens',
           referenceQuantity: { '@type': 'QuantitativeValue', value: 1000000, unitText: 'input tokens' },
+          validFrom: updatedAt,
         },
         availability: 'https://schema.org/InStock',
       },
@@ -170,12 +181,14 @@ export function productSchema({
         url,
         priceCurrency: 'USD',
         price: outputPrice.toString(),
+        priceValidUntil: validUntil,
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
           price: outputPrice,
           priceCurrency: 'USD',
           unitText: 'per 1,000,000 output tokens',
           referenceQuantity: { '@type': 'QuantitativeValue', value: 1000000, unitText: 'output tokens' },
+          validFrom: updatedAt,
         },
         availability: 'https://schema.org/InStock',
       },
@@ -193,5 +206,74 @@ export function itemListSchema({ name, urls }: { name: string; urls: string[] })
       position: i + 1,
       url,
     })),
+  }
+}
+
+export function howToSchema({
+  name,
+  description,
+  url,
+  totalTime = 'PT1M',
+  steps,
+}: {
+  name: string
+  description: string
+  url: string
+  totalTime?: string
+  steps: { name: string; text: string }[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name,
+    description,
+    url,
+    totalTime,
+    tool: { '@type': 'HowToTool', name: SITE_NAME },
+    step: steps.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+      url: `${url}#step-${i + 1}`,
+    })),
+  }
+}
+
+export function datasetSchema({
+  name,
+  description,
+  url,
+  dateModified,
+  datePublished,
+  keywords,
+}: {
+  name: string
+  description: string
+  url: string
+  dateModified: string
+  datePublished?: string
+  keywords?: string[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name,
+    description,
+    url,
+    dateModified,
+    datePublished: datePublished ?? dateModified,
+    keywords: keywords?.join(', '),
+    creator: { '@id': `${SITE_URL}/#organization` },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    isAccessibleForFree: true,
+    license: `${SITE_URL}/terms`,
+    distribution: [
+      {
+        '@type': 'DataDownload',
+        contentUrl: url,
+        encodingFormat: 'text/html',
+      },
+    ],
   }
 }

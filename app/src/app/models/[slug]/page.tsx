@@ -50,6 +50,18 @@ const TOKEN_EXAMPLES = [
   { label: '100K token document', tokens: 100000 },
 ]
 
+function formatBlufDate(iso: string): string {
+  const [y, m] = iso.split('-')
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  return `${months[Number(m) - 1]} ${y}`
+}
+
+function formatTokens(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(0)}M`
+  if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K`
+  return String(n)
+}
+
 export default async function ModelPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const model = getModelBySlug(slug)
@@ -93,6 +105,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
           brand: model.provider,
           inputPrice,
           outputPrice,
+          updatedAt: model.updatedAt,
         })}
       />
 
@@ -106,7 +119,7 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
         />
 
         {/* Header */}
-        <div className="mb-8 flex flex-col gap-3">
+        <div className="mb-6 flex flex-col gap-3">
           <div className="flex items-center gap-3 flex-wrap">
             <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">{model.name} Pricing</h1>
             <span className={`text-xs font-semibold px-2 py-1 rounded ${TIER_COLORS[model.tier]}`}>
@@ -116,6 +129,81 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
             {model.provider} · {ctxDisplay} context
           </p>
+        </div>
+
+        {/* Answer-first BLUF — single extractable paragraph */}
+        <section
+          aria-label="At-a-glance answer"
+          className="mb-6 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-5"
+        >
+          <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <strong className="text-zinc-900 dark:text-zinc-50">{model.name}</strong> from{' '}
+            {model.provider} costs{' '}
+            <span className="font-mono text-emerald-700 dark:text-emerald-400 font-semibold">
+              {fmt(inputPrice)}
+            </span>{' '}
+            per 1 million input tokens and{' '}
+            <span className="font-mono text-sky-700 dark:text-sky-400 font-semibold">
+              {fmt(outputPrice)}
+            </span>{' '}
+            per 1 million output tokens as of {formatBlufDate(model.updatedAt)}
+            {isLive ? ' (live OpenRouter data)' : ''}. The model supports a{' '}
+            <strong className="text-zinc-900 dark:text-zinc-50">{model.contextWindow.toLocaleString()}-token context window</strong>
+            {' '}(approximately {Math.round(model.contextWindow * 0.75).toLocaleString()} words) with a{' '}
+            {formatTokens(model.outputLimit)}-token maximum output. A typical 1,000-token request costs{' '}
+            <span className="font-mono">${((inputPrice * 1000) / 1_000_000).toFixed(4)}</span> in input
+            charges; a 10,000-token request costs{' '}
+            <span className="font-mono">${((inputPrice * 10000) / 1_000_000).toFixed(4)}</span>.
+          </p>
+        </section>
+
+        {/* Cost at a glance — extractable fact table */}
+        <section aria-label="Cost at a glance" className="mb-6">
+          <div className="rounded-xl border border-zinc-200 dark:border-zinc-700 overflow-hidden">
+            <table className="w-full text-sm">
+              <caption className="sr-only">{model.name} pricing and capability summary</caption>
+              <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
+                <tr className="bg-white dark:bg-zinc-900">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400 w-1/2">Input price</th>
+                  <td className="px-4 py-2.5 font-mono text-emerald-700 dark:text-emerald-400">{fmt(inputPrice)} / 1M tokens</td>
+                </tr>
+                <tr className="bg-zinc-50/60 dark:bg-zinc-800/30">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400">Output price</th>
+                  <td className="px-4 py-2.5 font-mono text-sky-700 dark:text-sky-400">{fmt(outputPrice)} / 1M tokens</td>
+                </tr>
+                <tr className="bg-white dark:bg-zinc-900">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400">Output / input ratio</th>
+                  <td className="px-4 py-2.5 font-mono text-zinc-700 dark:text-zinc-300">{(outputPrice / inputPrice).toFixed(1)}×</td>
+                </tr>
+                <tr className="bg-zinc-50/60 dark:bg-zinc-800/30">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400">Context window</th>
+                  <td className="px-4 py-2.5 font-mono text-zinc-700 dark:text-zinc-300">{model.contextWindow.toLocaleString()} tokens (~{Math.round(model.contextWindow * 0.75).toLocaleString()} words)</td>
+                </tr>
+                <tr className="bg-white dark:bg-zinc-900">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400">Maximum output</th>
+                  <td className="px-4 py-2.5 font-mono text-zinc-700 dark:text-zinc-300">{model.outputLimit.toLocaleString()} tokens</td>
+                </tr>
+                <tr className="bg-zinc-50/60 dark:bg-zinc-800/30">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400">Cost per 1K tokens (input)</th>
+                  <td className="px-4 py-2.5 font-mono text-zinc-700 dark:text-zinc-300">${((inputPrice * 1000) / 1_000_000).toFixed(4)}</td>
+                </tr>
+                <tr className="bg-white dark:bg-zinc-900">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400">Tier</th>
+                  <td className="px-4 py-2.5 text-zinc-700 dark:text-zinc-300">{TIER_LABELS[model.tier]}</td>
+                </tr>
+                <tr className="bg-zinc-50/60 dark:bg-zinc-800/30">
+                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-zinc-500 dark:text-zinc-400">Last verified</th>
+                  <td className="px-4 py-2.5 font-mono text-zinc-700 dark:text-zinc-300">
+                    <time dateTime={model.updatedAt}>{model.updatedAt}</time>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Description */}
+        <div className="mb-6">
           <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl text-sm">
             {model.description}
           </p>

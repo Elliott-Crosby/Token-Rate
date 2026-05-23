@@ -6,7 +6,7 @@ import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import FAQSection from '@/components/FAQSection'
 import RelatedPages from '@/components/RelatedPages'
-import JsonLd, { faqSchema, breadcrumbSchema } from '@/components/JsonLd'
+import JsonLd, { faqSchema, breadcrumbSchema, datasetSchema, itemListSchema } from '@/components/JsonLd'
 import { COMPARISON_FAQS } from '@/lib/faqs'
 
 export function generateStaticParams() {
@@ -44,6 +44,21 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
     <>
       <JsonLd data={faqSchema(COMPARISON_FAQS)} />
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
+      <JsonLd
+        data={datasetSchema({
+          name: comp.title,
+          description: comp.description,
+          url: `https://tokenrate.dev/compare/${slug}`,
+          dateModified: comp.updatedAt,
+          keywords: comp.tags,
+        })}
+      />
+      <JsonLd
+        data={itemListSchema({
+          name: comp.title,
+          urls: models.map((m) => `https://tokenrate.dev/models/${m.slug}`),
+        })}
+      />
 
       <div className="mx-auto max-w-5xl px-6 py-10">
         <Breadcrumb
@@ -54,10 +69,25 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
           ]}
         />
 
-        <div className="mb-8">
+        <div className="mb-6">
           <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">{comp.title}</h1>
           <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-2xl">{comp.description}</p>
+          <p className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">
+            Comparing {models.length} models · Prices last verified{' '}
+            <time dateTime={comp.updatedAt}>{comp.updatedAt}</time>
+          </p>
         </div>
+
+        {/* Answer-first verdict — extractable for AI citation */}
+        <section
+          aria-label="Quick verdict"
+          className="mb-8 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-5"
+        >
+          <p className="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-2">
+            Verdict
+          </p>
+          <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">{comp.verdict}</p>
+        </section>
 
         {/* Side-by-side pricing table */}
         <section className="mb-10">
