@@ -30,6 +30,16 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Verify secret is injected
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::ANTHROPIC_API_KEY secret is empty. Check repo Settings → Secrets and variables → Actions → Repository secrets (NOT Environment secrets) and add ANTHROPIC_API_KEY there."
+            exit 1
+          fi
+          echo "ANTHROPIC_API_KEY is set (length: ${#ANTHROPIC_API_KEY} chars, prefix: ${ANTHROPIC_API_KEY:0:7}...)"
+
       - name: Run blog generator
         working-directory: app
         env:
