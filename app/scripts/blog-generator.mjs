@@ -11,6 +11,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import https from 'node:https'
 import { fileURLToPath } from 'node:url'
+import { validateBlogPost } from './_lib/validate-blog-post.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const BLOG_DIR = path.join(__dirname, '..', 'content', 'blog')
@@ -198,19 +199,19 @@ async function main() {
   post.slug = topic.slug
   post.publishedAt = new Date().toISOString()
 
-  const required = ['slug', 'title', 'description', 'publishedAt', 'sections', 'faq']
-  for (const field of required) {
-    if (!post[field]) {
-      console.error(`Generated post missing required field: ${field}`)
-      process.exit(1)
-    }
+  const filename = `${post.slug}.json`
+  const validationErrors = validateBlogPost(filename, post)
+  if (validationErrors.length > 0) {
+    console.error('Generated post failed validation; refusing to write:')
+    for (const e of validationErrors) console.error(`  - ${e}`)
+    process.exit(1)
   }
 
   if (!fs.existsSync(BLOG_DIR)) {
     fs.mkdirSync(BLOG_DIR, { recursive: true })
   }
 
-  const outPath = path.join(BLOG_DIR, `${post.slug}.json`)
+  const outPath = path.join(BLOG_DIR, filename)
   fs.writeFileSync(outPath, JSON.stringify(post, null, 2))
   console.log(`Post saved: ${outPath}`)
 }

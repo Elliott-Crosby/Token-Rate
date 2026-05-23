@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "vercel-build": "next build",
+    "dev": "node scripts/build-blog-catalog.mjs && next dev",
+    "build": "node scripts/build-blog-catalog.mjs && next build",
+    "vercel-build": "node scripts/build-blog-catalog.mjs && next build",
+    "build:blog-catalog": "node scripts/build-blog-catalog.mjs",
     "start": "next start",
     "lint": "eslint"
   },
