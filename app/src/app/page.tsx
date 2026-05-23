@@ -133,38 +133,7 @@ export default async function Home() {
           <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
             AI Token Calculator &amp; Live Pricing Comparison
           </h1>
-          <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400 max-w-2xl">
-            Free, instant cost estimates for every major AI model. Convert money, tokens, and characters across
-            Claude, GPT-4o, Gemini, Llama, DeepSeek, Grok, and Mistral — with live pricing from OpenRouter.
-          </p>
         </div>
-
-        {/* Answer-first BLUF block — extractable facts for AI engines */}
-        <section
-          aria-label="Quick answer"
-          className="mb-10 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-5"
-        >
-          <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            <strong className="text-zinc-900 dark:text-zinc-50">What is an AI token calculator?</strong>{' '}
-            An AI token calculator converts between dollars, token counts, and characters using live API
-            pricing from large language model providers. It answers two questions developers ask before
-            shipping with an LLM: <em>"how much will this prompt cost?"</em> and{' '}
-            <em>"how many tokens does my budget buy?"</em>
-          </p>
-          <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            <strong className="text-zinc-900 dark:text-zinc-50">Current AI API pricing ({formatBlufDate(MODELS_UPDATED_AT)}):</strong>{' '}
-            {BLUF_REFS.llama8b && <>Llama 3.1 8B costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.llama8b.inputPricePerMillion.toFixed(2)}/1M</span> input tokens; </>}
-            {BLUF_REFS.flash && <>Gemini 2.0 Flash costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.flash.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
-            {BLUF_REFS.gpt4oMini && <>GPT-4o mini costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.gpt4oMini.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
-            {BLUF_REFS.haiku && <>Claude Haiku 4 costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.haiku.inputPricePerMillion.toFixed(2)}/1M</span>. </>}
-            Output tokens cost roughly 3–5× the input price across every major provider. A typical 1,000-token
-            request on a balanced model like Claude Sonnet 4 ($3/1M input) costs $0.003 — under a third of a
-            cent. Use the calculator below to convert any amount across {ALL_MODELS.length}+ tracked models.
-          </p>
-          <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-500">
-            Prices verified {MODELS_UPDATED_AT} · Live data refreshed hourly from OpenRouter
-          </p>
-        </section>
 
         {/* Calculator */}
         <ConverterClient providerGroups={providerGroups} />
@@ -185,6 +154,39 @@ export default async function Home() {
 
         {/* Content sections */}
         <div className="mt-16 flex flex-col gap-14">
+
+          {/* Subtitle + BLUF — moved below calculator */}
+          <section>
+            <p className="text-base text-zinc-500 dark:text-zinc-400 max-w-2xl mb-6">
+              Free, instant cost estimates for every major AI model. Convert money, tokens, and characters across
+              Claude, GPT-4o, Gemini, Llama, DeepSeek, Grok, and Mistral — with live pricing from OpenRouter.
+            </p>
+            <div
+              aria-label="Quick answer"
+              className="rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-5"
+            >
+              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                <strong className="text-zinc-900 dark:text-zinc-50">What is an AI token calculator?</strong>{' '}
+                An AI token calculator converts between dollars, token counts, and characters using live API
+                pricing from large language model providers. It answers two questions developers ask before
+                shipping with an LLM: <em>"how much will this prompt cost?"</em> and{' '}
+                <em>"how many tokens does my budget buy?"</em>
+              </p>
+              <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                <strong className="text-zinc-900 dark:text-zinc-50">Current AI API pricing ({formatBlufDate(MODELS_UPDATED_AT)}):</strong>{' '}
+                {BLUF_REFS.llama8b && <>Llama 3.1 8B costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.llama8b.inputPricePerMillion.toFixed(2)}/1M</span> input tokens; </>}
+                {BLUF_REFS.flash && <>Gemini 2.0 Flash costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.flash.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
+                {BLUF_REFS.gpt4oMini && <>GPT-4o mini costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.gpt4oMini.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
+                {BLUF_REFS.haiku && <>Claude Haiku 4 costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.haiku.inputPricePerMillion.toFixed(2)}/1M</span>. </>}
+                Output tokens cost roughly 3–5× the input price across every major provider. A typical 1,000-token
+                request on a balanced model like Claude Sonnet 4 ($3/1M input) costs $0.003 — under a third of a
+                cent. Use the calculator above to convert any amount across {ALL_MODELS.length}+ tracked models.
+              </p>
+              <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-500">
+                Prices verified {MODELS_UPDATED_AT} · Live data refreshed hourly from OpenRouter
+              </p>
+            </div>
+          </section>
 
           {/* What are tokens */}
           <section>
