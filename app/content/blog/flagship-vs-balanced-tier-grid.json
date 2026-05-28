@@ -1,0 +1,77 @@
+{
+  "category": "comparisons",
+  "slug": "flagship-vs-balanced-tier-grid",
+  "keyword": "flagship vs balanced",
+  "title": "Flagship vs Balanced Tier in the Compare Prices Grid",
+  "description": "The step from flagship to balanced tier in TokenRate's Compare Prices grid — Opus 4 vs Sonnet 4.7, GPT-5 vs GPT-5 mini, and the 4-5× price savings.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T21:30:00.000Z",
+  "tags": [
+    "flagship vs balanced",
+    "tier comparison",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Within-Tier Comparison Beats Cross-Tier",
+      "body": "Once you've narrowed a model shortlist on the main [TokenRate calculator](/), the [Compare Prices side-by-side view](/tools/compare-prices) is where you stack them for a decision. Each row shows the provider, the model ID (the one you'd paste into your SDK), per-1M input and output costs, the context window, and the blended quality score. Once you've picked your tier — Flagship vs Balanced — the next question is which **specific** Flagship vs Balanced model. Cross-tier comparisons (flagship vs fast) are usually a budgeting question. Within-tier comparisons are routing questions: \"of the models built for the same workload class, which is the best fit for mine?\" This guide grids Claude Opus 4, Claude Sonnet 4.7, GPT-5, GPT-5 mini, Grok 4, Gemini 2.5 Pro side-by-side in [/tools/compare-prices](/tools/compare-prices). See also: [filter LLM models by tier, cost, quality](/blog/filter-llm-models-by-tier-cost-quality), [Value column vs tokens-per-dollar](/blog/value-column-vs-tokens-per-dollar-metric), and [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost)."
+    },
+    {
+      "heading": "Flagship vs Balanced Tier Defined",
+      "body": "Flagship vs Balanced tier on TokenRate means: flagship tier is for frontier-quality use cases where the per-token price is a rounding error against the value of the output. Input prices typically span $0.300 to $15.00 per 1M tokens within the tier. Quality scores span 70 to 85. So even within the tier, the Value column will diverge — which is the whole point of comparing within-tier instead of just defaulting to whichever model is most familiar."
+    },
+    {
+      "heading": "The Flagship vs Balanced Models, Compared",
+      "body": "**Claude Opus 4** (Anthropic): $15.00 / $75.00, 200K ctx, Q85, value 5.7. **Claude Sonnet 4.7** (Anthropic): $3.00 / $15.00, 200K ctx, Q80, value 26.7. **GPT-5** (OpenAI): $1.25 / $10.00, 200K ctx, Q82, value 65.6. **GPT-5 mini** (OpenAI): $0.300 / $2.40, 128K ctx, Q70, value 233.3. **Grok 4** (xAI): $3.00 / $15.00, 256K ctx, Q79, value 26.3. **Gemini 2.5 Pro** (Google): $1.25 / $10.00, 1M ctx, Q78, value 62.4. All of these appear in the [Compare Prices grid](/tools/compare-prices) under their respective provider dropdowns. Tick all of them and the grid renders the cross-provider tier comparison in seconds."
+    },
+    {
+      "heading": "When to Pick Each Flagship vs Balanced Model",
+      "body": "**Claude Opus 4**: pick when quality is non-negotiable and the bill is a rounding error against the value of correct output. **Claude Sonnet 4.7**: pick when you want the production-default balance of quality (80) and price ($3.00 input). **GPT-5**: pick when quality is non-negotiable and the bill is a rounding error against the value of correct output. **GPT-5 mini**: pick when you want the production-default balance of quality (70) and price ($0.300 input). **Grok 4**: pick when quality is non-negotiable and the bill is a rounding error against the value of correct output. **Gemini 2.5 Pro**: pick when you want the production-default balance of quality (78) and price ($1.25 input). The picks aren't mutually exclusive — many production stacks route different traffic types to different Flagship vs Balanced models within the same week. For routing pattern guidance, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "Operationalizing the Flagship vs Balanced Pick",
+      "body": "Once you've shortlisted within the Flagship vs Balanced tier in [/tools/compare-prices](/tools/compare-prices), plug your token volume into [/tools/api-cost-estimator](/tools/api-cost-estimator) for monthly cost projection. A common mistake: assuming Flagship vs Balanced models all behave the same on output cost. The grid makes the spread obvious — output costs across the Flagship vs Balanced tier in this guide span $2.40 to $75.00 per 1M, a 31.3× spread. The grid pulls prices live from [OpenRouter](https://openrouter.ai/api/v1/models) and quality from a blended Arena AI + Artificial Analysis pipeline — both refresh on a 60-minute incremental cache, so the comparison reflects current rates not a baked-in snapshot. Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

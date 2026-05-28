@@ -1,0 +1,77 @@
+{
+  "category": "fundamentals",
+  "slug": "multimodal-cost-comparison-grid",
+  "keyword": "multimodal cost",
+  "title": "Multimodal Cost Comparison in the Compare Prices Grid",
+  "description": "Per-image and per-token cost comparison for multimodal LLMs in TokenRate's Compare Prices grid — what vision actually costs in 2026.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T21:39:00.000Z",
+  "tags": [
+    "multimodal cost",
+    "vision LLM pricing",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why Multimodal Pricing Matters in a Cost Comparison",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. The point: stop flipping between provider pricing pages and OpenRouter tabs. You pick a provider dropdown, check the models you want, repeat for each provider, and the grid stacks every pick into one comparison table. Most teams compare LLMs on per-token input price and call it a day. Multimodal Pricing is one of the under-attended dimensions that shows up in the [Compare Prices grid](/tools/compare-prices) — and ignoring it is where the surprise bills come from. Vision-capable LLMs charge by image (sometimes by image resolution or tile count). The compare-prices grid surfaces the per-token rate; the per-image rate is documented per-provider. See also: [filter LLM models by tier, cost, quality](/blog/filter-llm-models-by-tier-cost-quality), [Value column vs tokens-per-dollar](/blog/value-column-vs-tokens-per-dollar-metric), and [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost)."
+    },
+    {
+      "heading": "How Multimodal Pricing Appears in the Grid",
+      "body": "Most providers convert images to token-equivalents under the hood (e.g., a 1024×1024 image ≈ 1,000-2,000 input tokens). The grid's per-token rate then applies — but the conversion ratio varies by provider."
+    },
+    {
+      "heading": "Reading the Spread",
+      "body": "Cost per vision query in 2026: GPT-5 ~$0.001-$0.003 per image; Claude Opus 4 ~$0.024 per image; Gemini 2.5 Pro ~$0.001-$0.003 per image. That's a 10x+ spread driven by the underlying token-equivalent."
+    },
+    {
+      "heading": "Practical Implications",
+      "body": "For high-volume vision workloads (10K+ images/day), the provider choice has bigger bill impact than the model choice. Gemini and GPT often win on volume; Claude wins on visual reasoning quality."
+    },
+    {
+      "heading": "Workflow: From Grid to Decision",
+      "body": "In the Compare Prices grid, check the per-token rate and ballpark the image conversion via the provider's documentation. For monthly projection at your image volume, use [/tools/api-cost-estimator](/tools/api-cost-estimator)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

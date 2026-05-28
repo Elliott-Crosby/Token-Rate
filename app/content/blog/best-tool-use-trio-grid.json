@@ -1,0 +1,80 @@
+{
+  "category": "comparisons",
+  "slug": "best-tool-use-trio-grid",
+  "keyword": "tool use LLMs",
+  "title": "Best Tool-Use LLM Trio in the Compare Prices Grid",
+  "description": "Three LLMs with the strongest tool-use track record in the Compare Prices grid — Claude Sonnet 4.7, GPT-5, and Gemini 2.5 Pro.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T19:00:00.000Z",
+  "tags": [
+    "tool use LLMs",
+    "function calling",
+    "Sonnet",
+    "GPT-5",
+    "Gemini",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Three-Way Grid Beats Pairs for tool-use LLM picks",
+      "body": "The [Compare Prices tool](/tools/compare-prices) is the fastest way to put a shortlist of LLMs in a single grid — input cost, output cost, context window, and quality score in stacked columns you can scan vertically. Provider dropdowns let you mix models across Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, and xAI without leaving the page. A two-model comparison answers \"which of these wins,\" but it doesn't catch the third option that quietly dominates both — and that's a common case for tool-use LLM picks. This guide grids **Claude Sonnet 4.7**, **GPT-5**, and **Gemini 2.5 Pro** in [/tools/compare-prices](/tools/compare-prices) so you can see all three side-by-side: input rates, output rates, context windows, and quality scores in stacked columns. The trio was picked because each represents a different point on the quality-vs-price curve — Gemini 2.5 Pro at the budget end, GPT-5 at the quality end, and GPT-5 winning the Value column with 65.6 (quality ÷ input cost). Pair this with [flagship/balanced/fast/reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers), [Arena AI leaderboard Elo scores explained](/blog/arena-ai-leaderboard-elo-scores-explained), and [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "Building the Grid: Provider Dropdowns and Picks",
+      "body": "Open [/tools/compare-prices](/tools/compare-prices). Tick **Claude Sonnet 4.7** in the **Anthropic** dropdown, **GPT-5** in the **OpenAI** dropdown, and **Gemini 2.5 Pro** in the **Google** dropdown. The grid stacks them with input cost / output cost / context / quality in one row each. Claude Sonnet 4.7: $3.00 in, $15.00 out, 200K ctx, Q80. GPT-5: $1.25 in, $10.00 out, 200K ctx, Q82. Gemini 2.5 Pro: $1.25 in, $10.00 out, 1M ctx, Q78. The model ID column (visible on hover) is the string you paste into your SDK call."
+    },
+    {
+      "heading": "Reading the Cost Spread",
+      "body": "Input cost spans $1.25 to $1.25 — a 2.4× spread. Output cost matters more than input when reply length exceeds prompt length (typical for content generation, agents, code). Output-to-input ratios: Claude Sonnet 4.7 5.0×, GPT-5 8.0×, Gemini 2.5 Pro 8.0×. The model with the lowest output ratio tends to be the cheapest for generation-heavy workloads, regardless of input rate. For a workload mix calculator that bakes in your specific in/out ratio, run the same models through [/tools/api-cost-estimator](/tools/api-cost-estimator)."
+    },
+    {
+      "heading": "Quality and Value Tradeoffs",
+      "body": "**GPT-5** leads on quality (82). **Gemini 2.5 Pro** leads on raw cost ($1.25/1M input). **GPT-5** leads on the Value column (65.6) — meaning the highest quality-adjusted return per dollar. In practice, this means: when accuracy is non-negotiable, pay for GPT-5; when budget is the binding constraint and quality just needs to clear a floor, ship Gemini 2.5 Pro; when you want the best default for production routing, GPT-5 is the answer. For the methodology behind that Value formula, see [Value column vs tokens per dollar](/blog/value-column-vs-tokens-per-dollar-metric) and [quality per dollar LLM ranking 2026](/blog/quality-per-dollar-llm-ranking-2026)."
+    },
+    {
+      "heading": "Workflow: From Grid to Production Decision",
+      "body": "Once the trio is on screen, the workflow is: (1) eliminate any model whose quality is below the floor your workload tolerates — score < 50 for customer-facing, < 65 for reasoning-heavy. (2) of the survivors, compare Value column rankings. (3) for the top one or two, estimate monthly bill via [/tools/api-cost-estimator](/tools/api-cost-estimator) using your expected token volume. (4) ship a 1-week A/B with GPT-5 as the gold-standard control and your Value pick as the candidate. The Compare Prices grid is the first step in that funnel — it eliminates the wrong picks fast. Both the price denominator (OpenRouter) and the quality numerator (Arena AI + Artificial Analysis) refresh hourly. So the comparison you screenshot Monday morning is still trustworthy at standup Tuesday morning — but you should re-run it before a quarterly model-routing review. Open [/tools/compare-prices](/tools/compare-prices) now, pick your provider dropdowns, and pin the shortlist that matches your workload."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Open [/tools/compare-prices](/tools/compare-prices) now, pick your provider dropdowns, and pin the shortlist that matches your workload.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

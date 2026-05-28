@@ -1,0 +1,78 @@
+{
+  "category": "comparisons",
+  "slug": "grok-4-vs-gpt-5-grid",
+  "keyword": "Grok 4",
+  "title": "Grok 4 vs GPT-5 in the Compare Prices Grid",
+  "description": "Two flagships compared in TokenRate's Compare Prices grid: Grok 4 against GPT-5 on price, output ratio, and quality score.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T18:15:00.000Z",
+  "tags": [
+    "Grok 4",
+    "GPT-5",
+    "flagship comparison",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Side-by-Side Comparison of Grok 4 and GPT-5 Matters",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. The point: stop flipping between provider pricing pages and OpenRouter tabs. You pick a provider dropdown, check the models you want, repeat for each provider, and the grid stacks every pick into one comparison table. For Grok 4 vs GPT-5, the side-by-side framing matters because both models sit near the same workload niche — one of you ships the wrong pick and the bill (or quality regression) is months of pain. Grok 4 runs $3.00 / $15.00 per 1M tokens with a 256K context and a blended quality score of 79. GPT-5 runs $1.25 / $10.00 per 1M with a 200K context and quality 82. Sticker prices don't tell the whole story — the Value column (quality ÷ input cost) gives Grok 4 a 26.3 and GPT-5 a 65.6, which is the number you actually want to optimize when shipping production traffic. Pair this with [flagship/balanced/fast/reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers), [Arena AI leaderboard Elo scores explained](/blog/arena-ai-leaderboard-elo-scores-explained), and [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "Grok 4 in the Compare Prices Grid",
+      "body": "In the [Compare Prices view](/tools/compare-prices), click the **xAI** dropdown and check **Grok 4**. The row shows input at $3.00/1M, output at $15.00/1M, 256K context, and the blended quality badge at 79. Grok 4 sits in TokenRate's **flagship** tier — flagship tier is for frontier-quality use cases where the per-token price is a rounding error against the value of the output. The output-to-input ratio of 5.0x is worth flagging because generation-heavy workloads (long summaries, code, structured output) compound that multiplier across every reply. For a single-shot classifier the input price dominates; for an agent generating ~10× the tokens it reads, you're effectively paying $15.00 per 1M."
+    },
+    {
+      "heading": "GPT-5 in the Compare Prices Grid",
+      "body": "Add **GPT-5** from the **OpenAI** dropdown. The grid lists input $1.25/1M, output $10.00/1M, 200K context, quality 82, tier **flagship**. flagship tier is for frontier-quality use cases where the per-token price is a rounding error against the value of the output. Compared to Grok 4, GPT-5 is cheaper on input (by 58%) and higher on quality (by 3 points). Context-window-wise, GPT-5 has a tighter window — relevant if you're feeding long documents."
+    },
+    {
+      "heading": "Where Grok 4 Wins and Where GPT-5 Wins",
+      "body": "**GPT-5 wins on raw cost** ($1.25 vs $3.00 input — about 2.4× cheaper) — so it's the right pick for high-volume features where the model is fungible across the chosen tier. **GPT-5 wins on quality** (82 vs 79) — important when you're routing reasoning-heavy or accuracy-critical traffic. **GPT-5 wins on Value** (65.6 vs 26.3) — meaning per dollar of input you get more quality-adjusted output, which is what the [Value column](/blog/value-column-vs-tokens-per-dollar-metric) optimizes for. For long-context tasks, Grok 4's 256K window wins."
+    },
+    {
+      "heading": "Decision Heuristics and What to Do Next",
+      "body": "Three heuristics: (1) if your monthly bill on the pricier option exceeds 4× your engineering team's comfort and the cheaper option's quality is within 5 points — ship the cheaper one and pocket the savings. (2) if the workload is reasoning-heavy or customer-facing premium, pay the quality premium even when the Value column says otherwise. (3) hedge: route 80–90% of traffic to the cheaper model and fall back to the pricier one for tail-quality cases. The fallback router pattern works because output-cost only matters when you actually call it. For the routing implementation, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores). Pricing is pulled live from [OpenRouter's models endpoint](https://openrouter.ai/api/v1/models) and revalidated every 60 minutes via Next.js's incremental cache, so the grid you see is at most an hour stale. Quality scores blend [Arena AI](https://lmarena.ai/leaderboard) Elo with [Artificial Analysis](https://artificialanalysis.ai) intelligence-index data on the same cadence."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Open [/tools/compare-prices](/tools/compare-prices) now, pick your provider dropdowns, and pin the shortlist that matches your workload.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

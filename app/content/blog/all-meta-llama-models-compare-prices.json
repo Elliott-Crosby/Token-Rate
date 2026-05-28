@@ -1,0 +1,78 @@
+{
+  "category": "providers",
+  "slug": "all-meta-llama-models-compare-prices",
+  "keyword": "Meta lineup",
+  "title": "All Meta Llama Models Compared in the Compare Prices Grid",
+  "description": "Meta's Llama 4 lineup — Maverick and Scout — in TokenRate's Compare Prices grid, both at 1M-token context.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T19:24:00.000Z",
+  "tags": [
+    "Meta lineup",
+    "Llama 4 Maverick",
+    "Llama 4 Scout",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why Compare All Meta Models Together",
+      "body": "The [Compare Prices tool](/tools/compare-prices) is the fastest way to put a shortlist of LLMs in a single grid — input cost, output cost, context window, and quality score in stacked columns you can scan vertically. Provider dropdowns let you mix models across Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, and xAI without leaving the page. Picking between Meta's models — flagship, mid-tier, fast — is usually done by reading the provider's pricing page top-to-bottom, which buries the spread. The [Compare Prices grid](/tools/compare-prices) flips that: you check **every Meta model** in one dropdown and the grid lays them out side-by-side. Input cost across the lineup spans $0.200 to $0.500 per 1M tokens — a 2.5× spread you can scan in three seconds. This guide walks through the lineup model-by-model with the framing of \"what do you give up to step down a tier.\" Pair this with [flagship/balanced/fast/reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers), [Arena AI leaderboard Elo scores explained](/blog/arena-ai-leaderboard-elo-scores-explained), and [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "The Meta Lineup, Top to Bottom",
+      "body": "**Llama 4 Maverick** — $0.500 input / $1.50 output per 1M, 1M context, quality 70, tier **balanced**. balanced tier is the production-default zone — quality high enough for customer traffic, price low enough to scale. **Llama 4 Scout** — $0.200 input / $0.600 output per 1M, 1M context, quality 60, tier **fast**. fast tier is built for high-volume throughput at the lowest per-token rate the provider offers. All five attributes (input, output, context, quality, tier) live in the [Compare Prices grid](/tools/compare-prices), which makes the cross-tier deltas obvious. Stepping from Llama 4 Maverick (Q70, $0.500) down to Llama 4 Scout (Q60, $0.200) saves 60% on input at a cost of 10 quality points — the right tradeoff if your workload tolerates the quality drop."
+    },
+    {
+      "heading": "Where Each Meta Model Earns Its Place",
+      "body": "**Llama 4 Maverick**: best for production routing default — chatbots, RAG answer synthesis, structured output, anything that ships to real users at scale. **Llama 4 Scout**: best for high-volume classification, lightweight summarization, embeddings-adjacent tasks, prefilters and triage stages, draft generation. This isn't marketing copy — it's how the tier classification on TokenRate's [filter panel](/blog/filter-llm-models-by-tier-cost-quality) actually slots them. If you've already filtered to a tier, the Compare Prices grid is the next step: check the relevant Meta models alongside their cross-provider peers (e.g., Llama 4 Scout next to Gemini Flash, or Llama 4 Maverick next to GPT-5 and Grok 4) to confirm you're not paying a provider premium."
+    },
+    {
+      "heading": "Cost Multipliers When Stepping Up a Tier",
+      "body": "Within Meta's lineup, the step-up multipliers are stark. Input: Llama 4 Scout → Llama 4 Maverick is 2.5×. Output: 2.5×. Quality: +10 points. The question to ask: is +10 quality points worth 2.5× the per-token cost? For agentic or accuracy-critical workloads, yes — quality wins are non-linear in user value. For high-volume classification or templated content, no — the cheaper model clears the bar. Use the [API cost estimator](/tools/api-cost-estimator) to put a dollar figure on the step-up at your workload volume."
+    },
+    {
+      "heading": "Compare-Prices Across Providers, Not Just Within",
+      "body": "The most common mistake when picking within Meta's lineup is forgetting that cross-provider competitors may dominate the chosen tier. Once you've picked your Meta candidates, add 1-2 competitors from a different provider dropdown — for the balanced tier, comparing Meta's mid-model against Gemini 2.5 Pro and Claude Sonnet 4.7 is usually instructive. The [Compare Prices grid](/tools/compare-prices) was designed for exactly this multi-provider workflow. Both the price denominator (OpenRouter) and the quality numerator (Arena AI + Artificial Analysis) refresh hourly. So the comparison you screenshot Monday morning is still trustworthy at standup Tuesday morning — but you should re-run it before a quarterly model-routing review. Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

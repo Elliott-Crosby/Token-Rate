@@ -1,0 +1,78 @@
+{
+  "category": "providers",
+  "slug": "all-mistral-models-compare-prices",
+  "keyword": "Mistral lineup",
+  "title": "All Mistral Models Compared in the Compare Prices Grid",
+  "description": "Mistral's production lineup — Mistral Large and Mistral Small — side-by-side in TokenRate's Compare Prices grid.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T19:30:00.000Z",
+  "tags": [
+    "Mistral lineup",
+    "Mistral Large",
+    "Mistral Small",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why Compare All Mistral Models Together",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. The point: stop flipping between provider pricing pages and OpenRouter tabs. You pick a provider dropdown, check the models you want, repeat for each provider, and the grid stacks every pick into one comparison table. Picking between Mistral's models — flagship, mid-tier, fast — is usually done by reading the provider's pricing page top-to-bottom, which buries the spread. The [Compare Prices grid](/tools/compare-prices) flips that: you check **every Mistral model** in one dropdown and the grid lays them out side-by-side. Input cost across the lineup spans $0.200 to $2.00 per 1M tokens — a 10.0× spread you can scan in three seconds. This guide walks through the lineup model-by-model with the framing of \"what do you give up to step down a tier.\" Related reading: [quality per dollar LLM ranking 2026](/blog/quality-per-dollar-llm-ranking-2026), [LLM color-coded quality badges explained](/blog/llm-color-coded-quality-badges-explained), and [why the cheapest LLM isn't always the best value](/blog/why-cheapest-llm-isnt-always-best-value)."
+    },
+    {
+      "heading": "The Mistral Lineup, Top to Bottom",
+      "body": "**Mistral Large** — $2.00 input / $6.00 output per 1M, 128K context, quality 66, tier **balanced**. balanced tier is the production-default zone — quality high enough for customer traffic, price low enough to scale. **Mistral Small** — $0.200 input / $0.600 output per 1M, 32K context, quality 52, tier **fast**. fast tier is built for high-volume throughput at the lowest per-token rate the provider offers. All five attributes (input, output, context, quality, tier) live in the [Compare Prices grid](/tools/compare-prices), which makes the cross-tier deltas obvious. Stepping from Mistral Large (Q66, $2.00) down to Mistral Small (Q52, $0.200) saves 90% on input at a cost of 14 quality points — the right tradeoff if your workload tolerates the quality drop."
+    },
+    {
+      "heading": "Where Each Mistral Model Earns Its Place",
+      "body": "**Mistral Large**: best for production routing default — chatbots, RAG answer synthesis, structured output, anything that ships to real users at scale. **Mistral Small**: best for high-volume classification, lightweight summarization, embeddings-adjacent tasks, prefilters and triage stages, draft generation. This isn't marketing copy — it's how the tier classification on TokenRate's [filter panel](/blog/filter-llm-models-by-tier-cost-quality) actually slots them. If you've already filtered to a tier, the Compare Prices grid is the next step: check the relevant Mistral models alongside their cross-provider peers (e.g., Mistral Small next to Gemini Flash, or Mistral Large next to GPT-5 and Grok 4) to confirm you're not paying a provider premium."
+    },
+    {
+      "heading": "Cost Multipliers When Stepping Up a Tier",
+      "body": "Within Mistral's lineup, the step-up multipliers are stark. Input: Mistral Small → Mistral Large is 10.0×. Output: 10.0×. Quality: +14 points. The question to ask: is +14 quality points worth 10.0× the per-token cost? For agentic or accuracy-critical workloads, yes — quality wins are non-linear in user value. For high-volume classification or templated content, no — the cheaper model clears the bar. Use the [API cost estimator](/tools/api-cost-estimator) to put a dollar figure on the step-up at your workload volume."
+    },
+    {
+      "heading": "Compare-Prices Across Providers, Not Just Within",
+      "body": "The most common mistake when picking within Mistral's lineup is forgetting that cross-provider competitors may dominate the chosen tier. Once you've picked your Mistral candidates, add 1-2 competitors from a different provider dropdown — for the balanced tier, comparing Mistral's mid-model against Gemini 2.5 Pro and Claude Sonnet 4.7 is usually instructive. The [Compare Prices grid](/tools/compare-prices) was designed for exactly this multi-provider workflow. The grid pulls prices live from [OpenRouter](https://openrouter.ai/api/v1/models) and quality from a blended Arena AI + Artificial Analysis pipeline — both refresh on a 60-minute incremental cache, so the comparison reflects current rates not a baked-in snapshot. Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

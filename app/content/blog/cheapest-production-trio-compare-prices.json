@@ -1,0 +1,78 @@
+{
+  "category": "cost-optimization",
+  "slug": "cheapest-production-trio-compare-prices",
+  "keyword": "cheap LLMs",
+  "title": "The Cheapest Production-Grade LLM Trio in the Compare Prices Grid",
+  "description": "Three production-grade LLMs at the bottom of the cost curve — gridded side-by-side in Compare Prices to find the right \"cheap-but-credible\" pick.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T18:45:00.000Z",
+  "tags": [
+    "cheap LLMs",
+    "production trio",
+    "compare prices",
+    "budget shortlist"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Three-Way Grid Beats Pairs for cheap-but-production-grade LLM picks",
+      "body": "The [Compare Prices tool](/tools/compare-prices) is the fastest way to put a shortlist of LLMs in a single grid — input cost, output cost, context window, and quality score in stacked columns you can scan vertically. Provider dropdowns let you mix models across Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, and xAI without leaving the page. A two-model comparison answers \"which of these wins,\" but it doesn't catch the third option that quietly dominates both — and that's a common case for cheap-but-production-grade LLM picks. This guide grids **Claude Haiku 4.5**, **GPT-5 mini**, and **Gemini 2.5 Flash** in [/tools/compare-prices](/tools/compare-prices) so you can see all three side-by-side: input rates, output rates, context windows, and quality scores in stacked columns. The trio was picked because each represents a different point on the quality-vs-price curve — Gemini 2.5 Flash at the budget end, GPT-5 mini at the quality end, and GPT-5 mini winning the Value column with 233.3 (quality ÷ input cost). Pair this with [flagship/balanced/fast/reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers), [Arena AI leaderboard Elo scores explained](/blog/arena-ai-leaderboard-elo-scores-explained), and [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "Building the Grid: Provider Dropdowns and Picks",
+      "body": "Open [/tools/compare-prices](/tools/compare-prices). Tick **Claude Haiku 4.5** in the **Anthropic** dropdown, **GPT-5 mini** in the **OpenAI** dropdown, and **Gemini 2.5 Flash** in the **Google** dropdown. The grid stacks them with input cost / output cost / context / quality in one row each. Claude Haiku 4.5: $1.00 in, $5.00 out, 200K ctx, Q65. GPT-5 mini: $0.300 in, $2.40 out, 128K ctx, Q70. Gemini 2.5 Flash: $0.300 in, $2.50 out, 1M ctx, Q68. The model ID column (visible on hover) is the string you paste into your SDK call."
+    },
+    {
+      "heading": "Reading the Cost Spread",
+      "body": "Input cost spans $0.300 to $0.300 — a 3.3× spread. Output cost matters more than input when reply length exceeds prompt length (typical for content generation, agents, code). Output-to-input ratios: Claude Haiku 4.5 5.0×, GPT-5 mini 8.0×, Gemini 2.5 Flash 8.3×. The model with the lowest output ratio tends to be the cheapest for generation-heavy workloads, regardless of input rate. For a workload mix calculator that bakes in your specific in/out ratio, run the same models through [/tools/api-cost-estimator](/tools/api-cost-estimator)."
+    },
+    {
+      "heading": "Quality and Value Tradeoffs",
+      "body": "**GPT-5 mini** leads on quality (70). **Gemini 2.5 Flash** leads on raw cost ($0.300/1M input). **GPT-5 mini** leads on the Value column (233.3) — meaning the highest quality-adjusted return per dollar. In practice, this means: when accuracy is non-negotiable, pay for GPT-5 mini; when budget is the binding constraint and quality just needs to clear a floor, ship Gemini 2.5 Flash; when you want the best default for production routing, GPT-5 mini is the answer. For the methodology behind that Value formula, see [Value column vs tokens per dollar](/blog/value-column-vs-tokens-per-dollar-metric) and [quality per dollar LLM ranking 2026](/blog/quality-per-dollar-llm-ranking-2026)."
+    },
+    {
+      "heading": "Workflow: From Grid to Production Decision",
+      "body": "Once the trio is on screen, the workflow is: (1) eliminate any model whose quality is below the floor your workload tolerates — score < 50 for customer-facing, < 65 for reasoning-heavy. (2) of the survivors, compare Value column rankings. (3) for the top one or two, estimate monthly bill via [/tools/api-cost-estimator](/tools/api-cost-estimator) using your expected token volume. (4) ship a 1-week A/B with GPT-5 mini as the gold-standard control and your Value pick as the candidate. The Compare Prices grid is the first step in that funnel — it eliminates the wrong picks fast. Pricing is pulled live from [OpenRouter's models endpoint](https://openrouter.ai/api/v1/models) and revalidated every 60 minutes via Next.js's incremental cache, so the grid you see is at most an hour stale. Quality scores blend [Arena AI](https://lmarena.ai/leaderboard) Elo with [Artificial Analysis](https://artificialanalysis.ai) intelligence-index data on the same cadence. Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "category": "providers",
+  "slug": "all-openai-models-compare-prices",
+  "keyword": "OpenAI lineup",
+  "title": "All OpenAI Models Compared in the Compare Prices Grid",
+  "description": "OpenAI's GPT and o-series lineup — GPT-5, GPT-5 mini, GPT-4o mini, o3, o3-mini — in TokenRate's Compare Prices grid.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T19:18:00.000Z",
+  "tags": [
+    "OpenAI lineup",
+    "GPT-5",
+    "o3",
+    "GPT-4o mini",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why Compare All OpenAI Models Together",
+      "body": "The [Compare Prices tool](/tools/compare-prices) is the fastest way to put a shortlist of LLMs in a single grid — input cost, output cost, context window, and quality score in stacked columns you can scan vertically. Provider dropdowns let you mix models across Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, and xAI without leaving the page. Picking between OpenAI's models — flagship, mid-tier, fast — is usually done by reading the provider's pricing page top-to-bottom, which buries the spread. The [Compare Prices grid](/tools/compare-prices) flips that: you check **every OpenAI model** in one dropdown and the grid lays them out side-by-side. Input cost across the lineup spans $0.150 to $10.00 per 1M tokens — a 66.7× spread you can scan in three seconds. This guide walks through the lineup model-by-model with the framing of \"what do you give up to step down a tier.\" For the underlying math, see [tokens-to-dollars conversion](/blog/tokens-to-dollars-conversion); for routing strategy see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "The OpenAI Lineup, Top to Bottom",
+      "body": "**GPT-5** — $1.25 input / $10.00 output per 1M, 200K context, quality 82, tier **flagship**. flagship tier is for frontier-quality use cases where the per-token price is a rounding error against the value of the output. **GPT-5 mini** — $0.300 input / $2.40 output per 1M, 128K context, quality 70, tier **balanced**. balanced tier is the production-default zone — quality high enough for customer traffic, price low enough to scale. **GPT-4o mini** — $0.150 input / $0.600 output per 1M, 128K context, quality 55, tier **fast**. fast tier is built for high-volume throughput at the lowest per-token rate the provider offers. **OpenAI o3** — $10.00 input / $40.00 output per 1M, 200K context, quality 86, tier **reasoning**. reasoning tier uses chain-of-thought and costs more per output token but answers harder questions correctly. **OpenAI o3-mini** — $1.10 input / $4.40 output per 1M, 200K context, quality 72, tier **reasoning**. reasoning tier uses chain-of-thought and costs more per output token but answers harder questions correctly. All five attributes (input, output, context, quality, tier) live in the [Compare Prices grid](/tools/compare-prices), which makes the cross-tier deltas obvious. Stepping from OpenAI o3 (Q86, $10.00) down to GPT-4o mini (Q55, $0.150) saves 99% on input at a cost of 31 quality points — the right tradeoff if your workload tolerates the quality drop."
+    },
+    {
+      "heading": "Where Each OpenAI Model Earns Its Place",
+      "body": "**GPT-5**: best for customer-facing premium experiences, complex writing/code, low-volume high-value queries where the cost is dwarfed by what the answer is worth. **GPT-5 mini**: best for production routing default — chatbots, RAG answer synthesis, structured output, anything that ships to real users at scale. **GPT-4o mini**: best for high-volume classification, lightweight summarization, embeddings-adjacent tasks, prefilters and triage stages, draft generation. **OpenAI o3**: best for multi-step reasoning, math, code that requires planning, and any task where chain-of-thought has been shown to lift accuracy. **OpenAI o3-mini**: best for multi-step reasoning, math, code that requires planning, and any task where chain-of-thought has been shown to lift accuracy. This isn't marketing copy — it's how the tier classification on TokenRate's [filter panel](/blog/filter-llm-models-by-tier-cost-quality) actually slots them. If you've already filtered to a tier, the Compare Prices grid is the next step: check the relevant OpenAI models alongside their cross-provider peers (e.g., GPT-4o mini next to Gemini Flash, or OpenAI o3 next to GPT-5 and Grok 4) to confirm you're not paying a provider premium."
+    },
+    {
+      "heading": "Cost Multipliers When Stepping Up a Tier",
+      "body": "Within OpenAI's lineup, the step-up multipliers are stark. Input: GPT-4o mini → OpenAI o3 is 66.7×. Output: 66.7×. Quality: +31 points. The question to ask: is +31 quality points worth 66.7× the per-token cost? For agentic or accuracy-critical workloads, yes — quality wins are non-linear in user value. For high-volume classification or templated content, no — the cheaper model clears the bar. Use the [API cost estimator](/tools/api-cost-estimator) to put a dollar figure on the step-up at your workload volume."
+    },
+    {
+      "heading": "Compare-Prices Across Providers, Not Just Within",
+      "body": "The most common mistake when picking within OpenAI's lineup is forgetting that cross-provider competitors may dominate the chosen tier. Once you've picked your OpenAI candidates, add 1-2 competitors from a different provider dropdown — for the balanced tier, comparing OpenAI's mid-model against Gemini 2.5 Pro and Claude Sonnet 4.7 is usually instructive. The [Compare Prices grid](/tools/compare-prices) was designed for exactly this multi-provider workflow. The grid pulls prices live from [OpenRouter](https://openrouter.ai/api/v1/models) and quality from a blended Arena AI + Artificial Analysis pipeline — both refresh on a 60-minute incremental cache, so the comparison reflects current rates not a baked-in snapshot. Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

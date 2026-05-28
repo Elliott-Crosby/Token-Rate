@@ -1,0 +1,78 @@
+{
+  "category": "cost-optimization",
+  "slug": "free-tier-llm-alternative-grid",
+  "keyword": "free LLM",
+  "title": "Free-Tier Alternatives in the Compare Prices Grid",
+  "description": "When \"free\" isn't actually free — the cheapest paid LLMs that match the quality of self-hosted open-source, gridded in Compare Prices.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T21:12:00.000Z",
+  "tags": [
+    "free LLM",
+    "open source LLM",
+    "cheap alternatives",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "What \"Free-Tier Alternatives\" Means in 2026",
+      "body": "The [Compare Prices tool](/tools/compare-prices) is the fastest way to put a shortlist of LLMs in a single grid — input cost, output cost, context window, and quality score in stacked columns you can scan vertically. Provider dropdowns let you mix models across Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, and xAI without leaving the page. Self-hosting Llama 4 sounds cheap until you cost out the GPU. The cheapest paid Llama-tier API often dominates self-hosting for sub-1B-token workloads. The [Compare Prices view](/tools/compare-prices) makes the \"Free-Tier Alternatives\" picks visible at a glance — once you've ticked the candidates, the input-cost column does the budget filtering visually. For the underlying math, see [tokens-to-dollars conversion](/blog/tokens-to-dollars-conversion); for routing strategy see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "Who Fits the \"Free-Tier Alternatives\" Bucket",
+      "body": "**Llama 4 Scout** (Meta): $0.200 / $0.600, Q60, 1M ctx. **Llama 4 Maverick** (Meta): $0.500 / $1.50, Q70, 1M ctx. **Mistral Small** (Mistral): $0.200 / $0.600, Q52, 32K ctx. **Gemini 2.5 Flash-Lite** (Google): $0.075 / $0.300, Q55, 1M ctx. All ticked together in [/tools/compare-prices](/tools/compare-prices), the grid lays out the tradeoffs: quality varies from 52 to 70 within the budget, and output costs span $0.300 to $1.50/1M. Pick the highest-Value (quality ÷ input cost) entry that meets your quality floor."
+    },
+    {
+      "heading": "Why Cheapest ≠ Best",
+      "body": "Within the \"Free-Tier Alternatives\" bucket, the cheapest model is rarely the best Value pick. A model at $0.20 input / quality 60 has Value = 300; a model at $0.50 input / quality 70 has Value = 140 — the cheaper model wins by 2.1×. But if your workload's quality floor is 65, the cheaper model is disqualified even before Value enters the discussion. Always set the quality floor first, then optimize Value within it. For the framework, see [why the cheapest LLM isn't always the best value](/blog/why-cheapest-llm-isnt-always-best-value)."
+    },
+    {
+      "heading": "The Free-Tier Alternatives Picks, Side-by-Side",
+      "body": "In [/tools/compare-prices](/tools/compare-prices), tick all candidates across their provider dropdowns. The grid renders input, output, context, and quality in stacked columns. For most Free-Tier Alternatives workloads, the order of operations is: quality floor first, then Value, then output cost. The grid makes all three visible in one scan. If your monthly volume is small (< 10M tokens), the model differences won't make material bill impact — pick on quality. If volume is high (> 1B tokens/month), even small input-cost deltas compound."
+    },
+    {
+      "heading": "From Budget Bucket to Production",
+      "body": "Once you've shortlisted within the Free-Tier Alternatives bucket, run the candidates through [/tools/api-cost-estimator](/tools/api-cost-estimator) with your real workload volume to project monthly cost. For ongoing budget control, instrument token usage in production so you can catch cost regressions early — see [token usage auditing](/blog/token-usage-auditing-find-hidden-costs). Both the price denominator (OpenRouter) and the quality numerator (Arena AI + Artificial Analysis) refresh hourly. So the comparison you screenshot Monday morning is still trustworthy at standup Tuesday morning — but you should re-run it before a quarterly model-routing review. Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

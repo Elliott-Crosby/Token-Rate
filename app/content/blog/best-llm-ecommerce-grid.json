@@ -1,0 +1,77 @@
+{
+  "category": "building",
+  "slug": "best-llm-ecommerce-grid",
+  "keyword": "e-commerce LLM",
+  "title": "Best LLM for E-commerce Workloads: Compare Prices Grid",
+  "description": "Picking an LLM for e-commerce workloads (product descriptions, support, search) via TokenRate's Compare Prices grid.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T20:33:00.000Z",
+  "tags": [
+    "e-commerce LLM",
+    "retail AI",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why E-commerce LLM Picking Has Its Own Logic",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. The point: stop flipping between provider pricing pages and OpenRouter tabs. You pick a provider dropdown, check the models you want, repeat for each provider, and the grid stacks every pick into one comparison table. LLM picking for E-commerce workloads follows different rules than a generic SaaS chatbot. E-commerce LLM use cases mix high-volume content generation (product descriptions, SEO copy) with customer-facing chat (support, recommendations). The [Compare Prices grid](/tools/compare-prices) is the right starting point because it puts the cost-quality-context tradeoff on one screen — the three dimensions that E-commerce teams care about. For the underlying math, see [tokens-to-dollars conversion](/blog/tokens-to-dollars-conversion); for routing strategy see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "E-commerce Workload Characteristics",
+      "body": "Content generation (product descriptions), classification (intent routing), and recommendation reasoning. Per-call costs need to amortize against margin per order. That profile narrows the field of candidate models significantly. In the [Compare Prices grid](/tools/compare-prices), filter by the quality column first, then by the context window column second, then read the cost columns. For E-commerce, the typical sweet spot is balanced and fast tier (Q 65-75, $0.30-$3) depending on whether the model is customer-facing."
+    },
+    {
+      "heading": "Top Picks for E-commerce",
+      "body": "**GPT-5 mini** (OpenAI): $0.300 / $2.40, Q70, 128K ctx — production routing default — chatbots, RAG answer synthesis, structured output, anything that ships to real users at scale. **Claude Haiku 4.5** (Anthropic): $1.00 / $5.00, Q65, 200K ctx — high-volume classification, lightweight summarization, embeddings-adjacent tasks, prefilters and triage stages, draft generation. **Gemini 2.5 Flash** (Google): $0.300 / $2.50, Q68, 1M ctx — high-volume classification, lightweight summarization, embeddings-adjacent tasks, prefilters and triage stages, draft generation. Tick all three in [/tools/compare-prices](/tools/compare-prices) for the side-by-side view. The grid shows the Value column for each so the production-default candidate is visible without manual math."
+    },
+    {
+      "heading": "Gotchas Specific to E-commerce",
+      "body": "E-commerce workloads sometimes trip on the \"I'll just pick the flagship\" reflex — paying for capability that the workload doesn't actually use. The Compare Prices grid is the antidote: visible tradeoffs make over-paying obvious. For broader cost-control patterns, see [token budgeting for production AI apps](/blog/token-budgeting-for-production-ai-apps)."
+    },
+    {
+      "heading": "Operationalizing the Pick",
+      "body": "Once you've narrowed to a top pick from the [Compare Prices grid](/tools/compare-prices), run your projected token volume through [/tools/api-cost-estimator](/tools/api-cost-estimator). For E-commerce teams, a typical month is 50-500M tokens/month for a mid-size e-commerce site with active content and chat. Pricing is pulled live from [OpenRouter's models endpoint](https://openrouter.ai/api/v1/models) and revalidated every 60 minutes via Next.js's incremental cache, so the grid you see is at most an hour stale. Quality scores blend [Arena AI](https://lmarena.ai/leaderboard) Elo with [Artificial Analysis](https://artificialanalysis.ai) intelligence-index data on the same cadence. Open [/tools/compare-prices](/tools/compare-prices) now, pick your provider dropdowns, and pin the shortlist that matches your workload."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Open [/tools/compare-prices](/tools/compare-prices) now, pick your provider dropdowns, and pin the shortlist that matches your workload.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

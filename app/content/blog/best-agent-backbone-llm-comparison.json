@@ -1,0 +1,78 @@
+{
+  "category": "building",
+  "slug": "best-agent-backbone-llm-comparison",
+  "keyword": "AI agent LLM",
+  "title": "Best Agent-Backbone LLM: Compare Prices Comparison",
+  "description": "Picking an LLM to power an autonomous agent loop via TokenRate's Compare Prices grid — three picks with the per-step cost and quality tradeoffs.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T20:03:00.000Z",
+  "tags": [
+    "AI agent LLM",
+    "agent backbone",
+    "compare prices",
+    "autonomous AI"
+  ],
+  "sections": [
+    {
+      "heading": "AI Agent Backbone: The Right Question Isn't \"Which Model\"",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. The point: stop flipping between provider pricing pages and OpenRouter tabs. You pick a provider dropdown, check the models you want, repeat for each provider, and the grid stacks every pick into one comparison table. For AI Agent Backbone the picking decision usually defaults to \"use the model my last project used\" — which is roughly the worst possible heuristic in 2026, because the price-quality frontier has shifted three times in the past year. The right question is \"which combination of price tier, context length, and quality score fits AI Agent Backbone traffic patterns?\" The [Compare Prices grid](/tools/compare-prices) is built for that question. This guide walks through three picks for AI Agent Backbone and shows how to grid them. For the underlying math, see [tokens-to-dollars conversion](/blog/tokens-to-dollars-conversion); for routing strategy see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "The Workload Profile of AI Agent Backbone",
+      "body": "AI Agent Backbone workloads have a few distinguishing characteristics: multi-step loops (often 5-20+ calls per task), tool-use heavy, output costs dominate because each step generates new context; quality at each step compounds. That profile tells you which columns of the [Compare Prices grid](/tools/compare-prices) matter most. Output cost first (loops are output-heavy), tool-use quality second (per benchmark), context window third (later steps have more context). It also tells you which tier you should be in. For most AI Agent Backbone traffic, the [Balanced tier](/blog/flagship-balanced-fast-reasoning-llm-tiers) is the production default — quality high enough to ship to real users at scale, price low enough to make the unit economics work."
+    },
+    {
+      "heading": "Top Pick: Claude Sonnet 4.7",
+      "body": "For AI Agent Backbone, Claude Sonnet 4.7 is the default candidate. Pricing: $3.00 input / $15.00 output per 1M tokens. Context: 200K. Quality score: 80. Tier: balanced. Why it wins: best tool-use accuracy at a price point where 10-step loops remain affordable. Add it to the [Compare Prices grid](/tools/compare-prices) and the Value column makes the case visually (26.7 quality per dollar of input cost). Where it loses: on agent loops that need flagship-tier reasoning where Opus 4 or o3 justify the price step-up."
+    },
+    {
+      "heading": "Runner-Ups and When to Pick Them",
+      "body": "**GPT-5** ($1.25 / $10.00, Q82) — pick this when quality is non-negotiable and the bill is a rounding error against the value of correct output. **Claude Opus 4** ($15.00 / $75.00, Q85) — pick this when quality is non-negotiable and the bill is a rounding error against the value of correct output. All three live in the same [Compare Prices view](/tools/compare-prices) so the comparison is one screen, not three browser tabs. For workload-specific cost modeling, run your token volume through [/tools/api-cost-estimator](/tools/api-cost-estimator)."
+    },
+    {
+      "heading": "Compare-Prices Workflow for AI Agent Backbone",
+      "body": "Workflow: (1) open [/tools/compare-prices](/tools/compare-prices), (2) check the three picks across their provider dropdowns, (3) sort the resulting grid by Value column, (4) shortlist the top 1-2, (5) run an A/B against your real AI Agent Backbone traffic for a week. The shortlisting step is where 90% of the time savings happen — the grid eliminates obvious losers (low quality, wrong context, output-cost surprises) in seconds. Both the price denominator (OpenRouter) and the quality numerator (Arena AI + Artificial Analysis) refresh hourly. So the comparison you screenshot Monday morning is still trustworthy at standup Tuesday morning — but you should re-run it before a quarterly model-routing review. Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

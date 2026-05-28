@@ -1,0 +1,78 @@
+{
+  "category": "providers",
+  "slug": "all-xai-grok-models-compare-prices",
+  "keyword": "xAI Grok lineup",
+  "title": "All xAI Grok Models Compared in the Compare Prices Grid",
+  "description": "xAI's Grok 4 in TokenRate's Compare Prices grid, stacked against the cross-provider competitors at the same flagship price point — Claude Opus 4, GPT-5, and Gemini 2.5 Pro.",
+  "readTime": "5 min read",
+  "publishedAt": "2026-05-28T19:33:00.000Z",
+  "tags": [
+    "xAI lineup",
+    "Grok 4",
+    "compare prices",
+    "flagship comparison"
+  ],
+  "sections": [
+    {
+      "heading": "xAI's Lineup in 2026: Just Grok 4",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. xAI's hosted lineup in 2026 is short — just Grok 4 — so the more useful comparison isn't within-provider but across-provider at the same price point. Grok 4 sits at $3.00 input / $15.00 output per 1M tokens, a 256K context, and a blended quality score of 79. That price point puts Grok 4 in direct competition with Claude Sonnet 4.7 and just below Claude Opus 4 — the comparison this guide walks through. Related reading: [filter LLM models by tier, cost, quality](/blog/filter-llm-models-by-tier-cost-quality), [Value column vs tokens-per-dollar](/blog/value-column-vs-tokens-per-dollar-metric), and [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost)."
+    },
+    {
+      "heading": "Grok 4 in the Compare Prices Grid",
+      "body": "Open [/tools/compare-prices](/tools/compare-prices), click the **xAI** dropdown, and check **Grok 4**. The row shows: input $3.00/1M, output $15.00/1M, 256K context, quality 79, tier **flagship**. The Value column (quality ÷ input cost) reads 26.3 — competitive but not class-leading at the price point. The 256K context is the longest among models priced at $3/1M input, which is one of Grok 4's distinguishing features. The output-to-input ratio is 5×, identical to Claude Sonnet 4.7 — meaning generation-heavy workloads cost the same multiple of input as on Claude."
+    },
+    {
+      "heading": "Cross-Provider Competitors at Grok 4's Price Point",
+      "body": "Add the cross-provider competitors to the same grid: **Claude Sonnet 4.7** ($3.00 input / $15.00 output, 200K context, Q80, value 26.7) and **Grok 4** at the same input rate. Above the tier: **Claude Opus 4** ($15.00 input / $75.00 output, 200K context, Q85, value 5.7). Below the tier: **Gemini 2.5 Pro** ($1.25 input / $10.00 output, 1M context, Q78, value 62.4) and **GPT-5** ($1.25 input / $10.00 output, 200K context, Q82, value 65.6). Grok 4 occupies a narrow band: same price as Sonnet 4.7 but 1 quality point below, 0.6× the price of Opus 4 with a 6-point quality gap, 2.4× the price of GPT-5 with a 3-point quality gap. The grid surfaces the squeeze visually."
+    },
+    {
+      "heading": "When Grok 4 Wins in the Grid",
+      "body": "Grok 4 wins when: (1) context length matters — its 256K window beats Sonnet's 200K and GPT-5's 200K, useful for codebase QA and document libraries that don't quite fit the 200K bracket but don't need Gemini's 1M; (2) the workload has a real-time-search or X/Twitter-data flavor that xAI specializes in; (3) you want a third opinion alongside Anthropic and OpenAI for routing diversification. Where Grok 4 loses: pure quality-per-dollar (GPT-5 dominates at $1.25 input); long-context-per-dollar (Gemini 2.5 Pro at 1M context for half the price); peak quality (Opus 4 at Q85)."
+    },
+    {
+      "heading": "Operationalizing the Grok 4 Pick",
+      "body": "Once Grok 4 is in your grid alongside its cross-provider peers, run your projected token volume through [/tools/api-cost-estimator](/tools/api-cost-estimator) to model the monthly bill. For most teams, Grok 4 ends up being a routing diversification pick rather than a primary — 10-20% of traffic to Grok 4 as a hedge against single-vendor risk on Anthropic or OpenAI, with the majority on whichever wins the Value column for the workload. The grid pulls prices live from [OpenRouter](https://openrouter.ai/api/v1/models) and quality from a blended Arena AI + Artificial Analysis pipeline — both refresh on a 60-minute incremental cache. Open [/tools/compare-prices](/tools/compare-prices) now, pick your provider dropdowns, and pin the shortlist that matches your workload."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Does xAI have other Grok models besides Grok 4?",
+      "answer": "As of mid-2026, Grok 4 is the production model exposed through standard APIs and OpenRouter. Earlier Grok versions exist but are not consistently available across pricing aggregators. The Compare Prices grid surfaces what's actually buyable today."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Open /tools/compare-prices, tick Grok 4 in the xAI dropdown, and stack it against Claude Sonnet 4.7, GPT-5, and Gemini 2.5 Pro to see where the $3/M input bracket actually goes.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

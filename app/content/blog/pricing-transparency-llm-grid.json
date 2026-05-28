@@ -1,0 +1,77 @@
+{
+  "category": "fundamentals",
+  "slug": "pricing-transparency-llm-grid",
+  "keyword": "LLM pricing transparency",
+  "title": "Pricing Transparency Across LLM Providers: The Compare Prices Grid",
+  "description": "Some providers price-list per-token; others bundle, surcharge, or discount. The Compare Prices grid normalizes all of them.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T21:45:00.000Z",
+  "tags": [
+    "LLM pricing transparency",
+    "provider pricing",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why Pricing Transparency Matters in a Cost Comparison",
+      "body": "The [Compare Prices tool](/tools/compare-prices) is the fastest way to put a shortlist of LLMs in a single grid — input cost, output cost, context window, and quality score in stacked columns you can scan vertically. Provider dropdowns let you mix models across Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, and xAI without leaving the page. Most teams compare LLMs on per-token input price and call it a day. Pricing Transparency is one of the under-attended dimensions that shows up in the [Compare Prices grid](/tools/compare-prices) — and ignoring it is where the surprise bills come from. Provider pricing pages aren't uniformly readable. OpenAI bundles GPT-5 input and Cached input; Anthropic separates cache-write and cache-read. The Compare Prices grid normalizes to the same input/output base rate. For the underlying math, see [tokens-to-dollars conversion](/blog/tokens-to-dollars-conversion); for routing strategy see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "How Pricing Transparency Appears in the Grid",
+      "body": "In the grid, every model shows input cost per 1M and output cost per 1M in the same units. No bundles, no discounts, no surcharges — just the base rate."
+    },
+    {
+      "heading": "Reading the Spread",
+      "body": "When you want to model caching impact or batch discounts, do that downstream in [/tools/api-cost-estimator](/tools/api-cost-estimator). The grid is for cross-model comparison; the estimator is for total-cost modeling."
+    },
+    {
+      "heading": "Practical Implications",
+      "body": "Watch for: cache-read pricing (typically 10% of base), batch API pricing (typically 50% off), Anthropic prompt caching write surcharge (typically 25% above base). These bundle out in the grid for fairness."
+    },
+    {
+      "heading": "Workflow: From Grid to Decision",
+      "body": "Bookmark [/tools/compare-prices](/tools/compare-prices) and check it before signing a contract — vendor sales decks sometimes quote outdated or non-standard rates."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

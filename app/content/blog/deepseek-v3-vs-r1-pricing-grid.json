@@ -1,0 +1,78 @@
+{
+  "category": "comparisons",
+  "slug": "deepseek-v3-vs-r1-pricing-grid",
+  "keyword": "DeepSeek V3",
+  "title": "DeepSeek V3 vs R1: Compare Prices Pricing Grid",
+  "description": "DeepSeek's general-purpose V3 vs the reasoning-specialized R1 in TokenRate's Compare Prices grid — both budget-tier, different output behaviors.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T17:57:00.000Z",
+  "tags": [
+    "DeepSeek V3",
+    "DeepSeek R1",
+    "budget reasoning",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Side-by-Side Comparison of DeepSeek V3 and DeepSeek R1 Matters",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. The point: stop flipping between provider pricing pages and OpenRouter tabs. You pick a provider dropdown, check the models you want, repeat for each provider, and the grid stacks every pick into one comparison table. For DeepSeek V3 vs DeepSeek R1, the side-by-side framing matters because both models sit near the same workload niche — one of you ships the wrong pick and the bill (or quality regression) is months of pain. DeepSeek V3 runs $0.270 / $1.10 per 1M tokens with a 64K context and a blended quality score of 65. DeepSeek R1 runs $0.550 / $2.19 per 1M with a 128K context and quality 73. Sticker prices don't tell the whole story — the Value column (quality ÷ input cost) gives DeepSeek V3 a 240.7 and DeepSeek R1 a 132.7, which is the number you actually want to optimize when shipping production traffic. Related reading: [quality per dollar LLM ranking 2026](/blog/quality-per-dollar-llm-ranking-2026), [LLM color-coded quality badges explained](/blog/llm-color-coded-quality-badges-explained), and [why the cheapest LLM isn't always the best value](/blog/why-cheapest-llm-isnt-always-best-value)."
+    },
+    {
+      "heading": "DeepSeek V3 in the Compare Prices Grid",
+      "body": "In the [Compare Prices view](/tools/compare-prices), click the **DeepSeek** dropdown and check **DeepSeek V3**. The row shows input at $0.270/1M, output at $1.10/1M, 64K context, and the blended quality badge at 65. DeepSeek V3 sits in TokenRate's **balanced** tier — balanced tier is the production-default zone — quality high enough for customer traffic, price low enough to scale. The output-to-input ratio of 4.1x is worth flagging because generation-heavy workloads (long summaries, code, structured output) compound that multiplier across every reply. For a single-shot classifier the input price dominates; for an agent generating ~10× the tokens it reads, you're effectively paying $1.10 per 1M."
+    },
+    {
+      "heading": "DeepSeek R1 in the Compare Prices Grid",
+      "body": "Add **DeepSeek R1** from the **DeepSeek** dropdown. The grid lists input $0.550/1M, output $2.19/1M, 128K context, quality 73, tier **reasoning**. reasoning tier uses chain-of-thought and costs more per output token but answers harder questions correctly. Compared to DeepSeek V3, DeepSeek R1 is pricier on input (by 104%) and higher on quality (by 8 points). Context-window-wise, DeepSeek R1 gives you 2.0× the headroom."
+    },
+    {
+      "heading": "Where DeepSeek V3 Wins and Where DeepSeek R1 Wins",
+      "body": "**DeepSeek V3 wins on raw cost** ($0.270 vs $0.550 input — about 2.0× cheaper) — so it's the right pick for high-volume features where the model is fungible across the chosen tier. **DeepSeek R1 wins on quality** (73 vs 65) — important when you're routing reasoning-heavy or accuracy-critical traffic. **DeepSeek V3 wins on Value** (240.7 vs 132.7) — meaning per dollar of input you get more quality-adjusted output, which is what the [Value column](/blog/value-column-vs-tokens-per-dollar-metric) optimizes for. For long-context tasks (codebase QA, document analysis), DeepSeek R1's 128K window wins outright."
+    },
+    {
+      "heading": "Decision Heuristics and What to Do Next",
+      "body": "Three heuristics: (1) if your monthly bill on the pricier option exceeds 4× your engineering team's comfort and the cheaper option's quality is within 5 points — ship the cheaper one and pocket the savings. (2) if the workload is reasoning-heavy or customer-facing premium, pay the quality premium even when the Value column says otherwise. (3) hedge: route 80–90% of traffic to the cheaper model and fall back to the pricier one for tail-quality cases. The fallback router pattern works because output-cost only matters when you actually call it. For the routing implementation, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores). The grid pulls prices live from [OpenRouter](https://openrouter.ai/api/v1/models) and quality from a blended Arena AI + Artificial Analysis pipeline — both refresh on a 60-minute incremental cache, so the comparison reflects current rates not a baked-in snapshot."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Run the comparison live at [/tools/compare-prices](/tools/compare-prices), then bookmark the URL for next month's price audit.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

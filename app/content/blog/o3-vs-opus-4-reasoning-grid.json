@@ -1,0 +1,78 @@
+{
+  "category": "comparisons",
+  "slug": "o3-vs-opus-4-reasoning-grid",
+  "keyword": "OpenAI o3",
+  "title": "OpenAI o3 vs Claude Opus 4 (with Thinking): Compare Prices",
+  "description": "Reasoning flagship vs general flagship in the Compare Prices grid — OpenAI o3 against Claude Opus 4 on chain-of-thought workloads.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T18:27:00.000Z",
+  "tags": [
+    "OpenAI o3",
+    "Opus 4",
+    "reasoning comparison",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Side-by-Side Comparison of OpenAI o3 and Claude Opus 4 Matters",
+      "body": "TokenRate's new [Compare Prices grid](/tools/compare-prices) puts every model's per-token rates, context window, and quality score in a single side-by-side view. The point: stop flipping between provider pricing pages and OpenRouter tabs. You pick a provider dropdown, check the models you want, repeat for each provider, and the grid stacks every pick into one comparison table. For OpenAI o3 vs Claude Opus 4, the side-by-side framing matters because both models sit near the same workload niche — one of you ships the wrong pick and the bill (or quality regression) is months of pain. OpenAI o3 runs $10.00 / $40.00 per 1M tokens with a 200K context and a blended quality score of 86. Claude Opus 4 runs $15.00 / $75.00 per 1M with a 200K context and quality 85. Sticker prices don't tell the whole story — the Value column (quality ÷ input cost) gives OpenAI o3 a 8.6 and Claude Opus 4 a 5.7, which is the number you actually want to optimize when shipping production traffic. Pair this with [flagship/balanced/fast/reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers), [Arena AI leaderboard Elo scores explained](/blog/arena-ai-leaderboard-elo-scores-explained), and [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "OpenAI o3 in the Compare Prices Grid",
+      "body": "In the [Compare Prices view](/tools/compare-prices), click the **OpenAI** dropdown and check **OpenAI o3**. The row shows input at $10.00/1M, output at $40.00/1M, 200K context, and the blended quality badge at 86. OpenAI o3 sits in TokenRate's **reasoning** tier — reasoning tier uses chain-of-thought and costs more per output token but answers harder questions correctly. The output-to-input ratio of 4.0x is worth flagging because generation-heavy workloads (long summaries, code, structured output) compound that multiplier across every reply. For a single-shot classifier the input price dominates; for an agent generating ~10× the tokens it reads, you're effectively paying $40.00 per 1M."
+    },
+    {
+      "heading": "Claude Opus 4 in the Compare Prices Grid",
+      "body": "Add **Claude Opus 4** from the **Anthropic** dropdown. The grid lists input $15.00/1M, output $75.00/1M, 200K context, quality 85, tier **flagship**. flagship tier is for frontier-quality use cases where the per-token price is a rounding error against the value of the output. Compared to OpenAI o3, Claude Opus 4 is pricier on input (by 50%) and lower on quality (by 1 points). Context-window-wise, Claude Opus 4 has a tighter window — relevant if you're feeding long documents."
+    },
+    {
+      "heading": "Where OpenAI o3 Wins and Where Claude Opus 4 Wins",
+      "body": "**OpenAI o3 wins on raw cost** ($10.00 vs $15.00 input — about 1.5× cheaper) — so it's the right pick for high-volume features where the model is fungible across the chosen tier. **OpenAI o3 wins on quality** (86 vs 85) — important when you're routing reasoning-heavy or accuracy-critical traffic. **OpenAI o3 wins on Value** (8.6 vs 5.7) — meaning per dollar of input you get more quality-adjusted output, which is what the [Value column](/blog/value-column-vs-tokens-per-dollar-metric) optimizes for. Both have 200K context — neither wins on document length."
+    },
+    {
+      "heading": "Decision Heuristics and What to Do Next",
+      "body": "Three heuristics: (1) if your monthly bill on the pricier option exceeds 4× your engineering team's comfort and the cheaper option's quality is within 5 points — ship the cheaper one and pocket the savings. (2) if the workload is reasoning-heavy or customer-facing premium, pay the quality premium even when the Value column says otherwise. (3) hedge: route 80–90% of traffic to the cheaper model and fall back to the pricier one for tail-quality cases. The fallback router pattern works because output-cost only matters when you actually call it. For the routing implementation, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores). The grid pulls prices live from [OpenRouter](https://openrouter.ai/api/v1/models) and quality from a blended Arena AI + Artificial Analysis pipeline — both refresh on a 60-minute incremental cache, so the comparison reflects current rates not a baked-in snapshot."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Open [/tools/compare-prices](/tools/compare-prices) now, pick your provider dropdowns, and pin the shortlist that matches your workload.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}

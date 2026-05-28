@@ -1,0 +1,77 @@
+{
+  "category": "comparisons",
+  "slug": "fast-tier-llm-grid-side-by-side",
+  "keyword": "fast tier",
+  "title": "Fast-Tier LLMs Compared in the Compare Prices Grid",
+  "description": "Every fast-tier LLM compared in TokenRate's Compare Prices grid — Haiku 4.5, GPT-4o mini, Gemini 2.5 Flash, Llama 4 Scout, and more.",
+  "readTime": "4 min read",
+  "publishedAt": "2026-05-28T21:24:00.000Z",
+  "tags": [
+    "fast tier",
+    "high-volume LLM",
+    "compare prices"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Within-Tier Comparison Beats Cross-Tier",
+      "body": "Once you've narrowed a model shortlist on the main [TokenRate calculator](/), the [Compare Prices side-by-side view](/tools/compare-prices) is where you stack them for a decision. Each row shows the provider, the model ID (the one you'd paste into your SDK), per-1M input and output costs, the context window, and the blended quality score. Once you've picked your tier — Fast — the next question is which **specific** Fast model. Cross-tier comparisons (flagship vs fast) are usually a budgeting question. Within-tier comparisons are routing questions: \"of the models built for the same workload class, which is the best fit for mine?\" This guide grids Claude Haiku 4.5, GPT-4o mini, Gemini 2.5 Flash, Gemini 2.5 Flash-Lite, Llama 4 Scout, Mistral Small side-by-side in [/tools/compare-prices](/tools/compare-prices). Related reading: [quality per dollar LLM ranking 2026](/blog/quality-per-dollar-llm-ranking-2026), [LLM color-coded quality badges explained](/blog/llm-color-coded-quality-badges-explained), and [why the cheapest LLM isn't always the best value](/blog/why-cheapest-llm-isnt-always-best-value)."
+    },
+    {
+      "heading": "Fast Tier Defined",
+      "body": "Fast tier on TokenRate means: fast tier is built for high-volume throughput at the lowest per-token rate the provider offers. Input prices typically span $0.075 to $1.00 per 1M tokens within the tier. Quality scores span 52 to 68. So even within the tier, the Value column will diverge — which is the whole point of comparing within-tier instead of just defaulting to whichever model is most familiar."
+    },
+    {
+      "heading": "The Fast Models, Compared",
+      "body": "**Claude Haiku 4.5** (Anthropic): $1.00 / $5.00, 200K ctx, Q65, value 65. **GPT-4o mini** (OpenAI): $0.150 / $0.600, 128K ctx, Q55, value 366.7. **Gemini 2.5 Flash** (Google): $0.300 / $2.50, 1M ctx, Q68, value 226.7. **Gemini 2.5 Flash-Lite** (Google): $0.075 / $0.300, 1M ctx, Q55, value 733.3. **Llama 4 Scout** (Meta): $0.200 / $0.600, 1M ctx, Q60, value 300. **Mistral Small** (Mistral): $0.200 / $0.600, 32K ctx, Q52, value 260. All of these appear in the [Compare Prices grid](/tools/compare-prices) under their respective provider dropdowns. Tick all of them and the grid renders the cross-provider tier comparison in seconds."
+    },
+    {
+      "heading": "When to Pick Each Fast Model",
+      "body": "**Claude Haiku 4.5**: pick when traffic volume is high enough that the per-token savings dominate ($1.00 input is hard to beat). **GPT-4o mini**: pick when traffic volume is high enough that the per-token savings dominate ($0.150 input is hard to beat). **Gemini 2.5 Flash**: pick when traffic volume is high enough that the per-token savings dominate ($0.300 input is hard to beat). **Gemini 2.5 Flash-Lite**: pick when traffic volume is high enough that the per-token savings dominate ($0.075 input is hard to beat). **Llama 4 Scout**: pick when traffic volume is high enough that the per-token savings dominate ($0.200 input is hard to beat). **Mistral Small**: pick when traffic volume is high enough that the per-token savings dominate ($0.200 input is hard to beat). The picks aren't mutually exclusive — many production stacks route different traffic types to different Fast models within the same week. For routing pattern guidance, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "Operationalizing the Fast Pick",
+      "body": "Once you've shortlisted within the Fast tier in [/tools/compare-prices](/tools/compare-prices), plug your token volume into [/tools/api-cost-estimator](/tools/api-cost-estimator) for monthly cost projection. A common mistake: assuming Fast models all behave the same on output cost. The grid makes the spread obvious — output costs across the Fast tier in this guide span $0.300 to $5.00 per 1M, a 16.7× spread. Both the price denominator (OpenRouter) and the quality numerator (Arena AI + Artificial Analysis) refresh hourly. So the comparison you screenshot Monday morning is still trustworthy at standup Tuesday morning — but you should re-run it before a quarterly model-routing review. Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices grid?",
+      "answer": "Two ways: click the 'Compare Prices' tab at the top of the calculator card on the home page, or navigate directly to /tools/compare-prices. The standalone page is also linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I share my comparison with teammates?",
+      "answer": "Yes — the page URL captures the current state. Send the link in Slack and your teammate sees the same grid. Useful for procurement and architecture-review meetings."
+    },
+    {
+      "question": "Is the data live or cached?",
+      "answer": "Live from OpenRouter (prices) and a blended Arena AI + Artificial Analysis pipeline (quality), refreshed on a 60-minute incremental cache. So the grid is at most an hour stale."
+    },
+    {
+      "question": "Where do I go after the grid to project monthly cost?",
+      "answer": "Once you've picked a winner, go to /tools/api-cost-estimator and plug in the model + your expected monthly token volume. The estimator does the per-1M math against your real workload mix."
+    }
+  ],
+  "ctaText": "Try the comparison yourself at [/tools/compare-prices](/tools/compare-prices) — it's the fastest way to stack model cost, context, and quality in a single grid.",
+  "sources": [
+    {
+      "label": "TokenRate Compare Prices Tool",
+      "url": "https://www.tokenrate.dev/tools/compare-prices",
+      "note": "Side-by-side comparison grid"
+    },
+    {
+      "label": "OpenRouter Models API",
+      "url": "https://openrouter.ai/api/v1/models",
+      "note": "Live pricing data"
+    },
+    {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "note": "Quality benchmark source"
+    },
+    {
+      "label": "Arena AI Leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Elo quality source"
+    }
+  ]
+}
