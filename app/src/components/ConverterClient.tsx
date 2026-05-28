@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import type { InputMode, ProviderGroup, ModelPricing, CalculationResult } from '@/lib/types'
 import { calculate, CHARS_PER_TOKEN } from '@/lib/conversions'
 import type { MoneyResult, TokensResult, CharsResult } from '@/lib/types'
 import PriceCompareClient from './PriceCompareClient'
 import FilterPanel, { TIER_KEYS, type CostPreset, type QualityPreset } from './FilterPanel'
+import { track } from '@/lib/track'
 
 // ── Tier detection ─────────────────────────────────────────────────────────
 function detectTier(name: string): 'flagship' | 'balanced' | 'fast' | 'reasoning' {
@@ -254,7 +255,31 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
   function handleModeChange(m: InputMode) {
     setMode(m)
     setRaw('')
+    track('mode_changed', { mode: m })
   }
+
+  // Tracking wrappers — fire an event whenever the filter actually changes
+  const handleTiersChange = (t: Set<string>) => {
+    setFilterTiers(t)
+    track('filter_applied', { type: 'tier', tiers: [...t].sort() })
+  }
+  const handleCostPreset = (p: CostPreset) => {
+    setCostPreset(p)
+    track('filter_applied', { type: 'cost', value: p })
+  }
+  const handleQualityPreset = (p: QualityPreset) => {
+    setQualityPreset(p)
+    track('filter_applied', { type: 'quality', value: p })
+  }
+
+  // Debounced — capture token-volume distribution, not every keystroke
+  useEffect(() => {
+    if (numericValue === 0) return
+    const id = setTimeout(() => {
+      track('value_entered', { mode, value: numericValue })
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [numericValue, mode])
 
   const SORT_LABELS: Record<SortOption, string> = {
     popular: 'most popular',
@@ -285,7 +310,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
         {/* ── View tabs: All Models | Compare Prices ── */}
         <div className="flex border-b border-zinc-200 dark:border-zinc-800">
           <button
-            onClick={() => { setCompareMode(false); setSortOpen(false) }}
+            onClick={() => { setCompareMode(false); setSortOpen(false); track('view_changed', { view: 'all_models' }) }}
             className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold transition-colors ${
               !compareMode
                 ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border-b-2 border-emerald-500'
@@ -301,7 +326,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
             <span className="text-xs opacity-50 font-normal">· {filteredSorted.length}</span>
           </button>
           <button
-            onClick={() => { setCompareMode(true); setSortOpen(false) }}
+            onClick={() => { setCompareMode(true); setSortOpen(false); track('view_changed', { view: 'compare_prices' }) }}
             className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold transition-colors ${
               compareMode
                 ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border-b-2 border-emerald-500'
@@ -370,7 +395,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
                 {PRESETS[mode].map((p) => (
                   <button
                     key={p.label}
-                    onClick={() => setRaw(String(p.value))}
+                    onClick={() => { setRaw(String(p.value)); track('preset_used', { mode, preset_label: p.label, preset_value: p.value }) }}
                     className={`text-xs px-2.5 py-1 rounded-md border transition-colors font-mono ${
                       numericValue === p.value
                         ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'
@@ -390,7 +415,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
                 {providers.map((p) => (
                   <button
                     key={p}
-                    onClick={() => setActiveProvider(p)}
+                    onClick={() => { setActiveProvider(p); track('provider_filter', { provider: p }) }}
                     className={`text-xs px-3 py-1.5 rounded-full font-semibold transition-colors ${
                       activeProvider === p
                         ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900'
@@ -441,7 +466,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
                       {(Object.entries(SORT_LABELS) as [SortOption, string][]).map(([key, label]) => (
                         <button
                           key={key}
-                          onClick={() => { setSort(key); setSortOpen(false) }}
+                          onClick={() => { setSort(key); setSortOpen(false); track('sort_changed', { sort: key }) }}
                           className={`w-full text-left px-4 py-2.5 text-xs transition-colors ${
                             sort === key
                               ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 font-semibold'
@@ -461,11 +486,11 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
             {filtersOpen && (
               <FilterPanel
                 filterTiers={filterTiers}
-                onTiersChange={setFilterTiers}
+                onTiersChange={handleTiersChange}
                 costPreset={costPreset}
-                onCostPreset={setCostPreset}
+                onCostPreset={handleCostPreset}
                 qualityPreset={qualityPreset}
-                onQualityPreset={setQualityPreset}
+                onQualityPreset={handleQualityPreset}
                 hasQualityData={hasQualityData}
                 onReset={resetFilters}
               />

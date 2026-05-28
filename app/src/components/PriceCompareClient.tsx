@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo } from 'react'
 import type { ProviderGroup, ModelPricing } from '@/lib/types'
+import { track } from '@/lib/track'
 
 function detectTier(name: string): 'flagship' | 'balanced' | 'fast' | 'reasoning' {
   const n = name.toLowerCase()
@@ -81,6 +82,22 @@ export default function PriceCompareClient({ providerGroups }: { providerGroups:
     })
 
   const selectedModels = useMemo(() => allModels.filter((m) => selectedIds.has(m.id)), [allModels, selectedIds])
+
+  // Fire model_compared once the user's selection settles (>=2 models, 1.5s idle).
+  // This is the pair-frequency signal — what devs actually price out side-by-side.
+  useEffect(() => {
+    if (selectedModels.length < 2) return
+    const ids = selectedModels.map((m) => m.id).sort()
+    const providers = [...new Set(selectedModels.map((m) => m.provider))].sort()
+    const id = setTimeout(() => {
+      track('model_compared', {
+        model_ids: ids,
+        providers,
+        count: selectedModels.length,
+      })
+    }, 1500)
+    return () => clearTimeout(id)
+  }, [selectedModels])
 
   const inputPrices = selectedModels.map((m) => m.inputPricePerToken)
   const minInput = selectedModels.length > 1 ? Math.min(...inputPrices) : null
