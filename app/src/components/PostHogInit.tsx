@@ -18,15 +18,6 @@ export default function PostHogInit() {
   useEffect(() => {
     try {
       const token = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN
-      // DEBUG: temporarily expose so we can verify Vercel inlining via DevTools
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ;(globalThis as any).__POSTHOG_DEBUG__ = {
-        token_present: Boolean(token),
-        token_first8: token ? token.slice(0, 8) : null,
-        host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? null,
-      }
-      // eslint-disable-next-line no-console
-      console.log('[posthog]', (globalThis as { __POSTHOG_DEBUG__?: unknown }).__POSTHOG_DEBUG__)
       if (!token) return
       // Guard against React strict-mode double invocation
       if ((posthog as unknown as { __loaded?: boolean }).__loaded) return
