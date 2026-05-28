@@ -77,8 +77,22 @@ export default function WordsToTokensClient() {
                 {MODELS_TO_SHOW.map((m, i) => {
                   const inputCost = (tokens * m.inputPricePerMillion) / 1_000_000
                   const outputCost = (tokens * 0.5 * m.outputPricePerMillion) / 1_000_000
-                  const fmt = (n: number) =>
-                    n < 0.0001 ? '$' + n.toExponential(2) : '$' + n.toFixed(4)
+                  const fmt = (n: number) => {
+                    if (!isFinite(n) || n <= 0) return '$0.00'
+                    if (n >= 0.01) return '$' + n.toFixed(4)
+                    const magnitude = Math.floor(Math.log10(n))
+                    const decimals = Math.min(20, 2 - magnitude)
+                    let s = n.toFixed(decimals)
+                    if (s.includes('.')) {
+                      s = s.replace(/0+$/, '')
+                      if (s.endsWith('.')) s += '00'
+                      else {
+                        const [intPart, decPart] = s.split('.')
+                        if (decPart.length < 2) s = intPart + '.' + decPart.padEnd(2, '0')
+                      }
+                    }
+                    return '$' + s
+                  }
                   return (
                     <tr key={m.slug} className={i % 2 === 0 ? 'bg-white dark:bg-zinc-900' : 'bg-zinc-50/60 dark:bg-zinc-800/30'}>
                       <td className="px-4 py-2.5 font-medium text-zinc-800 dark:text-zinc-200">

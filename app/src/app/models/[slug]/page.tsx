@@ -9,6 +9,7 @@ import RelatedPages from '@/components/RelatedPages'
 import JsonLd, { faqSchema, breadcrumbSchema, productSchema } from '@/components/JsonLd'
 import { MODEL_FAQS } from '@/lib/faqs'
 import { getLivePricing, resolveModelPricing } from '@/lib/pricing-live'
+import { formatMoney } from '@/lib/conversions'
 
 export function generateStaticParams() {
   return ALL_MODELS.map((m) => ({ slug: m.slug }))
@@ -265,10 +266,10 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
                         <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300">{ex.label}</td>
                         <td className="px-4 py-3 text-right font-mono text-zinc-500 dark:text-zinc-400">{ex.tokens.toLocaleString()}</td>
                         <td className="px-4 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400">
-                          ${inputCost < 0.0001 ? inputCost.toExponential(2) : inputCost.toFixed(4)}
+                          {formatMoney(inputCost)}
                         </td>
                         <td className="px-4 py-3 text-right font-mono text-sky-700 dark:text-sky-400">
-                          ${outputCost < 0.0001 ? outputCost.toExponential(2) : outputCost.toFixed(4)}
+                          {formatMoney(outputCost)}
                         </td>
                       </tr>
                     )

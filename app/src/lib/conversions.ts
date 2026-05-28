@@ -55,12 +55,23 @@ export function formatNumber(n: number): string {
 }
 
 export function formatMoney(n: number): string {
-  if (n === 0) return '$0.00'
+  if (!isFinite(n) || n <= 0) return '$0.00'
   if (n >= 0.01) {
     return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })
   }
-  // Very small: show in scientific-style with enough precision
-  return '$' + n.toExponential(3)
+  // Sub-cent: spell out the decimals with ~3 significant digits, no scientific notation.
+  const magnitude = Math.floor(Math.log10(n))
+  const decimals = Math.min(20, 2 - magnitude)
+  let s = n.toFixed(decimals)
+  if (s.includes('.')) {
+    s = s.replace(/0+$/, '')
+    if (s.endsWith('.')) s += '00'
+    else {
+      const [intPart, decPart] = s.split('.')
+      if (decPart.length < 2) s = intPart + '.' + decPart.padEnd(2, '0')
+    }
+  }
+  return '$' + s
 }
 
 export function formatPricePerMillion(pricePerToken: number): string {

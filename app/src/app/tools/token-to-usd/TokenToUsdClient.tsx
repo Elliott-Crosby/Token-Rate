@@ -4,9 +4,20 @@ import { useState, useMemo } from 'react'
 import { ALL_MODELS } from '@/lib/models'
 
 function fmt(n: number): string {
-  if (n === 0) return '$0.00'
+  if (!isFinite(n) || n <= 0) return '$0.00'
   if (n >= 0.01) return '$' + n.toFixed(4)
-  return '$' + n.toExponential(3)
+  const magnitude = Math.floor(Math.log10(n))
+  const decimals = Math.min(20, 2 - magnitude)
+  let s = n.toFixed(decimals)
+  if (s.includes('.')) {
+    s = s.replace(/0+$/, '')
+    if (s.endsWith('.')) s += '00'
+    else {
+      const [intPart, decPart] = s.split('.')
+      if (decPart.length < 2) s = intPart + '.' + decPart.padEnd(2, '0')
+    }
+  }
+  return '$' + s
 }
 
 export default function TokenToUsdClient() {

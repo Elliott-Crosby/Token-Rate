@@ -80,9 +80,20 @@ function fmtTokens(n: number): string {
   return n.toFixed(0)
 }
 function fmtMoney(n: number): string {
-  if (n === 0) return '$0'
+  if (!isFinite(n) || n <= 0) return '$0'
   if (n >= 0.01) return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })
-  return '$' + n.toExponential(2)
+  const magnitude = Math.floor(Math.log10(n))
+  const decimals = Math.min(20, 2 - magnitude)
+  let s = n.toFixed(decimals)
+  if (s.includes('.')) {
+    s = s.replace(/0+$/, '')
+    if (s.endsWith('.')) s += '00'
+    else {
+      const [intPart, decPart] = s.split('.')
+      if (decPart.length < 2) s = intPart + '.' + decPart.padEnd(2, '0')
+    }
+  }
+  return '$' + s
 }
 function fmtRate(perToken: number): string {
   const pm = perToken * 1_000_000
