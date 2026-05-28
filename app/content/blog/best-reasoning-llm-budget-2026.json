@@ -1,0 +1,63 @@
+{
+  "category": "providers",
+  "slug": "best-reasoning-llm-budget-2026",
+  "keyword": "best reasoning LLM budget 2026",
+  "title": "Best Reasoning LLMs on a Budget: o3-mini, DeepSeek R1, Claude Thinking Compared",
+  "description": "Compare the most affordable reasoning LLMs in 2026 — OpenAI o3-mini, DeepSeek R1, Claude extended thinking, and Gemini 2.5 Pro thinking — by quality, price, and quality per dollar.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T16:05:00.000Z",
+  "tags": [
+    "reasoning LLM",
+    "budget AI",
+    "o3-mini",
+    "DeepSeek R1",
+    "Claude thinking"
+  ],
+  "sections": [
+    {
+      "heading": "Reasoning Models Used to Be a Luxury",
+      "body": "In 2024 the reasoning-model tier meant 'pay $30+ per million tokens for OpenAI o1' — chain-of-thought was a flagship-only feature. In 2026 that's no longer true. DeepSeek R1 ships reasoning at $0.55 input / $2.19 output; OpenAI o3-mini at $1.10 / $4.40; Claude extended-thinking variants at $3 base + thinking-token surcharge; Gemini 2.5 Pro at $1.25 / $5 with native thinking included. The result is that the [Reasoning tier filter](/blog/flagship-balanced-fast-reasoning-llm-tiers) on TokenRate's calculator now surfaces credible budget options for hard reasoning problems — math, multi-step planning, novel coding — at prices comparable to last-year's balanced tier. This post ranks the budget reasoning landscape head-to-head."
+    },
+    {
+      "heading": "DeepSeek R1: The Bargain Reasoning King",
+      "body": "DeepSeek R1 at $0.55 input / $2.19 output is the cheapest credible reasoning model in 2026. Quality score 73 on the blended index — close to flagship reasoning — at roughly 5% of OpenAI o3's cost. R1's chain-of-thought is exposed in the response (vs hidden by o3 and Claude thinking), which both helps debugging and inflates output token volume. Strengths: math, code, multi-step planning, agentic workflows. Weaknesses: instruction-following on nuanced format constraints (Claude is better), code execution / function calling (OpenAI's tooling is more mature), and ecosystem (smaller SDK coverage). For more depth, see [DeepSeek R1 review bargain reasoning](/blog/deepseek-r1-bargain-reasoning-model) and [DeepSeek R1 vs OpenAI o3 cost](/blog/deepseek-r1-vs-openai-o3-cost)."
+    },
+    {
+      "heading": "OpenAI o3-mini: The Ecosystem-Friendly Bargain",
+      "body": "OpenAI o3-mini at $1.10 / $4.40 sits between R1 and full o3 on price and quality. Quality score 72 — essentially tied with R1 — with the advantage of OpenAI's tooling: structured outputs, function calling, Assistants API, batch API discounts, and a Python/Node SDK that everyone already has. The catch is that thinking tokens are hidden and they meter against your output budget at full output-token rates, so a single o3-mini query can easily consume 5,000–20,000 tokens for hard problems. Practical impact: o3-mini's effective cost-per-query is often 2–5x higher than its sticker rate suggests. Read [OpenAI o3-mini cost reasoning](/blog/openai-o3-mini-cost-reasoning) for the full math."
+    },
+    {
+      "heading": "Claude Extended Thinking: Premium-Priced but Tightly Integrated",
+      "body": "Claude's extended thinking surcharges thinking tokens at premium rates — on Sonnet 4.7 the base is $3/$15 but thinking tokens cost $15/$30, and on Opus 4 thinking is $20/$60 (vs base $15/$75). A complex extended-thinking query can hit $1–$2 per query, putting it well outside the 'budget' tier. The reason teams still pick it: Claude's reasoning quality on nuanced, long-form, multi-document tasks is best-in-class, and it integrates cleanly with the Anthropic SDK / Bedrock / Claude Code stack. Don't reach for Claude thinking when DeepSeek R1 or o3-mini would work; reach for it when the task specifically needs Claude's reasoning style. See [Claude extended thinking cost analysis](/blog/claude-extended-thinking-cost-analysis)."
+    },
+    {
+      "heading": "Picking the Right Budget Reasoning Model for Your Workload",
+      "body": "Decision rules: (1) Math, code, planning, no ecosystem constraint → DeepSeek R1 (cheapest, quality ≈ o3-mini); (2) Need OpenAI tooling, function calling, structured outputs → o3-mini ($1.10/$4.40, 4x R1's input cost but with Assistants/Batch/SDK); (3) Need long-context reasoning + multi-document RAG → Claude Sonnet 4.7 extended thinking (premium but ecosystem-tight); (4) Want reasoning included with general-purpose flagship → Gemini 2.5 Pro ($1.25/$5, thinking built in, 1M context). To see all four side by side, open [/tools/compare-prices](/tools/compare-prices), pick OpenAI o3-mini, DeepSeek R1, Claude Sonnet 4.7, and Gemini 2.5 Pro from their respective dropdowns. For routing strategy, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores) and [building cost-aware AI agents](/blog/building-cost-aware-ai-agent)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What's the cheapest reasoning LLM in 2026?",
+      "answer": "DeepSeek R1 at $0.55 input / $2.19 output. Quality score 73, close to flagship reasoning quality at roughly 5% of OpenAI o3's price. Hosted via DeepSeek's API or via OpenRouter for a small markup."
+    },
+    {
+      "question": "Is o3-mini a real budget option or just labeled that way?",
+      "answer": "Real budget but watch the output side. At $1.10 input / $4.40 output, list price is moderate — but thinking tokens are billed at output rates and a hard query can easily consume 10,000 thinking tokens. Plan effective cost-per-query at 2–5x the listed output rate."
+    },
+    {
+      "question": "Should I use Claude extended thinking on Haiku 4.5 to save money?",
+      "answer": "Claude Haiku 4.5 doesn't support extended thinking — it's a fast-tier model. Thinking is available on Sonnet 4.7 and Opus 4 only. For cheap reasoning in the Anthropic ecosystem, the better path is Sonnet 4.7 without thinking ($3/$15) for moderate problems, then escalate to Opus 4 with thinking for the genuinely hard ones."
+    },
+    {
+      "question": "How does Gemini 2.5 Pro's 'thinking' compare to o3 and R1?",
+      "answer": "Gemini 2.5 Pro ships thinking as a native mode rather than a separate tier — same input/output prices ($1.25/$5) but with chain-of-thought enabled. Quality on reasoning benchmarks lags o3 and R1 slightly (76 vs 78–82) but the price advantage is large, making it the best 'cheap general-purpose reasoning' default for many teams."
+    }
+  ],
+  "ctaText": "Use TokenRate's Compare Prices view to grid DeepSeek R1, o3-mini, Claude Sonnet 4.7, and Gemini 2.5 Pro side by side — and the Filter panel's Reasoning chip to see every reasoning model live.",
+  "sources": [
+    { "label": "DeepSeek R1 Paper", "url": "https://arxiv.org/abs/2501.12948", "note": "DeepSeek R1 technical report" },
+    { "label": "OpenAI o-series Pricing", "url": "https://openai.com/api/pricing", "note": "o1, o3, o3-mini, o4-mini rates" },
+    { "label": "Anthropic Extended Thinking", "url": "https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking", "note": "Claude thinking docs" },
+    { "label": "Google Gemini 2.5 Pro", "url": "https://ai.google.dev/gemini-api/docs/models/gemini-2-5-pro", "note": "Gemini thinking mode" }
+  ]
+}

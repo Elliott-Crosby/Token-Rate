@@ -1,0 +1,60 @@
+{
+  "category": "cost-optimization",
+  "slug": "filter-llm-models-by-tier-cost-quality",
+  "keyword": "filter LLM models by tier cost quality",
+  "title": "How to Filter LLMs by Tier, Cost, and Quality in TokenRate's Calculator",
+  "description": "Master the new TokenRate filter panel — tier presets (flagship, balanced, fast, reasoning), input cost brackets (under $1, $1–$10, over $10), and quality score thresholds (Top 75+, Good 50+).",
+  "readTime": "6 min read",
+  "publishedAt": "2026-05-28T15:25:00.000Z",
+  "tags": [
+    "LLM filter",
+    "model selection",
+    "TokenRate calculator",
+    "tier filter"
+  ],
+  "sections": [
+    {
+      "heading": "The Three Filter Dimensions That Actually Matter",
+      "body": "Out of dozens of attributes you could filter LLMs by — context length, multimodal capability, latency, structured output support, vendor — three dimensions cover 95% of real selection decisions: tier (what's the model designed for), input cost (does it fit my budget), and quality (will the output be good enough). The new Filter panel on [TokenRate's calculator](/) wraps exactly these three dimensions into one-click preset chips. Click 'Filters' in the calculator header to reveal them, and watch the active-count badge tell you how many filters are stacked. The panel hides automatically when collapsed, so the calculator stays clean for default browsing. Below we walk through each filter dimension and the patterns that work well for production teams."
+    },
+    {
+      "heading": "Tier Filters: Flagship, Balanced, Fast, Reasoning",
+      "body": "TokenRate classifies every model into one of four tiers, surfaced as filter chips and color-coded in the model list: Flagship (amber) = frontier-quality, premium-priced — GPT-5, Claude Opus 4, Grok 4; Balanced (sky) = production-tier sweet spot — Claude Sonnet 4.7, Gemini 2.5 Pro, GPT-5 mini; Fast (emerald) = optimized for high-volume throughput at low cost — Claude Haiku 4.5, Gemini 2.5 Flash, GPT-4o mini; Reasoning (purple) = chain-of-thought models for hard problems — OpenAI o3, o3-mini, DeepSeek R1, Claude extended-thinking. Filter chips toggle independently and multi-select — pick Balanced + Fast for production routing candidates, or Reasoning alone when you need a hard-problem solver. The tier classification is curated and updated alongside model pricing. For deeper context on tier strategy, see [flagship balanced fast reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers)."
+    },
+    {
+      "heading": "Cost Presets: Under $1, $1–$10, Over $10 per Million Tokens",
+      "body": "The cost preset chips bucket models by input price per 1M tokens: 'Under $1' is the budget tier (Gemini Flash variants, Claude Haiku, Mistral Small, Llama 3 family, DeepSeek V3/R1, GPT-4o mini, GPT-5 mini, Qwen variants); '$1–$10' is the mainstream production tier (Claude Sonnet 4.7 at $3, GPT-5 at $1.25, Gemini 2.5 Pro at $1.25, OpenAI o3 at $10, Grok 4 at $3); 'Over $10' is the flagship tier (Claude Opus 4 at $15, older GPT-4 variants, premium reasoning). Selecting a cost preset is the fastest way to align the model list with your monthly budget — if you're shipping a high-volume feature with a $500/month ceiling, click 'Under $1' and you've eliminated 80% of the noise. Pair with the [API cost estimator](/tools/api-cost-estimator) to model the dollar impact on your specific workload. See also [best LLMs under $1 per million tokens](/blog/best-llm-under-1-dollar-per-million-tokens-2026)."
+    },
+    {
+      "heading": "Quality Presets: Top (75+), Good (50+), Rated Only",
+      "body": "The quality preset chips filter by the blended Arena AI + Artificial Analysis Quality score: 'Top (75+)' shows only flagship-grade models — GPT-5, Claude Opus 4, OpenAI o3, Grok 4, Claude Sonnet 4.7, DeepSeek R1; 'Good (50+)' shows the broader balanced-and-up zone where most production traffic should land; 'Rated only' hides anything without a quality score (long-tail Mistral fine-tunes, experimental hosted variants) — useful when you want to be sure you're seeing benchmarked candidates only. The quality filters only appear when quality data is actually available, so they hide gracefully if the AA and Arena feeds are unavailable. For the methodology behind the score thresholds, see [how to use an AI quality index to pick the best LLM](/blog/how-to-use-ai-quality-index-pick-best-llm). For the data sources, see [Artificial Analysis vs Arena Elo](/blog/artificial-analysis-intelligence-index-vs-arena-elo)."
+    },
+    {
+      "heading": "Stacking Filters: The Workflow That Works",
+      "body": "The filter panel is most powerful when you stack multiple dimensions. Common stacks: (a) Balanced tier + Under $1 + Good (50+) = production-default candidates; (b) Reasoning tier + $1–$10 + Top (75+) = premium reasoning shortlist; (c) Fast tier + Under $1 + Rated only = high-volume budget candidates; (d) Flagship tier + Top (75+) = 'show me the frontier' overview. Once filters narrow the list to 5–10 finalists, switch to the [Compare Prices view](/tools/compare-prices) for a side-by-side grid. Hit 'Reset' in the filter panel to clear and start over — useful when you want to flip between use cases. The filter state lives in the URL, so you can bookmark a specific filtered view (e.g., 'production routing candidates') and share it with teammates. For the full decision framework, see [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Where is the filter panel in TokenRate?",
+      "answer": "Click the 'Filters' button in the calculator header on the home page. A panel slides down with three sections: Tier, Input cost / 1M tokens, and Quality score. The active-count badge on the Filters button tells you how many filters are currently applied."
+    },
+    {
+      "question": "Can I select multiple tiers at once?",
+      "answer": "Yes. The Tier section is multi-select — click 'Balanced' and 'Fast' together to see both. Cost and Quality are single-select preset chips (only one bucket active at a time), since they represent ranges rather than categories."
+    },
+    {
+      "question": "What does the 'Rated only' quality preset do?",
+      "answer": "It hides any model without a quality score from Arena AI, Artificial Analysis, or the static fallback — leaving only models that have been benchmarked. Useful when you want to be confident every model in the list has been independently evaluated."
+    },
+    {
+      "question": "Do filters work with the Compare Prices view?",
+      "answer": "Filters apply to the main calculator list. Once you've narrowed candidates, switch to the Compare Prices tab and pick specific models from provider dropdowns — the side-by-side view is filter-independent so you can hand-pick the exact comparison set."
+    }
+  ],
+  "ctaText": "Open the TokenRate calculator, click Filters, and stack Tier + Cost + Quality presets to narrow 70+ models down to your shortlist in seconds.",
+  "sources": [
+    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Filter panel UI" },
+    { "label": "OpenRouter Pricing", "url": "https://openrouter.ai/api/v1/models", "note": "Cost data source" }
+  ]
+}

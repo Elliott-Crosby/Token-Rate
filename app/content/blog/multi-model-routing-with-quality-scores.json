@@ -1,0 +1,62 @@
+{
+  "category": "building",
+  "slug": "multi-model-routing-with-quality-scores",
+  "keyword": "multi-model routing quality scores",
+  "title": "How to Build Multi-Model Routing With Quality Scores (And Stop Overpaying)",
+  "description": "Practical guide to building a multi-model LLM router using TokenRate's quality scores and value column. Cut AI costs 60–80% without sacrificing quality.",
+  "readTime": "9 min read",
+  "publishedAt": "2026-05-28T16:15:00.000Z",
+  "tags": [
+    "multi-model routing",
+    "LLM router",
+    "AI cost optimization",
+    "quality-aware routing"
+  ],
+  "sections": [
+    {
+      "heading": "Single-Model Routing Is Leaving Money on the Table",
+      "body": "The default LLM deployment pattern in 2024 was 'pick one model, route everything to it'. In 2026 that pattern is the most expensive mistake in production AI: routine queries get the same flagship-priced inference as hard ones, burning 5–20x the necessary cost on 70%+ of traffic. Multi-model routing — cheap default with escalation paths for hard prompts — typically cuts AI bills by 60–80% without measurable quality loss. The blocker has historically been 'how do you decide what's hard'. The answer in 2026 is the same quality score that powers [TokenRate's Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm) and [Value column](/blog/quality-per-dollar-llm-ranking-2026): use cheap models as default, escalate to higher-quality models when the cheap one fails a quality check."
+    },
+    {
+      "heading": "The Three-Tier Router Pattern",
+      "body": "The standard production router has three tiers: (1) Fast tier — Gemini 2.5 Flash, Claude Haiku 4.5, GPT-4o mini, Llama 4 Scout — handles 70% of traffic at $0.10–$0.30 input cost; (2) Balanced tier — Claude Sonnet 4.7, GPT-5, Gemini 2.5 Pro — handles 25% of traffic at $1.25–$3 input; (3) Flagship tier — Claude Opus 4, OpenAI o3, Grok 4 — handles the last 5% at $10–$15 input. Routing rules: send everything to fast by default; escalate to balanced when fast's output fails a quality check (length below threshold, structured output validation fails, LLM-judge score below cutoff); escalate to flagship when balanced fails the same checks or when the prompt is tagged 'hard' by upstream classification. See [flagship balanced fast reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers) for picking the specific models."
+    },
+    {
+      "heading": "Quality Score as the Routing Signal",
+      "body": "There are two ways to use quality scores in routing. First, the simple way: pick one model per tier based on the highest-value model that meets the tier's quality floor (use the [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) to identify candidates). Second, the dynamic way: at request time, classify the prompt's difficulty (using a cheap classifier or a heuristic), then route to the cheapest model whose quality score exceeds the difficulty threshold. The dynamic approach captures more savings but adds complexity. Most teams should start with static three-tier routing and only add dynamic classification once the basics are working. For implementation patterns, see [building cost-aware AI agents](/blog/building-cost-aware-ai-agent) and [ai agent loops cost spiral](/blog/ai-agent-loops-cost-spiral)."
+    },
+    {
+      "heading": "Escalation Triggers That Work",
+      "body": "The escalation triggers that work in practice: (1) Output too short — if a fast-tier model returns under N characters when the prompt expected detail, escalate; (2) Structured output validation fails — JSON schema mismatch, missing fields, wrong types; (3) Confidence score from the model below threshold (when the API exposes one); (4) LLM-judge score below cutoff — use a tiny cheap model to grade each fast-tier output; (5) Explicit 'this is hard' tag — when upstream classification (intent, domain) flags a hard prompt; (6) User-visible retry — when a user explicitly says 'try again' or 'be more specific'. Implement triggers 1, 2, and 5 first; they're cheap and capture 80% of the value. For a related pattern, see [structured outputs token cost impact](/blog/structured-outputs-token-cost-impact)."
+    },
+    {
+      "heading": "Measuring Whether Routing Pays Off",
+      "body": "Track three numbers: (1) per-tier traffic share — should be roughly 70/25/5 across fast/balanced/flagship; (2) escalation rate from fast to balanced — should sit around 20–30%; (3) end-user quality score from an A/B test against single-flagship routing — should be statistically equivalent (within 1–2 points on an LLM-judge scale). If escalation rate climbs above 50%, your fast-tier model is too weak (move to a higher-quality fast-tier option). If end-user quality drops by 5+ points, your escalation triggers are missing hard prompts (add more triggers). Use [/tools/api-cost-estimator](/tools/api-cost-estimator) to model the cost impact of different tier mixes before shipping. For more on the cost math, see [ai cost monitor production](/blog/ai-cost-monitor-production), [token budgeting for production AI apps](/blog/token-budgeting-for-production-ai-apps), and [why your LLM bill is higher than expected](/blog/why-your-llm-bill-is-higher-than-expected)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What's the simplest multi-model router I can ship?",
+      "answer": "Two tiers: fast (Gemini 2.5 Flash or Claude Haiku 4.5) as default, balanced (Claude Sonnet 4.7 or GPT-5) on retry. Trigger escalation when the fast output fails JSON schema validation or comes back under a length threshold. You can ship this in 50 lines of code and cut your bill by 40–60% immediately."
+    },
+    {
+      "question": "Won't routing add latency on escalation?",
+      "answer": "Yes — escalation doubles the request time for the prompts that fail. The win comes from the 70%+ of prompts that succeed on the cheap tier. Net average latency usually drops because fast-tier models are faster than balanced/flagship even on first attempt."
+    },
+    {
+      "question": "How do I pick the models for each tier?",
+      "answer": "Open TokenRate, apply the Filter panel: Tier=Fast + Quality=Good (50+) for fast tier; Tier=Balanced + Quality=Top (75+) for balanced tier; Tier=Flagship + Quality=Top (75+) for flagship. Sort each by 'best value' and pick the top model from each. Use the Compare Prices view to confirm the three look right side by side."
+    },
+    {
+      "question": "Does multi-model routing work for streaming responses?",
+      "answer": "Yes but it's harder — you can't easily escalate mid-stream. The pragmatic pattern is to stream from the fast tier and, if quality validation fails after the stream completes, regenerate from the higher tier. End-user perception of a slightly delayed retry is usually acceptable."
+    }
+  ],
+  "ctaText": "Use TokenRate's Filter panel to pick your fast, balanced, and flagship tier models — then sort each by 'best value' to make sure you're not overpaying for any tier slot.",
+  "sources": [
+    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Pick router models" },
+    { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Unified API for multi-vendor routing" },
+    { "label": "Anthropic Pricing", "url": "https://www.anthropic.com/pricing", "note": "Claude tiers" },
+    { "label": "OpenAI Pricing", "url": "https://openai.com/api/pricing", "note": "GPT and o-series tiers" }
+  ]
+}

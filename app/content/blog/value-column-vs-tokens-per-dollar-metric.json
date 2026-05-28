@@ -1,0 +1,61 @@
+{
+  "category": "fundamentals",
+  "slug": "value-column-vs-tokens-per-dollar-metric",
+  "keyword": "value column vs tokens per dollar LLM metric",
+  "title": "Value Column vs Tokens Per Dollar: Which LLM Cost Metric Is Right for You?",
+  "description": "Compare two key LLM cost metrics — TokenRate's Value column (quality ÷ input cost) and the older Tokens Per Dollar metric. When to use each for picking the right model in 2026.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-05-28T16:50:00.000Z",
+  "tags": [
+    "value column",
+    "tokens per dollar",
+    "LLM cost metric",
+    "quality-adjusted pricing"
+  ],
+  "sections": [
+    {
+      "heading": "Two Metrics, Two Different Questions",
+      "body": "When developers talk about 'what's the most cost-efficient LLM', they often mean two completely different things. Tokens Per Dollar (TPD) answers 'how much compute do I get for $1' — useful when quality is held constant or doesn't matter. The Value column on TokenRate answers 'how much quality-adjusted compute do I get for $1' — useful when quality and price both matter. These are not interchangeable. A model with 10 million tokens per dollar at quality 15 has the same TPD ranking as a model with 10M tokens per dollar at quality 70 — but the second one is the only one you'd actually ship. This post walks through when to use each metric and how they show up on [the calculator](/) and [Compare Prices tool](/tools/compare-prices)."
+    },
+    {
+      "heading": "Tokens Per Dollar: The 2024 Metric",
+      "body": "Tokens Per Dollar is the legacy LLM cost metric. Math: 1,000,000 ÷ input cost per 1M tokens. A model at $0.10/1M input gives you 10M tokens per dollar; at $1/1M it gives 1M tokens per dollar; at $15/1M (Claude Opus 4) it gives 67,000. The metric was great in 2023–2024 when 'is this model production-grade' was usually a yes/no and you mostly cared about throughput. In 2026 it's incomplete: every provider now ships models from $0.05/1M input up to $20/1M input, and quality varies enormously across that range. Sorting by TPD alone surfaces budget-tier models that may or may not be production-ready. For TPD-specific context, see [tokens per dollar comparison 2026](/blog/tokens-per-dollar-comparison-2026)."
+    },
+    {
+      "heading": "Value Column: The 2026 Metric",
+      "body": "TokenRate's Value column is quality score ÷ input cost per 1M tokens. Higher is better. A model at quality 73 / $0.55 input = value 133. At quality 80 / $15 input = value 5.3. The Value metric is the right default for production routing decisions because it penalizes both 'cheap-and-junk' (low quality) and 'expensive-and-incremental' (high price). When you sort the calculator by 'best value', you see the highest-quality model that fits any given price point — which is exactly the production question. The formula is also workload-portable: a multi-step agent on a $200/mo budget gets the same Value ranking as a single-shot classifier on a $20,000/mo budget. For broader context, see [quality per dollar LLM ranking 2026](/blog/quality-per-dollar-llm-ranking-2026) and [why the cheapest LLM isn't always the best value](/blog/why-cheapest-llm-isnt-always-best-value)."
+    },
+    {
+      "heading": "When TPD Still Wins",
+      "body": "Tokens Per Dollar is the right metric in three cases. (1) Quality is genuinely fungible — synthetic data generation (sampling errors average out), embedding-adjacent classification (small fixed output set), pre-filter triage stages. (2) You've already constrained to a single quality tier and want to maximize throughput within it — e.g., 'cheapest credible Top (75+) model' or 'cheapest credible fast-tier model'. (3) You're benchmarking the absolute cost floor — research, budgeting, what's-possible-at-the-bottom. For these cases, sort the [calculator](/) by 'cheapest' (which reads as 'highest TPD') and the result is what you want. For everything else, use the Value column."
+    },
+    {
+      "heading": "Side-by-Side: A Worked Example",
+      "body": "Take three models. Llama 3.2 1B: quality 15, $0.05 input → TPD 20,000,000, Value 300. Gemini 2.5 Flash-Lite: quality 55, $0.075 input → TPD 13,300,000, Value 733. Claude Sonnet 4.7: quality 80, $3 input → TPD 333,000, Value 27. By TPD: Llama wins by 50%. By Value: Gemini Flash-Lite wins by 2.4x over Llama and by 27x over Sonnet — the production-best pick across a wide range of workloads. By raw quality: Sonnet wins. By value-at-flagship-tier (filter to Quality 75+): Sonnet is the only candidate. Each metric answers a different question. The [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) plus the right sort gives you the answer to whichever question your workload actually needs. See [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost) for the full workflow."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which metric should I default to in 2026?",
+      "answer": "Value column for production routing decisions; Tokens Per Dollar only when quality is fungible (synthetic data, triage, embeddings reranking). The Value column is TokenRate's default for the 'best value' sort because it captures both axes."
+    },
+    {
+      "question": "What if I want to factor in output cost instead of input cost?",
+      "answer": "The Value column uses input cost because input dominates volume in most workloads. For generation-heavy use cases, switch to /tools/compare-prices and mentally compute quality ÷ output cost from the side-by-side grid. Output-cost-leaders often differ from input-cost-leaders."
+    },
+    {
+      "question": "Can I see both metrics on the same screen?",
+      "answer": "Yes — the calculator shows Quality, Input Cost, Output Cost, and Value columns simultaneously. You can derive Tokens Per Dollar from Input Cost (1,000,000 ÷ input cost). The Compare Prices view at /tools/compare-prices shows the same columns in a side-by-side grid."
+    },
+    {
+      "question": "Does the Value column update with live pricing?",
+      "answer": "Yes — both the quality numerator (Arena AI + Artificial Analysis) and the price denominator (OpenRouter) refresh every 60 minutes. So the Value ranking is at most one hour stale."
+    }
+  ],
+  "ctaText": "Sort TokenRate's calculator by 'best value' for production routing, or by 'cheapest' when quality is fungible — and use Filters to combine the two for tier-specific picks.",
+  "sources": [
+    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Value and price columns" },
+    { "label": "OpenRouter Pricing", "url": "https://openrouter.ai/api/v1/models", "note": "Live cost source" },
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Quality numerator source" }
+  ]
+}

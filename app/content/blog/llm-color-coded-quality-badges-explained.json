@@ -1,0 +1,61 @@
+{
+  "category": "fundamentals",
+  "slug": "llm-color-coded-quality-badges-explained",
+  "keyword": "LLM quality color badges purple sky emerald zinc",
+  "title": "Reading LLM Quality at a Glance: TokenRate's Color-Coded Badges Explained",
+  "description": "How to read TokenRate's color-coded LLM quality badges — purple flagship (80+), sky balanced (65–79), emerald mid-tier (50–64), zinc budget (under 50) — and use them for fast model triage.",
+  "readTime": "6 min read",
+  "publishedAt": "2026-05-28T16:45:00.000Z",
+  "tags": [
+    "LLM quality badges",
+    "color-coded models",
+    "TokenRate UX",
+    "quality score"
+  ],
+  "sections": [
+    {
+      "heading": "Why Color Coding the Quality Column",
+      "body": "A 70-row model table with a numeric quality column is technically readable but slow to scan. The eye is much faster at parsing color buckets than two-digit numbers. That's why the [Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm) on TokenRate's calculator uses four color bands: purple (80+, flagship), sky blue (65–79, balanced), emerald green (50–64, mid-tier), and zinc grey (under 50, budget). Open [the calculator](/), let your eyes go down the column, and within seconds you know the quality landscape — without reading any individual numbers. This post documents what each color means and how to use it for fast model triage."
+    },
+    {
+      "heading": "Purple (80+): Flagship-Tier Quality",
+      "body": "Purple badges mark frontier-quality models — GPT-5 (78–80), Claude Opus 4 (80), OpenAI o3 (82), Grok 4 (78), Claude Sonnet 4.7 (80). These are the models you reach for when the task is genuinely hard or when output quality directly drives revenue. Purple correlates closely with Arena AI Elo 1480+ and Artificial Analysis Intelligence Index 78+. The catch: purple-tier models cost 10–30x more than the cheapest credible alternatives. Don't route 100% of traffic to a purple model — use it as your escalation tier in a [multi-model router](/blog/multi-model-routing-with-quality-scores). For specific picks, see [top quality LLMs 75+](/blog/top-quality-llms-score-75-and-above)."
+    },
+    {
+      "heading": "Sky Blue (65–79): Balanced Production Default",
+      "body": "Sky badges mark the production sweet spot — Claude Sonnet 4.7 (80, just barely upgraded to purple), GPT-5 mini (68), Gemini 2.5 Pro (76), DeepSeek R1 (73), Claude Haiku 4.5 (65), DeepSeek V3 (65), Gemini 2.5 Flash (66), o3-mini (72). This is where 70–80% of production traffic should land: quality good enough for chat, RAG, structured outputs, and most agentic workflows, at prices 5–30x cheaper than purple-tier. Sky is the right tier filter for most teams' baseline routing — the [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) calls this 'Good (50+)' but practically you want 65+ for user-facing work. See [flagship balanced fast reasoning LLM tiers](/blog/flagship-balanced-fast-reasoning-llm-tiers) for the full taxonomy."
+    },
+    {
+      "heading": "Emerald (50–64): Mid-Tier Workhorses",
+      "body": "Emerald badges mark mid-tier models — Llama 4 Maverick (62), Llama 4 Scout (55), Gemini 2.5 Flash-Lite (55), Mistral Large (51), GPT-4o mini (51), Qwen 2.5 Coder 32B (58), Codestral (50). These are the volume-throughput tier: not flagship-quality, but reliably above the threshold where outputs become user-visible failures on routine tasks. Use emerald for classification, summarization, intent detection, light extraction, embeddings reranking, and any high-volume work where 'good enough' beats 'perfect but 10x more expensive'. For specific picks at this tier, see [best LLMs under $1 per million tokens](/blog/best-llm-under-1-dollar-per-million-tokens-2026) and [underrated bargain LLMs Qwen Mistral Llama](/blog/underrated-bargain-llms-qwen-mistral-llama)."
+    },
+    {
+      "heading": "Zinc (Under 50): Budget Tier, Use Carefully",
+      "body": "Zinc badges mark models below the 50 quality threshold — Mistral Small (42), Llama 3.1 8B (30), Llama 3.2 1B (15), Mistral Nemo (38), older Llama 3 variants. These are usable but error-prone — instruction-following gets shaky, structured outputs need extra validation, hallucination rate rises. Right use cases: synthetic data generation (sampling errors average out), pre-filter triage stages, embedding-adjacent classification, on-device inference where size matters more than quality. Wrong use cases: anything user-facing, anything where errors aren't caught downstream. The Quality preset 'Rated only' on the [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) leaves zinc-tier models in the list; 'Good (50+)' hides them. For the trap to avoid, see [why the cheapest LLM isn't always the best value](/blog/why-cheapest-llm-isnt-always-best-value)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Where do the color thresholds (80, 65, 50) come from?",
+      "answer": "They're empirically calibrated to match how production teams segment models in practice. 80+ aligns with Arena AI Elo 1500+ (frontier); 65 aligns with Elo ~1450 (balanced production); 50 aligns with Elo ~1380 (mid-tier reliable). Below 50 is the threshold where instruction-following and structured-output reliability start to deteriorate."
+    },
+    {
+      "question": "Why purple, sky, emerald, zinc — what about red/yellow/green?",
+      "answer": "Quality bands aren't a red-yellow-green situation because we don't want to suggest 'bad' for any model — they all have legitimate uses. The colored palette signals tier without implying judgment: purple is regal (flagship), sky is calm (production default), emerald is workmanlike (volume), zinc is neutral (specialized use)."
+    },
+    {
+      "question": "Does the color show up on the Compare Prices view too?",
+      "answer": "Yes — the Quality column carries the same color coding into the side-by-side comparison grid at /tools/compare-prices, so you can scan tier badges across vendors at a glance."
+    },
+    {
+      "question": "What if a model has no badge?",
+      "answer": "It means TokenRate's quality pipeline (Arena AI, Artificial Analysis, static fallback) doesn't have a score for that model. Pricing and context-window data still display normally. Apply the 'Rated only' Quality filter to hide unrated models from the list."
+    }
+  ],
+  "ctaText": "Open the TokenRate calculator and scan the Quality column — within seconds you'll see the full landscape of flagship (purple), balanced (sky), mid-tier (emerald), and budget (zinc) models.",
+  "sources": [
+    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Color-coded quality badges" },
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Elo source" },
+    { "label": "Artificial Analysis", "url": "https://artificialanalysis.ai", "note": "Intelligence Index" }
+  ]
+}

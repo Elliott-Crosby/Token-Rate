@@ -1,0 +1,62 @@
+{
+  "category": "comparisons",
+  "slug": "claude-vs-gpt-vs-gemini-quality-per-dollar-showdown",
+  "keyword": "Claude vs GPT vs Gemini quality per dollar",
+  "title": "Claude vs GPT vs Gemini: The Quality-Per-Dollar Showdown for 2026",
+  "description": "Head-to-head comparison of Anthropic Claude, OpenAI GPT, and Google Gemini ranked by quality per dollar using the TokenRate Value column. Best picks for flagship, balanced, and fast tiers.",
+  "readTime": "9 min read",
+  "publishedAt": "2026-05-28T15:50:00.000Z",
+  "tags": [
+    "Claude vs GPT vs Gemini",
+    "AI model comparison",
+    "quality per dollar",
+    "value AI"
+  ],
+  "sections": [
+    {
+      "heading": "The Big Three by the Numbers",
+      "body": "Anthropic, OpenAI, and Google together account for roughly 85% of commercial LLM API spend in 2026. Picking among them used to be a matter of personal taste; with TokenRate's [Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm) and [Value column](/blog/quality-per-dollar-llm-ranking-2026) the choice is now quantified. Each provider runs three production-relevant tiers (flagship, balanced, fast) plus an optional reasoning variant. This post walks the three big providers head-to-head, tier by tier, and tells you which wins each match — by quality, by price, and by quality-per-dollar. Open [the calculator](/) alongside this post and filter to a provider to follow along."
+    },
+    {
+      "heading": "Flagship Tier: Claude Opus 4 vs GPT-5 vs Gemini 2.5 Pro",
+      "body": "Quality: Claude Opus 4 ~80, GPT-5 ~78, Gemini 2.5 Pro ~76 — all flagship-grade. Input cost: Opus 4 $15, GPT-5 $1.25, Gemini 2.5 Pro $1.25. Output cost: Opus 4 $75, GPT-5 $10, Gemini 2.5 Pro $5. Value (quality ÷ input cost): Opus 4 ~5, GPT-5 ~62, Gemini ~61. So Opus 4 has the slightly higher quality score but GPT-5 and Gemini 2.5 Pro destroy it on value by a factor of 10x+. Verdict: pick Opus 4 only if the 2-point quality gap directly drives revenue or if you're already deep in the Anthropic ecosystem (Claude Code, Bedrock contracts, etc.). For most teams, GPT-5 or Gemini 2.5 Pro is the right flagship default. For more on this, see [Claude Opus 4 worth the price](/blog/claude-opus-4-worth-the-price) and [Claude vs GPT-4o pricing](/blog/claude-vs-gpt4o-pricing)."
+    },
+    {
+      "heading": "Balanced Tier: Claude Sonnet 4.7 vs GPT-5 mini vs Gemini 2.5 Flash",
+      "body": "Quality: Claude Sonnet 4.7 ~80, GPT-5 mini ~68, Gemini 2.5 Flash ~66. Input cost: Sonnet $3, GPT-5 mini $0.30, Gemini 2.5 Flash $0.15. Output cost: Sonnet $15, GPT-5 mini $2, Gemini 2.5 Flash $0.60. Value: Sonnet ~27, GPT-5 mini ~227, Gemini 2.5 Flash ~440. Sonnet has the meaningful quality advantage — 12+ points over its 'balanced' competition — at 10–20x the price. For the same balanced-tier slot, Gemini 2.5 Flash is the value king, GPT-5 mini is the OpenAI-ecosystem sweet spot, and Claude Sonnet 4.7 is the premium choice when quality matters more than price. For deep dives, see [Claude Sonnet vs GPT-4o cost comparison](/blog/claude-sonnet-vs-gpt4o-cost-comparison) and [Gemini Flash vs GPT-4o-mini budget model](/blog/gemini-flash-vs-gpt4o-mini-budget-model)."
+    },
+    {
+      "heading": "Fast Tier: Claude Haiku 4.5 vs GPT-4o mini vs Gemini 2.5 Flash-Lite",
+      "body": "Quality: Claude Haiku 4.5 ~65, GPT-4o mini ~51, Gemini 2.5 Flash-Lite ~55. Input cost: Haiku $0.25, GPT-4o mini $0.15, Flash-Lite $0.075. Output cost: Haiku $1.25, GPT-4o mini $0.60, Flash-Lite $0.30. Value: Haiku ~260, GPT-4o mini ~340, Flash-Lite ~733. Gemini Flash-Lite wins on raw value by a wide margin. Claude Haiku 4.5 wins on quality. GPT-4o mini is the OpenAI-ecosystem default but lags on both. Pick: Flash-Lite for volume-bound classification and extraction; Haiku 4.5 for chat-quality work where instruction-following matters; GPT-4o mini only if you're already in OpenAI's stack. See [Claude Haiku 4 review and pricing](/blog/claude-haiku-4-review-and-pricing) for more depth."
+    },
+    {
+      "heading": "Reasoning Variant: Claude Extended Thinking vs OpenAI o3 vs Gemini Thinking",
+      "body": "Anthropic, OpenAI, and Google all now ship reasoning-variant flagships. Quality: o3 ~82, Claude Opus 4 with thinking ~83, Gemini 2.5 Pro with thinking ~78. Input cost: o3 $10, Claude thinking $15 base + $15/M thinking, Gemini 2.5 Pro $1.25 (thinking included). Output cost: o3 $40, Claude thinking $75 base + $60/M thinking, Gemini 2.5 Pro $5. For pure reasoning quality, o3 and Claude thinking trade blows depending on benchmark; Gemini 2.5 Pro is close behind at a fraction of the price. The smart pick depends on workload: hard math/code on o3, nuanced reasoning on Claude thinking, anything else on Gemini 2.5 Pro. For background, see [Claude extended thinking cost analysis](/blog/claude-extended-thinking-cost-analysis), [OpenAI o3-mini cost reasoning](/blog/openai-o3-mini-cost-reasoning), and [DeepSeek R1 vs OpenAI o3 cost](/blog/deepseek-r1-vs-openai-o3-cost). To see all three reasoning variants live, use [/tools/compare-prices](/tools/compare-prices)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which provider has the best quality per dollar overall in 2026?",
+      "answer": "Google Gemini wins on raw value across every tier — Flash-Lite, Flash, and 2.5 Pro all rank high on quality ÷ cost. Anthropic Claude wins on absolute quality at the balanced and fast tiers (Sonnet 4.7, Haiku 4.5). OpenAI sits in between, with GPT-5 mini as their value standout. The right pick depends on whether you optimize for value (Gemini) or quality (Claude)."
+    },
+    {
+      "question": "Should I use a single provider or mix Claude, GPT, and Gemini?",
+      "answer": "Mixing is the production norm in 2026. Different providers excel at different tiers, and using their cheapest+best-fit tier each typically beats single-provider routing by 30–60% on total cost. The complexity overhead (multiple API keys, different SDKs, varied rate limits) is real but worth it at scale. See [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "question": "How do I compare these three providers in real time?",
+      "answer": "Open TokenRate's Compare Prices view at /tools/compare-prices, select Anthropic, OpenAI, and Google from the provider dropdowns, and pick the specific models you want to grid. Quality, input, output, and context show side by side."
+    },
+    {
+      "question": "Is the quality ranking the same as Arena AI Elo for these models?",
+      "answer": "Very close. TokenRate's Quality column blends Arena AI Elo with the Artificial Analysis Intelligence Index, then falls back to a curated static table. For the big three providers, all three models in each tier appear in both Arena and AA datasets, so the score you see is the blended live signal."
+    }
+  ],
+  "ctaText": "Open /tools/compare-prices, drop one model from each of Anthropic, OpenAI, and Google into the grid, and see the quality-per-dollar comparison instantly.",
+  "sources": [
+    { "label": "Anthropic Pricing", "url": "https://www.anthropic.com/pricing", "note": "Claude API rates" },
+    { "label": "OpenAI Pricing", "url": "https://openai.com/api/pricing", "note": "GPT and o-series rates" },
+    { "label": "Google Gemini API Pricing", "url": "https://ai.google.dev/pricing", "note": "Gemini rates" },
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Live Elo source" }
+  ]
+}

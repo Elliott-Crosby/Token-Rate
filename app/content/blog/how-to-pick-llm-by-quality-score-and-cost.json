@@ -1,0 +1,65 @@
+{
+  "category": "building",
+  "slug": "how-to-pick-llm-by-quality-score-and-cost",
+  "keyword": "pick LLM by quality score and cost",
+  "title": "How to Pick an LLM by Quality Score and Cost: A Practical Framework",
+  "description": "A 5-step framework for picking the right LLM by quality score and cost in 2026 — using TokenRate's Filter panel, Value column, and Compare Prices tool together.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T15:45:00.000Z",
+  "tags": [
+    "LLM selection",
+    "model decision framework",
+    "AI cost optimization",
+    "quality vs cost"
+  ],
+  "sections": [
+    {
+      "heading": "Stop Picking Models by Reading Twitter Threads",
+      "body": "The most common LLM-selection workflow in 2025 went like this: read a Twitter thread, skim a benchmark, pick the model someone influential praised. That's noisy. The thread author might be optimizing for a different workload, the benchmark might not match your task, and the praise might be outdated by next week's model release. The deterministic alternative: filter by quality score and cost, narrow to 3–5 finalists, and run your own eval before committing. The whole point of [TokenRate's Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm) and [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) is to compress steps 1–3 of that workflow into 60 seconds. Below is the five-step framework we recommend."
+    },
+    {
+      "heading": "Step 1 — Define Your Quality Floor",
+      "body": "Before opening the calculator, decide the minimum quality score your workload can tolerate. Heuristics: user-facing chat (75+); RAG answer synthesis (65+); summarization, classification, intent detection (50+); embeddings reranking, keyword extraction (any rated). If you're not sure, default to 50+. A quality floor lets you ignore everything below it — and that floor maps directly to the 'Top (75+)' / 'Good (50+)' / 'Rated only' presets in the [Filter panel](/blog/filter-llm-models-by-tier-cost-quality). Pick the strictest floor your task can justify; you can always relax it later."
+    },
+    {
+      "heading": "Step 2 — Define Your Cost Ceiling",
+      "body": "Same logic, other axis. Estimate your monthly token volume (use [/tools/api-cost-estimator](/tools/api-cost-estimator)), divide your monthly budget by it, and you have a maximum acceptable price per million tokens. If your budget is $500/month and you expect 100M tokens/month total (input + output combined), your ceiling is $5/M tokens — but since input typically dominates volume, you can safely set the [Cost preset](/blog/filter-llm-models-by-tier-cost-quality) to '$1–$10' for input. Be honest about volume; the most common mistake is underestimating by 3–10x. For background, see [why your LLM bill is higher than expected](/blog/why-your-llm-bill-is-higher-than-expected) and [how to calculate OpenAI API costs](/blog/how-to-calculate-openai-api-costs)."
+    },
+    {
+      "heading": "Step 3 — Filter, Sort by Value, Read the Top 5",
+      "body": "Open [the calculator](/), click Filters, apply your quality floor and cost ceiling. Then sort by 'best value' — the column that ranks models by quality ÷ input cost. Read the top 5: those are your finalists. Some practical notes: don't blindly take #1 if its provider doesn't match your stack (e.g., picking xAI when you're already deep in Anthropic tooling); do consider context window if your prompts are long (Gemini 2.5 Pro's 1M window beats Claude's 200K for whole-codebase prompts); do check the source badge on the Quality column ('arena' vs 'aa') if the top model's score seems surprising."
+    },
+    {
+      "heading": "Step 4 — Side-by-Side Comparison",
+      "body": "Switch from the calculator to the [Compare Prices tool](/tools/compare-prices). Add your 3–5 finalists from their respective provider dropdowns. Now you have a grid showing input cost, output cost, context window, and quality next to each other. Look for: (a) output cost outliers — DeepSeek R1's $2.19 output beats o3's $40 but loses to Gemini Flash's $0.30; (b) context-window cliffs — a 200K model can't handle a 500K prompt without chunking; (c) quality gaps where the cheap option is close enough to the expensive one to ship without the premium. For specific comparison patterns, see [Claude vs GPT vs Gemini quality per dollar showdown](/blog/claude-vs-gpt-vs-gemini-quality-per-dollar-showdown) and [compare AI model prices side by side](/blog/compare-ai-model-prices-side-by-side-tool)."
+    },
+    {
+      "heading": "Step 5 — Run Your Own 50-Prompt Eval",
+      "body": "The Quality column narrows 70+ models to 5; your own eval picks the actual winner. Build a representative test set: 50 prompts that match your real production traffic (sampled from logs or hand-written from spec). Run each finalist against the set, score outputs against ground truth or use an LLM judge. Calculate per-model cost using [the API cost estimator](/tools/api-cost-estimator). Pick the model with the highest pass rate that fits the budget. This step takes 1–2 days but saves months of regret. For implementation patterns, see [building cost-aware AI agents](/blog/building-cost-aware-ai-agent), [token usage auditing](/blog/token-usage-auditing-find-hidden-costs), and [how to pick the right AI model for your budget](/blog/how-to-pick-the-right-ai-model-for-your-budget)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How long should the LLM selection process take?",
+      "answer": "Steps 1–4 (define thresholds, filter, compare) should take under 30 minutes. Step 5 (your own eval) takes 1–2 days but is non-negotiable for production decisions. Skipping the eval means relying on average human preference data that may not match your specific task."
+    },
+    {
+      "question": "Should I run the eval on more than 50 prompts?",
+      "answer": "50 is the minimum for a sanity check. For production routing decisions, 200–500 prompts gives much better confidence — especially across different prompt types. Use stratified sampling from your real traffic if you have it."
+    },
+    {
+      "question": "What if no model meets both my quality floor and cost ceiling?",
+      "answer": "Then your constraints are too tight. Options: raise the cost ceiling (and revise budget), relax the quality floor (and accept more retries/fallbacks), or implement multi-model routing — cheap default with escalation to a higher-quality model on hard prompts. See [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "question": "Do I need to redo this every time a new model launches?",
+      "answer": "No — only when (a) your existing model becomes a value laggard, (b) a new release directly competes in your tier, or (c) your workload changes significantly. Most teams recheck quarterly. Bookmark the filtered calculator URL with your tier and cost preset, and check whenever pricing news hits."
+    }
+  ],
+  "ctaText": "Open TokenRate's calculator, set your filters, sort by 'best value', then move your top 3 finalists into the Compare Prices view — the whole funnel takes under five minutes.",
+  "sources": [
+    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Filter and sort" },
+    { "label": "TokenRate Compare Prices", "url": "https://www.tokenrate.dev/tools/compare-prices", "note": "Side-by-side grid" },
+    { "label": "Anthropic Eval Best Practices", "url": "https://docs.anthropic.com/en/docs/test-and-evaluate", "note": "Evaluation guidance" }
+  ]
+}

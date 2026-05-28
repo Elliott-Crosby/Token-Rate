@@ -1,0 +1,60 @@
+{
+  "category": "fundamentals",
+  "slug": "popular-sort-round-robin-providers-llm",
+  "keyword": "popular sort LLM round-robin providers",
+  "title": "Why the 'Popular' Sort on TokenRate Round-Robins Across Providers (And Why That Beats Grouping)",
+  "description": "TokenRate's 'Popular' sort now round-robins flagship Anthropic, OpenAI, Google, DeepSeek, and Mistral models instead of grouping all of one provider together. Here's why that's the right default.",
+  "readTime": "6 min read",
+  "publishedAt": "2026-05-28T16:40:00.000Z",
+  "tags": [
+    "TokenRate sort",
+    "LLM popularity",
+    "model browser UX",
+    "AI calculator"
+  ],
+  "sections": [
+    {
+      "heading": "The Default Sort Problem",
+      "body": "When you open an LLM calculator and see 70 models, the order matters more than most users realize. Sort alphabetically and you get a wall of 'Claude…' before any other vendor surfaces. Sort by price and you get the cheapest junk first. Sort by quality and you get a flagship-only top — fine for some workflows, but not the right browsing experience. TokenRate's 'Popular' sort is the default browse mode, and we redesigned it to round-robin across providers — flagship Anthropic → flagship OpenAI → flagship Google → flagship Meta → flagship DeepSeek → flagship Mistral → flagship xAI → back to Anthropic #2, etc. That ordering exposes the full provider landscape on the first scroll instead of burying smaller vendors below 15 Claude variants. This post explains why."
+    },
+    {
+      "heading": "The Old Behavior and What Was Wrong With It",
+      "body": "Before the update, 'Popular' sort grouped all of one provider's models together — usually Anthropic first (alphabetical), then OpenAI, then Google. The result: if you didn't already know what you were shopping for, you saw 12 Claude variants before a single GPT, then 10 GPT variants before a single Gemini. Smaller vendors (xAI, DeepSeek, Mistral) appeared 30+ rows down. Users hit the bottom of the visible area without realizing those vendors even existed in TokenRate's catalog. The grouped sort was great for 'I know I want a Claude model and want to compare them' but terrible for 'I'm browsing to discover'. Most users browsing the [calculator](/) are in the second mode, not the first."
+    },
+    {
+      "heading": "How the New Round-Robin Sort Works",
+      "body": "The new behavior: each provider's models are sorted internally by quality (highest first), then the calculator interleaves one model from each provider in priority order. Anthropic #1 (flagship-tier, top quality), OpenAI #1, Google #1, Meta #1, DeepSeek #1, Mistral #1, xAI #1 — then Anthropic #2, OpenAI #2, and so on. The top of the visible list is the seven flagship choices, one per provider, sortable instantly by clicking a column header. Tier-2 models follow the same pattern. The change makes the calculator a much better discovery tool — you see Grok 4 next to GPT-5 next to Claude Opus 4 next to Gemini 2.5 Pro on the first screen, without scrolling. For the broader filter-and-sort UX, see [filter LLM models by tier, cost, quality](/blog/filter-llm-models-by-tier-cost-quality)."
+    },
+    {
+      "heading": "Other Sort Options That Now Behave Better",
+      "body": "Alongside the popular-sort change, two new sort options shipped: 'highest quality' and 'best value'. 'Highest quality' sorts strictly by the [blended quality score](/blog/how-llm-quality-scores-are-calculated) — useful when you want to see the absolute frontier first. 'Best value' uses quality ÷ input cost — useful for the production routing decisions covered in [quality per dollar LLM ranking 2026](/blog/quality-per-dollar-llm-ranking-2026). The existing 'cheapest' and 'most expensive' sorts now tie-break on quality descending, so two models at the same price surface the higher-quality one first. The combination of round-robin Popular + quality/value sorts covers ~95% of how users actually browse the calculator."
+    },
+    {
+      "heading": "When to Use Each Sort",
+      "body": "Use 'Popular' (the default) when browsing — you'll see one model from each provider before scrolling. Use 'best value' when picking a production model — the top of the list is the most cost-efficient choice that hits quality criteria. Use 'highest quality' when you've already filtered by cost and just want the best of the survivors. Use 'cheapest' only after applying a Quality filter (otherwise the top results are very-low-quality models — the [cheap-LLM trap](/blog/why-cheapest-llm-isnt-always-best-value)). And use the [Compare Prices view](/tools/compare-prices) once your sort has narrowed candidates to a side-by-side grid. Each sort is a different lens on the same underlying data — the live OpenRouter pricing feed plus the Arena + AA quality index."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How does 'Popular' decide which provider goes first in the round-robin?",
+      "answer": "TokenRate orders providers by a curated priority: Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, xAI. Within each provider, models are pre-sorted by quality descending. The interleave then cycles through providers, so position 1 is Anthropic flagship, position 2 is OpenAI flagship, position 3 is Google flagship, etc."
+    },
+    {
+      "question": "Can I still see all Claude models together?",
+      "answer": "Yes — apply the Provider filter (Anthropic) and the round-robin disappears, leaving only Claude variants sorted by quality. Or open /tools/compare-prices and pick all Claude models from the Anthropic dropdown for a side-by-side grid."
+    },
+    {
+      "question": "What changed about the 'cheapest' and 'most expensive' sorts?",
+      "answer": "Both now tie-break on quality descending. Previously two models at $0.50 input would surface in arbitrary order; now the higher-quality one appears first. Same logic for 'most expensive' — at equal price, higher quality wins."
+    },
+    {
+      "question": "How is this different from sorting by 'best value'?",
+      "answer": "'Popular' is a curated browse order (one model per provider in priority sequence). 'Best value' is a metric (quality ÷ input cost). Popular is for discovery; best value is for picking a production model. Use both, depending on the task."
+    }
+  ],
+  "ctaText": "Open the TokenRate calculator with the default 'Popular' sort to see flagship models from every major provider on the first scroll — then switch to 'best value' to pick the production winner.",
+  "sources": [
+    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Live sort options" },
+    { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Pricing data feed" }
+  ]
+}

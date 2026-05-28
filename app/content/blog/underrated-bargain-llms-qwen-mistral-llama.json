@@ -1,0 +1,63 @@
+{
+  "category": "cost-optimization",
+  "slug": "underrated-bargain-llms-qwen-mistral-llama",
+  "keyword": "underrated bargain LLMs Qwen Mistral Llama",
+  "title": "The Most Underrated Bargain LLMs: Qwen 2.5, Mistral, and Llama 3/4 by Quality and Cost",
+  "description": "Forget Claude and GPT for a moment — Qwen 2.5, Mistral, and Llama 3/4 are the most underrated bargain LLMs of 2026. See how they rank on TokenRate's Quality and Value columns.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T16:30:00.000Z",
+  "tags": [
+    "Qwen 2.5",
+    "Mistral",
+    "Llama",
+    "bargain LLM",
+    "open-source AI"
+  ],
+  "sections": [
+    {
+      "heading": "The Open-Source / Open-Weights Underdogs",
+      "body": "When the LLM conversation focuses on Claude, GPT, and Gemini, three open-weight families get overlooked: Qwen (Alibaba), Mistral (Mistral AI), and Llama (Meta). All three publish strong models under permissive licenses, all three are available via cheap hosted APIs (DeepInfra, Together, Fireworks, OpenRouter, Hugging Face Inference), and all three score well above the 'budget' tier on quality. They're often the smartest pick for cost-sensitive workloads, multi-language inference, on-prem requirements, and any case where data-residency or fine-tuning rights matter. This post ranks the underrated bargains on TokenRate's [Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm) and [Value column](/blog/quality-per-dollar-llm-ranking-2026)."
+    },
+    {
+      "heading": "Qwen 2.5: The Hidden Multilingual Bargain",
+      "body": "Qwen 2.5 (Alibaba) ships in five hosted sizes: 1.5B, 7B, 14B, 32B, and 72B. The TokenRate Quality column scores them: 1.5B ~25, 7B ~36, 14B ~42, 32B ~48, 72B ~53. Hosted pricing via DeepInfra and Together typically runs $0.10–$0.50 per million input depending on size. The standout is Qwen 2.5 Coder 32B at quality ~58 and $0.30 input — Qwen's coding-specialized variant scores higher than several Llama and Mistral generic models at a similar price. Best use case: multilingual workloads (Qwen has strong Chinese, Japanese, Korean, and Arabic), code synthesis at budget tier, and any workload where you want to fine-tune without licensing fees. For multilingual cost context, see [tokens per dollar comparison 2026](/blog/tokens-per-dollar-comparison-2026)."
+    },
+    {
+      "heading": "Mistral: The European Bargain With Data-Residency Bonus",
+      "body": "Mistral's hosted lineup as of 2026: Mistral Large at quality 51 / $2 input; Mistral Medium at 48 / $0.40 input; Mistral Small at 42 / $0.20 input; Mistral Nemo at 38 / $0.15 input; Pixtral Large (multimodal) at 52 / $2 input; Codestral (coding) at 50 / $0.20 input; Ministral 8B at 35 / $0.10 input. Mistral's value proposition: EU-hosted data residency (a hard requirement for many European enterprises), permissive open-weights for self-hosting, and competitive quality at mid-budget pricing. The standouts on TokenRate's Value column: Mistral Small and Codestral, both punching above their weight at $0.20 input. For full pricing context, see [Mistral vs Claude token pricing](/blog/mistral-vs-claude-token-pricing)."
+    },
+    {
+      "heading": "Llama 3 and 4: The Open-Weight Standard",
+      "body": "Meta's Llama family is the most widely deployed open-weight LLM in 2026. Llama 4 Maverick (quality 62, $0.20 input) and Llama 4 Scout (55, $0.10) are the current flagship and value picks. From the Llama 3 generation, Llama 3.3 70B (quality 52, $0.50 input) and Llama 3.1 405B (56, $2 input) remain in heavy production use. Smaller Llama 3.2 variants (1B, 3B, 11B, 90B) cover the very-budget and on-device tiers. Llama's strengths: maturity (most stable open-weight ecosystem), enormous community fine-tunes, and broad hosted availability (Together, Fireworks, Cerebras, Groq, AWS Bedrock, Azure). For specific picks see [Llama 3 vs Claude Haiku cost](/blog/llama-3-vs-claude-haiku-cost). Best use case: budget production routing, self-hosted privacy-sensitive deployments, fine-tuning starting points."
+    },
+    {
+      "heading": "When to Pick an Open-Weight Model Over Claude/GPT/Gemini",
+      "body": "Pick Qwen/Mistral/Llama when: (a) data residency or on-prem requirements rule out hosted closed-source APIs (Mistral wins for EU, Qwen for Asia, Llama for US/self-hosted); (b) you need to fine-tune without licensing complications (all three publish weights); (c) the quality floor is moderate (50+ is enough) and your bill is large enough that 50% cost reduction matters; (d) multilingual coverage outside English / Western European matters (Qwen, especially); (e) you want vendor diversification (don't bet the company on one closed-source provider). Don't pick them when: you need flagship reasoning quality (no open-weight model clears 75+ on TokenRate's index in 2026), you need first-party tool ecosystems (Assistants API, structured outputs, Claude Code), or you need the latest model release within hours of launch. To compare all three families head-to-head, use [/tools/compare-prices](/tools/compare-prices) with provider dropdowns set to Meta, Mistral, and Qwen-on-OpenRouter."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which open-weight LLM has the highest quality score in 2026?",
+      "answer": "Llama 4 Maverick at quality ~62, followed by Llama 3.1 405B at ~56, then Qwen 2.5 72B at ~53. All three top out below the closed-source frontier — no open-weight model currently clears the 'Top (75+)' filter on TokenRate's Quality preset."
+    },
+    {
+      "question": "Where do I find live pricing for Qwen, Mistral, and Llama on TokenRate?",
+      "answer": "All three appear in the main calculator (filter to Provider = Meta or Mistral, or look for Qwen models in the full list). The Compare Prices view at /tools/compare-prices lets you grid them against closed-source models for direct comparison."
+    },
+    {
+      "question": "Are Qwen, Mistral, and Llama production-ready?",
+      "answer": "Yes for the right workloads. All three are deployed at scale by major companies in 2026. The right workloads are budget-sensitive routine inference, multilingual coverage, on-prem requirements, and any case where fine-tuning rights matter. Don't pick them for hardest-tier reasoning."
+    },
+    {
+      "question": "Which is cheapest to host?",
+      "answer": "On hosted APIs: Llama 4 Scout at $0.10 input, Mistral Nemo at $0.15, Llama 3.2 1B as low as $0.05. For self-hosting on your own GPUs, all three families ship open weights — total cost depends on your utilization. See TokenRate's calculator for live hosted pricing."
+    }
+  ],
+  "ctaText": "Open TokenRate and filter to providers Meta or Mistral — then sort by 'best value' to see how Qwen, Mistral, and Llama stack up against Claude, GPT, and Gemini.",
+  "sources": [
+    { "label": "Qwen 2.5 GitHub", "url": "https://github.com/QwenLM/Qwen2.5", "note": "Open-weight Qwen family" },
+    { "label": "Mistral AI Models", "url": "https://docs.mistral.ai/getting-started/models/models_overview/", "note": "Mistral lineup" },
+    { "label": "Meta Llama Models", "url": "https://www.llama.com/", "note": "Llama family" },
+    { "label": "Together AI", "url": "https://www.together.ai/models", "note": "Open-weight hosting" }
+  ]
+}

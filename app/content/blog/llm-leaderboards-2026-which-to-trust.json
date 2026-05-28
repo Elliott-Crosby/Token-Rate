@@ -1,0 +1,64 @@
+{
+  "category": "fundamentals",
+  "slug": "llm-leaderboards-2026-which-to-trust",
+  "keyword": "LLM leaderboards which to trust 2026",
+  "title": "LLM Leaderboards in 2026: Which Rankings to Trust, Which to Ignore",
+  "description": "A 2026 guide to the LLM leaderboards that actually matter — Arena AI, Artificial Analysis, OpenRouter, Hugging Face — and how TokenRate blends the credible ones into a single Quality column.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T16:10:00.000Z",
+  "tags": [
+    "LLM leaderboards",
+    "Arena AI",
+    "Artificial Analysis",
+    "OpenRouter",
+    "model rankings"
+  ],
+  "sections": [
+    {
+      "heading": "Too Many Leaderboards, Too Little Signal",
+      "body": "Search 'best LLM 2026' and you'll find a dozen leaderboards each claiming to rank LLMs definitively: Arena AI, Artificial Analysis, OpenRouter, Hugging Face Open LLM Leaderboard, Aider, Stanford HELM, BigBench, MERA, JudgeBench. Most disagree about who's #1. Some are gameable, some are outdated, some measure things that don't matter for your workload. This post is the cheat sheet: which leaderboards to actually trust in 2026, what each measures, and how [TokenRate's Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm) consolidates the credible ones into a single signal you can sort by on the [calculator](/) and [Compare Prices tool](/tools/compare-prices)."
+    },
+    {
+      "heading": "Trust Tier 1: Arena AI Leaderboard",
+      "body": "Arena AI (the successor to LMSYS Chatbot Arena) is the gold standard for live human-preference data. Tens of millions of pairwise blind votes feed an Elo rating that updates continuously. The methodology is well-documented and hard to game. Limitations: voter base skews toward developers (over-rewards chatty/explainer responses), global Elo blends very different prompt types (math vs creative writing), and coverage is concentrated on the top 20–30 models. TokenRate's Quality column uses Arena Elo as one of two primary upstreams — normalized so 1600 Elo ≈ 100, 1150 Elo ≈ 0. For more, see [Arena AI leaderboard Elo scores explained](/blog/arena-ai-leaderboard-elo-scores-explained)."
+    },
+    {
+      "heading": "Trust Tier 1: Artificial Analysis Intelligence Index",
+      "body": "Artificial Analysis runs MMLU-Pro, GPQA Diamond, MATH-500, HumanEval, IFEval, and several private evals against every released model, then publishes a weighted composite Intelligence Index on a 0–100 scale. It's the broadest static-benchmark coverage available — they index 80+ models including long-tail open-source variants. AA also publishes throughput and latency data alongside intelligence scores, which is useful for production routing decisions. TokenRate consumes the AA Intelligence Index when AA_API_KEY is set and falls back to Arena + static map otherwise. For comparison with Arena, see [Artificial Analysis vs Arena Elo](/blog/artificial-analysis-intelligence-index-vs-arena-elo)."
+    },
+    {
+      "heading": "Trust Tier 2: OpenRouter, Aider Polyglot, Hugging Face Open LLM",
+      "body": "OpenRouter's leaderboard ranks by actual API call volume — useful as a popularity signal but not a quality signal. Models can be popular because they're cheap, free, or first-mover, not because they're best. Use it for 'what are people actually using' but not 'which is best'. Aider Polyglot ranks LLMs specifically on coding edit-quality across multiple languages — gold standard if your workload is code, less relevant otherwise. Hugging Face's Open LLM Leaderboard ranks open-source models on a benchmark suite (MMLU, HellaSwag, GSM8K, etc.) — useful for selecting Llama / Mistral / Qwen variants but doesn't include closed-source frontier models. Each of these is great for its specific use case but shouldn't be relied on as a general-purpose ranking."
+    },
+    {
+      "heading": "Trust Tier 3: Ignore These",
+      "body": "Vendor-curated leaderboards: every major provider has at one point published 'we're best at X' charts that cherry-pick the benchmarks where they win. Treat as marketing. Single-benchmark leaderboards: MMLU alone, GSM8K alone, BIG-Bench alone — any single benchmark is gameable. Outdated leaderboards: BIG-Bench and original MMLU are saturated (top models all score 88%+, no signal left). Reddit / Twitter pollswers: too small a sample, too biased an audience. For your own production decisions, blend Arena AI + Artificial Analysis (which is what TokenRate does) and then layer your own 50–500 prompt eval. For the eval workflow, see [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which single leaderboard should I trust if I only check one?",
+      "answer": "If forced to one, Arena AI for general chat workloads and Artificial Analysis Intelligence Index for reasoning/coding. Better: use TokenRate's blended Quality column, which merges both feeds with explicit precedence and falls back to a curated map of ~70 popular models."
+    },
+    {
+      "question": "Is the OpenRouter ranking a quality signal?",
+      "answer": "No — OpenRouter ranks by API call volume, which reflects popularity (driven by price, availability, and ecosystem) more than quality. A model can dominate OpenRouter's chart because it's free or first-mover. Use OpenRouter for live pricing and 'what's available'; use Arena and AA for quality."
+    },
+    {
+      "question": "How does TokenRate decide which leaderboard wins when they disagree?",
+      "answer": "Precedence: static fallback (baseline) → Arena AI (live, top ~20 models) → Artificial Analysis (broadest coverage, gold standard when AA_API_KEY is set). The Quality column shows the blended result, with a source badge ('arena' or 'aa') so you know which feed contributed."
+    },
+    {
+      "question": "Should I trust the Hugging Face Open LLM Leaderboard for picking a hosted model?",
+      "answer": "Only if you're picking among open-source variants — the HF leaderboard excludes closed-source frontier models (GPT-5, Claude Opus 4, Gemini 2.5 Pro, Grok 4). For a complete cross-vendor comparison, use TokenRate or Arena AI."
+    }
+  ],
+  "ctaText": "Skip the leaderboard rabbit hole — use the TokenRate calculator's Quality column, which blends Arena AI and Artificial Analysis into one normalized 0–100 score across 70+ models.",
+  "sources": [
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Trust tier 1: live human voting" },
+    { "label": "Artificial Analysis", "url": "https://artificialanalysis.ai", "note": "Trust tier 1: composite static benchmarks" },
+    { "label": "OpenRouter Models Ranking", "url": "https://openrouter.ai/rankings", "note": "Popularity signal" },
+    { "label": "Hugging Face Open LLM Leaderboard", "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard", "note": "Open-source models only" },
+    { "label": "Aider Polyglot Leaderboard", "url": "https://aider.chat/docs/leaderboards/", "note": "Code-specific" }
+  ]
+}

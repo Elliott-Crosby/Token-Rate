@@ -1,0 +1,61 @@
+{
+  "category": "fundamentals",
+  "slug": "flagship-balanced-fast-reasoning-llm-tiers",
+  "keyword": "LLM model tiers flagship balanced fast reasoning",
+  "title": "Flagship, Balanced, Fast, Reasoning: Understanding LLM Tier Classifications",
+  "description": "Learn what the flagship, balanced, fast, and reasoning LLM tiers mean — and how to use them to pick the right Claude, GPT, Gemini, or DeepSeek model for any production workload.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-05-28T15:30:00.000Z",
+  "tags": [
+    "LLM tiers",
+    "model selection",
+    "flagship model",
+    "reasoning model"
+  ],
+  "sections": [
+    {
+      "heading": "Why Tiers Replaced 'Big vs Small'",
+      "body": "Two years ago you picked an LLM by size: GPT-4 vs GPT-3.5, Claude Opus vs Sonnet vs Haiku, Llama 70B vs 8B. Bigger meant smarter and slower and more expensive — and that was the entire decision tree. In 2026 that mental model is broken. Reasoning models like OpenAI o3 and DeepSeek R1 are 'smaller' than GPT-5 in raw parameter count but score higher on hard problems because they trade tokens for thought. Fast models like Claude Haiku 4.5 punch far above their weight on quality. Multimodal flagships like Gemini 2.5 Pro have huge context windows. So TokenRate (and most production teams) now classify models by four functional tiers — flagship, balanced, fast, reasoning — that map to what you'd actually pick the model for. Those four tiers are filter chips in the [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) on the calculator, color-coded so you can scan the list visually."
+    },
+    {
+      "heading": "Flagship Tier: Frontier Quality, Premium Price",
+      "body": "Flagship models are the absolute frontier of capability and command the highest prices: Claude Opus 4 ($15 input / $75 output), GPT-5 ($1.25 / $10), Grok 4 ($3 / $15), OpenAI o3 ($10 / $40). All score 78+ on TokenRate's blended Quality index and 1500+ Elo on Arena AI. Use them when (a) quality directly drives revenue (medical, legal, financial decisions), (b) the failure cost dwarfs the API cost ($1 of inference saving an hour of human work), or (c) you're at the top of the quality vs cost trade and a 5-point quality drop materially hurts your product. Don't use flagships as a default for routine traffic — they kill value column rankings. For background on whether flagships are worth it, see [Claude Opus 4 worth the price](/blog/claude-opus-4-worth-the-price) and [Anthropic vs OpenAI cheaper for startups](/blog/anthropic-vs-openai-cheaper-for-startups)."
+    },
+    {
+      "heading": "Balanced Tier: The Production Default",
+      "body": "Balanced-tier models are where 70–80% of production traffic should live. Examples: Claude Sonnet 4.7 ($3 / $15), GPT-5 mini ($0.30 / $2), Gemini 2.5 Pro ($1.25 / $5), DeepSeek V3 ($0.30 / $1.10). Quality scores cluster in the 65–80 range — comfortably above the threshold where output errors become user-visible — at prices that are 5–30x cheaper than flagships. This is the tier you reach for when you're building chat features, RAG systems, summarization, structured extraction, or any general-purpose workload where 'production-grade quality' matters but you're not solving math olympiad problems. For comparison patterns inside this tier, see [Claude Sonnet vs GPT-4o cost comparison](/blog/claude-sonnet-vs-gpt4o-cost-comparison) and [Gemini Flash vs Claude Haiku 4](/blog/gemini-flash-vs-gpt4o-mini-budget-model)."
+    },
+    {
+      "heading": "Fast Tier: Volume-Optimized, Quality-Acceptable",
+      "body": "Fast-tier models are designed for very high throughput at very low cost: Claude Haiku 4.5 ($0.25 / $1.25), Gemini 2.5 Flash ($0.15 / $0.60), Gemini 2.5 Flash-Lite ($0.075 / $0.30), GPT-4o mini ($0.15 / $0.60), Llama 4 Scout ($0.10 / $0.30). Quality scores sit in the 50–66 range — enough for non-critical work like classification, lightweight summarization, intent detection, JSON extraction with simple schemas, and any volume-bound RAG retrieval reranking. The economics are dramatic: at fast-tier prices you can serve 10x the user volume of a balanced-tier model for the same budget. Pair fast-tier with [prompt caching](/blog/prompt-caching-save-90-percent-on-ai-costs) and [batch APIs](/blog/batch-api-cut-ai-costs-in-half) for compound savings. For specific bargains in this tier, see [Claude Haiku 4 review and pricing](/blog/claude-haiku-4-review-and-pricing)."
+    },
+    {
+      "heading": "Reasoning Tier: Chain-of-Thought for Hard Problems",
+      "body": "Reasoning models are a 2025/2026 category: they invest output tokens in internal chain-of-thought before producing the visible answer, trading cost and latency for accuracy on hard problems. OpenAI o3 ($10 / $40), o3-mini ($1.10 / $4.40), DeepSeek R1 ($0.55 / $2.19), Claude extended-thinking variants. Use them for: math, novel coding problems, multi-step agentic planning, scientific analysis. Don't use them for: high-volume chat, summarization, formatting tasks — where the thinking-token overhead burns money without delivering the quality lift. The Reasoning filter chip on TokenRate is purple to distinguish it visually. For when reasoning pays off, see [Claude extended thinking cost analysis](/blog/claude-extended-thinking-cost-analysis), [OpenAI o3-mini cost reasoning](/blog/openai-o3-mini-cost-reasoning), and [DeepSeek R1 vs OpenAI o3 cost](/blog/deepseek-r1-vs-openai-o3-cost). For budget reasoning specifically, [best reasoning LLM on a budget](/blog/best-reasoning-llm-budget-2026)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Are LLM tiers official or are they TokenRate's classification?",
+      "answer": "There's no industry-wide standard. TokenRate's tier labels are curated to match how developers actually segment models for production routing. Most providers implicitly use similar segmentations (OpenAI's Standard vs Mini, Anthropic's Opus/Sonnet/Haiku/Reasoning, Google's Pro/Flash/Flash-Lite), and our four labels generalize those across vendors."
+    },
+    {
+      "question": "Can the same model belong to multiple tiers?",
+      "answer": "In TokenRate's classification, each model has one primary tier — but Claude Opus 4 with extended thinking, for example, blurs flagship and reasoning. The filter chips are multi-select on Tier specifically so you can include hybrid candidates. Use the Compare Prices tool to see overlapping models side by side."
+    },
+    {
+      "question": "Which tier should I default to for a new project?",
+      "answer": "Default to Balanced. Quality score 65–80, input cost $0.30–$3 per million tokens, output cost $1–$15 per million. You can always route specific hard prompts up to a flagship or down to a fast-tier — but balanced is the right baseline for most production traffic."
+    },
+    {
+      "question": "Why is Reasoning a separate tier and not part of Flagship?",
+      "answer": "Reasoning models have a fundamentally different cost shape — they generate many invisible thinking tokens per query, making them 5–20x more expensive per response than their non-reasoning siblings even at similar listed prices. They also have very different latency. Separating the tier prevents accidentally routing high-volume traffic into expensive thinking-token pipelines."
+    }
+  ],
+  "ctaText": "Click 'Filters' on the TokenRate calculator and toggle the tier chips to see exactly which models fit Flagship, Balanced, Fast, and Reasoning categories — then sort by 'best value' inside each tier.",
+  "sources": [
+    { "label": "Anthropic Models Documentation", "url": "https://docs.anthropic.com/en/docs/about-claude/models", "note": "Official Claude model tiers" },
+    { "label": "OpenAI Models", "url": "https://platform.openai.com/docs/models", "note": "GPT, o-series tiers" },
+    { "label": "Google AI Models", "url": "https://ai.google.dev/gemini-api/docs/models", "note": "Gemini Pro/Flash tiers" }
+  ]
+}

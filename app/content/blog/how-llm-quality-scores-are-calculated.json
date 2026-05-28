@@ -1,0 +1,61 @@
+{
+  "category": "fundamentals",
+  "slug": "how-llm-quality-scores-are-calculated",
+  "keyword": "how LLM quality scores are calculated",
+  "title": "How LLM Quality Scores Are Calculated: Inside TokenRate's Quality Index",
+  "description": "Inside look at how TokenRate calculates LLM quality scores — the precedence between Arena AI Elo, the Artificial Analysis Intelligence Index, and a curated static fallback for ~70 models.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T16:35:00.000Z",
+  "tags": [
+    "quality index methodology",
+    "LLM benchmarks",
+    "Arena AI",
+    "Artificial Analysis"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Single Number Beats Reading Five Leaderboards",
+      "body": "Every LLM has scores on a dozen benchmarks: MMLU-Pro, GPQA Diamond, MATH-500, HumanEval, IFEval, BBH, Arena Elo, OpenRouter rank. Reading all of them to pick a model takes hours. Reducing them to a single 0–100 'Quality' number makes the calculator's [filter](/blog/filter-llm-models-by-tier-cost-quality) and [sort](/blog/quality-per-dollar-llm-ranking-2026) features work. The challenge is doing the reduction honestly — without weighing benchmarks in a way that flatters one provider, without ignoring the long tail of models, and without faking precision the underlying data doesn't support. This post documents exactly how TokenRate calculates its Quality score, source-by-source, so you can decide whether to trust it for your decisions."
+    },
+    {
+      "heading": "Three Sources, Explicit Precedence",
+      "body": "TokenRate builds the Quality map from three layered sources. (1) Static fallback: a curated table of about 70 popular models with scores hand-set to match the Artificial Analysis Intelligence Index range, sourced from publicly reported benchmark results. Updated quarterly. (2) Arena AI: live Elo from the Arena AI leaderboard (the rebranded LMSYS Chatbot Arena), pulled hourly. Elo values normalize to 0–100 using an empirical range — 1150 Elo maps to 0, 1600 Elo maps to 100. (3) Artificial Analysis: the AA Intelligence Index pulled from the [AA v2 API](https://artificialanalysis.ai) hourly when AA_API_KEY is set. Already 0–100. Precedence is: static (baseline) overwritten by Arena (live, top ~20) overwritten by AA (gold standard, broadest coverage). The 'source' badge on each Quality cell shows which feed contributed."
+    },
+    {
+      "heading": "Normalization: How Elo Becomes a 0–100 Score",
+      "body": "Arena AI publishes Elo ratings on a chess-style scale where 1500 is a strong frontier model and 1350 is a weaker tracked one. To slot Arena data into the same 0–100 range as AA's Intelligence Index, TokenRate applies a linear normalization with empirical floor and ceiling: floor 1150, ceiling 1600. So Elo 1500 = 78, Elo 1450 = 67, Elo 1400 = 56, Elo 1350 = 44. The bounds are chosen so the top of the visible range maps to ~100 (preserving headroom for future model releases) and the bottom catches anything tracked. Values are clamped to [0, 100] for any out-of-range Elo. This is admittedly a coarse approximation — Elo is a relative scale, not an absolute one — but it lets the [Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm) display both Arena and AA values on a comparable scale."
+    },
+    {
+      "heading": "Key Matching: Why the Lookup Doesn't Miss Most Models",
+      "body": "Quality data comes keyed by provider slugs (anthropic/claude-sonnet-4-7) and model names (Claude Sonnet 4.7). To match them against OpenRouter's pricing IDs, TokenRate normalizes every key: lowercase, drop provider prefix, replace dots/underscores/spaces with hyphens, strip suffixes like '-thinking' / '-preview' / '-instruct' / '-latest', and strip date-style suffixes like '-2024-11-20'. Lookups then try (a) exact match on the normalized ID, (b) exact match on the normalized name, and (c) prefix/substring fuzzy match for minor version drifts (Claude Opus 4-5 vs 4-6). The fuzzy matching is what catches edge cases like a Quality score for 'Claude Opus 4' resolving to 'claude-opus-4-7-thinking' on the calculator. The full implementation is in `src/lib/quality-index.ts` and follows the model-data flow documented in [Artificial Analysis vs Arena Elo](/blog/artificial-analysis-intelligence-index-vs-arena-elo)."
+    },
+    {
+      "heading": "Caching, Freshness, and Limitations",
+      "body": "All three sources cache for 60 minutes to match OpenRouter's pricing-revalidate window — so the Quality column is at most one hour stale. A single in-memory cache merges all sources into one map per server cold-start. Known limitations: (1) Arena's voter base skews toward developers, can over-reward chatty responses; (2) the static fallback is updated quarterly, so brand-new models may show no Quality badge until a refresh; (3) reasoning models score systematically higher on AA than Arena, which can make the blended score feel off for non-reasoning use cases; (4) the linear Elo normalization compresses signal at the top of the scale. Treat the Quality column as a coarse filter signal, then run your own eval on a 50-prompt sample of real workload before shipping. For the recommended workflow see [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Why blend two sources instead of using one?",
+      "answer": "Arena and AA measure different things — live human preference vs static benchmark composite — and disagree often. Blending captures both signals; the precedence (AA > Arena > static) prefers AA's broader coverage when available. If only one source has data for a model, that source determines the Quality value."
+    },
+    {
+      "question": "How often does the Quality score update?",
+      "answer": "Every 60 minutes — both Arena and AA feeds revalidate on the same hourly cycle as OpenRouter pricing, so a price change and a quality change can happen on the same refresh. The first request after a refresh may take an extra moment as the merge runs; subsequent requests hit the in-memory cache."
+    },
+    {
+      "question": "Can I see which source produced a given Quality score?",
+      "answer": "Yes — the source badge on each Quality cell on the calculator reads 'arena' or 'aa' (the static fallback also tags itself as 'aa' since its scores match AA's scale). If a model has no badge, it has no Quality data from any source."
+    },
+    {
+      "question": "Why is a model I expect to score high showing no Quality value?",
+      "answer": "Three possibilities: (1) the model isn't in Arena's top ~20 or AA's dataset; (2) the key-matching heuristic failed to align the OpenRouter ID with a Quality-source key (a fuzzy-match miss); (3) you're on the static-fallback path but the model post-dates the quarterly update. The Compare Prices view will still show pricing even when quality data is missing."
+    }
+  ],
+  "ctaText": "Open the TokenRate calculator to see the blended Quality score in action — the source badge on each cell tells you whether the value came from Arena AI, Artificial Analysis, or the curated fallback.",
+  "sources": [
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Live Elo source" },
+    { "label": "Artificial Analysis API", "url": "https://artificialanalysis.ai/documentation", "note": "Intelligence Index API" },
+    { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Pricing feed" }
+  ]
+}

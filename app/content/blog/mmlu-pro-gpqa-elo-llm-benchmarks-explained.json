@@ -1,0 +1,64 @@
+{
+  "category": "fundamentals",
+  "slug": "mmlu-pro-gpqa-elo-llm-benchmarks-explained",
+  "keyword": "MMLU Pro GPQA Elo LLM benchmarks",
+  "title": "MMLU-Pro vs GPQA vs Elo: Which LLM Benchmark Actually Predicts Real-World Performance",
+  "description": "Compare the four most-cited LLM benchmarks — MMLU-Pro, GPQA Diamond, MATH-500, and Arena AI Elo. Learn which one predicts the quality you'll see in production.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T15:55:00.000Z",
+  "tags": [
+    "LLM benchmarks",
+    "MMLU-Pro",
+    "GPQA",
+    "Arena AI Elo",
+    "AI evaluation"
+  ],
+  "sections": [
+    {
+      "heading": "The Benchmarks That Feed TokenRate's Quality Score",
+      "body": "When TokenRate's Quality column shows '78' next to a model, that number is a composite of multiple benchmarks weighted into a single 0–100 score. The two heavyweight upstream sources are Arena AI Elo (live human voting) and the Artificial Analysis Intelligence Index, which itself blends MMLU-Pro, GPQA Diamond, MATH-500, HumanEval, IFEval, and several private evals. Understanding what each of these benchmarks actually measures — and where they fail — is the difference between trusting the Quality column blindly and using it wisely. This post unpacks the four most influential benchmarks behind the score you see on [the calculator](/) and [Compare Prices tool](/tools/compare-prices)."
+    },
+    {
+      "heading": "MMLU-Pro: Multi-Discipline Knowledge",
+      "body": "MMLU-Pro is the harder successor to the original MMLU benchmark — same multiple-choice format covering 14 academic disciplines (math, physics, biology, chemistry, history, law, business, etc.) but with 10 answer choices instead of 4 and prompts rewritten to require multi-step reasoning. It's the de facto 'general intelligence' benchmark. As of mid-2026, frontier models (GPT-5, Claude Opus 4, o3) score 78–85% on MMLU-Pro; balanced-tier models (Sonnet 4.7, GPT-5 mini, Gemini 2.5 Pro) score 65–80%; fast-tier (Haiku 4.5, Flash) score 50–66%. MMLU-Pro is the single best predictor of 'does this model know stuff', but it doesn't measure instruction-following, formatting, or chat quality — that's why TokenRate blends it with Arena Elo. For more on the quality pipeline, see [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "GPQA Diamond: Graduate-Level Reasoning",
+      "body": "GPQA Diamond is the hard subset of the Graduate-Level Google-Proof Q&A benchmark — multiple-choice questions in biology, physics, and chemistry written and validated by PhD-level domain experts, specifically designed to be unsearchable on Google. It's the closest thing to a 'is this model genuinely reasoning' test. Top scores in mid-2026 are 75–82% (o3, Claude Opus 4 with thinking, DeepSeek R1) — note that reasoning models lead here because GPQA rewards multi-step chain-of-thought. Non-reasoning models cap around 60–70% even at the flagship tier. GPQA Diamond is especially useful for picking between reasoning variants — it's the benchmark where the [Reasoning tier filter](/blog/flagship-balanced-fast-reasoning-llm-tiers) in TokenRate's filter panel really earns its place."
+    },
+    {
+      "heading": "MATH-500 and HumanEval: Domain-Specific Predictors",
+      "body": "MATH-500 is a curated 500-problem subset of the MATH benchmark — competition-level mathematics from high school and undergraduate olympiads. It's the cleanest predictor of math reasoning. Frontier reasoning models hit 95%+, non-reasoning flagships cluster around 80–90%, and fast-tier drops to 50–70%. HumanEval is OpenAI's classic Python coding benchmark — 164 hand-written problems with unit tests. Top models exceed 90% pass@1; mid-tier sits at 70–85%. Both benchmarks are domain-specific: if your workload is math or code, weight them heavily; if not, MMLU-Pro and Arena Elo matter more. For specific cost analyses tied to coding, see [streaming vs batch AI cost](/blog/streaming-vs-batch-ai-cost) and [structured outputs token cost impact](/blog/structured-outputs-token-cost-impact)."
+    },
+    {
+      "heading": "Arena AI Elo: The Counter-Benchmark Benchmark",
+      "body": "Static benchmarks (MMLU-Pro, GPQA, MATH, HumanEval) are vulnerable to overfitting — providers train on adjacent data and scores climb without genuine capability gains. Arena AI Elo is the corrective: it measures live human preference on user-supplied prompts, so it's near-impossible to game. The catch is that human voters can be wrong (they reward verbose or 'confident-sounding' responses even when shorter answers are better), and the global Elo blends very different prompt types. That's why TokenRate uses both signals — see [Arena AI leaderboard explained](/blog/arena-ai-leaderboard-elo-scores-explained) and [Artificial Analysis vs Arena Elo](/blog/artificial-analysis-intelligence-index-vs-arena-elo). When the two signals disagree by 10+ points on the same model, dig in: it usually means the model is either over- or under-fitted for human chat compared to academic benchmarks. The Quality column on TokenRate shows the blended signal so you don't have to manually reconcile them."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which LLM benchmark should I trust most?",
+      "answer": "None alone. The best practice in 2026 is to look at a blended index (TokenRate's Quality column blends Arena Elo with Artificial Analysis, which itself blends MMLU-Pro, GPQA, MATH, HumanEval, and IFEval). For your specific workload — code, math, chat — weight the most relevant benchmark in your own eval."
+    },
+    {
+      "question": "What's the difference between MMLU and MMLU-Pro?",
+      "answer": "MMLU-Pro is harder: 10 answer choices vs 4, prompts rewritten for multi-step reasoning, harder distractors, and more recent question authoring. Original MMLU is essentially saturated (top models score 88%+), so MMLU-Pro replaced it as the canonical knowledge benchmark in 2024."
+    },
+    {
+      "question": "Why does GPQA Diamond favor reasoning models like o3 and DeepSeek R1?",
+      "answer": "GPQA Diamond problems require multi-step inference across multiple facts. Reasoning models invest output tokens in chain-of-thought before answering, which materially improves accuracy on these problems. Non-reasoning models that try to answer in one shot top out around 70%, vs 80%+ for reasoning variants."
+    },
+    {
+      "question": "How does TokenRate combine these benchmarks into a single Quality score?",
+      "answer": "TokenRate consumes a pre-blended score from two upstreams (Arena AI Elo, normalized to 0–100; Artificial Analysis Intelligence Index, native 0–100). For models not in either feed, a static fallback table of ~70 models uses publicly reported benchmark composites. Full methodology in [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    }
+  ],
+  "ctaText": "Open the TokenRate calculator to see the blended Quality score that summarizes MMLU-Pro, GPQA, MATH, HumanEval, and Arena Elo into one comparable number per model.",
+  "sources": [
+    { "label": "MMLU-Pro Paper", "url": "https://arxiv.org/abs/2406.01574", "note": "Multi-discipline knowledge benchmark" },
+    { "label": "GPQA Diamond Paper", "url": "https://arxiv.org/abs/2311.12022", "note": "Graduate-level reasoning benchmark" },
+    { "label": "MATH-500 Dataset", "url": "https://github.com/openai/prm800k", "note": "Math problem subset" },
+    { "label": "HumanEval (OpenAI)", "url": "https://github.com/openai/human-eval", "note": "Python coding benchmark" },
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Live human voting" }
+  ]
+}

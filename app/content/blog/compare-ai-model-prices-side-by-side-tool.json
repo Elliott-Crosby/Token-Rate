@@ -1,0 +1,60 @@
+{
+  "category": "building",
+  "slug": "compare-ai-model-prices-side-by-side-tool",
+  "keyword": "compare AI model prices side by side",
+  "title": "Compare AI Model Prices Side by Side: A New Tool for Multi-Model Cost Analysis",
+  "description": "Use TokenRate's new Compare Prices tool to pick specific Claude, GPT, Gemini, Llama, DeepSeek, Mistral, and Grok models and see their input, output, and context-window pricing in a side-by-side grid.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-05-28T15:20:00.000Z",
+  "tags": [
+    "compare AI prices",
+    "multi-model comparison",
+    "side-by-side pricing",
+    "TokenRate tools"
+  ],
+  "sections": [
+    {
+      "heading": "Why a Dedicated Side-by-Side Tool",
+      "body": "The default TokenRate calculator shows every model in a single sortable list — perfect for browsing 70+ options against your budget. But once you've narrowed to a shortlist of 3–5 specific models from different providers, the list view is the wrong format: you want to see prices, context lengths, and quality scores stacked in columns you can scan vertically. That's why we built [/tools/compare-prices](/tools/compare-prices) as a dedicated side-by-side view (and made it available as a tab inside the main calculator card too). You pick a provider dropdown, then check which of their models you want to add to the grid, then repeat for each provider. The result is a clean comparison table: Claude Sonnet 4.7 next to GPT-5 mini next to Gemini 2.5 Pro next to DeepSeek R1, all in one row of input/output/context columns. No more flipping between Anthropic's, OpenAI's, and Google's pricing pages."
+    },
+    {
+      "heading": "How the Compare Prices View Pulls Live Data",
+      "body": "Both the main calculator and the [Compare Prices tool](/tools/compare-prices) fetch their price data from the [OpenRouter Models API](https://openrouter.ai/api/v1/models), revalidated hourly via Next.js's incremental cache. OpenRouter aggregates pricing across providers and normalizes the per-token format, so a price quoted in the comparison grid is the same per-token rate the providers themselves publish. The provider filter ships with seven categories: Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, and xAI — covering ~90% of the models developers ship in production. Each model row shows the model ID (useful for copy-pasting into your SDK calls), the human-readable name, the input cost per 1M tokens, the output cost per 1M tokens, and the context window. The full Quality/Value pipeline from the main calculator also flows into the comparison view, so a model marked 'flagship-quality' on the home page reads the same in the comparison tool."
+    },
+    {
+      "heading": "Common Comparison Patterns",
+      "body": "We see a few comparison shapes show up over and over. First: 'cheapest balanced' — pick Claude Haiku 4.5, GPT-5 mini, Gemini 2.5 Flash, and Mistral Small to find the lowest-cost model with quality ≥ 50. Second: 'best reasoning' — pick OpenAI o3, Claude Opus 4 (with thinking), DeepSeek R1, and Gemini 2.5 Pro to compare premium reasoning options. Third: 'longest context for the price' — pick Gemini 2.5 Pro (1M context), Claude Sonnet 4.7 (200K), Llama 4 Maverick (1M), and GPT-5 (200K) to find the most affordable large-context model. Fourth: 'multimodal' — Claude Opus 4 vs GPT-5 vs Gemini 2.5 Pro vs Grok 4 for image+text workloads. For specific worked examples, see [Claude vs GPT vs Gemini quality per dollar](/blog/claude-vs-gpt-vs-gemini-quality-per-dollar-showdown), [best reasoning LLMs on a budget](/blog/best-reasoning-llm-budget-2026), and [Grok 4 vs Claude Sonnet quality index](/blog/grok-4-vs-claude-sonnet-quality-index)."
+    },
+    {
+      "heading": "Combining the Tool With Filters and Sorts",
+      "body": "The Compare Prices grid is best used downstream of the [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) on the main calculator. Workflow: load the home page, filter to Tier=Balanced + Quality=Top (75+), eyeball the survivors, then switch to the Compare Prices tab to pick exactly which ones you want to grid. This two-stage funnel — broad filtering then focused comparison — is much faster than reading individual model pages, and it surfaces tradeoffs (e.g., a 5% price drop for 8 quality points lost) that you'd miss scrolling pricing pages. For the underlying decision framework, see [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost). For a focused budget version, see [best LLMs under $1 per million tokens](/blog/best-llm-under-1-dollar-per-million-tokens-2026)."
+    },
+    {
+      "heading": "When to Use the Comparison Tool vs the API Cost Estimator",
+      "body": "Two related tools, two different jobs. Use [/tools/compare-prices](/tools/compare-prices) when you want to evaluate per-token rates across multiple models — the question is 'which model'. Use [/tools/api-cost-estimator](/tools/api-cost-estimator) when you've picked a model and want to model your total monthly bill against an expected workload — the question is 'how much'. A third tool, [/tools/token-to-usd](/tools/token-to-usd), converts a raw token count to a dollar figure for any single model — useful for sizing the cost of a specific prompt. And [/tools/words-to-tokens](/tools/words-to-tokens) goes the other way for content-driven planning. Together, these four tools cover the full workflow from 'which model' to 'how much will it cost me'. Read [how to calculate OpenAI API costs](/blog/how-to-calculate-openai-api-costs) for the math that powers the estimator."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How do I open the Compare Prices view?",
+      "answer": "Two ways: (1) click the 'Compare Prices' tab at the top of the calculator card on the home page, or (2) go directly to /tools/compare-prices for the standalone page. The standalone page is linked from the main navigation under 'Tools'."
+    },
+    {
+      "question": "Can I compare models from different providers in the same grid?",
+      "answer": "Yes — that's the main use case. Pick a provider dropdown (Anthropic, OpenAI, Google, Meta, DeepSeek, Mistral, xAI), check the models you want, then switch to a different provider dropdown and repeat. All selected models appear in a unified comparison table."
+    },
+    {
+      "question": "Are the prices live or do they get cached?",
+      "answer": "Live from OpenRouter, revalidated every 60 minutes via Next.js's incremental cache. The Quality column updates on the same cadence by blending Arena AI and Artificial Analysis data."
+    },
+    {
+      "question": "Does the Compare Prices tool show context windows and quality scores?",
+      "answer": "Yes. Each model row shows the per-token input cost, per-token output cost, and context window. Quality scores from the blended Arena AI / Artificial Analysis pipeline appear when available — the same scoring shown on the main calculator."
+    }
+  ],
+  "ctaText": "Open /tools/compare-prices, pick your provider dropdowns, and put Claude Sonnet 4.7, GPT-5, Gemini 2.5 Pro, and DeepSeek R1 in one side-by-side grid for an instant cost comparison.",
+  "sources": [
+    { "label": "TokenRate Compare Prices Tool", "url": "https://www.tokenrate.dev/tools/compare-prices", "note": "Live multi-model grid" },
+    { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Pricing data source" }
+  ]
+}

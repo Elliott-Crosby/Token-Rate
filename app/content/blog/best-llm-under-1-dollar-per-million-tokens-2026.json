@@ -1,0 +1,61 @@
+{
+  "category": "cost-optimization",
+  "slug": "best-llm-under-1-dollar-per-million-tokens-2026",
+  "keyword": "best LLM under $1 per million tokens",
+  "title": "Best LLMs Under $1 Per Million Tokens in 2026",
+  "description": "Ranked list of the best LLMs priced under $1 per million input tokens in 2026 — Gemini 2.5 Flash, Claude Haiku 4.5, GPT-5 mini, DeepSeek V3, Mistral Small, Qwen, and Llama. Quality vs cost compared.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T15:35:00.000Z",
+  "tags": [
+    "cheap LLM",
+    "budget AI models",
+    "under $1 LLM",
+    "low cost AI",
+    "value LLM"
+  ],
+  "sections": [
+    {
+      "heading": "The Under-$1 Tier Has Become Production-Viable",
+      "body": "Two years ago 'cheap' LLMs meant 'demo only' — quality was too low for anything user-facing. In 2026 that's no longer true: a dozen models priced under $1 per million input tokens now score 50–70 on the blended Arena AI + Artificial Analysis Quality index, putting them comfortably in production-grade territory for routine workloads. That's the whole reason TokenRate added a one-click 'Under $1' cost preset to the [Filter panel](/blog/filter-llm-models-by-tier-cost-quality) — it's now a real production tier, not a budget afterthought. This post ranks the best of that tier by Quality × Value (the [quality per dollar](/blog/quality-per-dollar-llm-ranking-2026) metric) so you can see which sub-$1 models are actually worth shipping with."
+    },
+    {
+      "heading": "The Top Picks at Under $1 Input",
+      "body": "As of May 2026, ranked by quality score (descending) with input price for context: DeepSeek R1 — quality 73, $0.55 input (the bargain reasoning king); GPT-5 mini — quality 68, $0.30 input (OpenAI's value flagship); Gemini 2.5 Flash — quality 66, $0.15 input (Google's volume play); Claude Haiku 4.5 — quality 65, $0.25 input (Anthropic's fast tier); DeepSeek V3 — quality 65, $0.30 input (non-reasoning sibling of R1); Llama 4 Maverick — quality 62, $0.20 input; Llama 4 Scout — quality 55, $0.10 input; Gemini 2.5 Flash-Lite — quality 55, $0.075 input (cheapest credible quality); Mistral Small — quality 42, $0.20 input (good for European data-residency requirements); Qwen 2.5 32B — quality 48, $0.30 input. To see these ranked live and sortable, open [the calculator](/), click Filters → 'Under $1', then sort by 'highest quality' or 'best value'."
+    },
+    {
+      "heading": "Picking Between the Top Three",
+      "body": "If your workload includes reasoning (multi-step planning, code synthesis, math), DeepSeek R1 is the clear winner — quality 73 at $0.55 input puts it within 10 points of $10+ flagships at 5% of the cost. If your workload is general chat, summarization, or RAG with short context, Gemini 2.5 Flash and Claude Haiku 4.5 split the win: Flash is cheaper ($0.15 vs $0.25 input) and has 1M context vs Haiku's 200K, but Haiku has slightly better instruction-following and is part of Anthropic's tooling ecosystem. If your workload is very high volume but quality requirements are modest (classification, intent detection, simple extraction), Gemini 2.5 Flash-Lite at $0.075 input is unbeatable. For the side-by-side comparison, use [/tools/compare-prices](/tools/compare-prices) to pick all three and see input/output/context in one grid. See also [Gemini Flash vs GPT-4o-mini budget model](/blog/gemini-flash-vs-gpt4o-mini-budget-model)."
+    },
+    {
+      "heading": "Output Cost Matters at This Tier Too",
+      "body": "Under-$1 input pricing tells half the story. Output costs at this tier range from $0.30/1M (Gemini Flash-Lite) to $4.40/1M (o3-mini, which slips just above $1 input depending on your routing). For generation-heavy workloads — content creation, code generation, long-form writing — output cost dominates and rankings shift. DeepSeek R1's $2.19 output is high relative to its input, so its true value depends on your input:output ratio. Claude Haiku 4.5's $1.25 output keeps it efficient on chat. Gemini 2.5 Flash-Lite's $0.30 output is the absolute floor. The [Compare Prices view](/tools/compare-prices) shows input and output columns side by side so you can apply your specific token ratio. For background on the input/output split, see [input vs output token ratio optimization](/blog/input-vs-output-token-ratio-optimization) and [output token pricing explained](/blog/output-token-pricing-explained)."
+    },
+    {
+      "heading": "Combining Under-$1 Models With Caching and Batching",
+      "body": "Under-$1 input pricing already cuts your bill by 70–95% vs flagships. Add [prompt caching](/blog/prompt-caching-save-90-percent-on-ai-costs) (90% discount on repeated context) and [batch APIs](/blog/batch-api-cut-ai-costs-in-half) (50% discount on async traffic) and the effective rate drops to single-digit cents per million tokens. A workload that costs $5,000/month on Claude Opus 4 can drop to $50/month on cached, batched Gemini Flash-Lite — a 100x reduction — without dropping below acceptable production quality for routine tasks. The right architecture is tiered routing: cheap model as default, escalate to a balanced or flagship only when the cheap model fails a quality check. For implementation, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores) and [building cost-aware AI agents](/blog/building-cost-aware-ai-agent)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which LLM has the lowest input price in 2026?",
+      "answer": "Gemini 2.5 Flash-Lite at $0.075 per million input tokens is the cheapest credibly-rated model from a major provider. Some hosted Llama 3.2 1B deployments go even lower (~$0.05) but quality drops to ~15–20 — usable for embeddings-adjacent tasks but not for general inference."
+    },
+    {
+      "question": "Is DeepSeek R1 really production-ready at $0.55 per million tokens?",
+      "answer": "Yes. R1 scores 73 on the blended TokenRate Quality index, putting it in the balanced tier — comparable to Claude Sonnet 4 at $3 input. The catch is higher latency from chain-of-thought tokens and a more limited ecosystem (fewer official SDKs, smaller community)."
+    },
+    {
+      "question": "How do I filter the TokenRate calculator to under-$1 models?",
+      "answer": "Click 'Filters' on the calculator, then pick the 'Under $1' chip under 'Input cost / 1M tokens'. Stack with 'Good (50+)' under Quality score to filter further to the production-viable subset."
+    },
+    {
+      "question": "What's the catch with under-$1 LLMs?",
+      "answer": "Three things: (1) Output cost is sometimes high relative to input (DeepSeek R1 is $2.19/1M output); (2) Quality on hard problems drops below flagships — multi-step reasoning, novel coding, complex math; (3) Ecosystems are less mature for some — open-source models often lack official SDKs for every language. Test before shipping."
+    }
+  ],
+  "ctaText": "Open the TokenRate calculator, click Filters → 'Under $1', sort by 'best value', and see the live ranking of every sub-$1 LLM with its quality score and provider.",
+  "sources": [
+    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Live under-$1 model list" },
+    { "label": "OpenRouter Pricing API", "url": "https://openrouter.ai/api/v1/models", "note": "Source of live pricing" }
+  ]
+}

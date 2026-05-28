@@ -1,0 +1,62 @@
+{
+  "category": "comparisons",
+  "slug": "grok-4-vs-claude-sonnet-quality-index",
+  "keyword": "Grok 4 vs Claude Sonnet quality",
+  "title": "Grok 4 vs Claude Sonnet 4.7: Quality Index, Price, and Value Compared",
+  "description": "Head-to-head comparison of xAI Grok 4 and Anthropic Claude Sonnet 4.7 using the TokenRate Quality column and Value column. Pricing, benchmark scores, and use-case picks.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-05-28T16:25:00.000Z",
+  "tags": [
+    "Grok 4",
+    "Claude Sonnet 4.7",
+    "xAI vs Anthropic",
+    "LLM comparison"
+  ],
+  "sections": [
+    {
+      "heading": "Two Different Bets on the Future of LLM Production",
+      "body": "xAI's Grok 4 and Anthropic's Claude Sonnet 4.7 sit one tier apart on TokenRate's classification (Grok 4 = flagship, Sonnet 4.7 = balanced) but compete for many of the same production slots — general-purpose chat, RAG, structured outputs, and agentic workflows. They embody different strategic bets: Grok 4 trades raw quality for real-time information access (X integration) and a faster development cadence; Claude Sonnet 4.7 trades real-time data for tighter instruction-following, stronger long-context reasoning, and a more mature enterprise ecosystem (Bedrock, Vertex AI, Claude Code). This post puts both head to head on TokenRate's [Quality column](/blog/how-to-use-ai-quality-index-pick-best-llm), [Value column](/blog/quality-per-dollar-llm-ranking-2026), and the [Compare Prices tool](/tools/compare-prices)."
+    },
+    {
+      "heading": "Quality Scores and What They Mean",
+      "body": "Quality: Grok 4 ~78, Claude Sonnet 4.7 ~80 (blended Arena AI + Artificial Analysis). On Arena AI Elo specifically, Grok 4 sits around 1500 — top 5 — while Sonnet 4.7 is around 1505. On Artificial Analysis Intelligence Index, Grok 4 scores 78 vs Sonnet's 80. The two are essentially tied within margin of error. Differences show up in subcategory leaderboards: Grok 4 leads on coding (Aider Polyglot) and real-time questions; Sonnet 4.7 leads on long-context reasoning and nuanced instruction-following. For benchmark-by-benchmark depth, see [MMLU-Pro vs GPQA vs Elo](/blog/mmlu-pro-gpqa-elo-llm-benchmarks-explained). Both clear the 'Top (75+)' Quality filter on the calculator."
+    },
+    {
+      "heading": "Pricing: Where Sonnet 4.7 Catches a Break",
+      "body": "Grok 4: $3 input / $15 output per million tokens. Claude Sonnet 4.7: $3 input / $15 output. Identical list prices — but Anthropic offers heavier batch-API and prompt-caching discounts (up to 90% off cached input, 50% off batched), while xAI's batch tooling is newer and less broadly applied. In practice, a workload with significant prompt caching (RAG, multi-turn chat) sees Sonnet 4.7 effective cost drop by 60–80% while Grok 4 stays closer to list price. For background on prompt caching savings, see [prompt caching save 90 percent on AI costs](/blog/prompt-caching-save-90-percent-on-ai-costs) and [batch API cut AI costs in half](/blog/batch-api-cut-ai-costs-in-half)."
+    },
+    {
+      "heading": "Value Column: A Practical Tie at List Price",
+      "body": "Value column = quality ÷ input cost = Grok 4: 78 / 3 = 26; Claude Sonnet 4.7: 80 / 3 = 27. Within margin of error. With effective caching discounts, Sonnet 4.7's value climbs significantly while Grok 4 holds steady — making Sonnet the smarter pick for repeat-prompt workloads. With output cost dominant (generation-heavy workloads), the picture is similar: both at $15/M output, both ~78–80 quality, value tied. The real differentiator at this price point is workload fit, not list price. To see this live, drop both into [/tools/compare-prices](/tools/compare-prices) — the quality and value columns make the tie visible."
+    },
+    {
+      "heading": "Use-Case Pick Matrix",
+      "body": "Pick Grok 4 when: (a) you need real-time information access (current news, X posts, recent web), (b) coding is the primary workload (Grok 4 leads Aider Polyglot), (c) you want the latest model release cadence — xAI ships frequently. Pick Claude Sonnet 4.7 when: (a) you need long-context reasoning (200K window, strong on whole-codebase analysis), (b) instruction-following on tight format constraints is critical, (c) you're in the AWS Bedrock / Google Vertex / Anthropic SDK / Claude Code ecosystem, (d) prompt caching savings are material to your bill, (e) you want enterprise-grade safety tuning. For broader comparisons of balanced-tier candidates, see [Claude Sonnet vs GPT-4o cost comparison](/blog/claude-sonnet-vs-gpt4o-cost-comparison), [Claude vs GPT vs Gemini quality per dollar](/blog/claude-vs-gpt-vs-gemini-quality-per-dollar-showdown), and [Anthropic vs OpenAI cheaper for startups](/blog/anthropic-vs-openai-cheaper-for-startups)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which has the higher quality score, Grok 4 or Claude Sonnet 4.7?",
+      "answer": "Claude Sonnet 4.7 edges out by ~2 points (80 vs 78) on the blended TokenRate Quality column. The gap is within margin of error and reverses on category-specific leaderboards — Grok 4 leads on coding (Aider Polyglot), Sonnet leads on long-context reasoning."
+    },
+    {
+      "question": "Are Grok 4 and Claude Sonnet 4.7 priced the same?",
+      "answer": "Yes at list — both $3 input / $15 output. Effective pricing differs because Anthropic offers heavier prompt-caching (90% off) and batch-API (50% off) discounts than xAI does. For caching-friendly workloads, Sonnet's effective price drops significantly."
+    },
+    {
+      "question": "Can I compare both side by side on TokenRate?",
+      "answer": "Yes. Open /tools/compare-prices, pick Anthropic and xAI from the provider dropdowns, and check Grok 4 + Claude Sonnet 4.7. The grid shows input, output, context, and quality side by side. You can also filter the main calculator to Quality = Top (75+) to see both appear together."
+    },
+    {
+      "question": "Is Grok 4 in the Reasoning tier?",
+      "answer": "No — Grok 4 is classified as a flagship. xAI hasn't released a separate reasoning variant with chain-of-thought thinking the way OpenAI (o-series) or DeepSeek (R1) have. If you need reasoning-tier quality, look at o3, DeepSeek R1, or Claude Opus 4 with extended thinking."
+    }
+  ],
+  "ctaText": "Use TokenRate's Compare Prices view to put Grok 4 and Claude Sonnet 4.7 side by side — quality, input, output, and context windows all in one grid.",
+  "sources": [
+    { "label": "xAI Grok API", "url": "https://docs.x.ai/docs/api-reference", "note": "Grok 4 pricing and docs" },
+    { "label": "Anthropic Claude Sonnet 4", "url": "https://docs.anthropic.com/en/docs/about-claude/models", "note": "Sonnet docs" },
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Live Elo scores" },
+    { "label": "Aider Polyglot Leaderboard", "url": "https://aider.chat/docs/leaderboards/", "note": "Coding benchmark" }
+  ]
+}
