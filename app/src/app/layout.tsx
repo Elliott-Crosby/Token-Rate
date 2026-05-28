@@ -7,6 +7,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import JsonLd, { siteSchemas } from '@/components/JsonLd'
 import { Analytics } from '@vercel/analytics/next'
+import PostHogInit from '@/components/PostHogInit'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -85,6 +86,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <Analytics />
+          <PostHogInit />
         </ThemeProvider>
 
         {/* Google Analytics — afterInteractive: deferred until hydration */}
