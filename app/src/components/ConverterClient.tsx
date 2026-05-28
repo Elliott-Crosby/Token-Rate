@@ -582,7 +582,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
         )}
 
         {/* Compare panel — always mounted so selections survive toggling */}
-        <div className={`px-5 py-5${compareMode ? '' : ' hidden'}`}>
+        <div className={`px-5 pt-8 pb-5${compareMode ? '' : ' hidden'}`}>
           <PriceCompareClient providerGroups={providerGroups} />
         </div>
 
