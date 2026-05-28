@@ -1,0 +1,56 @@
+{
+  "category": "building",
+  "slug": "ai-saas-cost-per-user-calculation",
+  "keyword": "calculate AI API cost per user",
+  "title": "How to Calculate AI API Cost Per User for Your SaaS Product",
+  "description": "Learn the exact formula to calculate per-user AI API costs for your SaaS. Includes pricing breakdown for GPT-4, Claude, and Llama models.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-05-28T08:03:55.757Z",
+  "tags": [
+    "saas-pricing",
+    "cost-calculation",
+    "ai-economics",
+    "api-costs"
+  ],
+  "sections": [
+    {
+      "heading": "Understanding Your Total API Spend",
+      "body": "Before you can calculate per-user costs, you need to measure your actual API consumption. Start by tracking token usage across all your models and endpoints for a representative period, typically one month. Most AI providers like OpenAI, Anthropic, and Meta charge separately for input and output tokens. For example, GPT-4 Turbo costs $0.01 per 1K input tokens and $0.03 per 1K output tokens, while Claude 3.5 Sonnet charges $3 per 1M input tokens and $15 per 1M output tokens. Use your provider's dashboard or our TokenRate calculator to convert raw token counts into USD spend. This gives you the baseline number needed for accurate per-user calculations."
+    },
+    {
+      "heading": "The Per-User Cost Formula",
+      "body": "The core formula is straightforward: divide your total monthly API costs by your active monthly users. If you spend $5,000 monthly on Claude API calls and have 500 active users, your cost per user is $10. However, this becomes more complex with variable usage patterns. Power users consuming 10x more tokens than casual users will skew your averages. Consider calculating percentile-based costs instead: measure costs for your 50th percentile user, 90th percentile user, and median user separately. This reveals whether a small group of heavy users dominates your spend. You should also factor in concurrent users versus monthly active users, as peak capacity costs differ from average costs."
+    },
+    {
+      "heading": "Allocating Costs Across Features",
+      "body": "Most SaaS products use AI for multiple features, each with different token economics. A writing assistant might consume 2,000 tokens per request while a search feature uses only 500 tokens. Track which features drive API calls by logging feature identifiers alongside token counts. Allocate costs proportionally: if your chat feature generates 60% of tokens, it bears 60% of API costs. This helps identify which features are economically viable at your current pricing. A feature costing $15 per user monthly is sustainable if customers pay $30 monthly, but not if they only pay $10. Our token cost comparison tool at /tools/api-cost-estimator helps you model different feature combinations and their projected impact on unit economics."
+    },
+    {
+      "heading": "Optimizing Costs Without Sacrificing Quality",
+      "body": "Once you understand your per-user costs, implement cost reduction strategies. Model selection is your first lever: switching from GPT-4 to GPT-4o Mini can reduce costs by 95% for many tasks. Llama 3.1 via providers like Together AI costs significantly less than proprietary models. Implement prompt caching to avoid reprocessing identical context, reducing costs by up to 90% on repeated queries. Batch processing non-urgent requests overnight using cheaper batch APIs can cut costs in half. Rate limiting prevents users from generating unlimited tokens. Monitor which user segments are most profitable by overlaying per-user costs against revenue per user, then optimize your product experience accordingly."
+    },
+    {
+      "heading": "Building Sustainable SaaS Economics",
+      "body": "Healthy AI SaaS products maintain a 3:1 revenue to API cost ratio at minimum. If API costs are $3 per user monthly, charge at least $9. Track your payback period: how many months of subscription revenue offset the acquisition cost of one user. As you scale, negotiate volume discounts with providers, use reserved capacity plans, or shift to open-source models. Model scenarios with TokenRate to understand how pricing changes, feature additions, or model upgrades affect profitability. Share cost insights transparently with customers who value efficiency. Some customers will upgrade specifically to unlock features using cheaper models. Your cost structure directly influences product design decisions, so review these metrics quarterly as your usage patterns evolve."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Should I calculate costs per active user or all registered users?",
+      "answer": "Use monthly active users (MAU) for pricing and profit projections, as this reflects users generating actual API spend. Track all registered users separately to understand churn impact on unit economics. A 30% churn rate means you replace one-third of your cost per user monthly, which must be factored into customer acquisition cost targets."
+    },
+    {
+      "question": "How do I account for input versus output token costs when they differ?",
+      "answer": "Most models cost more for output tokens since generating content is computationally expensive. Calculate your actual input-to-output ratio by analyzing logs, then weight the total cost accordingly. For example, if your average request is 500 input tokens and 200 output tokens, calculate costs for both separately then sum them for your total per-request cost."
+    },
+    {
+      "question": "What's a reasonable target for API costs as a percentage of revenue?",
+      "answer": "Industry benchmarks suggest 10-25% of revenue for AI-native SaaS products, with 15% being typical. If your costs exceed 30% of revenue, you need model optimization, pricing increases, or a higher-margin business model. Compare your metrics against your chosen models using our comparison tool at /compare to ensure you're using the most cost-effective option."
+    },
+    {
+      "question": "How often should I recalculate per-user costs?",
+      "answer": "Recalculate monthly initially to understand seasonal patterns and user behavior changes. Once stable, quarterly reviews are sufficient unless you're launching new features. Sudden cost spikes often indicate bugs, prompt injections, or feature abuse that require immediate investigation."
+    }
+  ],
+  "ctaText": "Ready to optimize your AI API costs? Use our API cost estimator at /tools/api-cost-estimator to model your exact spend across different models and pricing tiers, then compare options side-by-side to find the best fit for your SaaS margins."
+}
