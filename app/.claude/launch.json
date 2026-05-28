@@ -1,13 +1,1 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    {
-      "name": "token-converter",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3015,
-      "autoPort": true,
-      "cwd": "C:/Users/ellio/Token_Conversion_Rate/app"
-    }
-  ]
-}
+{"version":"0.0.1","configurations":[{"name":"tokenrate-dev","runtimeExecutable":"npm","runtimeArgs":["run","dev"],"port":3000}]}

@@ -7,6 +7,8 @@ export interface ModelPricing {
   inputPricePerToken: number
   outputPricePerToken: number
   contextLength?: number
+  qualityIndex?: number        // 0–100 composite score (AA Intelligence Index or Arena Elo normalised)
+  qualitySource?: 'aa' | 'arena'
 }
 
 export interface ProviderGroup {

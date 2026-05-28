@@ -6,6 +6,7 @@ import RelatedPages from '@/components/RelatedPages'
 import JsonLd, { webAppSchema, faqSchema } from '@/components/JsonLd'
 import { HOME_FAQS } from '@/lib/faqs'
 import { ALL_MODELS, MODELS_UPDATED_AT, getCheapestModels, getModelBySlug } from '@/lib/models'
+import { getQualityMap, lookupQuality } from '@/lib/quality-index'
 import { SITE_URL } from '@/lib/seo'
 import Link from 'next/link'
 
@@ -35,13 +36,16 @@ const PROVIDER_MAP: { prefix: string; label: string }[] = [
 
 async function fetchModels(): Promise<ProviderGroup[]> {
   try {
-    const res = await fetch('https://openrouter.ai/api/v1/models', {
-      next: { revalidate: 3600 },
-      headers: { Accept: 'application/json' },
-    })
-    if (!res.ok) throw new Error(`OpenRouter ${res.status}`)
+    const [orRes, qualityMap] = await Promise.all([
+      fetch('https://openrouter.ai/api/v1/models', {
+        next: { revalidate: 3600 },
+        headers: { Accept: 'application/json' },
+      }),
+      getQualityMap(),
+    ])
+    if (!orRes.ok) throw new Error(`OpenRouter ${orRes.status}`)
 
-    const json: { data: OpenRouterModel[] } = await res.json()
+    const json: { data: OpenRouterModel[] } = await orRes.json()
 
     const groups: Record<string, ModelPricing[]> = {}
     const seen: Record<string, Set<string>> = {}
@@ -60,6 +64,7 @@ async function fetchModels(): Promise<ProviderGroup[]> {
       if (seen[entry.label].has(name)) continue
       seen[entry.label].add(name)
 
+      const quality = lookupQuality(qualityMap, m.id, name)
       groups[entry.label].push({
         id: m.id,
         name,
@@ -67,6 +72,8 @@ async function fetchModels(): Promise<ProviderGroup[]> {
         inputPricePerToken: input,
         outputPricePerToken: output,
         contextLength: m.context_length,
+        qualityIndex: quality?.score,
+        qualitySource: quality?.source,
       })
     }
 
