@@ -124,3 +124,29 @@
   color: #9199a6;
   text-align: center;
 }
+
+/* ── Side-rail positioning ──────────────────────────────────
+   Fixed "skyscraper" rails in the page margins, vertically centred.
+   Hidden until there is room beside the centred content column
+   (max-w-5xl = 1024px). From 1500px the 300px banners are scaled to
+   0.76 so they fit the tighter margin — this covers a 1920px monitor
+   at 125% display scaling (≈1536 CSS px, minus the scrollbar). From
+   1760px, where there's room to spare, they show at full size.
+   Edge transform-origins keep the inner edge anchored near the content
+   so scaling never pushes a rail over the article. */
+.nd-rail {
+  position: fixed;
+  top: 50%;
+  z-index: 30;
+  display: none;
+  transform: translateY(-50%);
+}
+@media (min-width: 1500px) {
+  .nd-rail { display: block; }
+  .nd-rail-left  { left:  calc(50% - 754px); transform-origin: left center;  transform: translateY(-50%) scale(0.76); }
+  .nd-rail-right { right: calc(50% - 754px); transform-origin: right center; transform: translateY(-50%) scale(0.76); }
+}
+@media (min-width: 1760px) {
+  .nd-rail-left  { left:  calc(50% - 836px); transform: translateY(-50%) scale(1); }
+  .nd-rail-right { right: calc(50% - 836px); transform: translateY(-50%) scale(1); }
+}

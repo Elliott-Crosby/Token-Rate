@@ -9,24 +9,17 @@ import NodeaCompanionAd from './NodeaCompanionAd'
  * canvas" banner on the LEFT rail and the dark "why settle for one answer?"
  * companion on the RIGHT rail.
  *
- * Only shown once the viewport is wide enough to hold a 300px banner on each
- * side without overlapping the content (1024 + 2×300 + gaps ≈ 1672px), so it
- * never collides with the calculator. Positioned via calc() relative to centre
- * so each rail always hugs the outer edge of the content column.
+ * Shown from 1536px (scaled to fit the margin) and at full size from 1680px;
+ * hidden on narrower screens so the rails never collide with the calculator.
+ * All positioning/scaling lives in the `.nd-rail*` classes in NodeaBannerAd.css.
  */
 export default function SideRailAds() {
   return (
     <div aria-hidden={false}>
-      <div
-        className="hidden min-[1680px]:block fixed top-1/2 -translate-y-1/2 z-30"
-        style={{ left: 'calc(50% - 836px)' }}
-      >
+      <div className="nd-rail nd-rail-left">
         <NodeaBannerAd />
       </div>
-      <div
-        className="hidden min-[1680px]:block fixed top-1/2 -translate-y-1/2 z-30"
-        style={{ right: 'calc(50% - 836px)' }}
-      >
+      <div className="nd-rail nd-rail-right">
         <NodeaCompanionAd />
       </div>
     </div>
