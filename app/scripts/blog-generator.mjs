@@ -88,12 +88,16 @@ function pickNextTopic(existingSlugs) {
   for (const topic of TOPICS) {
     if (!existingSlugs.has(topic.slug)) return topic
   }
-  const ts = Date.now()
-  return {
-    slug: `ai-token-pricing-insights-${ts}`,
-    title: `AI Token Pricing Insights: What Developers Need to Know in ${new Date().getFullYear()}`,
-    category: 'fundamentals',
-  }
+  // All curated topics are published — generate nothing.
+  //
+  // The previous fallback emitted a generic, timestamp-slugged
+  // `ai-token-pricing-insights-<ts>` post on every run. With the curated list
+  // exhausted, that produced a near-duplicate, ungrounded filler article every
+  // 2 hours. Google flagged the site for "Low value content" / scaled content
+  // abuse and AdSense review failed. Returning null makes main() exit cleanly.
+  //
+  // To publish more posts, add real entries to the TOPICS table above.
+  return null
 }
 
 function callAnthropicAPI(prompt) {
@@ -204,6 +208,11 @@ async function main() {
   console.log(`Existing posts: ${existingSlugs.size}`)
 
   const topic = pickNextTopic(existingSlugs)
+  if (!topic) {
+    console.log('All curated topics are already published — nothing to generate.')
+    console.log('Add new entries to the TOPICS table in this script to publish more posts.')
+    return
+  }
   console.log(`Generating: "${topic.title}" (slug: ${topic.slug}, category: ${topic.category})`)
 
   const prompt = buildPrompt(topic)
