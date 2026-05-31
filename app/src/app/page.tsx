@@ -3,6 +3,7 @@ import type { ProviderGroup, ModelPricing } from '@/lib/types'
 import ConverterClient from '@/components/ConverterClient'
 import FAQSection from '@/components/FAQSection'
 import RelatedPages from '@/components/RelatedPages'
+import NodeaBannerAd from '@/components/NodeaBannerAd'
 import JsonLd, { webAppSchema, faqSchema } from '@/components/JsonLd'
 import { HOME_FAQS } from '@/lib/faqs'
 import { ALL_MODELS, MODELS_UPDATED_AT, getCheapestModels, getModelBySlug } from '@/lib/models'
@@ -240,6 +241,11 @@ export default async function Home() {
               </p>
             </div>
           </section>
+
+          {/* House ad — Nodea half-page banner (clearly labelled advertising) */}
+          <aside aria-label="Advertisement" className="flex justify-center">
+            <NodeaBannerAd />
+          </aside>
 
           {/* Cheapest models table */}
           <section>

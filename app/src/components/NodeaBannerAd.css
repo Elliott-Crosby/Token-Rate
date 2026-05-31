@@ -1,0 +1,110 @@
+/* ───────────────────────────────────────────────────────────
+   Nodea house-ad banner — 300×600 half-page ("A branching AI
+   chat canvas"). Ported from the Claude Design handoff bundle.
+   All rules are scoped under .nd-ad so they never leak into the
+   surrounding TokenRate UI (Tailwind / Geist).
+   ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..700&display=swap');
+
+.nd-ad {
+  --nd-accent: #7c3aed;
+  --nd-accent-deep: #6d28d9;
+  --nd-lav: #c4b5fd;
+  --nd-ink: #1a1d23;
+  --nd-ink-2: #5c6370;
+  --nd-ink-3: #9199a6;
+  --nd-paper: #f8f9fa;
+  --nd-border: #e2e5ea;
+  --nd-border-2: #d8dade;
+  --nd-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  position: relative;
+  overflow: hidden;
+  font-family: var(--nd-sans);
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+.nd-ad * { box-sizing: border-box; }
+
+/* Surface */
+.nd-ad.nd-paper { background: var(--nd-paper); color: var(--nd-ink); }
+.nd-ad.nd-dotgrid::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(26, 29, 35, 0.07) 1px, transparent 0);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+/* Logo lockup */
+.nd-ad .nd-logo { display: inline-flex; align-items: center; gap: 7px; }
+.nd-ad .nd-logo-word { font-weight: 700; letter-spacing: -0.02em; color: var(--nd-ink); }
+
+/* CTA pill */
+.nd-ad .nd-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-weight: 700;
+  border-radius: 999px;
+  white-space: nowrap;
+  line-height: 1;
+}
+.nd-ad .nd-cta-solid { background: var(--nd-accent); color: #fff; }
+.nd-ad .nd-arrow { transition: transform .3s ease; }
+.nd-ad:hover .nd-cta .nd-arrow { transform: translateX(3px); }
+
+@keyframes ndPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.0); }
+  50%      { box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.16); }
+}
+.nd-ad .nd-cta-pulse { animation: ndPulse 2.8s ease-in-out infinite; }
+
+/* Headline */
+.nd-ad .nd-h {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin: 0;
+  text-wrap: balance;
+}
+.nd-ad .nd-h em { font-style: italic; color: var(--nd-accent); font-weight: 800; }
+.nd-ad .nd-eyebrow {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--nd-accent);
+}
+.nd-ad .nd-sub { color: var(--nd-ink-2); margin: 0; }
+.nd-ad .nd-foot { color: var(--nd-ink-3); font-weight: 500; letter-spacing: .01em; }
+
+/* Tree node motion */
+.nd-ad .nd-node { animation: ndPop .42s cubic-bezier(0.18, 0.89, 0.32, 1.28) both; }
+@keyframes ndPop {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Active labeled pill — soft pulsing ring (shadow only; never hides the pill) */
+@keyframes ndPillPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--ring, #7c3aed) 50%, transparent); }
+  60%      { box-shadow: 0 0 0 7px color-mix(in oklab, var(--ring, #7c3aed) 0%, transparent); }
+}
+.nd-ad .nd-pill-live { animation: ndPillPulse 2.6s ease-out infinite; }
+
+/* Respect reduced-motion: show the fully-built banner, no looping pulses */
+@media (prefers-reduced-motion: reduce) {
+  .nd-ad .nd-node { animation: none; }
+  .nd-ad .nd-cta-pulse,
+  .nd-ad .nd-pill-live { animation: none; }
+}
+
+/* "Advertisement" disclosure caption above the banner */
+.nd-ad-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9199a6;
+  text-align: center;
+}
