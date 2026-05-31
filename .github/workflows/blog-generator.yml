@@ -2,8 +2,10 @@ name: Auto Blog Generator
 
 on:
   schedule:
-    # Every 2 hours
-    - cron: '0 */2 * * *'
+    # Once a day at 13:00 UTC. New models don't appear hourly — the generator
+    # publishes only when it detects a genuinely new model, so a daily check is
+    # plenty and keeps the publish log clean.
+    - cron: '0 13 * * *'
   workflow_dispatch:
     # Allow manual trigger from GitHub Actions UI
 
@@ -54,7 +56,7 @@ jobs:
         run: |
           git config user.name "TokenRate BlogBot"
           git config user.email "bot@tokenrate.dev"
-          git add app/content/blog/ app/src/lib/blog-catalog.generated.ts
+          git add app/content/ app/src/lib/blog-catalog.generated.ts
           if git diff --cached --quiet; then
             echo "No new posts to commit."
           else

@@ -1,10 +1,24 @@
 #!/usr/bin/env node
 /**
  * Generates one new blog post per run using the Anthropic API (Haiku for cost efficiency).
- * Called by .github/workflows/blog-generator.yml every 2 hours.
+ * Called by .github/workflows/blog-generator.yml once a day.
  *
- * Usage: node scripts/blog-generator.mjs
- * Requires: ANTHROPIC_API_KEY env var
+ * PRIMARY MODE — new-model comparison posts:
+ *   Each run pulls the live OpenRouter model feed (the same source the site's
+ *   calculator uses) plus best-effort Arena quality scores, detects models it
+ *   hasn't written about yet (auto-discovered releases + anything curated in
+ *   src/lib/models.ts), and publishes a comparison post grounded in REAL pricing.
+ *   The numeric comparison table is built in code — the LLM only writes the prose
+ *   around it and is forbidden from inventing figures. A committed ledger
+ *   (content/models-ledger.json) tracks which models are covered; on first run it
+ *   seeds the current feed as a baseline so only genuinely new models trigger posts.
+ *
+ * FALLBACK MODE — legacy curated TOPICS list (now exhausted → no-op).
+ *
+ * Usage:
+ *   node scripts/blog-generator.mjs            # generate + write
+ *   node scripts/blog-generator.mjs --dry-run  # show selection/table/prompt, no API call, no writes
+ * Requires: ANTHROPIC_API_KEY env var (not needed for --dry-run)
  */
 
 import fs from 'node:fs'
@@ -15,9 +29,23 @@ import { validateBlogPost } from './_lib/validate-blog-post.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const BLOG_DIR = path.join(__dirname, '..', 'content', 'blog')
+const MODELS_TS = path.join(__dirname, '..', 'src', 'lib', 'models.ts')
+const LEDGER_PATH = path.join(__dirname, '..', 'content', 'models-ledger.json')
 const API_KEY = process.env.ANTHROPIC_API_KEY
+const DRY_RUN = process.argv.includes('--dry-run')
 
-if (!API_KEY) {
+// Same provider prefixes the homepage uses to group the OpenRouter feed.
+const PROVIDER_MAP = [
+  { prefix: 'anthropic/', label: 'Anthropic' },
+  { prefix: 'openai/', label: 'OpenAI' },
+  { prefix: 'google/', label: 'Google' },
+  { prefix: 'meta-llama/', label: 'Meta' },
+  { prefix: 'deepseek/', label: 'DeepSeek' },
+  { prefix: 'mistralai/', label: 'Mistral' },
+  { prefix: 'x-ai/', label: 'xAI' },
+]
+
+if (!API_KEY && !DRY_RUN) {
   console.error('Error: ANTHROPIC_API_KEY environment variable is not set.')
   process.exit(1)
 }
@@ -203,14 +231,446 @@ Requirements:
 - Return ONLY raw JSON starting with { and ending with }`
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// New-model comparison mode
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Quality-key normalisation — ported from src/lib/quality-index.ts so the
+// generator matches the site's own model↔score lookup behaviour.
+function normalizeKey(s) {
+  return (s || '')
+    .toLowerCase()
+    .split('/').pop()
+    .replace(/[._\s]+/g, '-')
+    .replace(/-(thinking|preview|instruct|latest|exp|turbo)$/g, '')
+    .replace(/-\d{4}-\d{2}-\d{2}$/, '')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+function normalizeId(id) {
+  return normalizeKey(id).replace(/-\d+$/, '')
+}
+
+/** Stable per-model identity for the ledger. Keyed on the display name so dated
+ *  snapshots collapse (e.g. "GPT-4o (2024-08-06)" / "(2024-11-20)" → one entry)
+ *  while genuine new versions (GPT-5 vs GPT-5.5) stay distinct. Provider-prefixed
+ *  to avoid any cross-provider name collision. */
+function modelKey(m) {
+  return `${m.provider}|${normalizeKey(m.name)}`
+}
+
+async function fetchOpenRouterModels() {
+  const res = await fetch('https://openrouter.ai/api/v1/models', {
+    headers: { Accept: 'application/json' },
+  })
+  if (!res.ok) throw new Error(`OpenRouter ${res.status}`)
+  const json = await res.json()
+  const out = []
+  for (const m of json.data || []) {
+    const entry = PROVIDER_MAP.find((p) => m.id.startsWith(p.prefix))
+    if (!entry) continue
+    if (!m.pricing?.prompt || !m.pricing?.completion) continue
+    const input = parseFloat(m.pricing.prompt)
+    const output = parseFloat(m.pricing.completion)
+    if (!(input > 0) || !(output > 0)) continue
+    const name = (m.name || '').replace(/^[^:]+:\s*/i, '') || m.id
+    out.push({
+      id: m.id,
+      name,
+      provider: entry.label,
+      inputPerM: input * 1_000_000,
+      outputPerM: output * 1_000_000,
+      context: m.context_length || 0,
+    })
+  }
+  return out
+}
+
+/** Best-effort live quality scores from the (free, no-auth) Arena leaderboard.
+ *  Covers roughly the current top-20; anything unrated simply has no score, which
+ *  is fine — posts are grounded on price/context and quality is a bonus column. */
+async function fetchArenaQuality() {
+  const map = new Map()
+  try {
+    const res = await fetch('https://api.wulong.dev/arena-ai-leaderboards/v1/leaderboard?name=text')
+    if (!res.ok) return map
+    const json = await res.json()
+    const ELO_MIN = 1150
+    const ELO_MAX = 1600
+    for (const m of json.models || []) {
+      const norm = Math.round(Math.min(100, Math.max(0, ((m.score - ELO_MIN) / (ELO_MAX - ELO_MIN)) * 100)))
+      const k = normalizeKey(m.model)
+      if (k) map.set(k, norm)
+    }
+  } catch { /* offline / changed schema → no quality, still publish on price */ }
+  return map
+}
+
+function lookupQuality(map, id, name) {
+  const idKey = normalizeId(id)
+  const nameKey = normalizeKey(name)
+  if (idKey && map.has(idKey)) return map.get(idKey)
+  if (nameKey && map.has(nameKey)) return map.get(nameKey)
+  for (const [k, v] of map) {
+    if (idKey && (idKey.startsWith(k) || k.startsWith(idKey))) return v
+    if (nameKey && (nameKey.startsWith(k) || k.startsWith(nameKey))) return v
+  }
+  return null
+}
+
+/** Extract curated models from src/lib/models.ts WITHOUT importing TS (CI runs
+ *  Node 20, no tsx). Guarded regex: matches each block from `slug:` to its own
+ *  `openRouterIds:` without crossing into the next `slug:`, so entries that omit
+ *  openRouterIds are skipped rather than mis-paired. Failure is non-fatal — the
+ *  model just falls through to auto-discovery. */
+function readCuratedModels() {
+  let src
+  try {
+    src = fs.readFileSync(MODELS_TS, 'utf-8')
+  } catch {
+    return []
+  }
+  const out = []
+  const re = /slug:\s*'([^']+)'((?:(?!slug:)[\s\S])*?)openRouterIds:\s*\[([^\]]*)\]/g
+  let m
+  while ((m = re.exec(src))) {
+    const slug = m[1]
+    const block = m[2]
+    const ids = [...m[3].matchAll(/'([^']+)'/g)].map((x) => x[1])
+    if (ids.length === 0) continue
+    const name = (block.match(/name:\s*'([^']*)'/) || [])[1] || slug
+    const tier = (block.match(/tier:\s*'([^']*)'/) || [])[1] || ''
+    out.push({ slug, name, tier, openRouterIds: ids })
+  }
+  return out
+}
+
+function readLedger() {
+  try {
+    const raw = fs.readFileSync(LEDGER_PATH, 'utf-8')
+    const data = JSON.parse(raw)
+    return { seeded: !!data.seeded, covered: data.covered || {} }
+  } catch {
+    return { seeded: false, covered: {} }
+  }
+}
+function writeLedger(ledger) {
+  fs.writeFileSync(LEDGER_PATH, JSON.stringify(ledger, null, 2) + '\n')
+}
+
+function fmtPrice(n) {
+  if (n >= 100) return `$${n.toFixed(0)}`
+  if (n >= 1) return `$${n.toFixed(2)}`
+  return `$${n.toFixed(3)}`
+}
+function fmtContext(n) {
+  if (!n) return '—'
+  if (n >= 1_000_000) return `${+(n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0)}M`
+  if (n >= 1000) return `${Math.round(n / 1000)}K`
+  return String(n)
+}
+
+const PROVIDER_BONUS = { Anthropic: 30, OpenAI: 30, Google: 30, Meta: 15, DeepSeek: 15, Mistral: 15, xAI: 15 }
+
+function scoreModel(m, qmap) {
+  let s = 0
+  if (m.curated) s += 10_000
+  const q = lookupQuality(qmap, m.id, m.name)
+  if (q != null) s += q * 10
+  s += PROVIDER_BONUS[m.provider] || 0
+  s += Math.min(m.inputPerM, 50) // pricier models skew flagship/notable; capped
+  return s
+}
+
+/** Up to 4 competitors: nearest 2 by input price within the same provider, then
+ *  fill with nearest cross-provider rivals. Deduped by model key. */
+function pickCompetitors(subject, all) {
+  const sk = modelKey(subject)
+  const others = all.filter((m) => modelKey(m) !== sk)
+  // Relative distance on BOTH input and output price, so a model pairs with peers
+  // of a similar overall cost profile (not, say, a $10/$10 image model next to a
+  // $10/$30 chat model just because their input prices match).
+  const dist = (m) =>
+    Math.abs(m.inputPerM - subject.inputPerM) / Math.max(subject.inputPerM, 0.01) +
+    Math.abs(m.outputPerM - subject.outputPerM) / Math.max(subject.outputPerM, 0.01)
+  const byCloseness = (a, b) => dist(a) - dist(b)
+  const same = others.filter((m) => m.provider === subject.provider).sort(byCloseness)
+  const cross = others.filter((m) => m.provider !== subject.provider).sort(byCloseness)
+  const chosen = []
+  const seen = new Set()
+  for (const m of [...same.slice(0, 2), ...cross]) {
+    const k = modelKey(m)
+    if (seen.has(k)) continue
+    seen.add(k)
+    chosen.push(m)
+    if (chosen.length >= 4) break
+  }
+  return chosen
+}
+
+function buildComparisonTable(subject, competitors, qmap) {
+  const rows = [subject, ...competitors]
+  const quals = rows.map((m) => lookupQuality(qmap, m.id, m.name))
+  const hasQuality = quals.some((q) => q != null)
+  const columns = ['Model', 'Input / 1M', 'Output / 1M', 'Context']
+  if (hasQuality) columns.push('Quality')
+  const tableRows = rows.map((m, i) => {
+    const row = [m.name, fmtPrice(m.inputPerM), fmtPrice(m.outputPerM), fmtContext(m.context)]
+    if (hasQuality) row.push(quals[i] != null ? String(quals[i]) : '—')
+    return row
+  })
+  return { caption: `${subject.name} vs. alternatives — live pricing`, columns, rows: tableRows, hasQuality }
+}
+
+const PROVIDER_GUIDE_SLUG = {
+  Anthropic: 'all-anthropic-models-compare-prices',
+  OpenAI: 'all-openai-models-compare-prices',
+  Google: 'all-google-models-compare-prices',
+  Meta: 'all-meta-llama-models-compare-prices',
+  DeepSeek: 'all-deepseek-models-compare-prices',
+  Mistral: 'all-mistral-models-compare-prices',
+  xAI: 'all-xai-grok-models-compare-prices',
+}
+function pickRelated(subject, existingSlugs) {
+  const candidates = [
+    PROVIDER_GUIDE_SLUG[subject.provider],
+    'compare-ai-model-prices-side-by-side-tool',
+    'how-ai-api-pricing-works',
+    'quality-per-dollar-llm-ranking-2026',
+    'how-to-reduce-ai-api-costs',
+    'tokens-to-dollars-conversion',
+  ]
+  return candidates.filter((s) => s && existingSlugs.has(s)).slice(0, 3)
+}
+function buildSources(hasQuality) {
+  const s = [
+    { label: 'OpenRouter — live model pricing', url: 'https://openrouter.ai/models', note: 'Input/output price per token and context length' },
+  ]
+  if (hasQuality) {
+    s.push({ label: 'LMArena leaderboard', url: 'https://lmarena.ai/leaderboard', note: 'Crowd-sourced Elo, normalised to a 0–100 quality score' })
+  }
+  s.push({ label: 'TokenRate price comparison tool', url: 'https://tokenrate.dev/tools/compare-prices' })
+  return s
+}
+function uniqueSlug(base, existingSlugs) {
+  let slug = base.replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
+  if (!existingSlugs.has(slug)) return slug
+  let i = 2
+  while (existingSlugs.has(`${slug}-${i}`)) i++
+  return `${slug}-${i}`
+}
+function estimateReadTime(prose) {
+  const text = [
+    prose.tldr || '',
+    ...(prose.sections || []).map((s) => s.body || ''),
+    ...(prose.faq || []).map((f) => f.answer || ''),
+  ].join(' ')
+  const words = text.split(/\s+/).filter(Boolean).length
+  return `${Math.max(3, Math.round(words / 200))} min read`
+}
+
+function buildModelPrompt(subject, competitors, table, qualityNote) {
+  const lines = [subject, ...competitors].map((m, i) => {
+    const q = table.hasQuality ? `, quality ${table.rows[i][4]}` : ''
+    return `${i === 0 ? '[SUBJECT] ' : ''}${m.name} (${m.provider}): input ${fmtPrice(m.inputPerM)}/1M, output ${fmtPrice(m.outputPerM)}/1M, context ${fmtContext(m.context)}${q}`
+  }).join('\n')
+
+  const modelLink = subject.curatedSlug ? `/models/${subject.curatedSlug}` : '/tools/compare-prices'
+
+  return `You are a technical writer for TokenRate.dev, a tool that compares AI API token costs. Write a factual, useful comparison article about a model and how it stacks up against alternatives.
+
+THE ONLY FACTS YOU MAY USE (all figures are live and verified — do NOT state any price, context size, quality score, release date, or benchmark number that is not in this list):
+${lines}
+${qualityNote ? `\nNote: ${qualityNote}` : ''}
+
+The reader will see a data table with exactly these numbers directly above your article, so do not repeat the full table — interpret it. Focus on: what the subject model is for, how its input/output pricing compares to the alternatives, the output-to-input cost ratio, context-window trade-offs, and which workloads make it the right (or wrong) pick versus the named alternatives.
+
+Return ONLY valid JSON (no markdown fences, no commentary) matching:
+{
+  "title": "<concise title naming the subject model; no date>",
+  "description": "<140-160 char meta description>",
+  "tldr": "<2-3 sentence answer-first summary a reader can act on>",
+  "tags": ["<tag>", "<tag>", "<tag>"],
+  "sections": [ { "heading": "<heading>", "body": "<110-170 words of plain prose, no markdown, no bullet lists>" } ],
+  "faq": [ { "question": "<question>", "answer": "<2-3 sentence answer>" } ],
+  "ctaText": "<1-2 sentence CTA to use the TokenRate calculator>"
+}
+
+Requirements:
+- Exactly 4 sections and 3-4 FAQ items.
+- Plain prose only in every body and answer — no markdown, no headings, no bullet points.
+- You MAY include at most two internal links written as [anchor text](path), choosing from: ${modelLink}, /tools/compare-prices, / (the calculator). Do not invent other links.
+- Never state a number that is not in the facts list above. When you reference cost, use the exact figures given.
+- Return ONLY raw JSON starting with { and ending with }.`
+}
+
+async function tryModelComparisonPost(existingSlugs) {
+  let live, qmap
+  try {
+    ;[live, qmap] = await Promise.all([fetchOpenRouterModels(), fetchArenaQuality()])
+  } catch (err) {
+    console.warn(`Live data unavailable (${err.message}) — skipping model mode this run.`)
+    return false
+  }
+  if (!live || live.length === 0) {
+    console.warn('OpenRouter returned no usable models — skipping model mode this run.')
+    return false
+  }
+  console.log(`Live feed: ${live.length} models with pricing across ${PROVIDER_MAP.length} providers; ${qmap.size} quality scores.`)
+
+  const curated = readCuratedModels()
+  const curatedIds = new Set(curated.flatMap((c) => c.openRouterIds))
+  const curatedById = new Map()
+  for (const c of curated) for (const id of c.openRouterIds) curatedById.set(id, c)
+  console.log(`Curated catalog: ${curated.length} models parsed from models.ts.`)
+
+  for (const m of live) {
+    m.curated = curatedIds.has(m.id)
+    m.curatedSlug = m.curated ? curatedById.get(m.id)?.slug ?? null : null
+  }
+
+  // Collapse dated snapshots / duplicates to one entry per key (prefer the curated one).
+  const byKey = new Map()
+  for (const m of live) {
+    const k = modelKey(m)
+    const existing = byKey.get(k)
+    if (!existing || (m.curated && !existing.curated)) byKey.set(k, m)
+  }
+  const liveUniq = [...byKey.values()]
+
+  const ledger = readLedger()
+  const covered = ledger.covered
+
+  const pool = liveUniq.filter((m) => !covered[modelKey(m)])
+  if (pool.length === 0) {
+    console.log('No new models since last run — nothing to publish.')
+    return false
+  }
+
+  if (!ledger.seeded) {
+    // One-time showcase: lead with the highest-quality model so the first post
+    // features a current flagship rather than whatever curated model ranks first.
+    const qOf = (m) => lookupQuality(qmap, m.id, m.name) ?? -1
+    pool.sort((a, b) => qOf(b) - qOf(a) || b.inputPerM - a.inputPerM)
+    console.log(`[cold start] establishing baseline of ${liveUniq.length} models; showcasing the highest-rated one.`)
+  } else {
+    pool.sort((a, b) => scoreModel(b, qmap) - scoreModel(a, qmap))
+    console.log(`Seeded ledger has ${Object.keys(covered).length} models; ${pool.length} not yet covered.`)
+  }
+  const subject = pool[0]
+  const competitors = pickCompetitors(subject, liveUniq)
+  if (competitors.length === 0) {
+    console.warn('No competitors available for comparison — skipping.')
+    return false
+  }
+  const table = buildComparisonTable(subject, competitors, qmap)
+
+  console.log(`\nSelected: ${subject.name} (${subject.provider})${subject.curated ? ' [curated]' : ' [auto-discovered]'}`)
+  console.log(`Competitors: ${competitors.map((c) => c.name).join(', ')}`)
+  console.log('Comparison table:')
+  console.log('  ' + table.columns.join(' | '))
+  for (const r of table.rows) console.log('  ' + r.join(' | '))
+
+  if (DRY_RUN) {
+    console.log('\n--- prompt preview (first 1200 chars) ---')
+    console.log(buildModelPrompt(subject, competitors, table).slice(0, 1200))
+    console.log('\n[dry-run] would write a post and update the ledger. Stopping here.')
+    return true
+  }
+
+  const prompt = buildModelPrompt(subject, competitors, table)
+  console.log('\nCalling Anthropic API (claude-haiku-4-5)...')
+  let resp
+  try {
+    resp = await callWithRetry(prompt)
+  } catch (err) {
+    console.error('API call failed after retries:', err.message)
+    process.exit(1)
+  }
+  const { text: raw, stopReason, usage } = resp
+  if (usage) console.log(`Usage: input=${usage.input_tokens} output=${usage.output_tokens} stop_reason=${stopReason}`)
+  if (stopReason === 'max_tokens') {
+    console.error('Generation hit max_tokens — output truncated.')
+    process.exit(1)
+  }
+
+  const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim()
+  let prose
+  try {
+    prose = JSON.parse(cleaned)
+  } catch (err) {
+    console.error('Failed to parse JSON response:', err.message)
+    console.error('Raw (first 500):', raw.slice(0, 500))
+    process.exit(1)
+  }
+
+  const slug = uniqueSlug(`${normalizeKey(subject.name)}-pricing-comparison`, existingSlugs)
+  const post = {
+    slug,
+    category: 'comparisons',
+    kind: 'guide',
+    keyword: `${subject.name} pricing`,
+    title: prose.title || `${subject.name}: Pricing & How It Compares`,
+    description: prose.description || `${subject.name} pricing compared to alternatives — input/output cost per million tokens, context window, and which workloads it fits.`,
+    tldr: prose.tldr,
+    readTime: estimateReadTime(prose),
+    publishedAt: new Date().toISOString(),
+    tags: Array.isArray(prose.tags) && prose.tags.length ? prose.tags : [subject.provider, 'pricing', 'comparison'],
+    sections: prose.sections,
+    faq: prose.faq,
+    ctaText: prose.ctaText,
+    sources: buildSources(table.hasQuality),
+    relatedSlugs: pickRelated(subject, existingSlugs),
+    comparison: { caption: table.caption, columns: table.columns, rows: table.rows },
+  }
+
+  const filename = `${slug}.json`
+  const validationErrors = validateBlogPost(filename, post)
+  if (validationErrors.length > 0) {
+    console.error('Generated post failed validation; refusing to write:')
+    for (const e of validationErrors) console.error(`  - ${e}`)
+    process.exit(1)
+  }
+
+  if (!fs.existsSync(BLOG_DIR)) fs.mkdirSync(BLOG_DIR, { recursive: true })
+  fs.writeFileSync(path.join(BLOG_DIR, filename), JSON.stringify(post, null, 2))
+  console.log(`Post saved: ${filename}`)
+
+  // Update ledger: mark the subject covered; on first run, baseline-seed the rest.
+  covered[modelKey(subject)] = { name: subject.name, slug, postedAt: post.publishedAt }
+  if (!ledger.seeded) {
+    for (const m of liveUniq) {
+      const k = modelKey(m)
+      if (!covered[k]) covered[k] = { name: m.name, slug: null, postedAt: null }
+    }
+    ledger.seeded = true
+  }
+  writeLedger(ledger)
+  console.log(`Ledger updated: ${Object.keys(covered).length} models tracked (seeded=${ledger.seeded}).`)
+  return true
+}
+
 async function main() {
+  if (DRY_RUN) console.log('[dry-run] no API calls will be made and no files will be written.\n')
   const existingSlugs = getExistingSlugs()
   console.log(`Existing posts: ${existingSlugs.size}`)
 
+  // PRIMARY: a fresh comparison post about a newly-tracked model, grounded in
+  // live pricing. Returns true if it produced (or, in dry-run, would produce) one.
+  let made = false
+  try {
+    made = await tryModelComparisonPost(existingSlugs)
+  } catch (err) {
+    console.error('Model-comparison post failed:', err.message)
+    if (!DRY_RUN) process.exit(1)
+  }
+  if (made) return
+
+  // FALLBACK: legacy curated TOPICS list (currently exhausted → no-op).
   const topic = pickNextTopic(existingSlugs)
   if (!topic) {
-    console.log('All curated topics are already published — nothing to generate.')
-    console.log('Add new entries to the TOPICS table in this script to publish more posts.')
+    console.log('No new models to cover and all curated topics are published — nothing to generate.')
     return
   }
   console.log(`Generating: "${topic.title}" (slug: ${topic.slug}, category: ${topic.category})`)

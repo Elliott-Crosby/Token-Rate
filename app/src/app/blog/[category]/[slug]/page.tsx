@@ -190,6 +190,50 @@ export default async function PostPage({
           </section>
         )}
 
+        {/* Comparison table — built in code from live pricing, never LLM-authored */}
+        {post.comparison && post.comparison.rows.length > 0 && (
+          <section className="mb-8 overflow-x-auto" aria-label={post.comparison.caption ?? 'Comparison table'}>
+            {post.comparison.caption && (
+              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-2">
+                {post.comparison.caption}
+              </p>
+            )}
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-zinc-300 dark:border-zinc-700 text-left">
+                  {post.comparison.columns.map((col, i) => (
+                    <th
+                      key={i}
+                      className={`py-2 pr-4 font-semibold text-zinc-700 dark:text-zinc-300 ${i === 0 ? '' : 'text-right'}`}
+                    >
+                      {col}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {post.comparison.rows.map((row, r) => (
+                  <tr
+                    key={r}
+                    className={`border-b border-zinc-100 dark:border-zinc-800 ${
+                      r === 0 ? 'bg-emerald-50/60 dark:bg-emerald-950/20 font-medium' : ''
+                    }`}
+                  >
+                    {row.map((cell, c) => (
+                      <td
+                        key={c}
+                        className={`py-2 pr-4 ${c === 0 ? 'text-zinc-900 dark:text-zinc-100' : 'text-right tabular-nums text-zinc-600 dark:text-zinc-400'}`}
+                      >
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        )}
+
         {/* Body sections — mid-article ad inserted after the 2nd section */}
         <article className="flex flex-col gap-8">
           {post.sections?.map((section, i) => (

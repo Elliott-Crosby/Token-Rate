@@ -16,6 +16,16 @@ export interface BlogSource {
   note?: string
 }
 
+/** A structured comparison table. Built in code from live pricing data (never
+ *  authored by the LLM), so the numbers are always accurate. Rendered as a real
+ *  HTML table. `rows[0]` is the subject ("new") model and is highlighted. */
+export interface ComparisonTable {
+  caption?: string
+  columns: string[]
+  /** Each row must have the same length as `columns`. */
+  rows: string[][]
+}
+
 export interface BlogPost {
   slug: string
   category: CategorySlug
@@ -35,4 +45,6 @@ export interface BlogPost {
   ctaText?: string
   sources?: BlogSource[]
   relatedSlugs?: string[]
+  /** Optional data table rendered between the intro and the body sections. */
+  comparison?: ComparisonTable
 }

@@ -91,5 +91,22 @@ export function validateBlogPost(filename, data) {
     errors.push('relatedSlugs must be an array of slug strings')
   }
 
+  if (data.comparison !== undefined) {
+    const c = data.comparison
+    if (!c || typeof c !== 'object') {
+      errors.push('comparison must be an object')
+    } else if (!Array.isArray(c.columns) || c.columns.length === 0) {
+      errors.push('comparison.columns must be a non-empty array')
+    } else if (!Array.isArray(c.rows) || c.rows.length === 0) {
+      errors.push('comparison.rows must be a non-empty array')
+    } else {
+      c.rows.forEach((row, i) => {
+        if (!Array.isArray(row) || row.length !== c.columns.length) {
+          errors.push(`comparison.rows[${i}] must have ${c.columns.length} cells (matching columns)`)
+        }
+      })
+    }
+  }
+
   return errors
 }
