@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import type { InputMode, ProviderGroup, ModelPricing, CalculationResult } from '@/lib/types'
-import { calculate, CHARS_PER_TOKEN } from '@/lib/conversions'
+import { calculate } from '@/lib/conversions'
 import type { MoneyResult, TokensResult, CharsResult } from '@/lib/types'
 import PriceCompareClient from './PriceCompareClient'
 import FilterPanel, { TIER_KEYS, type CostPreset, type QualityPreset } from './FilterPanel'
@@ -307,7 +307,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
       {/* Stats row */}
       <div className="flex items-center justify-between mb-3 px-1">
         <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-widest font-semibold">
-          {compareMode ? 'SELECT MODELS TO COMPARE SIDE-BY-SIDE' : 'TYPE ANY AMOUNT — RESULTS UPDATE LIVE'}
+          {compareMode ? 'PICK MODELS · TYPE ANY AMOUNT — RESULTS UPDATE LIVE' : 'TYPE ANY AMOUNT — RESULTS UPDATE LIVE'}
         </p>
         <p className="text-xs text-zinc-400 dark:text-zinc-500 shrink-0">
           <span className="font-bold text-zinc-600 dark:text-zinc-300">{allModels.length}</span> models ·{' '}
@@ -352,73 +352,73 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
           </button>
         </div>
 
+        {/* ── Input mode tabs (always visible across both views) ── */}
+        <div className="flex border-b border-zinc-200 dark:border-zinc-800">
+          {(['money', 'tokens', 'characters'] as InputMode[]).map((m) => (
+            <button
+              key={m}
+              onClick={() => handleModeChange(m)}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold transition-colors ${
+                mode === m
+                  ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border-b-2 border-emerald-500'
+                  : 'bg-zinc-50 dark:bg-zinc-800/60 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300'
+              }`}
+            >
+              <span className="font-mono text-xs opacity-70">{MODE_PREFIX[m]}</span>
+              {m === 'money' ? 'Dollars' : m === 'tokens' ? 'Tokens' : 'Characters'}
+            </button>
+          ))}
+        </div>
+
+        {/* ── Input + quick presets (always visible across both views) ── */}
+        <div className="px-5 pt-5 pb-3">
+          <div className="flex items-center rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all">
+            <span className="w-12 shrink-0 flex items-center justify-center font-mono text-sm text-zinc-400 dark:text-zinc-500 border-r border-zinc-200 dark:border-zinc-700 h-full py-4">
+              {MODE_PREFIX[mode]}
+            </span>
+            <input
+              type="text"
+              inputMode="decimal"
+              value={raw}
+              onChange={(e) => setRaw(e.target.value)}
+              placeholder={MODE_PLACEHOLDER[mode]}
+              className="flex-1 bg-transparent px-4 py-4 text-xl font-mono text-zinc-900 dark:text-zinc-50 outline-none placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
+            />
+            {raw && (
+              <button
+                onClick={() => setRaw('')}
+                className="mr-4 h-6 w-6 shrink-0 flex items-center justify-center rounded-full bg-zinc-200 dark:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors"
+                aria-label="Clear"
+              >
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Quick presets */}
+          <div className="flex items-center gap-2 mt-3">
+            <span className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-semibold">Quick</span>
+            {PRESETS[mode].map((p) => (
+              <button
+                key={p.label}
+                onClick={() => { setRaw(String(p.value)); track('preset_used', { mode, preset_label: p.label, preset_value: p.value }) }}
+                className={`text-xs px-2.5 py-1 rounded-md border transition-colors font-mono ${
+                  numericValue === p.value
+                    ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'
+                    : 'border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600 hover:text-zinc-700 dark:hover:text-zinc-200'
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* ── All Models content ── */}
         {!compareMode && (
           <>
-            {/* Input mode tabs */}
-            <div className="flex border-b border-zinc-200 dark:border-zinc-800">
-              {(['money', 'tokens', 'characters'] as InputMode[]).map((m) => (
-                <button
-                  key={m}
-                  onClick={() => handleModeChange(m)}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold transition-colors ${
-                    mode === m
-                      ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border-b-2 border-emerald-500'
-                      : 'bg-zinc-50 dark:bg-zinc-800/60 text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300'
-                  }`}
-                >
-                  <span className="font-mono text-xs opacity-70">{MODE_PREFIX[m]}</span>
-                  {m === 'money' ? 'Dollars' : m === 'tokens' ? 'Tokens' : 'Characters'}
-                </button>
-              ))}
-            </div>
-
-            {/* Input */}
-            <div className="px-5 pt-5 pb-3">
-              <div className="flex items-center rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all">
-                <span className="w-12 shrink-0 flex items-center justify-center font-mono text-sm text-zinc-400 dark:text-zinc-500 border-r border-zinc-200 dark:border-zinc-700 h-full py-4">
-                  {MODE_PREFIX[mode]}
-                </span>
-                <input
-                  type="text"
-                  inputMode="decimal"
-                  value={raw}
-                  onChange={(e) => setRaw(e.target.value)}
-                  placeholder={MODE_PLACEHOLDER[mode]}
-                  className="flex-1 bg-transparent px-4 py-4 text-xl font-mono text-zinc-900 dark:text-zinc-50 outline-none placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
-                />
-                {raw && (
-                  <button
-                    onClick={() => setRaw('')}
-                    className="mr-4 h-6 w-6 shrink-0 flex items-center justify-center rounded-full bg-zinc-200 dark:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors"
-                    aria-label="Clear"
-                  >
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  </button>
-                )}
-              </div>
-
-              {/* Quick presets */}
-              <div className="flex items-center gap-2 mt-3">
-                <span className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-semibold">Quick</span>
-                {PRESETS[mode].map((p) => (
-                  <button
-                    key={p.label}
-                    onClick={() => { setRaw(String(p.value)); track('preset_used', { mode, preset_label: p.label, preset_value: p.value }) }}
-                    className={`text-xs px-2.5 py-1 rounded-md border transition-colors font-mono ${
-                      numericValue === p.value
-                        ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'
-                        : 'border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-600 hover:text-zinc-700 dark:hover:text-zinc-200'
-                    }`}
-                  >
-                    {p.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Provider filter + sort + filter toggle */}
             <div className="flex items-center justify-between gap-3 px-5 py-3 border-t border-zinc-100 dark:border-zinc-800 flex-wrap">
               {/* Provider pills */}
@@ -619,7 +619,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
 
         {/* Compare panel — always mounted so selections survive toggling */}
         <div className={`px-5 pt-8 pb-5${compareMode ? '' : ' hidden'}`}>
-          <PriceCompareClient providerGroups={providerGroups} />
+          <PriceCompareClient providerGroups={providerGroups} mode={mode} numericValue={numericValue} />
         </div>
 
       </div>

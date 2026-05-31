@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useMemo } from 'react'
-import type { ProviderGroup, ModelPricing } from '@/lib/types'
+import type { ProviderGroup, ModelPricing, InputMode } from '@/lib/types'
 import { track } from '@/lib/track'
 
 function detectTier(name: string): 'flagship' | 'balanced' | 'fast' | 'reasoning' {
@@ -31,6 +31,31 @@ function fmtCtx(n: number): string {
   return n >= 1_000_000 ? `${(n / 1_000_000).toFixed(0)}M` : `${(n / 1_000).toFixed(0)}K`
 }
 
+// Match the formatters used in the All Models view so cost/token display is identical across tabs.
+function fmtTokens(n: number): string {
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + 'M'
+  if (n >= 1_000) return Math.round(n).toLocaleString()
+  return n.toFixed(0)
+}
+function fmtMoney(n: number): string {
+  if (!isFinite(n) || n <= 0) return '$0'
+  if (n >= 0.01) return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })
+  const magnitude = Math.floor(Math.log10(n))
+  const decimals = Math.min(20, 2 - magnitude)
+  let s = n.toFixed(decimals)
+  if (s.includes('.')) {
+    s = s.replace(/0+$/, '')
+    if (s.endsWith('.')) s += '00'
+    else {
+      const [intPart, decPart] = s.split('.')
+      if (decPart.length < 2) s = intPart + '.' + decPart.padEnd(2, '0')
+    }
+  }
+  return '$' + s
+}
+
+const CHARS_PER_TOKEN = 4
+
 function QualityBadge({ score, source }: { score?: number; source?: string }) {
   if (score == null) return <span className="text-zinc-300 dark:text-zinc-600 font-mono text-xs">—</span>
 
@@ -50,10 +75,47 @@ function QualityBadge({ score, source }: { score?: number; source?: string }) {
   )
 }
 
-export default function PriceCompareClient({ providerGroups }: { providerGroups: ProviderGroup[] }) {
+// Value badge (quality per $1 of input cost) — identical math to the All Models view.
+function ValueBadge({ quality, inputPricePerToken }: { quality?: number; inputPricePerToken: number }) {
+  if (quality == null) return <span className="text-zinc-300 dark:text-zinc-600 font-mono text-xs">—</span>
+  const pricePerMillion = inputPricePerToken * 1_000_000
+  if (pricePerMillion <= 0) return <span className="text-zinc-300 dark:text-zinc-600 font-mono text-xs">—</span>
+  const value = quality / pricePerMillion  // quality points per $1 of input cost
+  let label: string
+  if      (value >= 1000) label = (value / 1000).toFixed(1) + 'k'
+  else if (value >= 100)  label = Math.round(value).toString()
+  else if (value >= 10)   label = value.toFixed(0)
+  else                    label = value.toFixed(1)
+  let color: string
+  if      (value >= 100) color = 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+  else if (value >= 30)  color = 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400'
+  else if (value >= 10)  color = 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300'
+  else                   color = 'bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400'
+  return (
+    <span
+      title={`${quality} quality ÷ $${pricePerMillion.toFixed(2)}/1M = ${value.toFixed(1)} quality per $1`}
+      className={`inline-flex items-center text-[11px] font-bold px-1.5 py-0.5 rounded font-mono ${color}`}
+    >
+      {label}
+    </span>
+  )
+}
+
+export default function PriceCompareClient({
+  providerGroups,
+  mode = 'money',
+  numericValue = 0,
+}: {
+  providerGroups: ProviderGroup[]
+  mode?: InputMode
+  numericValue?: number
+}) {
   const [openProvider, setOpenProvider] = useState<string | null>(null)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const containerRef = useRef<HTMLDivElement>(null)
+  const showCalc = numericValue > 0
+  const calcLabelIn = mode === 'money' ? 'Tokens In' : 'Cost In'
+  const calcLabelOut = mode === 'money' ? 'Tokens Out' : 'Cost Out'
 
   useEffect(() => {
     function onPointerDown(e: PointerEvent) {
@@ -244,7 +306,19 @@ export default function PriceCompareClient({ providerGroups }: { providerGroups:
                 <th className="px-4 py-3 text-right font-semibold text-purple-600 dark:text-purple-400 whitespace-nowrap">Quality</th>
                 <th className="px-4 py-3 text-right font-semibold text-emerald-700 dark:text-emerald-400 whitespace-nowrap">Input / 1M</th>
                 <th className="px-4 py-3 text-right font-semibold text-sky-700 dark:text-sky-400 whitespace-nowrap">Output / 1M</th>
+                {showCalc && (
+                  <>
+                    <th className="px-4 py-3 text-right font-semibold text-emerald-700 dark:text-emerald-400 whitespace-nowrap">{calcLabelIn}</th>
+                    <th className="px-4 py-3 text-right font-semibold text-sky-700 dark:text-sky-400 whitespace-nowrap">{calcLabelOut}</th>
+                  </>
+                )}
                 <th className="px-4 py-3 text-right font-semibold text-zinc-500 dark:text-zinc-400 whitespace-nowrap">Context</th>
+                <th
+                  className="px-4 py-3 text-right font-semibold text-emerald-600 dark:text-emerald-400 whitespace-nowrap"
+                  title="Quality points per $1 of input cost (quality ÷ $/1M input). Higher is better."
+                >
+                  Value
+                </th>
                 <th className="px-4 py-3 whitespace-nowrap" />
               </tr>
             </thead>
@@ -279,8 +353,29 @@ export default function PriceCompareClient({ providerGroups }: { providerGroups:
                       )}
                     </td>
                     <td className="px-4 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">{fmt(m.outputPricePerToken)}</td>
+                    {showCalc && (() => {
+                      let valIn: string
+                      let valOut: string
+                      if (mode === 'money') {
+                        valIn = m.inputPricePerToken > 0 ? fmtTokens(numericValue / m.inputPricePerToken) : '—'
+                        valOut = m.outputPricePerToken > 0 ? fmtTokens(numericValue / m.outputPricePerToken) : '—'
+                      } else {
+                        const tokens = mode === 'tokens' ? numericValue : numericValue / CHARS_PER_TOKEN
+                        valIn = fmtMoney(tokens * m.inputPricePerToken)
+                        valOut = fmtMoney(tokens * m.outputPricePerToken)
+                      }
+                      return (
+                        <>
+                          <td className="px-4 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">{valIn}</td>
+                          <td className="px-4 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">{valOut}</td>
+                        </>
+                      )
+                    })()}
                     <td className="px-4 py-3 text-right font-mono text-zinc-400 dark:text-zinc-500 text-xs whitespace-nowrap">
                       {m.contextLength ? fmtCtx(m.contextLength) : '—'}
+                    </td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap">
+                      <ValueBadge quality={m.qualityIndex} inputPricePerToken={m.inputPricePerToken} />
                     </td>
                     <td className="px-3 py-3">
                       <button
