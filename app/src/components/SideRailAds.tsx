@@ -1,8 +1,13 @@
 import NodeaBannerAd from './NodeaBannerAd'
+import NodeaCompanionAd from './NodeaCompanionAd'
 
 /**
  * SideRailAds — fixed "skyscraper" rails that sit in the empty page margins,
  * one on each side of the centered content column (max-w-5xl ≈ 1024px).
+ *
+ * The two banners bookend the page in contrast: the light "branching AI chat
+ * canvas" banner on the LEFT rail and the dark "why settle for one answer?"
+ * companion on the RIGHT rail.
  *
  * Only shown once the viewport is wide enough to hold a 300px banner on each
  * side without overlapping the content (1024 + 2×300 + gaps ≈ 1672px), so it
@@ -22,7 +27,7 @@ export default function SideRailAds() {
         className="hidden min-[1680px]:block fixed top-1/2 -translate-y-1/2 z-30"
         style={{ right: 'calc(50% - 836px)' }}
       >
-        <NodeaBannerAd />
+        <NodeaCompanionAd />
       </div>
     </div>
   )

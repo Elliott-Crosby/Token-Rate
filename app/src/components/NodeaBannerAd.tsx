@@ -1,18 +1,13 @@
 'use client'
 
 /**
- * NodeaBannerAd — a 300×600 half-page house ad ("A branching AI chat canvas").
- *
- * Faithful port of the `HP_Final` design from the Claude Design handoff bundle
- * (Nodea Banner Ads.html). It is a self-promotional / advertising unit, so it is
- * clearly labelled "Advertisement" and the outbound link is marked rel="sponsored"
- * for FTC / search-engine disclosure compliance.
+ * NodeaBannerAd — a 300×600 light half-page house ad ("A branching AI chat
+ * canvas"). Faithful port of `HP_Final` from the Claude Design handoff bundle.
+ * Wrapped in AdFrame for the "Advertisement" disclosure + rel="sponsored" link.
  */
 
 import { useEffect, useState, type CSSProperties } from 'react'
-import './NodeaBannerAd.css'
-
-const AD_HREF = 'https://nodea.ai'
+import AdFrame, { AdArrow } from './AdFrame'
 
 /* Looping-once reveal timeline (mirrors the product's tree-build animation). */
 function useSequence(count: number, step: number, start: number): number {
@@ -74,15 +69,7 @@ function LabeledTree({ reveal, fs = 11 }: { reveal: number; fs?: number }) {
           const on = p.active && n.active
           const my = (p.y + n.y) / 2
           const d = `M ${p.x} ${p.y} C ${p.x} ${my} ${n.x} ${my} ${n.x} ${n.y}`
-          return (
-            <path
-              key={k}
-              d={d}
-              fill="none"
-              stroke={on ? C.edgeOn : C.edge}
-              strokeWidth={on ? 2 : 1.5}
-            />
-          )
+          return <path key={k} d={d} fill="none" stroke={on ? C.edgeOn : C.edge} strokeWidth={on ? 2 : 1.5} />
         })}
       </svg>
       {nodes.map((nd, i) => {
@@ -115,14 +102,6 @@ function LabeledTree({ reveal, fs = 11 }: { reveal: number; fs?: number }) {
         )
       })}
     </div>
-  )
-}
-
-function Arrow({ s = 16 }: { s?: number }) {
-  return (
-    <svg className="nd-arrow" width={s} height={s} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M3 8h9M8.5 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   )
 }
 
@@ -162,73 +141,56 @@ export default function NodeaBannerAd({ className, style }: { className?: string
   const reveal = useSequence(LBL_V2.nodes.length, 400, 700)
 
   return (
-    <figure className={`m-0 flex flex-col items-center gap-1.5 ${className ?? ''}`} style={style}>
-      <figcaption className="nd-ad-label">Advertisement</figcaption>
-
-      <a
-        href={AD_HREF}
-        target="_blank"
-        rel="sponsored noopener noreferrer"
-        aria-label="Advertisement: Nodea — a branching AI chat canvas. Open a canvas, free. Opens in a new tab."
-        className="nd-ad nd-paper nd-dotgrid block rounded-2xl no-underline shadow-md ring-1 ring-black/5 transition-shadow hover:shadow-xl"
-        style={{
-          width: 300,
-          height: 600,
-          padding: '22px 24px',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: 'inset 0 0 0 1px var(--nd-border)',
-        }}
-      >
-        {/* Logo + eyebrow */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span className="nd-logo">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/nodea-icon.png" alt="Nodea" width={22} height={22} style={{ display: 'block', width: 22, height: 22, flex: '0 0 auto' }} />
-            <span className="nd-logo-word" style={{ fontSize: 22 }}>Nodea</span>
-          </span>
-          <span className="nd-eyebrow" style={{ fontSize: 9, letterSpacing: '.14em', whiteSpace: 'nowrap' }}>
-            Branching AI chat
-          </span>
-        </div>
-
-        {/* Headline */}
-        <h2 className="nd-h" style={{ fontSize: 29, marginTop: 12, color: 'var(--nd-ink)', lineHeight: 1.07 }}>
-          A <em>branching</em>
-          <br />
-          AI chat canvas.
-        </h2>
-
-        {/* Chat exchange → branch prompt */}
-        <div style={{ marginTop: 13, display: 'flex', flexDirection: 'column', gap: 7 }}>
-          <ChatRow role="user" who="JA" text="How should we launch?" />
-          <ChatRow role="ai" text="A cautious plan — or a bolder one?" />
-          <div
-            style={{
-              display: 'flex', gap: 6, margin: '1px 0 0 26px',
-              fontSize: 9.5, fontWeight: 700, letterSpacing: '.04em', color: 'var(--nd-accent)',
-            }}
-          >
-            ↳ branch the reply
-          </div>
-        </div>
-
-        {/* Branching tree */}
-        <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'flex-start', marginTop: 8 }}>
-          <div style={{ width: '100%', height: 188 }}>
-            <LabeledTree reveal={reveal} fs={11} />
-          </div>
-        </div>
-
-        {/* CTA + footer */}
-        <span className="nd-cta nd-cta-solid nd-cta-pulse" style={{ padding: '13px 20px', fontSize: 15 }}>
-          Open a canvas — free
-          <Arrow s={16} />
+    <AdFrame
+      ariaLabel="Advertisement: Nodea — a branching AI chat canvas. Open a canvas, free. Opens in a new tab."
+      surfaceClassName="nd-paper nd-dotgrid"
+      innerStyle={{ padding: '22px 24px', boxShadow: 'inset 0 0 0 1px var(--nd-border)' }}
+      className={className}
+      style={style}
+    >
+      {/* Logo + eyebrow */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span className="nd-logo">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/nodea-icon.png" alt="Nodea" width={22} height={22} style={{ display: 'block', width: 22, height: 22, flex: '0 0 auto' }} />
+          <span className="nd-logo-word" style={{ fontSize: 22 }}>Nodea</span>
         </span>
-        <div className="nd-foot" style={{ fontSize: 11.5, marginTop: 10, textAlign: 'center' }}>
-          Free during beta · No credit card · nodea.ai
+        <span className="nd-eyebrow" style={{ fontSize: 9, letterSpacing: '.14em', whiteSpace: 'nowrap' }}>
+          Branching AI chat
+        </span>
+      </div>
+
+      {/* Headline */}
+      <h2 className="nd-h" style={{ fontSize: 29, marginTop: 12, color: 'var(--nd-ink)', lineHeight: 1.07 }}>
+        A <em>branching</em>
+        <br />
+        AI chat canvas.
+      </h2>
+
+      {/* Chat exchange → branch prompt */}
+      <div style={{ marginTop: 13, display: 'flex', flexDirection: 'column', gap: 7 }}>
+        <ChatRow role="user" who="JA" text="How should we launch?" />
+        <ChatRow role="ai" text="A cautious plan — or a bolder one?" />
+        <div style={{ display: 'flex', gap: 6, margin: '1px 0 0 26px', fontSize: 9.5, fontWeight: 700, letterSpacing: '.04em', color: 'var(--nd-accent)' }}>
+          ↳ branch the reply
         </div>
-      </a>
-    </figure>
+      </div>
+
+      {/* Branching tree */}
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'flex-start', marginTop: 8 }}>
+        <div style={{ width: '100%', height: 188 }}>
+          <LabeledTree reveal={reveal} fs={11} />
+        </div>
+      </div>
+
+      {/* CTA + footer */}
+      <span className="nd-cta nd-cta-solid nd-cta-pulse" style={{ padding: '13px 20px', fontSize: 15 }}>
+        Open a canvas — free
+        <AdArrow s={16} />
+      </span>
+      <div className="nd-foot" style={{ fontSize: 11.5, marginTop: 10, textAlign: 'center' }}>
+        Free during beta · No credit card · nodea.ai
+      </div>
+    </AdFrame>
   )
 }

@@ -16,6 +16,9 @@
   --nd-paper: #f8f9fa;
   --nd-border: #e2e5ea;
   --nd-border-2: #d8dade;
+  --nd-night-1: #0a0314;
+  --nd-night-2: #170a36;
+  --nd-night-3: #2a1870;
   --nd-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   position: relative;
@@ -27,19 +30,27 @@
 }
 .nd-ad * { box-sizing: border-box; }
 
-/* Surface */
+/* Surfaces */
 .nd-ad.nd-paper { background: var(--nd-paper); color: var(--nd-ink); }
+.nd-ad.nd-night {
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(124, 58, 237, 0.34) 0%, transparent 55%),
+    linear-gradient(140deg, var(--nd-night-1) 0%, var(--nd-night-2) 55%, var(--nd-night-3) 120%);
+  color: #fff;
+}
 .nd-ad.nd-dotgrid::before {
   content: '';
   position: absolute; inset: 0;
-  background-image: radial-gradient(circle at 1px 1px, rgba(26, 29, 35, 0.07) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, var(--dot, rgba(255, 255, 255, 0.06)) 1px, transparent 0);
   background-size: 22px 22px;
   pointer-events: none;
 }
+.nd-ad.nd-paper.nd-dotgrid::before { --dot: rgba(26, 29, 35, 0.07); }
 
 /* Logo lockup */
 .nd-ad .nd-logo { display: inline-flex; align-items: center; gap: 7px; }
 .nd-ad .nd-logo-word { font-weight: 700; letter-spacing: -0.02em; color: var(--nd-ink); }
+.nd-ad.nd-night .nd-logo-word { color: #fff; }
 
 /* CTA pill */
 .nd-ad .nd-cta {
@@ -50,6 +61,7 @@
   line-height: 1;
 }
 .nd-ad .nd-cta-solid { background: var(--nd-accent); color: #fff; }
+.nd-ad .nd-cta-lav { background: var(--nd-lav); color: #1c1033; }
 .nd-ad .nd-arrow { transition: transform .3s ease; }
 .nd-ad:hover .nd-cta .nd-arrow { transform: translateX(3px); }
 
@@ -67,15 +79,19 @@
   margin: 0;
   text-wrap: balance;
 }
-.nd-ad .nd-h em { font-style: italic; color: var(--nd-accent); font-weight: 800; }
+.nd-ad .nd-h em { font-style: italic; color: var(--nd-lav); font-weight: 800; }
+.nd-ad.nd-paper .nd-h em { color: var(--nd-accent); }
 .nd-ad .nd-eyebrow {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: var(--nd-accent);
+  color: var(--nd-lav);
 }
+.nd-ad.nd-paper .nd-eyebrow { color: var(--nd-accent); }
 .nd-ad .nd-sub { color: var(--nd-ink-2); margin: 0; }
+.nd-ad.nd-night .nd-sub { color: rgba(255, 255, 255, 0.72); }
 .nd-ad .nd-foot { color: var(--nd-ink-3); font-weight: 500; letter-spacing: .01em; }
+.nd-ad.nd-night .nd-foot { color: rgba(255, 255, 255, 0.5); }
 
 /* Tree node motion */
 .nd-ad .nd-node { animation: ndPop .42s cubic-bezier(0.18, 0.89, 0.32, 1.28) both; }
