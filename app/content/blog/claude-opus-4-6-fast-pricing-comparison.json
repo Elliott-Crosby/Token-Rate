@@ -1,0 +1,122 @@
+{
+  "slug": "claude-opus-4-6-fast-pricing-comparison",
+  "category": "comparisons",
+  "kind": "guide",
+  "keyword": "Claude Opus 4.6 (Fast) pricing",
+  "title": "Claude Opus 4.6 (Fast) vs GPT-5.5 Pro and Claude Opus 4.1",
+  "description": "Claude Opus 4.6 (Fast) costs $30/1M input, $150/1M output with 1M context. Compare token pricing and quality against GPT-5.5 Pro and older Claude models.",
+  "tldr": "Claude Opus 4.6 (Fast) matches GPT-5.5 Pro on input costs but costs $30 per million tokens less on output, while offering a full 1M context window. It's the better value for high-volume output workloads, though quality scores are comparable.",
+  "readTime": "3 min read",
+  "publishedAt": "2026-06-01T18:41:51.873Z",
+  "tags": [
+    "claude-opus",
+    "token-pricing",
+    "api-cost-comparison",
+    "context-window"
+  ],
+  "sections": [
+    {
+      "heading": "What Claude Opus 4.6 (Fast) Is Built For",
+      "body": "Claude Opus 4.6 (Fast) is Anthropic's optimized variant for applications that prioritize speed and cost efficiency without sacrificing depth of reasoning. With a 1 million token context window and a quality score of 77, it's designed for workloads requiring sustained, coherent analysis across long documents, code repositories, and multi-turn conversations. The Fast designation indicates this version trades some latency for throughput, making it ideal for batch processing, content generation, and large-scale retrieval augmented generation systems where response time is less critical than token economy."
+    },
+    {
+      "heading": "Input and Output Cost Trade-offs",
+      "body": "Claude Opus 4.6 (Fast) and GPT-5.5 Pro both charge $30.00 per million input tokens, eliminating input cost as a differentiator. The divergence appears in output pricing: Claude Opus 4.6 (Fast) costs $150 per million output tokens, while GPT-5.5 Pro charges $180 per million. Over high-volume output workloads, this $30 per million difference compounds quickly. Claude Opus 4.1, the previous generation, offers cheaper input at $15.00 per million and output at $75.00 per million, but its 200K context window severely limits use cases requiring extended reasoning or document processing."
+    },
+    {
+      "heading": "Context Window and Workload Fit",
+      "body": "Claude Opus 4.6 (Fast) provides a 1 million token context window, matching GPT-5.5 Pro's 1.1M window and dramatically exceeding Claude Opus 4.1's 200K limit. This five-fold increase enables processing entire codebases, books, or conversation histories in a single API call. For workflows involving document summarization, contract analysis, or long-context reasoning, the extra context is worth the higher per-token cost. GPT-5.5 Pro's marginally larger window offers negligible practical advantage, while Claude Opus 4.1 remains suitable only for shorter, focused tasks."
+    },
+    {
+      "heading": "Quality, Speed, and the Right Use Case",
+      "body": "Claude Opus 4.6 (Fast) achieves a quality score of 77, matching Claude Opus 4.1 and exceeding GPT-5.5 Pro's 72. The Fast variant sacrifices some inference speed for cost and throughput, making it less suitable for real-time chat applications or latency-sensitive APIs. Choose Claude Opus 4.6 (Fast) when output volume is high, context is large, and quality must remain competitive. Reserve GPT-5.5 Pro for scenarios where its slightly larger context edge justifies the $30 per million output premium, and Claude Opus 4.1 only for cost-conscious, short-context workloads."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much will I save on output tokens using Claude Opus 4.6 (Fast) instead of GPT-5.5 Pro?",
+      "answer": "Claude Opus 4.6 (Fast) saves $30 per million output tokens compared to GPT-5.5 Pro. For a workload generating 100 million output tokens monthly, that translates to $3,000 in savings. The calculation: (180 - 150) × (output tokens / 1,000,000)."
+    },
+    {
+      "question": "Should I downgrade to Claude Opus 4.1 to cut costs in half?",
+      "answer": "Only if your use case fits within a 200K context window. Claude Opus 4.1's 75 percent input and output cost reduction is offset by its inability to handle long documents or sustained conversations. For most production workloads requiring context, Claude Opus 4.6 (Fast) offers better total value despite higher per-token pricing."
+    },
+    {
+      "question": "Is Claude Opus 4.6 (Fast) slower than the standard version?",
+      "answer": "The Fast designation indicates this model prioritizes throughput and cost over lowest latency. If your application requires sub-second response times, a standard variant may be preferable. For batch processing, async workflows, and non-real-time use cases, the speed difference is negligible and the cost savings are substantial."
+    },
+    {
+      "question": "Why is the context window important for my token bill?",
+      "answer": "Larger context windows reduce the number of API calls needed by processing more data per request. Claude Opus 4.6 (Fast)'s 1M context avoids expensive re-indexing and chunking overhead, lowering total input costs even at higher per-token rates. This advantage compounds for document-heavy or multi-turn workflows."
+    }
+  ],
+  "ctaText": "Use the TokenRate calculator to model your specific input and output volumes against Claude Opus 4.6 (Fast), GPT-5.5 Pro, and other models to see exact monthly costs for your workload.",
+  "sources": [
+    {
+      "label": "OpenRouter — live model pricing",
+      "url": "https://openrouter.ai/models",
+      "note": "Input/output price per token and context length"
+    },
+    {
+      "label": "LMArena leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Crowd-sourced Elo, normalised to a 0–100 quality score"
+    },
+    {
+      "label": "TokenRate price comparison tool",
+      "url": "https://tokenrate.dev/tools/compare-prices"
+    }
+  ],
+  "relatedSlugs": [
+    "all-anthropic-models-compare-prices",
+    "compare-ai-model-prices-side-by-side-tool",
+    "how-ai-api-pricing-works"
+  ],
+  "comparison": {
+    "caption": "Claude Opus 4.6 (Fast) vs. alternatives — live pricing",
+    "columns": [
+      "Model",
+      "Input / 1M",
+      "Output / 1M",
+      "Context",
+      "Quality"
+    ],
+    "rows": [
+      [
+        "Claude Opus 4.6 (Fast)",
+        "$30.00",
+        "$150",
+        "1M",
+        "77"
+      ],
+      [
+        "Claude Opus 4.7 (Fast)",
+        "$30.00",
+        "$150",
+        "1M",
+        "76"
+      ],
+      [
+        "Claude Opus 4.1",
+        "$15.00",
+        "$75.00",
+        "200K",
+        "77"
+      ],
+      [
+        "GPT-5.5 Pro",
+        "$30.00",
+        "$180",
+        "1.1M",
+        "72"
+      ],
+      [
+        "GPT-5.4 Pro",
+        "$30.00",
+        "$180",
+        "1.1M",
+        "—"
+      ]
+    ]
+  }
+}
