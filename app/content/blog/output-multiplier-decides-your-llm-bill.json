@@ -1,0 +1,111 @@
+{
+  "category": "cost-optimization",
+  "slug": "output-multiplier-decides-your-llm-bill",
+  "kind": "guide",
+  "keyword": "output token pricing",
+  "title": "The Output Multiplier: The Token Rate That Decides Your 2026 Bill",
+  "description": "Input price is a vanity metric. In the agent era your bill is set by the output multiplier — 2× to 6× across 2026's newest models. Here's the math that matters.",
+  "tldr": "Every pricing page leads with input price, but agent and reasoning workloads are dominated by output tokens — which cost 2× to 6× more depending on the model. Across the newest June 2026 lineup, DeepSeek V4 and Grok 4.3 charge a 2× output multiplier, Claude Opus 4.8 charges 5×, and GPT-5.5 and Gemini 3.5 Flash charge 6× — so the model that looks cheapest on paper often isn't cheapest in production. The only rate that predicts your bill is your blended rate: input and output, weighted by how many of each you actually spend.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-06-05T13:30:00.000Z",
+  "tags": [
+    "output token pricing",
+    "LLM cost",
+    "blended rate",
+    "agent costs",
+    "2026 models"
+  ],
+  "comparison": {
+    "caption": "June 2026's newest models, sorted by output multiplier (Out ÷ In). 'Blended' = cost per 1M tokens at a 1:4 input-to-output mix, typical of an agent or reasoning workload. Live input/output pricing via OpenRouter.",
+    "columns": ["Model", "Input / 1M", "Output / 1M", "Out ÷ In", "Blended (agent)"],
+    "rows": [
+      ["DeepSeek V4 Pro", "$0.43", "$0.87", "2.0×", "$0.78"],
+      ["Grok 4.3", "$1.25", "$2.50", "2.0×", "$2.25"],
+      ["Claude Opus 4.8", "$5.00", "$25.00", "5.0×", "$21.00"],
+      ["Gemini 3.5 Flash", "$1.50", "$9.00", "6.0×", "$7.50"],
+      ["GPT-5.4", "$2.50", "$15.00", "6.0×", "$12.50"],
+      ["GPT-5.5", "$5.00", "$30.00", "6.0×", "$25.00"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "The Number on the Pricing Page Is the Wrong Number",
+      "body": "Open any provider's pricing page and the first figure you see is the input price — dollars per million input tokens. It is the number every comparison table sorts by, the number that wins the headline, and, for most modern workloads, the wrong number to optimize.\n\nHere is why. An input token is something the model reads; an output token is something the model writes. Every provider charges more for output, because writing is more expensive to compute than reading. The gap is neither small nor constant: across the newest models to land since late April — Claude Opus 4.8 on May 28, plus GPT-5.5, Gemini 3.5 Flash, Grok 4.3, and DeepSeek V4 — output costs anywhere from 2× to 6× as much as input.\n\nThat spread means two models with nearly identical input prices can hand you bills that differ threefold, depending entirely on how much your application writes versus reads. If you are ranking models by input price alone, you are comparing them on the axis that matters least."
+    },
+    {
+      "heading": "Why Output Costs More Than Input",
+      "body": "The asymmetry is rooted in how transformers run. When a model reads your prompt, it processes the whole input in parallel in a single forward pass — the prefill stage — which is fast and efficient on modern GPUs. When it writes a response, it generates one token at a time, and each new token requires another full pass over everything written so far — the decode stage. Decode is sequential and bound by memory bandwidth rather than raw compute, so each output token ties up far more hardware time than an input token. Providers price that reality in.\n\nWhat physics does not fix is the size of the markup. The underlying cost gap is real, but whether a provider charges 2× or 6× for output is a strategic choice — shaped by their hardware, their batching efficiency, and how badly they want output-heavy traffic. That is why the multiplier varies so widely across the 2026 lineup, and why it has quietly become a competitive battleground. A provider pricing output at 2× is making a play for exactly the agent and reasoning workloads that everyone else is overcharging."
+    },
+    {
+      "heading": "The June 2026 Lineup, Sorted by What Actually Costs You",
+      "body": "The table above ranks the newest models by their output multiplier — output price divided by input price — and adds the number that actually predicts your bill: the blended rate, the cost of a million tokens at the 1-to-4 input-to-output mix typical of an agent or reasoning task.\n\nTwo camps jump out. DeepSeek V4 Pro and Grok 4.3 hold output to 2× input. Claude Opus 4.8 sits at 5×, keeping its standard rate at $5 / $25 per million while cutting its priority Fast tier threefold versus Opus 4.7. And the 6× camp — Gemini 3.5 Flash, GPT-5.4, and GPT-5.5 — charges six dollars of output for every dollar of input.\n\nWatch what that does to two models that look like twins on a pricing page. Grok 4.3 lists at $1.25 input; Gemini 3.5 Flash at $1.50 — twenty percent apart, close enough that most teams would call it a wash. Run an output-heavy agent on each and Grok costs $2.25 per million blended while Gemini costs $7.50 — more than three times as much. Same near-identical headline, triple the bill."
+    },
+    {
+      "heading": "Your Blended Rate Is the Only Rate That Matters",
+      "body": "To compare models honestly you need one number that folds input and output together the way your workload actually spends them. That number is your blended rate: multiply each model's input price by the share of your tokens that are input, multiply its output price by the share that are output, and add the two.\n\nThe weights come from your workload's input-to-output ratio, and they change everything. Three rough archetypes cover most applications. Retrieval and extraction — stuffing a large context in to get a short answer out — runs heavily input-side, often 10-to-1 or more; here the output multiplier barely registers and input price genuinely is king. Conversational chat lands near 1-to-1. Agents, reasoning, and code generation invert the ratio entirely, writing far more than they read — 1-to-4 or steeper — and at that mix the output multiplier dominates the bill.\n\nYou do not have to guess your ratio. Pull it from a week of production logs, or estimate it with the [API cost estimator](/tools/api-cost-estimator), which runs the blend across your real token mix."
+    },
+    {
+      "heading": "The Same Models, Two Workloads, Two Different Winners",
+      "body": "Make it concrete. Picture 100,000 tasks a month. As an agent, each task reads 2,000 tokens and writes 8,000 — a 1-to-4 mix. Grok 4.3 runs that for about $2,250 a month. Claude Opus 4.8 runs it for $21,000. GPT-5.5 runs it for $25,000 — and notice that Opus and GPT-5.5 charge the identical $5 input price, yet Opus lands $4,000 cheaper purely because its output multiplier is 5× rather than 6×.\n\nNow keep the same models and flip the workload to retrieval: each task reads 50,000 tokens and writes 500. The bills converge. Opus 4.8 lands at $26,250 and GPT-5.5 at $26,500 — the multiplier that split them by sixteen percent on agents now barely moves the total, because almost every token is input. Grok's lead over Opus shrinks from roughly ninefold on the agent workload to fourfold on retrieval.\n\nThe models never changed. Your token mix did. That is the whole point: there is no context-free 'cheapest model,' only the cheapest model for your ratio."
+    },
+    {
+      "heading": "Reasoning Tokens Are Output Tokens (and They're Invisible)",
+      "body": "There is a trap hiding inside the most popular models of 2026. Reasoning models — the ones that 'think' before answering — generate a hidden chain of thought, and that chain is billed at the output rate. A model that emits 4,000 tokens of internal reasoning to produce a 200-token answer charges you output price on all 4,200, not just the part you read.\n\nThis quietly drags nearly every serious workload toward the output-heavy end of the spectrum, which is exactly where the multiplier bites hardest. Turn on extended thinking and a model that looked balanced on paper starts spending like an agent. It is why a model's output multiplier and its reasoning behavior have to be read together — a steep multiplier on a heavy reasoner compounds fast. For when that tradeoff pays off anyway, see [are reasoning models worth the extra cost](/blog/reasoning-models-worth-the-cost); for the mechanics of the ratio itself, see [optimizing your input-to-output token ratio](/blog/input-vs-output-token-ratio-optimization)."
+    },
+    {
+      "heading": "How to Shop for Rates in the Second Half of 2026",
+      "body": "The discipline is short. Stop ranking models by input price. Estimate your input-to-output ratio from real traffic, compute each candidate's blended rate at that ratio, and rank on that — then weigh the result against quality, because the cheapest blended rate is only a bargain if the model clears your accuracy bar. A 2× multiplier on a model that fails half your evals is not a saving.\n\nTwo more habits. First, re-check after every major release: the multiplier is now a competitive lever, so a new model can reset your blended rate overnight without ever touching its headline input price. Second, remember that prompt caching pushes this math in the same direction — caching discounts input, which shrinks the input share of your bill and makes the output multiplier matter more, not less. Line the current lineup up side by side, input and output both visible, in the [compare prices grid](/tools/compare-prices), and start the comparison from the column everyone else ignores. For the underlying mechanics, see [output token pricing explained](/blog/output-token-pricing-explained)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Why do output tokens cost more than input tokens?",
+      "answer": "Reading your prompt happens in one parallel pass (prefill), but writing a response happens one token at a time, each requiring a fresh pass over everything generated so far (decode). Decode is bound by memory bandwidth and ties up far more GPU time per token, so providers price output higher. The exact multiplier, though, is a pricing decision — which is why it ranges from 2× to 6× across the 2026 lineup."
+    },
+    {
+      "question": "What is a typical input-to-output ratio for my app?",
+      "answer": "Retrieval, extraction, and classification are input-heavy, often 10-to-1 or more. Chat is roughly 1-to-1. Agents, code generation, and reasoning are output-heavy, commonly 1-to-4 or steeper once you count hidden reasoning tokens. The reliable move is to measure it from a week of production logs rather than guess."
+    },
+    {
+      "question": "Do reasoning or 'thinking' tokens count as input or output?",
+      "answer": "Output. The hidden chain of thought a reasoning model generates is billed at the output rate, even though you never see most of it. That means enabling extended thinking pushes your effective input-to-output ratio toward the output-heavy end, where a high output multiplier costs you the most."
+    },
+    {
+      "question": "Is a lower output multiplier always the better deal?",
+      "answer": "Only if the model also meets your quality bar and you actually run output-heavy work. A 2× multiplier is decisive for agents and reasoning, but nearly irrelevant for input-heavy retrieval, where input price dominates the total. Always compute the blended rate at your real ratio, then weigh it against quality — never pick on the multiplier alone."
+    },
+    {
+      "question": "Does prompt caching change the output-multiplier math?",
+      "answer": "Yes, and it makes the multiplier matter more. Caching discounts repeated input tokens, which shrinks the input portion of your bill and leaves output as a larger share of the total. The more aggressively you cache, the more your spend concentrates in output — so the output rate deserves even closer attention."
+    }
+  ],
+  "ctaText": "Estimate your input-to-output ratio, then rank the newest models by the blended rate you'll actually pay — input and output together — in the compare-prices grid at /tools/compare-prices.",
+  "sources": [
+    {
+      "label": "Anthropic — Introducing Claude Opus 4.8",
+      "url": "https://www.anthropic.com/news/claude-opus-4-8",
+      "note": "May 28, 2026 launch; standard rate held at $5/$25, Fast tier cut to $10/$50 per million"
+    },
+    {
+      "label": "OpenRouter — live model pricing",
+      "url": "https://openrouter.ai/models",
+      "note": "Input/output price per token and context length for every model in the table"
+    },
+    {
+      "label": "LMArena leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Crowd-sourced Elo, the quality source behind the compare-prices grid"
+    },
+    {
+      "label": "TokenRate — compare prices",
+      "url": "https://tokenrate.dev/tools/compare-prices",
+      "note": "Live input and output rates side by side across every provider"
+    }
+  ],
+  "relatedSlugs": [
+    "output-token-pricing-explained",
+    "input-vs-output-token-ratio-optimization",
+    "reasoning-models-worth-the-cost",
+    "quality-per-dollar-llm-ranking-2026"
+  ]
+}
