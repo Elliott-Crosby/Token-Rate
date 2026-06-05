@@ -2,9 +2,10 @@ name: Auto Blog Generator
 
 on:
   schedule:
-    # Once a day at 13:00 UTC. New models don't appear hourly — the generator
-    # publishes only when it detects a genuinely new model, so a daily check is
-    # plenty and keeps the publish log clean.
+    # Once a day at 13:00 UTC. The generator researches the day's sharpest
+    # rate-comparison angle (live pricing + web search), writes one high-quality
+    # article, and publishes only if it clears the quality/novelty gate — so a
+    # daily run is plenty and keeps the publish log clean.
     - cron: '0 13 * * *'
   workflow_dispatch:
     # Allow manual trigger from GitHub Actions UI
@@ -17,7 +18,9 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # Research (web search) + writing, plus patience for the org's per-minute
+    # token rate limit (the generator waits out 429s honouring retry-after).
+    timeout-minutes: 20
     environment: production
 
     steps:
@@ -46,6 +49,10 @@ jobs:
         working-directory: app
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Optional: set a repo variable BLOG_MODEL to override the writing model
+          # (Settings → Secrets and variables → Actions → Variables). Defaults to
+          # claude-sonnet-4-6; set to claude-opus-4-8 for maximum quality.
+          BLOG_MODEL: ${{ vars.BLOG_MODEL }}
         run: node scripts/blog-generator.mjs
 
       - name: Rebuild blog catalog

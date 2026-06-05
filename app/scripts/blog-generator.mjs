@@ -1,40 +1,62 @@
 #!/usr/bin/env node
 /**
- * Generates one new blog post per run using the Anthropic API (Haiku for cost efficiency).
+ * Daily high-quality blog generator for TokenRate.dev.
  * Called by .github/workflows/blog-generator.yml once a day.
  *
- * PRIMARY MODE — new-model comparison posts:
- *   Each run pulls the live OpenRouter model feed (the same source the site's
- *   calculator uses) plus best-effort Arena quality scores, detects models it
- *   hasn't written about yet (auto-discovered releases + anything curated in
- *   src/lib/models.ts), and publishes a comparison post grounded in REAL pricing.
- *   The numeric comparison table is built in code — the LLM only writes the prose
- *   around it and is forbidden from inventing figures. A committed ledger
- *   (content/models-ledger.json) tracks which models are covered; on first run it
- *   seeds the current feed as a baseline so only genuinely new models trigger posts.
+ * GOAL: publish ONE genuinely excellent, timely, rate-focused comparison
+ * article per run — the quality bar of a hand-written piece, not templated
+ * filler. (The previous version emitted cheap single-model template posts and
+ * was retired; see scripts/blog-generator.legacy.mjs.bak in git history.)
  *
- * FALLBACK MODE — legacy curated TOPICS list (now exhausted → no-op).
+ * HOW IT STAYS HIGH-QUALITY AND GROUNDED:
+ *   1. Live data backbone — every run pulls the live OpenRouter price feed (the
+ *      same source the site's calculator uses) plus best-effort Arena quality
+ *      scores. From that it computes "story leads": the newest models, output-
+ *      multiplier outliers, cheapest-per-tier, biggest context windows, etc.
+ *   2. Angle selection (stage A) — a capable model, with live web search when
+ *      available, picks the single sharpest, most timely, NOT-yet-covered angle
+ *      and the 2–6 models to feature. Degrades gracefully to a data-only choice
+ *      if web search is unavailable.
+ *   3. Verified table — the numeric comparison table is built IN CODE from the
+ *      live feed (never written by the model), so figures are always accurate.
+ *   4. Writing (stage B) — the model writes prose AROUND the verified facts and
+ *      is forbidden from stating any number not in the supplied facts list.
+ *   5. Quality gate — if a fresh, substantive, non-duplicate angle can't be
+ *      found, or generation fails validation, the run publishes NOTHING rather
+ *      than ship low-value content. A missed day beats a bad post (this is what
+ *      previously got the site flagged by Google/AdSense for scaled content).
+ *
+ * A committed angles ledger (content/blog-angles-ledger.json) records what has
+ * been published so the selector avoids repeats.
+ *
+ * Config (env):
+ *   ANTHROPIC_API_KEY   required (except --dry-run)
+ *   BLOG_MODEL          writing/selection model. Default 'claude-sonnet-4-6'.
+ *                       Set to 'claude-opus-4-8' for maximum quality (higher cost).
+ *   BLOG_DISABLE_SEARCH set to '1' to skip web search entirely (data-only mode).
+ *   ANTHROPIC_BASE_URL  optional API base override (defaults to api.anthropic.com).
  *
  * Usage:
- *   node scripts/blog-generator.mjs            # generate + write
- *   node scripts/blog-generator.mjs --dry-run  # show selection/table/prompt, no API call, no writes
- * Requires: ANTHROPIC_API_KEY env var (not needed for --dry-run)
+ *   node scripts/blog-generator.mjs            # research → write → publish
+ *   node scripts/blog-generator.mjs --dry-run  # show leads + selection + table + prompts; no API calls past selection, no writes
  */
 
 import fs from 'node:fs'
 import path from 'node:path'
-import https from 'node:https'
 import { fileURLToPath } from 'node:url'
 import { validateBlogPost } from './_lib/validate-blog-post.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const BLOG_DIR = path.join(__dirname, '..', 'content', 'blog')
-const MODELS_TS = path.join(__dirname, '..', 'src', 'lib', 'models.ts')
-const LEDGER_PATH = path.join(__dirname, '..', 'content', 'models-ledger.json')
+const ANGLES_LEDGER_PATH = path.join(__dirname, '..', 'content', 'blog-angles-ledger.json')
 const API_KEY = process.env.ANTHROPIC_API_KEY
+const BASE_URL = (process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/+$/, '')
+const MODEL = process.env.BLOG_MODEL || 'claude-sonnet-4-6'
+const DISABLE_SEARCH = process.env.BLOG_DISABLE_SEARCH === '1'
 const DRY_RUN = process.argv.includes('--dry-run')
 
-// Same provider prefixes the homepage uses to group the OpenRouter feed.
+const VALID_CATEGORIES = ['fundamentals', 'comparisons', 'cost-optimization', 'providers', 'building']
+
 const PROVIDER_MAP = [
   { prefix: 'anthropic/', label: 'Anthropic' },
   { prefix: 'openai/', label: 'OpenAI' },
@@ -50,193 +72,9 @@ if (!API_KEY && !DRY_RUN) {
   process.exit(1)
 }
 
-// Valid categories — mirror of CATEGORY_SLUGS in src/lib/categories.ts and validate-blog-post.mjs.
-// Keep in sync. Every TOPIC must declare a category from this list, so the validator
-// (which requires `category`) is always satisfied even if the model omits the field.
-const VALID_CATEGORIES = ['fundamentals', 'comparisons', 'cost-optimization', 'providers', 'building']
-
-const TOPICS = [
-  { slug: 'how-to-calculate-openai-api-costs', title: 'How to Calculate Your OpenAI API Costs Before You Ship', category: 'providers' },
-  { slug: 'claude-sonnet-vs-gpt4o-cost-comparison', title: 'Claude Sonnet vs GPT-4o: Real-World API Cost Comparison', category: 'comparisons' },
-  { slug: 'why-your-llm-bill-is-higher-than-expected', title: 'Why Your LLM Bill Is Higher Than Expected — And How to Fix It', category: 'cost-optimization' },
-  { slug: 'token-budgeting-for-production-ai-apps', title: 'Token Budgeting for Production AI Apps', category: 'cost-optimization' },
-  { slug: 'gpt4o-mini-vs-claude-haiku-cost', title: 'GPT-4o Mini vs Claude Haiku: Which Is Cheaper for High-Volume Tasks?', category: 'comparisons' },
-  { slug: 'understanding-context-windows-api-costs', title: 'Context Windows Explained: What 200K Tokens Really Costs You', category: 'fundamentals' },
-  { slug: 'prompt-caching-save-90-percent-on-ai-costs', title: 'Prompt Caching: How to Save Up to 90% on Repeated Context Costs', category: 'cost-optimization' },
-  { slug: 'batch-api-cut-ai-costs-in-half', title: 'Batch API Processing: Cut Your AI Costs in Half', category: 'cost-optimization' },
-  { slug: 'system-prompts-are-costing-you-money', title: 'System Prompts Are Costing You Money — Here Is How to Optimize Them', category: 'cost-optimization' },
-  { slug: 'output-token-pricing-explained', title: 'Output Token Pricing Explained (And Why It Costs More Than Input)', category: 'fundamentals' },
-  { slug: 'llm-pricing-trends-2026', title: 'LLM Pricing Trends: How AI Model Costs Changed in 2026', category: 'fundamentals' },
-  { slug: 'deepseek-r1-vs-openai-o3-cost', title: 'DeepSeek R1 vs OpenAI o3: Reasoning Model Cost Comparison', category: 'comparisons' },
-  { slug: 'how-to-pick-the-right-ai-model-for-your-budget', title: 'How to Pick the Right AI Model for Your Budget', category: 'building' },
-  { slug: 'token-usage-auditing-find-hidden-costs', title: 'Token Usage Auditing: Find Hidden Costs in Your AI App', category: 'cost-optimization' },
-  { slug: 'anthropic-vs-openai-cheaper-for-startups', title: 'Anthropic Claude vs OpenAI: Which Is Cheaper for Startups?', category: 'comparisons' },
-  { slug: 'building-cost-aware-ai-agent', title: 'Building a Cost-Aware AI Agent That Stays Within Budget', category: 'building' },
-  { slug: 'mistral-vs-claude-token-pricing', title: 'Mistral vs Claude: Token Pricing Breakdown for 2026', category: 'comparisons' },
-  { slug: 'rag-pipeline-cost-optimization', title: 'Building Cost-Efficient RAG Pipelines: Token Strategies That Work', category: 'building' },
-  { slug: 'fine-tuning-vs-prompt-engineering-cost', title: 'Fine-Tuning vs Prompt Engineering: A Cost Analysis', category: 'cost-optimization' },
-  { slug: 'gemini-flash-vs-gpt4o-mini-budget-model', title: 'Gemini 2.0 Flash vs GPT-4o Mini: The Budget Model Showdown', category: 'comparisons' },
-  { slug: 'real-cost-1-million-token-context', title: 'The Real Cost of a 1-Million-Token Context Window', category: 'fundamentals' },
-  { slug: 'streaming-vs-batch-ai-cost', title: 'Streaming vs Batch Requests: Which AI API Mode Costs Less?', category: 'comparisons' },
-  { slug: 'embedding-models-cost-optimization', title: 'Why Embedding Models Are Underrated for Cutting AI Costs', category: 'cost-optimization' },
-  { slug: 'what-happens-when-you-exceed-token-limit', title: 'What Happens When You Exceed Your Token Limit?', category: 'fundamentals' },
-  { slug: 'ai-cost-monitor-production', title: 'How to Build a Cost Monitor for Your AI Application', category: 'building' },
-  { slug: 'tokens-per-dollar-comparison-2026', title: 'Tokens Per Dollar: Comparing Every Major LLM in 2026', category: 'comparisons' },
-  { slug: 'llama-3-vs-claude-haiku-cost', title: 'Llama 3 vs Claude Haiku: Open-Source vs Commercial Cost Tradeoffs', category: 'comparisons' },
-  { slug: 'claude-opus-4-worth-the-price', title: 'Is Claude Opus 4 Worth the Price? A Developer Cost Analysis', category: 'providers' },
-  { slug: 'multimodal-token-costs-images-vision', title: 'Multimodal Token Costs: What You Pay for Image and Vision APIs', category: 'fundamentals' },
-  { slug: 'ai-agent-loops-cost-spiral', title: 'AI Agent Loops and Cost Spirals: How to Keep Agentic Workflows Cheap', category: 'building' },
-  { slug: 'openai-o3-mini-cost-reasoning', title: 'OpenAI o3-mini Cost Guide: When Cheap Reasoning Makes Sense', category: 'providers' },
-  { slug: 'claude-haiku-4-review-and-pricing', title: 'Claude Haiku 4 Review: Speed, Quality, and Pricing Breakdown', category: 'providers' },
-  { slug: 'input-vs-output-token-ratio-optimization', title: 'Optimizing Your Input-to-Output Token Ratio for Lower API Bills', category: 'cost-optimization' },
-  { slug: 'per-token-pricing-vs-subscription-ai', title: 'Pay-Per-Token vs AI Subscriptions: Which Is Better for Developers?', category: 'fundamentals' },
-  { slug: 'ai-api-cost-for-mvp-startups', title: 'Estimating AI API Costs for Your MVP: A Startup Founders Guide', category: 'cost-optimization' },
-  { slug: 'structured-outputs-token-cost-impact', title: 'How Structured Outputs Affect Your Token Count and Cost', category: 'cost-optimization' },
-  { slug: 'gpt-4-turbo-vs-gpt-4o-cost', title: 'GPT-4 Turbo vs GPT-4o: A Pricing and Performance Comparison', category: 'comparisons' },
-  { slug: 'ai-saas-cost-per-user-calculation', title: 'How to Calculate AI API Cost Per User for Your SaaS Product', category: 'building' },
-  { slug: 'claude-extended-thinking-cost-analysis', title: 'Claude Extended Thinking Tokens: Cost Impact and When to Enable It', category: 'providers' },
-  { slug: 'token-counting-tools-for-developers', title: 'Token Counting Tools Every LLM Developer Should Know', category: 'building' },
-  { slug: 'llm-cost-at-scale-1m-requests', title: 'LLM Costs at Scale: What 1 Million API Requests Actually Costs', category: 'cost-optimization' },
-  { slug: 'ai-provider-comparison-2026-cost', title: 'AI Provider Showdown 2026: Pricing, Performance, and Value', category: 'comparisons' },
-  { slug: 'reducing-hallucinations-vs-token-cost', title: 'Reducing Hallucinations Without Blowing Your Token Budget', category: 'building' },
-  { slug: 'json-mode-token-overhead', title: 'JSON Mode and Structured Outputs: The Hidden Token Overhead', category: 'fundamentals' },
-  { slug: 'reasoning-models-worth-the-cost', title: 'Are Reasoning Models Worth the Extra Cost? A Practical Guide', category: 'fundamentals' },
-]
-
-function getExistingSlugs() {
-  if (!fs.existsSync(BLOG_DIR)) return new Set()
-  return new Set(
-    fs.readdirSync(BLOG_DIR)
-      .filter((f) => f.endsWith('.json'))
-      .map((f) => f.replace('.json', ''))
-  )
-}
-
-function pickNextTopic(existingSlugs) {
-  for (const topic of TOPICS) {
-    if (!existingSlugs.has(topic.slug)) return topic
-  }
-  // All curated topics are published — generate nothing.
-  //
-  // The previous fallback emitted a generic, timestamp-slugged
-  // `ai-token-pricing-insights-<ts>` post on every run. With the curated list
-  // exhausted, that produced a near-duplicate, ungrounded filler article every
-  // 2 hours. Google flagged the site for "Low value content" / scaled content
-  // abuse and AdSense review failed. Returning null makes main() exit cleanly.
-  //
-  // To publish more posts, add real entries to the TOPICS table above.
-  return null
-}
-
-function callAnthropicAPI(prompt) {
-  return new Promise((resolve, reject) => {
-    const body = JSON.stringify({
-      // max_tokens: haiku 4.5 caps output at 8192. 2048 was truncating posts mid-JSON
-      // (4-6 sections * ~150 words + FAQ + boilerplate routinely exceeds 2k tokens).
-      // 6000 gives plenty of headroom while leaving room for the response envelope.
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 6000,
-      messages: [{ role: 'user', content: prompt }],
-    })
-
-    const options = {
-      hostname: 'api.anthropic.com',
-      path: '/v1/messages',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-        'x-api-key': API_KEY,
-        'Content-Length': Buffer.byteLength(body),
-      },
-    }
-
-    const req = https.request(options, (res) => {
-      let data = ''
-      res.on('data', (chunk) => { data += chunk })
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data)
-          if (parsed.error) {
-            reject(new Error(`Anthropic API error: ${JSON.stringify(parsed.error)}`))
-          } else {
-            resolve({
-              text: parsed.content?.[0]?.text ?? '',
-              stopReason: parsed.stop_reason ?? null,
-              usage: parsed.usage ?? null,
-            })
-          }
-        } catch (e) {
-          reject(new Error(`Failed to parse API response: ${e.message}`))
-        }
-      })
-    })
-
-    req.on('error', reject)
-    req.write(body)
-    req.end()
-  })
-}
-
-async function callWithRetry(prompt, attempts = 3) {
-  let lastErr
-  for (let i = 1; i <= attempts; i++) {
-    try {
-      return await callAnthropicAPI(prompt)
-    } catch (err) {
-      lastErr = err
-      const transient = /ECONNRESET|ETIMEDOUT|ENOTFOUND|socket hang up|5\d\d/i.test(err.message || '')
-      if (!transient || i === attempts) throw err
-      const delay = 1000 * 2 ** (i - 1)
-      console.warn(`Attempt ${i} failed (${err.message}); retrying in ${delay}ms...`)
-      await new Promise((r) => setTimeout(r, delay))
-    }
-  }
-  throw lastErr
-}
-
-function buildPrompt(topic) {
-  const now = new Date().toISOString()
-  return `You are a technical blog writer for TokenRate.dev, a tool that helps developers calculate and compare AI API token costs.
-
-Write a blog post with the title: "${topic.title}"
-
-Return ONLY valid JSON matching this exact structure — no markdown fences, no explanation:
-
-{
-  "category": "${topic.category}",
-  "slug": "${topic.slug}",
-  "keyword": "<primary SEO keyword phrase, 3-6 words>",
-  "title": "${topic.title}",
-  "description": "<140-160 char meta description>",
-  "readTime": "<e.g. 6 min read>",
-  "publishedAt": "${now}",
-  "tags": ["<tag1>", "<tag2>"],
-  "sections": [
-    { "heading": "<section heading>", "body": "<100-180 words of plain prose, no markdown>" }
-  ],
-  "faq": [
-    { "question": "<question>", "answer": "<2-3 sentence answer>" }
-  ],
-  "ctaText": "<1-2 sentence CTA encouraging use of the TokenRate calculator>"
-}
-
-Requirements:
-- "category" MUST be exactly one of: ${VALID_CATEGORIES.map((c) => `"${c}"`).join(', ')}
-- Include 4-5 sections (keep total output under 5000 tokens)
-- Include 3-4 FAQ items
-- Body text must be plain prose — no bullet points, no markdown headers
-- Use real model names, real pricing data, and specific numbers where possible
-- Link to internal pages where relevant using paths like /tools/token-to-usd, /tools/api-cost-estimator, /models/<slug>, /compare/<slug>
-- Return ONLY raw JSON starting with { and ending with }`
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
-// New-model comparison mode
+// Key normalisation (ported from src/lib/quality-index.ts) + formatting
 // ─────────────────────────────────────────────────────────────────────────────
-
-// Quality-key normalisation — ported from src/lib/quality-index.ts so the
-// generator matches the site's own model↔score lookup behaviour.
 function normalizeKey(s) {
   return (s || '')
     .toLowerCase()
@@ -251,19 +89,30 @@ function normalizeKey(s) {
 function normalizeId(id) {
   return normalizeKey(id).replace(/-\d+$/, '')
 }
-
-/** Stable per-model identity for the ledger. Keyed on the display name so dated
- *  snapshots collapse (e.g. "GPT-4o (2024-08-06)" / "(2024-11-20)" → one entry)
- *  while genuine new versions (GPT-5 vs GPT-5.5) stay distinct. Provider-prefixed
- *  to avoid any cross-provider name collision. */
-function modelKey(m) {
-  return `${m.provider}|${normalizeKey(m.name)}`
+function fmtPrice(n) {
+  if (n >= 100) return `$${n.toFixed(0)}`
+  if (n >= 1) return `$${n.toFixed(2)}`
+  return `$${n.toFixed(3)}`
+}
+function fmtContext(n) {
+  if (!n) return '—'
+  if (n >= 1_000_000) return `${+(n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0)}M`
+  if (n >= 1000) return `${Math.round(n / 1000)}K`
+  return String(n)
+}
+function fmtMult(m) {
+  return `${(m.outputPerM / m.inputPerM).toFixed(1)}×`
+}
+/** Blended cost per 1M total tokens at a given output share (0..1). */
+function blended(m, outShare) {
+  return (1 - outShare) * m.inputPerM + outShare * m.outputPerM
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Live data
+// ─────────────────────────────────────────────────────────────────────────────
 async function fetchOpenRouterModels() {
-  const res = await fetch('https://openrouter.ai/api/v1/models', {
-    headers: { Accept: 'application/json' },
-  })
+  const res = await fetch('https://openrouter.ai/api/v1/models', { headers: { Accept: 'application/json' } })
   if (!res.ok) throw new Error(`OpenRouter ${res.status}`)
   const json = await res.json()
   const out = []
@@ -282,31 +131,27 @@ async function fetchOpenRouterModels() {
       inputPerM: input * 1_000_000,
       outputPerM: output * 1_000_000,
       context: m.context_length || 0,
+      created: m.created || 0,
     })
   }
   return out
 }
 
-/** Best-effort live quality scores from the (free, no-auth) Arena leaderboard.
- *  Covers roughly the current top-20; anything unrated simply has no score, which
- *  is fine — posts are grounded on price/context and quality is a bonus column. */
 async function fetchArenaQuality() {
   const map = new Map()
   try {
     const res = await fetch('https://api.wulong.dev/arena-ai-leaderboards/v1/leaderboard?name=text')
     if (!res.ok) return map
     const json = await res.json()
-    const ELO_MIN = 1150
-    const ELO_MAX = 1600
+    const ELO_MIN = 1150, ELO_MAX = 1600
     for (const m of json.models || []) {
       const norm = Math.round(Math.min(100, Math.max(0, ((m.score - ELO_MIN) / (ELO_MAX - ELO_MIN)) * 100)))
       const k = normalizeKey(m.model)
       if (k) map.set(k, norm)
     }
-  } catch { /* offline / changed schema → no quality, still publish on price */ }
+  } catch { /* offline / schema change → no quality, still publish on price */ }
   return map
 }
-
 function lookupQuality(map, id, name) {
   const idKey = normalizeId(id)
   const nameKey = normalizeKey(name)
@@ -319,110 +164,333 @@ function lookupQuality(map, id, name) {
   return null
 }
 
-/** Extract curated models from src/lib/models.ts WITHOUT importing TS (CI runs
- *  Node 20, no tsx). Guarded regex: matches each block from `slug:` to its own
- *  `openRouterIds:` without crossing into the next `slug:`, so entries that omit
- *  openRouterIds are skipped rather than mis-paired. Failure is non-fatal — the
- *  model just falls through to auto-discovery. */
-function readCuratedModels() {
-  let src
-  try {
-    src = fs.readFileSync(MODELS_TS, 'utf-8')
-  } catch {
-    return []
+/** Collapse dated snapshots / duplicate ids to one entry per provider|name. */
+function dedupeModels(live) {
+  const byKey = new Map()
+  for (const m of live) {
+    const k = `${m.provider}|${normalizeKey(m.name)}`
+    const existing = byKey.get(k)
+    // Prefer the newer snapshot when duplicated.
+    if (!existing || (m.created || 0) > (existing.created || 0)) byKey.set(k, m)
   }
+  return [...byKey.values()]
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Existing content (for de-duplication)
+// ─────────────────────────────────────────────────────────────────────────────
+function getExistingPosts() {
+  if (!fs.existsSync(BLOG_DIR)) return []
   const out = []
-  const re = /slug:\s*'([^']+)'((?:(?!slug:)[\s\S])*?)openRouterIds:\s*\[([^\]]*)\]/g
-  let m
-  while ((m = re.exec(src))) {
-    const slug = m[1]
-    const block = m[2]
-    const ids = [...m[3].matchAll(/'([^']+)'/g)].map((x) => x[1])
-    if (ids.length === 0) continue
-    const name = (block.match(/name:\s*'([^']*)'/) || [])[1] || slug
-    const tier = (block.match(/tier:\s*'([^']*)'/) || [])[1] || ''
-    out.push({ slug, name, tier, openRouterIds: ids })
+  for (const f of fs.readdirSync(BLOG_DIR)) {
+    if (!f.endsWith('.json')) continue
+    try {
+      const data = JSON.parse(fs.readFileSync(path.join(BLOG_DIR, f), 'utf-8'))
+      out.push({ slug: data.slug || f.replace(/\.json$/, ''), title: data.title || '', category: data.category || '' })
+    } catch { /* skip unreadable */ }
   }
   return out
 }
-
-function readLedger() {
+function readAnglesLedger() {
   try {
-    const raw = fs.readFileSync(LEDGER_PATH, 'utf-8')
-    const data = JSON.parse(raw)
-    return { seeded: !!data.seeded, covered: data.covered || {} }
+    const data = JSON.parse(fs.readFileSync(ANGLES_LEDGER_PATH, 'utf-8'))
+    return Array.isArray(data.published) ? data : { published: [] }
   } catch {
-    return { seeded: false, covered: {} }
+    return { published: [] }
   }
 }
-function writeLedger(ledger) {
-  fs.writeFileSync(LEDGER_PATH, JSON.stringify(ledger, null, 2) + '\n')
+function writeAnglesLedger(ledger) {
+  fs.writeFileSync(ANGLES_LEDGER_PATH, JSON.stringify(ledger, null, 2) + '\n')
+}
+function uniqueSlug(base, existingSlugs) {
+  let slug = (base || '').toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')
+  if (!slug) slug = 'llm-pricing-comparison'
+  if (!existingSlugs.has(slug)) return slug
+  let i = 2
+  while (existingSlugs.has(`${slug}-${i}`)) i++
+  return `${slug}-${i}`
+}
+function estimateReadTime(prose) {
+  const text = [prose.tldr || '', ...(prose.sections || []).map((s) => s.body || ''), ...(prose.faq || []).map((f) => f.answer || '')].join(' ')
+  const words = text.split(/\s+/).filter(Boolean).length
+  return `${Math.max(3, Math.round(words / 200))} min read`
 }
 
-function fmtPrice(n) {
-  if (n >= 100) return `$${n.toFixed(0)}`
-  if (n >= 1) return `$${n.toFixed(2)}`
-  return `$${n.toFixed(3)}`
+// ─────────────────────────────────────────────────────────────────────────────
+// Story leads — deterministic, always-available angle fuel from the live feed
+// ─────────────────────────────────────────────────────────────────────────────
+function computeStoryLeads(models, qmap) {
+  const withQ = models.map((m) => ({ ...m, quality: lookupQuality(qmap, m.id, m.name) }))
+  const byCreated = [...withQ].filter((m) => m.created).sort((a, b) => b.created - a.created)
+  const NOW = byCreated[0]?.created || 0
+  const recent = byCreated.filter((m) => NOW && (NOW - m.created) <= 60 * 24 * 3600).slice(0, 12)
+  const newest = byCreated.slice(0, 10)
+  const byMultAsc = [...withQ].sort((a, b) => a.outputPerM / a.inputPerM - b.outputPerM / b.inputPerM)
+  const lowMult = byMultAsc.slice(0, 6)
+  const highMult = byMultAsc.slice(-6).reverse()
+  const cheapest = [...withQ].sort((a, b) => a.inputPerM - b.inputPerM).slice(0, 8)
+  const priciest = [...withQ].sort((a, b) => b.inputPerM - a.inputPerM).slice(0, 6)
+  const biggestCtx = [...withQ].sort((a, b) => b.context - a.context).slice(0, 6)
+  return { newest, recent, lowMult, highMult, cheapest, priciest, biggestCtx }
 }
-function fmtContext(n) {
-  if (!n) return '—'
-  if (n >= 1_000_000) return `${+(n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0)}M`
-  if (n >= 1000) return `${Math.round(n / 1000)}K`
-  return String(n)
+function describeModel(m) {
+  const d = m.created ? new Date(m.created * 1000).toISOString().slice(0, 10) : '????-??-??'
+  const q = m.quality != null ? `, quality ${m.quality}` : ''
+  return `${m.name} (${m.provider}): in ${fmtPrice(m.inputPerM)}/1M, out ${fmtPrice(m.outputPerM)}/1M, ${fmtMult(m)} multiplier, ctx ${fmtContext(m.context)}${q}, added ${d}`
 }
 
-const PROVIDER_BONUS = { Anthropic: 30, OpenAI: 30, Google: 30, Meta: 15, DeepSeek: 15, Mistral: 15, xAI: 15 }
-
-function scoreModel(m, qmap) {
-  let s = 0
-  if (m.curated) s += 10_000
-  const q = lookupQuality(qmap, m.id, m.name)
-  if (q != null) s += q * 10
-  s += PROVIDER_BONUS[m.provider] || 0
-  s += Math.min(m.inputPerM, 50) // pricier models skew flagship/notable; capped
-  return s
+// ─────────────────────────────────────────────────────────────────────────────
+// Anthropic API (fetch-based; supports server-side web_search + pause_turn)
+// ─────────────────────────────────────────────────────────────────────────────
+function extractText(content) {
+  return (content || []).filter((b) => b.type === 'text').map((b) => b.text).join('\n').trim()
+}
+function extractJson(text) {
+  let t = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim()
+  const first = t.indexOf('{')
+  const last = t.lastIndexOf('}')
+  if (first === -1 || last === -1 || last < first) throw new Error('no JSON object found in response')
+  return JSON.parse(t.slice(first, last + 1))
 }
 
-/** Up to 4 competitors: nearest 2 by input price within the same provider, then
- *  fill with nearest cross-provider rivals. Deduped by model key. */
-function pickCompetitors(subject, all) {
-  const sk = modelKey(subject)
-  const others = all.filter((m) => modelKey(m) !== sk)
-  // Relative distance on BOTH input and output price, so a model pairs with peers
-  // of a similar overall cost profile (not, say, a $10/$10 image model next to a
-  // $10/$30 chat model just because their input prices match).
-  const dist = (m) =>
-    Math.abs(m.inputPerM - subject.inputPerM) / Math.max(subject.inputPerM, 0.01) +
-    Math.abs(m.outputPerM - subject.outputPerM) / Math.max(subject.outputPerM, 0.01)
-  const byCloseness = (a, b) => dist(a) - dist(b)
-  const same = others.filter((m) => m.provider === subject.provider).sort(byCloseness)
-  const cross = others.filter((m) => m.provider !== subject.provider).sort(byCloseness)
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+/** POST /v1/messages with resilient handling of the org's per-minute rate limit
+ *  (this org is on a low tier — 30k input tokens/min — so a 429 needs a ~60s
+ *  wait, honouring retry-after, not a few-second backoff), plus transient 5xx
+ *  and network retries. Returns parsed JSON; throws on a hard 4xx (e.g. the
+ *  web_search tool not being enabled), which the caller can act on. */
+async function postMessages(body, { maxRateWaits = 6 } = {}) {
+  let rateWaits = 0
+  let transientTries = 0
+  for (;;) {
+    let res
+    try {
+      res = await fetch(`${BASE_URL}/v1/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'anthropic-version': '2023-06-01',
+          'x-api-key': API_KEY,
+        },
+        body: JSON.stringify(body),
+      })
+    } catch (netErr) {
+      if (transientTries++ >= 3) throw netErr
+      await sleep(1500 * 2 ** transientTries)
+      continue
+    }
+    if (res.status === 429) {
+      if (rateWaits++ >= maxRateWaits) throw new Error('rate limit: exceeded wait budget')
+      const ra = parseInt(res.headers.get('retry-after') || '', 10)
+      const waitMs = (Number.isFinite(ra) ? ra : 60) * 1000 + 2000
+      console.warn(`  rate limited (per-minute token cap); waiting ${Math.round(waitMs / 1000)}s before retry ${rateWaits}/${maxRateWaits}...`)
+      await sleep(waitMs)
+      continue
+    }
+    if (res.status >= 500) {
+      if (transientTries++ >= 3) throw new Error(`Anthropic ${res.status} (server error)`)
+      await sleep(1500 * 2 ** transientTries)
+      continue
+    }
+    const data = await res.json()
+    if (data.error) {
+      const err = new Error(`Anthropic API error: ${JSON.stringify(data.error)}`)
+      err.apiError = data.error
+      err.status = res.status
+      throw err
+    }
+    return data
+  }
+}
+
+/** One logical completion. Handles server-side web search (pause_turn loop).
+ *  `useSearch` adds the web_search tool; on a tool-not-enabled style 400 the
+ *  caller can retry with useSearch=false. */
+async function anthropic({ system, user, maxTokens = 4500, useSearch = false }) {
+  const tools = useSearch && !DISABLE_SEARCH ? [{ type: 'web_search_20250305', name: 'web_search', max_uses: 3 }] : undefined
+  const messages = [{ role: 'user', content: user }]
+  let searchCount = 0
+  for (let turn = 0; turn < 6; turn++) {
+    const body = { model: MODEL, max_tokens: maxTokens, messages }
+    if (system) body.system = system
+    if (tools) body.tools = tools
+    const data = await postMessages(body)
+    for (const b of data.content || []) if (b.type === 'server_tool_use') searchCount++
+    if (data.stop_reason === 'pause_turn') {
+      messages.push({ role: 'assistant', content: data.content })
+      continue // resume the paused turn
+    }
+    if (data.stop_reason === 'max_tokens') throw new Error('generation hit max_tokens (truncated)')
+    return { text: extractText(data.content), usage: data.usage, searches: searchCount }
+  }
+  throw new Error('exceeded pause_turn continuation limit')
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Stage A — pick the sharpest, most timely, not-yet-covered angle
+// ─────────────────────────────────────────────────────────────────────────────
+function buildSelectionPrompt(leads, existing, recentlyPublished, today) {
+  const block = (label, arr) => `${label}:\n${arr.map((m) => '  - ' + describeModel(m)).join('\n')}`
+  const existingSlugs = existing.map((p) => p.slug).join(', ')
+  const recentTitles = existing.slice(-40).map((p) => `  - ${p.title}`).join('\n')
+  const recentAngles = recentlyPublished.slice(-20).map((a) => `  - ${a.title} :: ${a.angle || ''}`).join('\n') || '  (none yet)'
+  return `Today is ${today}. You are the editor of TokenRate.dev, a tool that helps developers compare AI API token prices (rates). Choose the single best NEW blog article to publish today.
+
+The article MUST be fundamentally about comparing token rates / pricing — that is the entire point of the site. It must be timely, sharp, and genuinely useful — the kind of piece a sharp engineer would share. Favour an angle tied to a recent release, a pricing shift, or a non-obvious rate insight. Avoid anything generic or already covered.
+
+If web search is available, use it to find what is genuinely hot right now in LLM pricing and the newest model releases — then anchor the angle to that. Verify launch facts; do not rely on stale memory.
+
+LIVE PRICING FEED — story leads (these prices are authoritative; the article's table is built from this same feed):
+${block('NEWEST MODELS (by release date)', leads.newest)}
+${block('ADDED IN THE LAST ~60 DAYS', leads.recent)}
+${block('LOWEST OUTPUT MULTIPLIERS (output ÷ input)', leads.lowMult)}
+${block('HIGHEST OUTPUT MULTIPLIERS', leads.highMult)}
+${block('CHEAPEST INPUT PRICE', leads.cheapest)}
+${block('PRICIEST (flagship/frontier)', leads.priciest)}
+${block('BIGGEST CONTEXT WINDOWS', leads.biggestCtx)}
+
+ALREADY-PUBLISHED SLUGS (do NOT duplicate any of these topics):
+${existingSlugs}
+
+RECENT POST TITLES (for tone + to avoid overlap):
+${recentTitles}
+
+ANGLES THIS GENERATOR ALREADY USED (never repeat):
+${recentAngles}
+
+Pick 2 to 6 models to feature in a side-by-side price table. Use EXACT names from the leads above so the table can be built from verified figures. Choose models that make the comparison sharp (e.g., a new release vs. the incumbents it undercuts; a low-multiplier challenger vs. high-multiplier flagships; a tier face-off).
+
+Return ONLY valid JSON (no markdown, no commentary):
+{
+  "title": "<headline, 50-70 chars, no date, names the comparison or insight>",
+  "slug": "<kebab-case, descriptive, no dates>",
+  "category": "<one of: ${VALID_CATEGORIES.join(', ')}>",
+  "keyword": "<3-6 word SEO phrase>",
+  "subjectModels": ["<exact model name from leads>", "..."],
+  "angle": "<1-2 sentence thesis: the specific, non-obvious point this article makes about rates>",
+  "whyTimely": "<1 sentence: why this is worth publishing TODAY>",
+  "sources": [ { "label": "<source name>", "url": "<https url>", "note": "<what it backs up>" } ]
+}
+Return ONLY the JSON object.`
+}
+
+async function selectAngle(leads, existing, recentlyPublished, today) {
+  const prompt = buildSelectionPrompt(leads, existing, recentlyPublished, today)
+  let resp
+  try {
+    resp = await anthropic({ user: prompt, maxTokens: 3000, useSearch: true })
+    console.log(`  (angle selection used ${resp.searches} web search${resp.searches === 1 ? '' : 'es'})`)
+  } catch (err) {
+    if (err.status === 400 && !DISABLE_SEARCH) {
+      console.warn(`  web search unavailable (${err.message}); retrying angle selection in data-only mode.`)
+      resp = await anthropic({ user: prompt, maxTokens: 3000, useSearch: false })
+    } else {
+      throw err
+    }
+  }
+  return extractJson(resp.text)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Resolve featured models + build the verified comparison table (in code)
+// ─────────────────────────────────────────────────────────────────────────────
+function resolveSubjects(names, models) {
   const chosen = []
   const seen = new Set()
-  for (const m of [...same.slice(0, 2), ...cross]) {
-    const k = modelKey(m)
-    if (seen.has(k)) continue
-    seen.add(k)
-    chosen.push(m)
-    if (chosen.length >= 4) break
+  for (const n of names || []) {
+    const nk = normalizeKey(n)
+    let hit = models.find((m) => normalizeKey(m.name) === nk)
+    if (!hit) hit = models.find((m) => normalizeKey(m.name).includes(nk) || nk.includes(normalizeKey(m.name)))
+    if (hit && !seen.has(hit.id)) { seen.add(hit.id); chosen.push(hit) }
   }
   return chosen
 }
-
-function buildComparisonTable(subject, competitors, qmap) {
-  const rows = [subject, ...competitors]
-  const quals = rows.map((m) => lookupQuality(qmap, m.id, m.name))
+/** Ensure 3–6 featured models even if the selector under-delivered: top up with
+ *  recent / notable models near the chosen ones. */
+function topUpSubjects(chosen, leads) {
+  const seen = new Set(chosen.map((m) => m.id))
+  const pool = [...leads.newest, ...leads.recent, ...leads.lowMult, ...leads.priciest]
+  for (const m of pool) {
+    if (chosen.length >= 4) break
+    if (!seen.has(m.id)) { seen.add(m.id); chosen.push(m) }
+  }
+  return chosen.slice(0, 6)
+}
+function buildComparisonTable(subjects, qmap) {
+  const quals = subjects.map((m) => lookupQuality(qmap, m.id, m.name))
   const hasQuality = quals.some((q) => q != null)
-  const columns = ['Model', 'Input / 1M', 'Output / 1M', 'Context']
+  // Sort by output multiplier ascending so the rate story reads left-to-right.
+  const order = subjects.map((m, i) => ({ m, q: quals[i] })).sort((a, b) => a.m.outputPerM / a.m.inputPerM - b.m.outputPerM / b.m.inputPerM)
+  const columns = ['Model', 'Input / 1M', 'Output / 1M', 'Out ÷ In', 'Context']
   if (hasQuality) columns.push('Quality')
-  const tableRows = rows.map((m, i) => {
-    const row = [m.name, fmtPrice(m.inputPerM), fmtPrice(m.outputPerM), fmtContext(m.context)]
-    if (hasQuality) row.push(quals[i] != null ? String(quals[i]) : '—')
+  const rows = order.map(({ m, q }) => {
+    const row = [m.name, fmtPrice(m.inputPerM), fmtPrice(m.outputPerM), fmtMult(m), fmtContext(m.context)]
+    if (hasQuality) row.push(q != null ? String(q) : '—')
     return row
   })
-  return { caption: `${subject.name} vs. alternatives — live pricing`, columns, rows: tableRows, hasQuality }
+  return {
+    caption: 'Live token rates via OpenRouter, sorted by output multiplier (output ÷ input).',
+    columns,
+    rows,
+    ordered: order.map(({ m, q }) => ({ ...m, quality: q })),
+    hasQuality,
+  }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Stage B — write the article around the verified facts
+// ─────────────────────────────────────────────────────────────────────────────
+function buildWritingPrompt(sel, table) {
+  const facts = table.ordered.map((m) => {
+    const q = m.quality != null ? `, quality ${m.quality}/100` : ''
+    const rel = m.created ? `, released ${new Date(m.created * 1000).toISOString().slice(0, 10)}` : ''
+    return `- ${m.name} (${m.provider}): input ${fmtPrice(m.inputPerM)}/1M, output ${fmtPrice(m.outputPerM)}/1M, output multiplier ${fmtMult(m)}, context ${fmtContext(m.context)}${q}${rel}. Blended cost per 1M tokens: ${fmtPrice(blended(m, 0.8))} at a 1:4 input:output mix (agent/reasoning), ${fmtPrice(blended(m, 0.5))} at 1:1 (chat), ${fmtPrice(blended(m, 0.1))} at 9:1 (retrieval).`
+  }).join('\n')
+  return `You are a senior technical writer for TokenRate.dev. Write a genuinely excellent, factual comparison article. Title: "${sel.title}". Editorial angle: ${sel.angle}
+
+A verified price comparison table (built from live data) renders directly ABOVE your article, so DO NOT restate the whole table — interpret it. The reader is a developer choosing a model by cost.
+
+THE ONLY FACTS YOU MAY USE — all live and verified. Never state a price, multiplier, context size, quality score, blended cost, or release date that is not in this list:
+${facts}
+
+GROUNDING — this is a pricing site; accuracy is everything:
+- Build the entire analysis on the verified facts above. Every number you write must come from that list.
+- Do NOT cite external publications, blogs, news outlets, or benchmark leaderboards by name, and do NOT state benchmark scores, historical/previous prices, market-share, or funding figures — you cannot verify them and a wrong citation destroys trust. (The quality scores and release dates in the facts list are the only such figures you may use.)
+- Keep any qualitative claim (a model's general strength, a typical workload shape) non-numeric and stated as reasoning, not as a sourced fact.
+
+WRITE THE ARTICLE. Focus on rates: input vs output pricing, the output multiplier, the blended cost at the reader's real workload mix, context-window trade-offs, and which model wins for which workload (and why the cheapest headline price often is not the cheapest in production).
+
+CRITICAL FORMATTING RULES (the renderer is strict):
+- Plain prose only. NO markdown bold, NO asterisks, NO headings inside bodies, NO bullet or numbered lists — these render as literal characters.
+- Separate paragraphs with a blank line (\\n\\n).
+- Internal links ONLY as [anchor text](path), choosing only from: /, /tools/compare-prices, /tools/api-cost-estimator. Use 2–4 of them total across the article, where they genuinely help. Do not invent other paths.
+- Use exact figures from the facts list when you cite numbers.
+
+Return ONLY valid JSON (no markdown fences, no commentary):
+{
+  "title": "${sel.title}",
+  "description": "<140-160 char meta description, includes the key comparison>",
+  "tldr": "<2-3 sentence answer-first summary the reader can act on>",
+  "tags": ["<tag>", "<tag>", "<tag>"],
+  "sections": [ { "heading": "<specific, non-generic heading>", "body": "<120-190 words of plain prose>" } ],
+  "faq": [ { "question": "<question a developer would actually search>", "answer": "<2-3 sentence answer>" } ],
+  "ctaText": "<1-2 sentence call to action; plain text only, no links or brackets; you may mention the path /tools/compare-prices in plain text>"
+}
+Requirements: 5 to 7 sections, 4 to 5 FAQ items. Plain prose everywhere. Return ONLY the JSON object.`
+}
+
+async function writeArticle(sel, table) {
+  const prompt = buildWritingPrompt(sel, table)
+  // Writing doesn't need search; keep it grounded in the verified facts.
+  const resp = await anthropic({ user: prompt, maxTokens: 6000, useSearch: false })
+  if (resp.usage) console.log(`  writing usage: input=${resp.usage.input_tokens} output=${resp.usage.output_tokens}`)
+  return extractJson(resp.text)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Assemble + persist
+// ─────────────────────────────────────────────────────────────────────────────
 const PROVIDER_GUIDE_SLUG = {
   Anthropic: 'all-anthropic-models-compare-prices',
   OpenAI: 'all-openai-models-compare-prices',
@@ -432,308 +500,168 @@ const PROVIDER_GUIDE_SLUG = {
   Mistral: 'all-mistral-models-compare-prices',
   xAI: 'all-xai-grok-models-compare-prices',
 }
-function pickRelated(subject, existingSlugs) {
+function pickRelated(subjects, existingSlugs) {
+  const providers = [...new Set(subjects.map((m) => m.provider))]
   const candidates = [
-    PROVIDER_GUIDE_SLUG[subject.provider],
+    ...providers.map((p) => PROVIDER_GUIDE_SLUG[p]),
+    'output-multiplier-decides-your-llm-bill',
+    'quality-per-dollar-llm-ranking-2026',
     'compare-ai-model-prices-side-by-side-tool',
     'how-ai-api-pricing-works',
-    'quality-per-dollar-llm-ranking-2026',
-    'how-to-reduce-ai-api-costs',
     'tokens-to-dollars-conversion',
   ]
-  return candidates.filter((s) => s && existingSlugs.has(s)).slice(0, 3)
-}
-function buildSources(hasQuality) {
-  const s = [
-    { label: 'OpenRouter — live model pricing', url: 'https://openrouter.ai/models', note: 'Input/output price per token and context length' },
-  ]
-  if (hasQuality) {
-    s.push({ label: 'LMArena leaderboard', url: 'https://lmarena.ai/leaderboard', note: 'Crowd-sourced Elo, normalised to a 0–100 quality score' })
+  const out = []
+  for (const s of candidates) {
+    if (s && existingSlugs.has(s) && !out.includes(s)) out.push(s)
+    if (out.length >= 4) break
   }
-  s.push({ label: 'TokenRate price comparison tool', url: 'https://tokenrate.dev/tools/compare-prices' })
-  return s
+  return out
 }
-function uniqueSlug(base, existingSlugs) {
-  let slug = base.replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
-  if (!existingSlugs.has(slug)) return slug
-  let i = 2
-  while (existingSlugs.has(`${slug}-${i}`)) i++
-  return `${slug}-${i}`
+// Canonical, stable rate-card URLs per provider. We render ONLY these (plus the
+// known-good aggregators below) — never a URL the model produced — so the Sources
+// block can never point at a hallucinated link.
+const PROVIDER_SOURCE = {
+  Anthropic: { label: 'Anthropic — pricing', url: 'https://www.anthropic.com/pricing' },
+  OpenAI: { label: 'OpenAI — API pricing', url: 'https://openai.com/api/pricing/' },
+  Google: { label: 'Google — Gemini API pricing', url: 'https://ai.google.dev/gemini-api/docs/pricing' },
+  Meta: { label: 'Llama — models', url: 'https://www.llama.com/' },
+  DeepSeek: { label: 'DeepSeek — API pricing', url: 'https://api-docs.deepseek.com/quick_start/pricing' },
+  Mistral: { label: 'Mistral — pricing', url: 'https://mistral.ai/pricing' },
+  xAI: { label: 'xAI — API', url: 'https://x.ai/api' },
 }
-function estimateReadTime(prose) {
-  const text = [
-    prose.tldr || '',
-    ...(prose.sections || []).map((s) => s.body || ''),
-    ...(prose.faq || []).map((f) => f.answer || ''),
-  ].join(' ')
-  const words = text.split(/\s+/).filter(Boolean).length
-  return `${Math.max(3, Math.round(words / 200))} min read`
-}
-
-function buildModelPrompt(subject, competitors, table, qualityNote) {
-  const lines = [subject, ...competitors].map((m, i) => {
-    const q = table.hasQuality ? `, quality ${table.rows[i][4]}` : ''
-    return `${i === 0 ? '[SUBJECT] ' : ''}${m.name} (${m.provider}): input ${fmtPrice(m.inputPerM)}/1M, output ${fmtPrice(m.outputPerM)}/1M, context ${fmtContext(m.context)}${q}`
-  }).join('\n')
-
-  const modelLink = subject.curatedSlug ? `/models/${subject.curatedSlug}` : '/tools/compare-prices'
-
-  return `You are a technical writer for TokenRate.dev, a tool that compares AI API token costs. Write a factual, useful comparison article about a model and how it stacks up against alternatives.
-
-THE ONLY FACTS YOU MAY USE (all figures are live and verified — do NOT state any price, context size, quality score, release date, or benchmark number that is not in this list):
-${lines}
-${qualityNote ? `\nNote: ${qualityNote}` : ''}
-
-The reader will see a data table with exactly these numbers directly above your article, so do not repeat the full table — interpret it. Focus on: what the subject model is for, how its input/output pricing compares to the alternatives, the output-to-input cost ratio, context-window trade-offs, and which workloads make it the right (or wrong) pick versus the named alternatives.
-
-Return ONLY valid JSON (no markdown fences, no commentary) matching:
-{
-  "title": "<concise title naming the subject model; no date>",
-  "description": "<140-160 char meta description>",
-  "tldr": "<2-3 sentence answer-first summary a reader can act on>",
-  "tags": ["<tag>", "<tag>", "<tag>"],
-  "sections": [ { "heading": "<heading>", "body": "<110-170 words of plain prose, no markdown, no bullet lists>" } ],
-  "faq": [ { "question": "<question>", "answer": "<2-3 sentence answer>" } ],
-  "ctaText": "<1-2 sentence CTA to use the TokenRate calculator>"
+function buildSources(subjects, hasQuality) {
+  const out = [
+    { label: 'OpenRouter — live model pricing', url: 'https://openrouter.ai/models', note: 'Input/output price per token and context length for every model in the table' },
+  ]
+  if (hasQuality) out.push({ label: 'LMArena leaderboard', url: 'https://lmarena.ai/leaderboard', note: 'Crowd-sourced Elo, normalised to a 0–100 quality score' })
+  for (const p of [...new Set(subjects.map((m) => m.provider))]) {
+    if (PROVIDER_SOURCE[p]) out.push({ ...PROVIDER_SOURCE[p], note: 'Official rate card' })
+  }
+  out.push({ label: 'TokenRate — compare prices', url: 'https://tokenrate.dev/tools/compare-prices', note: 'Live input and output rates side by side' })
+  return out
 }
 
-Requirements:
-- Exactly 4 sections and 3-4 FAQ items.
-- Plain prose only in every body and answer — no markdown, no headings, no bullet points.
-- You MAY include at most two internal links written as [anchor text](path), choosing from: ${modelLink}, /tools/compare-prices, / (the calculator). Do not invent other links.
-- Never state a number that is not in the facts list above. When you reference cost, use the exact figures given.
-- Return ONLY raw JSON starting with { and ending with }.`
-}
+async function main() {
+  if (DRY_RUN) console.log('[dry-run] no post will be written.\n')
+  const today = new Date().toISOString().slice(0, 10)
 
-async function tryModelComparisonPost(existingSlugs) {
   let live, qmap
   try {
     ;[live, qmap] = await Promise.all([fetchOpenRouterModels(), fetchArenaQuality()])
   } catch (err) {
-    console.warn(`Live data unavailable (${err.message}) — skipping model mode this run.`)
-    return false
+    console.error(`Live data unavailable (${err.message}) — cannot ground an article. Skipping today.`)
+    return
   }
-  if (!live || live.length === 0) {
-    console.warn('OpenRouter returned no usable models — skipping model mode this run.')
-    return false
-  }
-  console.log(`Live feed: ${live.length} models with pricing across ${PROVIDER_MAP.length} providers; ${qmap.size} quality scores.`)
+  if (!live.length) { console.error('OpenRouter returned no usable models — skipping today.'); return }
+  const models = dedupeModels(live)
+  console.log(`Live feed: ${models.length} models with pricing; ${qmap.size} quality scores.`)
 
-  const curated = readCuratedModels()
-  const curatedIds = new Set(curated.flatMap((c) => c.openRouterIds))
-  const curatedById = new Map()
-  for (const c of curated) for (const id of c.openRouterIds) curatedById.set(id, c)
-  console.log(`Curated catalog: ${curated.length} models parsed from models.ts.`)
+  const leads = computeStoryLeads(models, qmap)
+  const existing = getExistingPosts()
+  const existingSlugs = new Set(existing.map((p) => p.slug))
+  const anglesLedger = readAnglesLedger()
+  console.log(`Existing posts: ${existing.length}. Newest model in feed: ${leads.newest[0] ? leads.newest[0].name : 'n/a'}.`)
 
-  for (const m of live) {
-    m.curated = curatedIds.has(m.id)
-    m.curatedSlug = m.curated ? curatedById.get(m.id)?.slug ?? null : null
-  }
-
-  // Collapse dated snapshots / duplicates to one entry per key (prefer the curated one).
-  const byKey = new Map()
-  for (const m of live) {
-    const k = modelKey(m)
-    const existing = byKey.get(k)
-    if (!existing || (m.curated && !existing.curated)) byKey.set(k, m)
-  }
-  const liveUniq = [...byKey.values()]
-
-  const ledger = readLedger()
-  const covered = ledger.covered
-
-  const pool = liveUniq.filter((m) => !covered[modelKey(m)])
-  if (pool.length === 0) {
-    console.log('No new models since last run — nothing to publish.')
-    return false
+  if (DRY_RUN && !API_KEY) {
+    console.log('\n[dry-run] story leads (newest):')
+    for (const m of leads.newest) console.log('  - ' + describeModel(m))
+    console.log('\n[dry-run] no API key set; stopping before angle selection.')
+    return
   }
 
-  if (!ledger.seeded) {
-    // One-time showcase: lead with the highest-quality model so the first post
-    // features a current flagship rather than whatever curated model ranks first.
-    const qOf = (m) => lookupQuality(qmap, m.id, m.name) ?? -1
-    pool.sort((a, b) => qOf(b) - qOf(a) || b.inputPerM - a.inputPerM)
-    console.log(`[cold start] establishing baseline of ${liveUniq.length} models; showcasing the highest-rated one.`)
-  } else {
-    pool.sort((a, b) => scoreModel(b, qmap) - scoreModel(a, qmap))
-    console.log(`Seeded ledger has ${Object.keys(covered).length} models; ${pool.length} not yet covered.`)
+  // Stage A — angle
+  console.log(`\nStage A: selecting today's angle (model: ${MODEL})...`)
+  let sel
+  try {
+    sel = await selectAngle(leads, existing, anglesLedger.published, today)
+  } catch (err) {
+    console.error(`Angle selection failed (${err.message}) — skipping today rather than shipping filler.`)
+    if (!DRY_RUN) process.exitCode = 0
+    return
   }
-  const subject = pool[0]
-  const competitors = pickCompetitors(subject, liveUniq)
-  if (competitors.length === 0) {
-    console.warn('No competitors available for comparison — skipping.')
-    return false
+  if (!sel || !sel.title || !sel.slug) { console.error('Selector returned no usable angle — skipping today.'); return }
+  if (!VALID_CATEGORIES.includes(sel.category)) sel.category = 'comparisons'
+  // Quality gate: reject duplicates.
+  if (existingSlugs.has(sel.slug)) {
+    console.log(`Selected slug "${sel.slug}" already exists — treating as duplicate, skipping today.`)
+    return
   }
-  const table = buildComparisonTable(subject, competitors, qmap)
+  console.log(`  angle: ${sel.title}`)
+  console.log(`  thesis: ${sel.angle}`)
+  console.log(`  timely: ${sel.whyTimely || '(n/a)'}`)
+  console.log(`  category: ${sel.category}; featuring: ${(sel.subjectModels || []).join(', ')}`)
 
-  console.log(`\nSelected: ${subject.name} (${subject.provider})${subject.curated ? ' [curated]' : ' [auto-discovered]'}`)
-  console.log(`Competitors: ${competitors.map((c) => c.name).join(', ')}`)
-  console.log('Comparison table:')
-  console.log('  ' + table.columns.join(' | '))
-  for (const r of table.rows) console.log('  ' + r.join(' | '))
+  // Resolve + verified table
+  let subjects = resolveSubjects(sel.subjectModels, models)
+  if (subjects.length < 3) subjects = topUpSubjects(subjects, leads)
+  if (subjects.length < 2) { console.error('Could not resolve enough featured models — skipping today.'); return }
+  const table = buildComparisonTable(subjects, qmap)
+  console.log('\n  verified comparison table:')
+  console.log('    ' + table.columns.join(' | '))
+  for (const r of table.rows) console.log('    ' + r.join(' | '))
 
   if (DRY_RUN) {
-    console.log('\n--- prompt preview (first 1200 chars) ---')
-    console.log(buildModelPrompt(subject, competitors, table).slice(0, 1200))
-    console.log('\n[dry-run] would write a post and update the ledger. Stopping here.')
-    return true
+    console.log('\n--- writing prompt preview (first 1400 chars) ---')
+    console.log(buildWritingPrompt(sel, table).slice(0, 1400))
+    console.log('\n[dry-run] would write the article and update the angles ledger. Stopping here.')
+    return
   }
 
-  const prompt = buildModelPrompt(subject, competitors, table)
-  console.log('\nCalling Anthropic API (claude-haiku-4-5)...')
-  let resp
-  try {
-    resp = await callWithRetry(prompt)
-  } catch (err) {
-    console.error('API call failed after retries:', err.message)
-    process.exit(1)
-  }
-  const { text: raw, stopReason, usage } = resp
-  if (usage) console.log(`Usage: input=${usage.input_tokens} output=${usage.output_tokens} stop_reason=${stopReason}`)
-  if (stopReason === 'max_tokens') {
-    console.error('Generation hit max_tokens — output truncated.')
-    process.exit(1)
-  }
-
-  const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim()
+  // Stage B — write
+  console.log('\nStage B: writing the article...')
   let prose
   try {
-    prose = JSON.parse(cleaned)
+    prose = await writeArticle(sel, table)
   } catch (err) {
-    console.error('Failed to parse JSON response:', err.message)
-    console.error('Raw (first 500):', raw.slice(0, 500))
-    process.exit(1)
+    console.error(`Writing failed (${err.message}) — skipping today.`)
+    process.exitCode = 0
+    return
   }
 
-  const slug = uniqueSlug(`${normalizeKey(subject.name)}-pricing-comparison`, existingSlugs)
+  const slug = uniqueSlug(sel.slug, existingSlugs)
   const post = {
     slug,
-    category: 'comparisons',
+    category: sel.category,
     kind: 'guide',
-    keyword: `${subject.name} pricing`,
-    title: prose.title || `${subject.name}: Pricing & How It Compares`,
-    description: prose.description || `${subject.name} pricing compared to alternatives — input/output cost per million tokens, context window, and which workloads it fits.`,
+    keyword: sel.keyword || undefined,
+    title: prose.title || sel.title,
+    description: prose.description || `${sel.title} — input/output token rates compared, with the blended cost that actually predicts your bill.`,
     tldr: prose.tldr,
     readTime: estimateReadTime(prose),
     publishedAt: new Date().toISOString(),
-    tags: Array.isArray(prose.tags) && prose.tags.length ? prose.tags : [subject.provider, 'pricing', 'comparison'],
+    tags: Array.isArray(prose.tags) && prose.tags.length ? prose.tags : ['LLM pricing', 'token rates', 'comparison'],
     sections: prose.sections,
     faq: prose.faq,
     ctaText: prose.ctaText,
-    sources: buildSources(table.hasQuality),
-    relatedSlugs: pickRelated(subject, existingSlugs),
+    sources: buildSources(subjects, table.hasQuality),
+    relatedSlugs: pickRelated(subjects, existingSlugs),
     comparison: { caption: table.caption, columns: table.columns, rows: table.rows },
   }
 
   const filename = `${slug}.json`
-  const validationErrors = validateBlogPost(filename, post)
-  if (validationErrors.length > 0) {
+  const errors = validateBlogPost(filename, post)
+  if (errors.length) {
     console.error('Generated post failed validation; refusing to write:')
-    for (const e of validationErrors) console.error(`  - ${e}`)
-    process.exit(1)
+    for (const e of errors) console.error(`  - ${e}`)
+    process.exitCode = 0
+    return
   }
+  // Extra quality gates beyond the schema.
+  if (!Array.isArray(post.sections) || post.sections.length < 4) { console.error('Too few sections — skipping.'); process.exitCode = 0; return }
+  const markdownLeak = post.sections.some((s) => /\*\*/.test(s.body))
+  if (markdownLeak) console.warn('Warning: a section body contains "**" which renders literally; the model was told not to.')
 
   if (!fs.existsSync(BLOG_DIR)) fs.mkdirSync(BLOG_DIR, { recursive: true })
   fs.writeFileSync(path.join(BLOG_DIR, filename), JSON.stringify(post, null, 2))
-  console.log(`Post saved: ${filename}`)
+  console.log(`\nPost saved: ${filename} (${post.sections.length} sections, ${post.faq.length} FAQ, ${post.readTime})`)
 
-  // Update ledger: mark the subject covered; on first run, baseline-seed the rest.
-  covered[modelKey(subject)] = { name: subject.name, slug, postedAt: post.publishedAt }
-  if (!ledger.seeded) {
-    for (const m of liveUniq) {
-      const k = modelKey(m)
-      if (!covered[k]) covered[k] = { name: m.name, slug: null, postedAt: null }
-    }
-    ledger.seeded = true
-  }
-  writeLedger(ledger)
-  console.log(`Ledger updated: ${Object.keys(covered).length} models tracked (seeded=${ledger.seeded}).`)
-  return true
-}
-
-async function main() {
-  if (DRY_RUN) console.log('[dry-run] no API calls will be made and no files will be written.\n')
-  const existingSlugs = getExistingSlugs()
-  console.log(`Existing posts: ${existingSlugs.size}`)
-
-  // PRIMARY: a fresh comparison post about a newly-tracked model, grounded in
-  // live pricing. Returns true if it produced (or, in dry-run, would produce) one.
-  let made = false
-  try {
-    made = await tryModelComparisonPost(existingSlugs)
-  } catch (err) {
-    console.error('Model-comparison post failed:', err.message)
-    if (!DRY_RUN) process.exit(1)
-  }
-  if (made) return
-
-  // FALLBACK: legacy curated TOPICS list (currently exhausted → no-op).
-  const topic = pickNextTopic(existingSlugs)
-  if (!topic) {
-    console.log('No new models to cover and all curated topics are published — nothing to generate.')
-    return
-  }
-  console.log(`Generating: "${topic.title}" (slug: ${topic.slug}, category: ${topic.category})`)
-
-  const prompt = buildPrompt(topic)
-  console.log('Calling Anthropic API (claude-haiku-4-5)...')
-
-  let resp
-  try {
-    resp = await callWithRetry(prompt)
-  } catch (err) {
-    console.error('API call failed after retries:', err.message)
-    process.exit(1)
-  }
-
-  const { text: raw, stopReason, usage } = resp
-  if (usage) {
-    console.log(`Usage: input=${usage.input_tokens} output=${usage.output_tokens} stop_reason=${stopReason}`)
-  }
-  if (stopReason === 'max_tokens') {
-    // Output was cut off. Parsing will almost certainly fail with "Unterminated string".
-    // Fail loudly so the workflow run is visibly bad and we don't write a half-post.
-    console.error('Generation hit max_tokens — output truncated. Bump max_tokens or shorten the prompt.')
-    process.exit(1)
-  }
-
-  const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim()
-
-  let post
-  try {
-    post = JSON.parse(cleaned)
-  } catch (err) {
-    console.error('Failed to parse JSON response:', err.message)
-    console.error('Raw response (first 500 chars):', raw.slice(0, 500))
-    console.error('Raw response (last 500 chars):', raw.slice(-500))
-    process.exit(1)
-  }
-
-  // Topic table is the source of truth for slug + category. Overwrite whatever the
-  // model returned so the post always satisfies the validator's requirements, even if
-  // the model misclassifies or omits the field.
-  post.slug = topic.slug
-  post.category = topic.category
-  post.publishedAt = new Date().toISOString()
-
-  const filename = `${post.slug}.json`
-  const validationErrors = validateBlogPost(filename, post)
-  if (validationErrors.length > 0) {
-    console.error('Generated post failed validation; refusing to write:')
-    for (const e of validationErrors) console.error(`  - ${e}`)
-    process.exit(1)
-  }
-
-  if (!fs.existsSync(BLOG_DIR)) {
-    fs.mkdirSync(BLOG_DIR, { recursive: true })
-  }
-
-  const outPath = path.join(BLOG_DIR, filename)
-  fs.writeFileSync(outPath, JSON.stringify(post, null, 2))
-  console.log(`Post saved: ${outPath}`)
+  anglesLedger.published.push({ slug, title: post.title, angle: sel.angle, category: post.category, date: today })
+  writeAnglesLedger(anglesLedger)
+  console.log(`Angles ledger updated: ${anglesLedger.published.length} entries.`)
 }
 
 main().catch((err) => {
   console.error('Unexpected error:', err)
-  process.exit(1)
+  // Don't fail the workflow hard on a bad day — just publish nothing.
+  process.exitCode = 0
 })
