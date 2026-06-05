@@ -1,0 +1,151 @@
+{
+  "slug": "gemini-3-5-flash-vs-flash-lite-price-comparison",
+  "category": "comparisons",
+  "kind": "guide",
+  "keyword": "Gemini 3.5 Flash pricing comparison 2026",
+  "title": "Gemini 3.5 Flash vs 3.1 Flash Lite: When 'Flash' Stopped Meaning Cheap",
+  "description": "Gemini 3.5 Flash costs $1.50/$9.00 per 1M tokens — 3× pricier than its predecessor. Compare it to 3.1 Flash Lite at $0.25/$1.50 and Claude Opus 4.8 Fast.",
+  "tldr": "Gemini 3.5 Flash at $1.50 input / $9.00 output is no longer a budget model — its 6× output multiplier pushes agent workloads to $7.50 per 1M blended tokens. Gemini 3.1 Flash Lite at $0.25 / $1.50 is now Google's only genuinely cheap option, blending to just $1.25 at agent ratios. Check the output multiplier and your actual workload mix before trusting any 'Flash' or 'Fast' label.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-06-05T15:58:08.420Z",
+  "tags": [
+    "gemini",
+    "pricing",
+    "cost-comparison",
+    "google",
+    "anthropic",
+    "flash",
+    "api-costs"
+  ],
+  "sections": [
+    {
+      "heading": "The Output Multiplier Is Where Your Budget Actually Dies",
+      "body": "Most developers anchor on input price when scanning a model pricing table. That instinct breaks down the moment you look at the output multiplier — the ratio between what a model charges per output token versus per input token. Both Gemini 3.5 Flash and Gemini 3.1 Flash Lite carry a 6.0× output multiplier, meaning every token the model generates costs six times what a token you send in costs. Claude Opus 4.8 Fast has a 5.0× multiplier. None of these are symmetric. In a retrieval workload where you feed nine tokens for every one you receive back, the multiplier barely matters. In an agent or reasoning loop where you might send one token and receive four in return, it dominates your bill entirely. The table above shows this split across three workload shapes — retrieval, chat, and agent — and the differences are not marginal. Understanding the multiplier before you pick a model is not optional; it is the whole calculation. You can model your own ratio using the [API cost estimator](/tools/api-cost-estimator)."
+    },
+    {
+      "heading": "Gemini 3.5 Flash: A Quality Upgrade Wearing a Budget Label",
+      "body": "Gemini 3.5 Flash launched on 2026-05-19 with input pricing of $1.50 per million tokens and output pricing of $9.00 per million tokens. At a 1:4 agent ratio, that blends to $7.50 per million tokens. At a 1:1 chat ratio it comes to $5.25, and at a 9:1 retrieval ratio it drops to $2.25. The model carries a quality score of 73 out of 100 and a 1M token context window. Those are genuinely capable numbers, and the quality score reflects a meaningful step up from lighter-weight options. But the 'Flash' name invites a budget assumption that the price does not support. Developers migrating from an earlier Flash-tier model expecting a like-for-like cost will find their invoices have changed substantially. The 6.0× output multiplier means any workload that produces long generations — code, structured documents, chain-of-thought reasoning — will trend toward the higher end of that blended range, not the lower. The name has stayed the same; the pricing tier has not."
+    },
+    {
+      "heading": "Gemini 3.1 Flash Lite: The Last True Budget Route on Google's Roster",
+      "body": "Gemini 3.1 Flash Lite, released 2026-05-07, is the model that now occupies the position Gemini Flash originally promised: genuinely inexpensive API access. Input is $0.25 per million tokens, output is $1.50 per million tokens, and the blended cost at a 1:4 agent ratio comes to $1.25 per million tokens. At 1:1 chat that falls to $0.875, and at 9:1 retrieval it reaches $0.375. The context window is 1M tokens, identical to Gemini 3.5 Flash. The output multiplier is also 6.0×, so the same math about generation length applies — but at a base rate roughly six times lower, the absolute dollar impact of that multiplier is far less painful. For high-volume, cost-sensitive workloads — classification, summarization, retrieval-augmented generation, or any pipeline where you control output length — 3.1 Flash Lite is the only Gemini model currently positioned as a true commodity tier. If your workload fits, the cost gap over 3.5 Flash is not a rounding error; it is a 6× difference in blended agent cost."
+    },
+    {
+      "heading": "Claude Opus 4.8 Fast: A Price Cut That Reframes 'Fast' Entirely",
+      "body": "Anthropic's Claude Opus 4.8 Fast, released 2026-05-27, changed the calculus for the upper tier. Input is $10.00 per million tokens, output is $50.00 per million tokens, and the 5.0× output multiplier blends to $42.00 at agent ratios, $30.00 at chat, and $14.00 at retrieval. Compare that to Claude Opus 4.7 Fast, released just fifteen days earlier on 2026-05-12 with input at $30.00, output at $150.00, and blended agent cost of $126.00 per million tokens. The reduction is dramatic: agent workloads on Opus 4.8 Fast cost roughly one-third of what Opus 4.7 Fast cost at the same ratio. The 'Fast' label existed on both versions, but the pricing story is completely different. This is a direct illustration of the editorial point: tier labels — Flash, Fast, Lite — are brand signals, not price anchors. The only way to know what you are buying is to read the actual numbers. See the [full model comparison](/tools/compare-prices) to place these four models side by side."
+    },
+    {
+      "heading": "Workload-by-Workload Verdict: Which Model Wins Where",
+      "body": "For retrieval-heavy pipelines with a 9:1 input-to-output ratio, Gemini 3.1 Flash Lite at $0.375 blended is the clear winner. Nothing on this list comes close for pure volume processing where output is short and controlled. For balanced chat applications at 1:1 ratios, 3.1 Flash Lite at $0.875 still dominates on cost, though Gemini 3.5 Flash at $5.25 becomes relevant if the quality score of 73 versus an unscored Lite model matters for your user-facing product. For agent and reasoning workloads at 1:4 ratios, Gemini 3.5 Flash at $7.50 blended sits in a middle tier: meaningfully cheaper than Claude Opus 4.8 Fast at $42.00, but no longer in the same cost class as 3.1 Flash Lite at $1.25. If your agent loop produces substantial output and you need the higher quality ceiling, 3.5 Flash is the practical choice. If cost control is the primary constraint and quality is acceptable at a lighter level, 3.1 Flash Lite is the correct answer. You can stress-test these ratios for your specific token volumes at the [API cost estimator](/tools/api-cost-estimator)."
+    },
+    {
+      "heading": "Why the Cheapest Headline Price Is Rarely the Cheapest in Production",
+      "body": "The input price is the number that gets quoted in announcements and comparison headlines. It is also the number least likely to reflect your actual bill. In a production system, output tokens typically represent the majority of cost for any generative task — and with multipliers of 5.0× or 6.0× across every model in this comparison, output is always the dominant variable. A retrieval system that ingests large documents and returns short answers will look very different on invoice from an agent that reasons through multi-step problems with verbose intermediate outputs. Gemini 3.5 Flash's $1.50 input price sounds approachable until you run an agent workload and land at $7.50 blended. Gemini 3.1 Flash Lite's $0.25 input price stays approachable even at agent ratios because the $1.25 blended cost is low in absolute terms. The discipline required here is straightforward: take your real token mix from production logs or a reasonable estimate, apply it to both the input and output rates with the multiplier in mind, and compare blended costs — not headline prices. The [compare prices tool](/tools/compare-prices) is built for exactly this calculation."
+    },
+    {
+      "heading": "The Label Problem Is Now an Industry Pattern",
+      "body": "The four models in this comparison span two providers and a price range from $0.375 to $42.00 blended at agent ratios — more than a 100× spread. Yet every one of them carries a tier name — Flash, Flash Lite, Fast — that signals speed and efficiency rather than cost position. Gemini 3.5 Flash has a quality score of 73 out of 100 and launched on 2026-05-19. Gemini 3.1 Flash Lite has no published quality score and launched 2026-05-07. Claude Opus 4.8 Fast launched 2026-05-27 at a dramatically lower price than its predecessor just fifteen days prior. These are not stable category definitions. They are product naming conventions that shift with each release cycle. For a developer building a cost-sensitive system, the practical takeaway is that model names and tier labels should trigger a price-table lookup, not a budget assumption. The only reliable signal is the input rate, the output rate, the multiplier those two rates imply, and the blended cost at your workload shape."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What is the blended cost of Gemini 3.5 Flash for an agent workload?",
+      "answer": "At a 1:4 input-to-output ratio typical of agent and reasoning workloads, Gemini 3.5 Flash blends to $7.50 per million tokens. This is driven by the $9.00 per million output price and the 6.0× output multiplier, which makes long generations significantly more expensive than the $1.50 input price alone suggests."
+    },
+    {
+      "question": "How much cheaper is Gemini 3.1 Flash Lite than Gemini 3.5 Flash in production?",
+      "answer": "At a 1:4 agent ratio, Gemini 3.1 Flash Lite blends to $1.25 per million tokens versus $7.50 for Gemini 3.5 Flash — a 6× cost difference. At a 9:1 retrieval ratio the gap narrows in absolute terms to $0.375 versus $2.25, but the relative difference remains 6×."
+    },
+    {
+      "question": "How much did Claude Opus 4.8 Fast reduce costs compared to Opus 4.7 Fast?",
+      "answer": "Claude Opus 4.7 Fast had an input price of $30.00 and output of $150.00 per million tokens, blending to $126.00 at agent ratios. Claude Opus 4.8 Fast brought that to $10.00 input, $50.00 output, and $42.00 blended at agent ratios — roughly a 3× reduction across all workload shapes."
+    },
+    {
+      "question": "Which Gemini model should I use for high-volume retrieval-augmented generation?",
+      "answer": "Gemini 3.1 Flash Lite is the correct choice for high-volume retrieval workloads. At a 9:1 input-to-output ratio it blends to $0.375 per million tokens, compared to $2.25 for Gemini 3.5 Flash. Both share a 1M token context window, so there is no structural disadvantage to using Lite for retrieval-heavy pipelines."
+    },
+    {
+      "question": "Do Gemini 3.5 Flash and Gemini 3.1 Flash Lite have the same output multiplier?",
+      "answer": "Yes, both carry a 6.0× output multiplier, meaning output tokens cost six times more than input tokens on each model. The multiplier is identical, but because the base rates differ substantially, the absolute cost impact is far larger for 3.5 Flash than for 3.1 Flash Lite on any generation-heavy workload."
+    }
+  ],
+  "ctaText": "Run your own token mix through the numbers at tokenrate.dev/tools/compare-prices to see exactly which model wins at your specific input-to-output ratio before you commit to a production integration.",
+  "sources": [
+    {
+      "label": "OpenRouter — live model pricing",
+      "url": "https://openrouter.ai/models",
+      "note": "Input/output price per token and context length for every model in the table"
+    },
+    {
+      "label": "LMArena leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Crowd-sourced Elo, normalised to a 0–100 quality score"
+    },
+    {
+      "label": "Google — Gemini API pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "note": "Official rate card"
+    },
+    {
+      "label": "Anthropic — pricing",
+      "url": "https://www.anthropic.com/pricing",
+      "note": "Official rate card"
+    },
+    {
+      "label": "TokenRate — compare prices",
+      "url": "https://tokenrate.dev/tools/compare-prices",
+      "note": "Live input and output rates side by side"
+    }
+  ],
+  "relatedSlugs": [
+    "all-google-models-compare-prices",
+    "all-anthropic-models-compare-prices",
+    "output-multiplier-decides-your-llm-bill",
+    "quality-per-dollar-llm-ranking-2026"
+  ],
+  "comparison": {
+    "caption": "Live token rates via OpenRouter, sorted by output multiplier (output ÷ input).",
+    "columns": [
+      "Model",
+      "Input / 1M",
+      "Output / 1M",
+      "Out ÷ In",
+      "Context",
+      "Quality"
+    ],
+    "rows": [
+      [
+        "Claude Opus 4.8 (Fast)",
+        "$10.00",
+        "$50.00",
+        "5.0×",
+        "1M",
+        "—"
+      ],
+      [
+        "Claude Opus 4.7 (Fast)",
+        "$30.00",
+        "$150",
+        "5.0×",
+        "1M",
+        "76"
+      ],
+      [
+        "Gemini 3.5 Flash",
+        "$1.50",
+        "$9.00",
+        "6.0×",
+        "1M",
+        "73"
+      ],
+      [
+        "Gemini 3.1 Flash Lite",
+        "$0.250",
+        "$1.50",
+        "6.0×",
+        "1M",
+        "—"
+      ]
+    ]
+  }
+}
