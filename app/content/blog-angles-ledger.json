@@ -6,6 +6,13 @@
       "angle": "Gemini 3.5 Flash launched at $1.50/$9.00 per 1M tokens — a 3× price hike over the prior Gemini 3 Flash — carrying a 6× output multiplier that matches the priciest flagship tiers, yet Google markets it as 'Flash'; meanwhile Gemini 3.1 Flash Lite at $0.25/$1.50 is now the only true budget Gemini route, and Anthropic quietly slashed Claude Opus 4.8 Fast Mode to $10/$50 (down from $30/$150 on Opus 4.7 Fast), proving that 'Flash' and 'Fast' tier labels require a price-table check, not a brand assumption.",
       "category": "comparisons",
       "date": "2026-06-05"
+    },
+    {
+      "slug": "grok-build-vs-claude-opus-4-8-fast-coding-model-price",
+      "title": "Agentic Coding Model Prices Compared: Grok Build 0.1 vs Claude Opus 4.8 Fast",
+      "angle": "Two purpose-built agentic coding models launched within days of each other — Grok Build 0.1 at $1/$2 per 1M tokens and Claude Opus 4.8 Fast at $10/$50 — and they share an identical 2× output multiplier, yet sit at a 10× price gap; the non-obvious insight is that Anthropic quietly slashed its Fast-mode premium from a punishing 6× speed surcharge (Opus 4.7 Fast at $30/$150) to a rational 2× (Opus 4.8 Fast at $10/$50), meaning the real story isn't Grok vs Claude but how the Fast-tier pricing war is compressing the cost of speed itself.",
+      "category": "comparisons",
+      "date": "2026-06-06"
     }
   ]
 }
