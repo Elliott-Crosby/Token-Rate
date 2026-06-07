@@ -13,6 +13,13 @@
       "angle": "Two purpose-built agentic coding models launched within days of each other — Grok Build 0.1 at $1/$2 per 1M tokens and Claude Opus 4.8 Fast at $10/$50 — and they share an identical 2× output multiplier, yet sit at a 10× price gap; the non-obvious insight is that Anthropic quietly slashed its Fast-mode premium from a punishing 6× speed surcharge (Opus 4.7 Fast at $30/$150) to a rational 2× (Opus 4.8 Fast at $10/$50), meaning the real story isn't Grok vs Claude but how the Fast-tier pricing war is compressing the cost of speed itself.",
       "category": "comparisons",
       "date": "2026-06-06"
+    },
+    {
+      "slug": "opus-4-8-vs-gpt-5-5-vs-gemini-3-5-flash-price-comparison",
+      "title": "Opus 4.8 vs GPT-5.5 vs Gemini 3.5 Flash: Frontier Price Parity Broken",
+      "angle": "For the first time at the frontier tier, sticker prices have nominally converged — Claude Opus 4.8 and GPT-5.5 both land at $5/$25 per 1M tokens — yet the rate cards diverge sharply once you layer in Fast Mode (Anthropic's $10/$50, now 3× cheaper than Opus 4.7 Fast), output multipliers (GPT-5.5 carries a punishing 6× vs Anthropic's 5×), and Gemini 3.5 Flash's $1.50/$9.00 which, despite being marketed as 'Flash', now costs 6× more than Gemini 3.1 Flash Lite and carries the same 6× output multiplier as the flagship GPT-5.5 Pro at $30/$180.",
+      "category": "comparisons",
+      "date": "2026-06-07"
     }
   ]
 }
