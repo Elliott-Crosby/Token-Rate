@@ -1,0 +1,169 @@
+{
+  "slug": "effort-control-hidden-token-cost-opus-4-8-frontier-grid",
+  "category": "cost-optimization",
+  "kind": "guide",
+  "keyword": "LLM effort control token cost comparison",
+  "title": "Effort Control Is a Hidden Cost Dial: Opus 4.8 vs Gemini 3.5 Flash vs GPT-5.5 vs DeepSeek V4 Pro",
+  "description": "Claude Opus 4.8's Effort Control silently inflates output tokens. See how real per-task costs compare against Gemini 3.5 Flash, GPT-5.5, and DeepSeek V4 Pro.",
+  "tldr": "Claude Opus 4.8 carries a $5/$25 rate card but its default high-effort mode drives a 5× output multiplier that makes agentic workloads cost $21.00 per blended million tokens — nearly 27× DeepSeek V4 Pro's $0.783. For retrieval-heavy or chat workloads, Gemini 3.5 Flash undercuts every rival on blended cost while matching Opus 4.8's quality score. Pick your model by your actual input-to-output ratio, not the headline input price.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-06-08T16:52:04.620Z",
+  "tags": [
+    "claude-opus-4.8",
+    "gemini-3.5-flash",
+    "gpt-5.5",
+    "deepseek-v4-pro",
+    "llm-pricing",
+    "effort-control",
+    "agentic-ai"
+  ],
+  "sections": [
+    {
+      "heading": "The Sticker Price Lie: Why $5 Input Does Not Mean $5 Costs",
+      "body": "Every model in this comparison has a published input price, and that number almost always leads the conversation. Claude Opus 4.8 looks identical to GPT-5.5 at $5.00 per million input tokens. DeepSeek V4 Pro looks like a runaway bargain at $0.435. But input tokens are only half the bill in agentic or reasoning workloads — and often the cheaper half. The real cost lever is the output multiplier: how many output tokens does the model generate relative to the input you send? That ratio, combined with the per-output-token price, determines what you actually pay. Claude Opus 4.8's Effort Control feature defaults to high effort, which shapes the model's verbosity and reasoning depth upward, keeping its effective output multiplier at 5.0×. GPT-5.5 and Gemini 3.5 Flash both carry a 6.0× multiplier. DeepSeek V4 Pro sits at a comparatively lean 2.0×. The table above captures these multipliers alongside blended costs across three realistic workload mixes — those numbers are the ones worth studying."
+    },
+    {
+      "heading": "Effort Control: The Third Pricing Dimension That Never Appears on a Rate Card",
+      "body": "When Anthropic shipped Claude Opus 4.8 on 2026-05-27, it introduced an Effort Control parameter that lets developers dial reasoning intensity up or down. The critical detail is that the default is high effort. Nothing in the $5.00/$25.00 rate card changes between Opus 4.7 and Opus 4.8, but the default behavior quietly amplifies how many output tokens the model produces per task. A model generating more tokens per query is not inherently worse — it can mean richer reasoning chains, more complete answers, and fewer follow-up calls. But it does mean the $25.00 output price hits more often and harder than developers coming from a simpler model might expect. Effort Control is therefore best understood as a hidden cost dial built into the product defaults. A developer who ships Opus 4.8 without tuning the effort level is implicitly choosing the highest-cost configuration. For use cases where concise answers are adequate — classification, slot filling, simple Q&A — lowering the effort setting is the fastest optimization available, and it costs nothing to change. The rate card never warns you."
+    },
+    {
+      "heading": "Reading the Blended Cost Table: Three Workloads, Four Models",
+      "body": "The table above presents blended cost per million tokens at three input-to-output ratios that proxy for common workloads: 1:4 for agent and reasoning pipelines, 1:1 for conversational chat, and 9:1 for retrieval and summarization. These ratios expose the models' true cost posture far better than either the input or output price in isolation. At the agentic 1:4 mix, Opus 4.8 costs $21.00 blended, GPT-5.5 costs $25.00, Gemini 3.5 Flash costs $7.50, and DeepSeek V4 Pro costs $0.783. That is not a marginal gap — it is a gap that exceeds 30× between the most and least expensive options for the same category of task. At the retrieval 9:1 mix, where output tokens are scarce, the picture compresses: Opus 4.8 drops to $7.00, GPT-5.5 to $7.50, Gemini 3.5 Flash to $2.25, and DeepSeek V4 Pro to $0.479. Use the [API cost estimator](/tools/api-cost-estimator) to plug in your own ratio before assuming any of these models is the right default."
+    },
+    {
+      "heading": "Gemini 3.5 Flash: The Quiet Overachiever in Cost Efficiency",
+      "body": "Gemini 3.5 Flash arrived on 2026-05-19 with an input price of $1.50 per million and an output price of $9.00 per million. Its output multiplier of 6.0× is actually higher than Opus 4.8's 5.0×, which would normally signal a cost warning. But the output price of $9.00 is so much lower than Opus 4.8's $25.00 that the math still favors Flash dramatically at every workload mix. At the agent/reasoning 1:4 mix, Flash's $7.50 blended cost is less than 36% of Opus 4.8's $21.00. Both models carry a quality score of 73 out of 100. That is a striking pairing: equal quality score, less than half the price at the workload where cost pressure is greatest. Flash is not optimal for every situation — the higher multiplier means chat and retrieval savings are proportionally smaller — but for developers running agentic pipelines at volume, it is the most cost-competitive option in this group that does not require accepting a significantly different capability profile. The [model comparison tool](/tools/compare-prices) lets you run this side-by-side with your projected token volumes."
+    },
+    {
+      "heading": "DeepSeek V4 Pro: Extreme Value, With a Ceiling to Consider",
+      "body": "DeepSeek V4 Pro, released 2026-04-24, prices input at $0.435 per million and output at $0.870 per million. Its 2.0× output multiplier is the lowest in this group by a wide margin, meaning the model is structurally less verbose — a property that works in your favor on cost whether or not you have any direct control over it. At the agentic 1:4 mix the blended cost is $0.783 per million tokens. For context, that is roughly one thirty-seventh of GPT-5.5's $25.00 at the same mix. For high-volume, cost-sensitive pipelines — log analysis, batch classification, high-frequency summarization — DeepSeek V4 Pro's economics are genuinely difficult to argue against on price alone. The important planning question is whether the 2.0× multiplier reflects a capability trade-off for your specific task. A model that produces fewer tokens is not automatically worse, but if your workload demands multi-step reasoning traces or verbose structured output, you will need to verify that the lower token budget is not compressing answer quality. No quality score is available in the verified data for DeepSeek V4 Pro, so that assessment requires your own evaluation against the 73/100 benchmark the other three models share."
+    },
+    {
+      "heading": "GPT-5.5: Premium Pricing With the Least Differentiated Cost Profile",
+      "body": "GPT-5.5 launched on 2026-04-24 with a $5.00 input price and a $30.00 output price — the highest output rate in this comparison. Its 6.0× multiplier matches Gemini 3.5 Flash, but the $30.00 output price is more than three times Flash's $9.00, which means every extra output token costs significantly more. The result is that GPT-5.5's blended costs land above every other model at every workload mix: $25.00 at agent/reasoning, $17.50 at chat, $7.50 at retrieval. Its quality score of 72 out of 100 is one point below Opus 4.8 and Gemini 3.5 Flash. A 1.1 million token context window is the one specification where GPT-5.5 has a distinct edge — 10% more headroom than the 1 million context the other three offer, which can matter when processing very long documents in a single call without chunking. If your workload genuinely requires that extra context and the quality score is competitive for your task, the premium may be justified. Outside of that specific constraint, GPT-5.5's cost profile is the hardest to defend in a purely economic comparison."
+    },
+    {
+      "heading": "Which Model Wins for Which Workload — and What to Do About Effort",
+      "body": "The decision tree is cleaner than the rate cards suggest once you frame it around workload mix and effort settings. For agentic and reasoning pipelines where output tokens dominate, DeepSeek V4 Pro wins on cost at $0.783 blended, with Gemini 3.5 Flash as a strong alternative at $7.50 when quality verification against the 73/100 bar matters. For conversational chat at a 1:1 mix, Gemini 3.5 Flash at $5.25 blended is less than 35% of Opus 4.8's $15.00 and less than 30% of GPT-5.5's $17.50. For retrieval-heavy workloads at a 9:1 mix, all four models compress toward cheaper territory, but DeepSeek V4 Pro at $0.479 and Gemini 3.5 Flash at $2.25 remain the clear value leaders. If you are committed to Opus 4.8 for capability reasons, the first optimization is always to audit your Effort Control setting. Defaulting to high effort on tasks that do not require it is the equivalent of leaving cost savings on the table with no upside. Model selection and effort tuning are two separate dials — treat them that way. You can explore how these numbers shift under your own token ratios at [tokenrate.dev](/)"
+    }
+  ],
+  "faq": [
+    {
+      "question": "What is Claude Opus 4.8 Effort Control and how does it affect my API bill?",
+      "answer": "Effort Control is a parameter in Claude Opus 4.8 that adjusts the model's reasoning depth and output verbosity. It defaults to high effort, which means the model generates more output tokens per request without any change to the published $5.00/$25.00 rate card. Since output tokens cost $25.00 per million, higher verbosity directly raises your bill — the rate did not change, but the token count did."
+    },
+    {
+      "question": "Why does blended cost matter more than the input price per million tokens?",
+      "answer": "Input tokens are usually the cheaper side of the bill. In agentic or reasoning workloads, models generate four or more output tokens for every input token, so the output price and the multiplier dominate total spend. A model priced at $0.435 input like DeepSeek V4 Pro but with a low 2.0× multiplier can cost a fraction of a model priced at $5.00 input with a 5.0× or 6.0× multiplier. Blended cost at your actual ratio is the only number that reflects what you will pay."
+    },
+    {
+      "question": "At agentic workloads, how much cheaper is Gemini 3.5 Flash than Claude Opus 4.8?",
+      "answer": "At a 1:4 input-to-output ratio, which approximates agent and reasoning pipelines, Gemini 3.5 Flash blends to $7.50 per million tokens and Claude Opus 4.8 blends to $21.00 per million tokens. Both models carry a quality score of 73 out of 100. Gemini 3.5 Flash is roughly 64% cheaper at that workload mix."
+    },
+    {
+      "question": "Does GPT-5.5's larger context window justify its higher cost?",
+      "answer": "GPT-5.5 offers a 1.1 million token context window, compared to 1 million tokens for the other three models. If your workload requires processing very long documents without chunking and that extra headroom prevents additional API calls, the premium may offset. Otherwise GPT-5.5's $25.00 blended cost at agent workloads — the highest in this group — is difficult to justify when Gemini 3.5 Flash delivers the same quality score at $7.50."
+    },
+    {
+      "question": "Is DeepSeek V4 Pro actually usable for production agentic pipelines given its low price?",
+      "answer": "DeepSeek V4 Pro's $0.783 blended cost at a 1:4 ratio and its 2.0× output multiplier make it structurally the cheapest option in this group by a large margin. The lower multiplier means it produces fewer output tokens, which is a cost advantage but requires verifying that conciseness does not compress answer quality for your specific task. No quality score is available in the verified data for DeepSeek V4 Pro, so your own evaluation against a known baseline is the right first step before committing it to a high-stakes pipeline."
+    }
+  ],
+  "ctaText": "Run your own token ratio through the cost estimator at tokenrate.dev/tools/compare-prices to see exactly which model wins for your workload before you commit to a default.",
+  "sources": [
+    {
+      "label": "OpenRouter — live model pricing",
+      "url": "https://openrouter.ai/models",
+      "note": "Input/output price per token and context length for every model in the table"
+    },
+    {
+      "label": "LMArena leaderboard",
+      "url": "https://lmarena.ai/leaderboard",
+      "note": "Crowd-sourced Elo, normalised to a 0–100 quality score"
+    },
+    {
+      "label": "Anthropic — pricing",
+      "url": "https://www.anthropic.com/pricing",
+      "note": "Official rate card"
+    },
+    {
+      "label": "Google — Gemini API pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "note": "Official rate card"
+    },
+    {
+      "label": "OpenAI — API pricing",
+      "url": "https://openai.com/api/pricing/",
+      "note": "Official rate card"
+    },
+    {
+      "label": "DeepSeek — API pricing",
+      "url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "note": "Official rate card"
+    },
+    {
+      "label": "TokenRate — compare prices",
+      "url": "https://tokenrate.dev/tools/compare-prices",
+      "note": "Live input and output rates side by side"
+    }
+  ],
+  "relatedSlugs": [
+    "all-anthropic-models-compare-prices",
+    "all-google-models-compare-prices",
+    "all-openai-models-compare-prices",
+    "all-deepseek-models-compare-prices"
+  ],
+  "comparison": {
+    "caption": "Live token rates via OpenRouter, sorted by output multiplier (output ÷ input).",
+    "columns": [
+      "Model",
+      "Input / 1M",
+      "Output / 1M",
+      "Out ÷ In",
+      "Context",
+      "Quality"
+    ],
+    "rows": [
+      [
+        "DeepSeek V4 Pro",
+        "$0.435",
+        "$0.870",
+        "2.0×",
+        "1M",
+        "—"
+      ],
+      [
+        "Claude Opus 4.8",
+        "$5.00",
+        "$25.00",
+        "5.0×",
+        "1M",
+        "73"
+      ],
+      [
+        "Claude Opus 4.8 (Fast)",
+        "$10.00",
+        "$50.00",
+        "5.0×",
+        "1M",
+        "73"
+      ],
+      [
+        "Gemini 3.5 Flash",
+        "$1.50",
+        "$9.00",
+        "6.0×",
+        "1M",
+        "73"
+      ],
+      [
+        "GPT-5.5",
+        "$5.00",
+        "$30.00",
+        "6.0×",
+        "1.1M",
+        "72"
+      ]
+    ]
+  }
+}

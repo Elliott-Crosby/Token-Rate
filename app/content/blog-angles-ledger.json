@@ -20,6 +20,13 @@
       "angle": "For the first time at the frontier tier, sticker prices have nominally converged — Claude Opus 4.8 and GPT-5.5 both land at $5/$25 per 1M tokens — yet the rate cards diverge sharply once you layer in Fast Mode (Anthropic's $10/$50, now 3× cheaper than Opus 4.7 Fast), output multipliers (GPT-5.5 carries a punishing 6× vs Anthropic's 5×), and Gemini 3.5 Flash's $1.50/$9.00 which, despite being marketed as 'Flash', now costs 6× more than Gemini 3.1 Flash Lite and carries the same 6× output multiplier as the flagship GPT-5.5 Pro at $30/$180.",
       "category": "comparisons",
       "date": "2026-06-07"
+    },
+    {
+      "slug": "effort-control-hidden-token-cost-opus-4-8-frontier-grid",
+      "title": "Effort Control Is a Hidden Cost Dial: Opus 4.8 vs Gemini 3.5 Flash vs GPT-5.5 vs DeepSeek V4 Pro",
+      "angle": "Claude Opus 4.8's new Effort Control feature defaults to 'high' effort — silently multiplying output token count even though the sticker price ($5/$25) is unchanged from Opus 4.7 — meaning the real per-task cost depends on a third pricing dimension that never appears on any rate card; comparing Opus 4.8 against Gemini 3.5 Flash (6× output multiplier, $1.50 input), GPT-5.5 (6× multiplier, $5 input), and DeepSeek V4 Pro (2× multiplier, $0.435 input) shows that at high-output agentic workloads, the effective cost gap between these nominally 'comparable' models can exceed 10× once effort verbosity is factored in.",
+      "category": "cost-optimization",
+      "date": "2026-06-08"
     }
   ]
 }
