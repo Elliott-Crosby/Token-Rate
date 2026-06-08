@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import { Fragment, type ReactNode } from 'react'
 import Link from 'next/link'
-import { getAllBlogPosts, getBlogPost } from '@/lib/blog'
+import { getAllBlogPosts, getBlogPost, getBlogPostsByCategory } from '@/lib/blog'
 import { getCategory, isCategorySlug } from '@/lib/categories'
 import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
@@ -87,14 +87,32 @@ export default async function PostPage({
   const isGuide = post.kind === 'guide'
   const kindLabel = isGuide ? 'Guide' : 'Article'
 
-  const relatedPages = (post.relatedSlugs ?? [])
+  // Start from the post's explicit relatedSlugs. Slugs pointing at deleted
+  // posts resolve to null via getBlogPost and are dropped by filter(Boolean),
+  // so a pruned post never renders as a dead link.
+  const MIN_RELATED = 3
+  const MAX_RELATED = 4
+  const relatedPosts = (post.relatedSlugs ?? [])
     .map((s) => getBlogPost(s))
-    .filter((p): p is NonNullable<typeof p> => Boolean(p))
-    .map((p) => ({
-      href: `/blog/${p.category}/${p.slug}`,
-      label: p.title,
-      description: p.description,
-    }))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p) && p!.slug !== post.slug)
+
+  // Backfill: most posts have no relatedSlugs, so top up from the same category
+  // (then any recent post) to ~3-4 links so no post is left orphaned.
+  if (relatedPosts.length < MIN_RELATED) {
+    const chosen = new Set([post.slug, ...relatedPosts.map((p) => p.slug)])
+    for (const p of [...getBlogPostsByCategory(post.category), ...getAllBlogPosts()]) {
+      if (relatedPosts.length >= MAX_RELATED) break
+      if (chosen.has(p.slug)) continue
+      chosen.add(p.slug)
+      relatedPosts.push(p)
+    }
+  }
+
+  const relatedPages = relatedPosts.slice(0, MAX_RELATED).map((p) => ({
+    href: `/blog/${p.category}/${p.slug}`,
+    label: p.title,
+    description: p.description,
+  }))
 
   const breadcrumbs = [
     { name: 'TokenRate', url: 'https://tokenrate.dev' },

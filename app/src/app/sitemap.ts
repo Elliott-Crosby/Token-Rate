@@ -59,7 +59,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ? new Date(post.publishedAt)
         : new Date('2026-01-01'),
     changeFrequency: 'monthly' as const,
-    priority: post.kind === 'guide' ? 0.8 : 0.75,
+    // Blog posts are deprioritized vs tools/models/hubs so the long tail of
+    // posts doesn't dilute crawl budget away from the pages that convert.
+    priority: 0.5,
   }))
 
   return [

@@ -101,10 +101,8 @@
     }
   ],
   "relatedSlugs": [
-    "all-anthropic-models-compare-prices",
-    "all-openai-models-compare-prices",
-    "all-google-models-compare-prices",
-    "output-multiplier-decides-your-llm-bill"
+    "output-multiplier-decides-your-llm-bill",
+    "quality-per-dollar-llm-ranking-2026"
   ],
   "comparison": {
     "caption": "Live token rates via OpenRouter, sorted by output multiplier (output ÷ input).",

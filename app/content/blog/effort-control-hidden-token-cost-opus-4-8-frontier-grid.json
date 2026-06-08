@@ -108,10 +108,9 @@
     }
   ],
   "relatedSlugs": [
-    "all-anthropic-models-compare-prices",
-    "all-google-models-compare-prices",
-    "all-openai-models-compare-prices",
-    "all-deepseek-models-compare-prices"
+    "quality-per-dollar-llm-ranking-2026",
+    "output-multiplier-decides-your-llm-bill",
+    "gemini-vs-claude-vs-gpt-cost"
   ],
   "comparison": {
     "caption": "Live token rates via OpenRouter, sorted by output multiplier (output ÷ input).",
