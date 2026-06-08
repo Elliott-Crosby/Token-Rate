@@ -12,9 +12,8 @@ import { SITE_URL } from '@/lib/seo'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: { absolute: 'TokenRate — AI Token Calculator & Pricing Comparison' },
-  description:
-    'Free AI token calculator with live pricing. Convert between money, tokens, and characters for Claude, GPT-4o, Gemini 2.5, and more. Compare costs across models instantly.',
+  title: { absolute: 'AI Token Calculator — Free, Live Pricing | TokenRate' },
+  description: `Free AI token calculator with live pricing. Convert tokens to dollars and compare AI cost across Claude, GPT-4o, Gemini, and ${ALL_MODELS.length}+ models instantly.`,
   alternates: { canonical: SITE_URL },
 }
 

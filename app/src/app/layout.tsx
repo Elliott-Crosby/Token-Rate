@@ -45,14 +45,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://tokenrate.dev',
     siteName: 'TokenRate',
-    title: 'TokenRate — AI Token Calculator & Pricing Comparison',
+    title: 'AI Token Calculator — Free, Live Pricing | TokenRate',
     description:
-      'Free AI token calculator. Convert money, tokens, and characters across Claude, GPT-4o, Gemini, and more with live pricing.',
+      'Free AI token calculator with live pricing. Convert tokens to dollars and compare AI cost across Claude, GPT-4o, Gemini, and more — instantly.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TokenRate — AI Token Calculator & Pricing Comparison',
-    description: 'Free AI token calculator with live pricing across Claude, GPT-4o, Gemini, and more.',
+    title: 'AI Token Calculator — Free, Live Pricing | TokenRate',
+    description: 'Free AI token calculator with live pricing. Convert tokens to dollars and compare AI cost across Claude, GPT-4o, Gemini, and more.',
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://tokenrate.dev' },

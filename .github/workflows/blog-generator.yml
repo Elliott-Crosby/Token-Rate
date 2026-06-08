@@ -1,12 +1,17 @@
 name: Auto Blog Generator
 
 on:
-  schedule:
-    # Once a day at 13:00 UTC. The generator researches the day's sharpest
-    # rate-comparison angle (live pricing + web search), writes one high-quality
-    # article, and publishes only if it clears the quality/novelty gate — so a
-    # daily run is plenty and keeps the publish log clean.
-    - cron: '0 13 * * *'
+  # PAUSED 2026-06-08: Google has indexed only 1 of ~97 pages; the ~178 auto-posts
+  # are "Discovered – currently not indexed" and a daily drip of templated content
+  # dilutes crawl budget and trips scaled-content signals. Daily auto-publishing is
+  # paused while we clean the thin backlog and build authority. Re-enable by
+  # uncommenting the schedule block. Manual runs still work via workflow_dispatch.
+  # schedule:
+  #   # Once a day at 13:00 UTC. The generator researches the day's sharpest
+  #   # rate-comparison angle (live pricing + web search), writes one high-quality
+  #   # article, and publishes only if it clears the quality/novelty gate — so a
+  #   # daily run is plenty and keeps the publish log clean.
+  #   - cron: '0 13 * * *'
   workflow_dispatch:
     # Allow manual trigger from GitHub Actions UI
 
