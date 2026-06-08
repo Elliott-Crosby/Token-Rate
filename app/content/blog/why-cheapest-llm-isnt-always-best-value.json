@@ -54,7 +54,7 @@
   ],
   "ctaText": "Sort the TokenRate calculator by 'best value' instead of 'cheapest' to see which LLMs actually deliver the most quality per dollar — not just the lowest sticker price.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Value column sort" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Value column sort" },
     { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Quality source" }
   ]
 }

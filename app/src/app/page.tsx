@@ -119,6 +119,9 @@ const RELATED: { href: string; label: string; description: string }[] = [
   { href: '/tools/token-to-usd', label: 'Token → USD Calculator', description: 'Convert a raw token count to dollars for any model.' },
   { href: '/compare/cheapest-ai-models', label: 'Cheapest AI Models 2026', description: 'Ranked list of the most affordable LLMs available via API.' },
   { href: '/blog/fundamentals/what-are-ai-tokens', label: 'What Are AI Tokens?', description: 'A clear explanation of how tokens work and why they matter.' },
+  { href: '/blog/comparisons/quality-per-dollar-llm-ranking-2026', label: 'Quality Per Dollar: Best-Value LLMs', description: 'Which models deliver the most quality for each dollar in 2026.' },
+  { href: '/blog/comparisons/gemini-vs-claude-vs-gpt-cost', label: 'Gemini vs Claude vs GPT Cost', description: 'A full side-by-side cost comparison of the three frontier model families.' },
+  { href: '/blog/providers/llm-pricing-trends-2026', label: 'LLM Pricing Trends 2026', description: 'How AI model costs have shifted across providers this year.' },
 ]
 
 export default async function Home() {

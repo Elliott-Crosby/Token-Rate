@@ -56,6 +56,6 @@
   "sources": [
     { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Live Elo rankings" },
     { "label": "Artificial Analysis", "url": "https://artificialanalysis.ai", "note": "Intelligence Index source" },
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Top 75+ live filter" }
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Top 75+ live filter" }
   ]
 }

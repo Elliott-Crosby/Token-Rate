@@ -55,7 +55,7 @@
   ],
   "ctaText": "Sort the TokenRate calculator by 'best value' to see the live quality-per-dollar ranking across 70+ models — then click 'Compare Prices' to put your top 3 candidates side by side.",
   "sources": [
-    { "label": "TokenRate Calculator (live data)", "url": "https://www.tokenrate.dev", "note": "Quality and Value columns updated hourly" },
+    { "label": "TokenRate Calculator (live data)", "url": "https://tokenrate.dev", "note": "Quality and Value columns updated hourly" },
     { "label": "OpenRouter Pricing API", "url": "https://openrouter.ai/api/v1/models", "note": "Source of live prices" },
     { "label": "Artificial Analysis", "url": "https://artificialanalysis.ai", "note": "Quality score source" }
   ]

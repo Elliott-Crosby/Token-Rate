@@ -54,7 +54,7 @@
   ],
   "ctaText": "Open the TokenRate calculator with the default 'Popular' sort to see flagship models from every major provider on the first scroll — then switch to 'best value' to pick the production winner.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Live sort options" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Live sort options" },
     { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Pricing data feed" }
   ]
 }

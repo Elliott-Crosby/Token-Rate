@@ -54,7 +54,7 @@
   ],
   "ctaText": "Open /tools/compare-prices, pick your provider dropdowns, and put Claude Sonnet 4.7, GPT-5, Gemini 2.5 Pro, and DeepSeek R1 in one side-by-side grid for an instant cost comparison.",
   "sources": [
-    { "label": "TokenRate Compare Prices Tool", "url": "https://www.tokenrate.dev/tools/compare-prices", "note": "Live multi-model grid" },
+    { "label": "TokenRate Compare Prices Tool", "url": "https://tokenrate.dev/tools/compare-prices", "note": "Live multi-model grid" },
     { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Pricing data source" }
   ]
 }

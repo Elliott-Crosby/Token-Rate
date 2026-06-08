@@ -55,7 +55,7 @@
   ],
   "ctaText": "Open the TokenRate calculator, click Filters → 'Under $1', sort by 'best value', and see the live ranking of every sub-$1 LLM with its quality score and provider.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Live under-$1 model list" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Live under-$1 model list" },
     { "label": "OpenRouter Pricing API", "url": "https://openrouter.ai/api/v1/models", "note": "Source of live pricing" }
   ]
 }

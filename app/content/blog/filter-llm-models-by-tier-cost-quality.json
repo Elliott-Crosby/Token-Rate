@@ -54,7 +54,7 @@
   ],
   "ctaText": "Open the TokenRate calculator, click Filters, and stack Tier + Cost + Quality presets to narrow 70+ models down to your shortlist in seconds.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Filter panel UI" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Filter panel UI" },
     { "label": "OpenRouter Pricing", "url": "https://openrouter.ai/api/v1/models", "note": "Cost data source" }
   ]
 }

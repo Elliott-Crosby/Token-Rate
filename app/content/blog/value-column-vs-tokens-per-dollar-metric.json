@@ -54,7 +54,7 @@
   ],
   "ctaText": "Sort TokenRate's calculator by 'best value' for production routing, or by 'cheapest' when quality is fungible — and use Filters to combine the two for tier-specific picks.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Value and price columns" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Value and price columns" },
     { "label": "OpenRouter Pricing", "url": "https://openrouter.ai/api/v1/models", "note": "Live cost source" },
     { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Quality numerator source" }
   ]

@@ -58,8 +58,8 @@
   ],
   "ctaText": "Open TokenRate's calculator, set your filters, sort by 'best value', then move your top 3 finalists into the Compare Prices view — the whole funnel takes under five minutes.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Filter and sort" },
-    { "label": "TokenRate Compare Prices", "url": "https://www.tokenrate.dev/tools/compare-prices", "note": "Side-by-side grid" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Filter and sort" },
+    { "label": "TokenRate Compare Prices", "url": "https://tokenrate.dev/tools/compare-prices", "note": "Side-by-side grid" },
     { "label": "Anthropic Eval Best Practices", "url": "https://docs.anthropic.com/en/docs/test-and-evaluate", "note": "Evaluation guidance" }
   ]
 }

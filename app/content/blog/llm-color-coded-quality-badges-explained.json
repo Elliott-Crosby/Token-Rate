@@ -54,7 +54,7 @@
   ],
   "ctaText": "Open the TokenRate calculator and scan the Quality column — within seconds you'll see the full landscape of flagship (purple), balanced (sky), mid-tier (emerald), and budget (zinc) models.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Color-coded quality badges" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Color-coded quality badges" },
     { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Elo source" },
     { "label": "Artificial Analysis", "url": "https://artificialanalysis.ai", "note": "Intelligence Index" }
   ]

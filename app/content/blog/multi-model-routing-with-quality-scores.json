@@ -54,7 +54,7 @@
   ],
   "ctaText": "Use TokenRate's Filter panel to pick your fast, balanced, and flagship tier models — then sort each by 'best value' to make sure you're not overpaying for any tier slot.",
   "sources": [
-    { "label": "TokenRate Calculator", "url": "https://www.tokenrate.dev", "note": "Pick router models" },
+    { "label": "TokenRate Calculator", "url": "https://tokenrate.dev", "note": "Pick router models" },
     { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Unified API for multi-vendor routing" },
     { "label": "Anthropic Pricing", "url": "https://www.anthropic.com/pricing", "note": "Claude tiers" },
     { "label": "OpenAI Pricing", "url": "https://openai.com/api/pricing", "note": "GPT and o-series tiers" }
