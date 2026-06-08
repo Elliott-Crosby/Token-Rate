@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { ProviderGroup, ModelPricing } from '@/lib/types'
 import ConverterClient from '@/components/ConverterClient'
+import MobileConverter from '@/components/MobileConverter'
 import FAQSection from '@/components/FAQSection'
 import RelatedPages from '@/components/RelatedPages'
 import SideRailAds from '@/components/SideRailAds'
@@ -148,8 +149,14 @@ export default async function Home() {
           </h1>
         </div>
 
-        {/* Calculator */}
-        <ConverterClient providerGroups={providerGroups} />
+        {/* Calculator — desktop table view, hidden on mobile */}
+        <div className="hidden lg:block">
+          <ConverterClient providerGroups={providerGroups} />
+        </div>
+        {/* Calculator — mobile card view (verbatim "TokenRate Mobile" design) */}
+        <div className="lg:hidden">
+          <MobileConverter providerGroups={providerGroups} />
+        </div>
 
         {/* Quick stats */}
         <div className="mt-12 grid grid-cols-3 gap-4 text-center">
