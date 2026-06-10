@@ -19,10 +19,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const model = getModelBySlug(slug)
   if (!model) return {}
+  // Variant pages (speed tiers, dated snapshots) duplicate a primary model — keep
+  // them usable but out of the index so they don't dilute crawl budget.
   return buildMetadata({
     title: `${model.name} Pricing, Context Window & API Cost`,
     description: `${model.name} API pricing: $${model.inputPricePerMillion}/1M input, $${model.outputPricePerMillion}/1M output. ${model.contextWindow.toLocaleString()}-token context window. See cost examples, strengths, and model comparisons.`,
     path: `/models/${slug}`,
+    noIndex: model.variant,
   })
 }
 

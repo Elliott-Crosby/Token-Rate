@@ -1,0 +1,50 @@
+name: Update Model Catalog
+
+on:
+  schedule:
+    # Daily at 06:00 UTC. Fetches the live OpenRouter feed and regenerates
+    # src/lib/models.generated.ts so pricing stays current and newly-shipped
+    # models (Claude/GPT/Gemini/etc.) appear automatically the next day.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Allow manual trigger from the GitHub Actions UI.
+
+# NOTE: This project uses `main` as the default branch. Always push to main, never master.
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate model catalog from OpenRouter
+        working-directory: app
+        run: node scripts/build-models.mjs
+
+      - name: Commit catalog if it changed
+        run: |
+          git config user.name "TokenRate ModelBot"
+          git config user.email "bot@tokenrate.dev"
+          git add app/src/lib/models.generated.ts
+          if git diff --cached --quiet; then
+            echo "No model changes today."
+          else
+            COUNT=$(grep -c '"slug":' app/src/lib/models.generated.ts || echo "?")
+            git commit -m "models: daily refresh from OpenRouter (${COUNT} live models)"
+            git pull --rebase origin main
+            git push origin main
+          fi

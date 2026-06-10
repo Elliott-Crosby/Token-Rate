@@ -30,7 +30,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }))
 
-  const modelPages: MetadataRoute.Sitemap = ALL_MODELS.map((model) => ({
+  // Exclude noindex'd variant pages (speed tiers, dated snapshots) so the sitemap
+  // only advertises canonical, indexable model pages.
+  const modelPages: MetadataRoute.Sitemap = ALL_MODELS.filter((m) => !m.variant).map((model) => ({
     url: `${BASE}/models/${model.slug}`,
     lastModified: new Date(model.updatedAt),
     changeFrequency: 'weekly' as const,

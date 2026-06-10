@@ -33,6 +33,10 @@ const PROVIDER_MAP: { prefix: string; label: string }[] = [
   { prefix: 'deepseek/', label: 'DeepSeek' },
   { prefix: 'mistralai/', label: 'Mistral' },
   { prefix: 'x-ai/', label: 'xAI' },
+  { prefix: 'qwen/', label: 'Qwen' },
+  { prefix: 'cohere/', label: 'Cohere' },
+  { prefix: 'amazon/', label: 'Amazon' },
+  { prefix: 'microsoft/', label: 'Microsoft' },
 ]
 
 async function fetchModels(): Promise<ProviderGroup[]> {

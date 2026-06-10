@@ -1,3 +1,5 @@
+import { EXTRA_MODELS, LIVE_PRICING, LIVE_UPDATED_AT } from './models.generated'
+
 export interface ModelData {
   slug: string
   name: string
@@ -15,13 +17,22 @@ export interface ModelData {
   tier: 'flagship' | 'balanced' | 'fast' | 'reasoning'
   updatedAt: string
   openRouterIds?: string[]
+  // Auto-generated from the live OpenRouter feed (vs hand-curated editorial).
+  auto?: boolean
+  // A near-duplicate variant (speed/preview tier or dated snapshot) — noindex'd
+  // and excluded from the sitemap to protect crawl budget.
+  variant?: boolean
 }
 
-export const MODELS_UPDATED_AT = '2026-05-22'
+// Reference date for the hand-curated editorial entries below. Live pricing and
+// the public MODELS_UPDATED_AT come from the daily-regenerated models.generated.ts.
+const U = '2026-06-10'
 
-const U = MODELS_UPDATED_AT
-
-export const ALL_MODELS: ModelData[] = [
+// Hand-curated models with rich editorial copy. These own their slugs (referenced
+// by comparison pages) and get fresh pricing applied from the live feed at load.
+// Everything else in the catalogue is auto-added daily from OpenRouter — see the
+// merge step after this array.
+const CURATED_MODELS: ModelData[] = [
   // ── Anthropic ─────────────────────────────────────────────
   {
     slug: 'claude-opus-4',
@@ -54,7 +65,7 @@ export const ALL_MODELS: ModelData[] = [
       'High-stakes content generation',
     ],
     relatedSlugs: ['claude-sonnet-4', 'claude-haiku-4', 'gpt-o3'],
-    openRouterIds: ['anthropic/claude-opus-4-5'],
+    openRouterIds: ['anthropic/claude-opus-4'],
   },
   {
     slug: 'claude-sonnet-4',
@@ -86,7 +97,7 @@ export const ALL_MODELS: ModelData[] = [
       'Chat and conversational interfaces',
     ],
     relatedSlugs: ['claude-opus-4', 'claude-haiku-4', 'gpt-4o'],
-    openRouterIds: ['anthropic/claude-sonnet-4-5'],
+    openRouterIds: ['anthropic/claude-sonnet-4'],
   },
   {
     slug: 'claude-haiku-4',
@@ -163,6 +174,49 @@ export const ALL_MODELS: ModelData[] = [
     useCases: ['Legacy pipelines', 'Cheap classification', 'Lightweight chat'],
     relatedSlugs: ['claude-haiku-4', 'claude-3-5-sonnet', 'gpt-4o-mini'],
     openRouterIds: ['anthropic/claude-3-haiku'],
+  },
+  {
+    slug: 'claude-3-7-sonnet',
+    name: 'Claude 3.7 Sonnet',
+    provider: 'Anthropic',
+    providerSlug: 'anthropic',
+    inputPricePerMillion: 3,
+    outputPricePerMillion: 15,
+    contextWindow: 200000,
+    outputLimit: 128000,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "Claude 3.7 Sonnet is Anthropic's first hybrid reasoning model — it can think step-by-step for hard problems or respond instantly for simple ones, all at Sonnet-level pricing. The 128K output limit makes it uniquely capable for long-form generation.",
+    strengths: [
+      'Hybrid: instant or extended chain-of-thought on demand',
+      'Largest output window of any Claude Sonnet at 128K tokens',
+      'Strong coding and multi-step reasoning',
+      'Sonnet-tier pricing despite reasoning capability',
+    ],
+    weaknesses: ['Extended thinking adds latency', 'Thinking tokens billed as output tokens'],
+    useCases: ['Agentic coding workflows', 'Complex analysis requiring transparent reasoning', 'Long-document drafting'],
+    relatedSlugs: ['claude-sonnet-4', 'claude-opus-4', 'o4-mini'],
+    openRouterIds: ['anthropic/claude-3.7-sonnet'],
+  },
+  {
+    slug: 'claude-3-5-haiku',
+    name: 'Claude 3.5 Haiku',
+    provider: 'Anthropic',
+    providerSlug: 'anthropic',
+    inputPricePerMillion: 0.8,
+    outputPricePerMillion: 4,
+    contextWindow: 200000,
+    outputLimit: 8192,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Claude 3.5 Haiku is a step up from Claude 3 Haiku in quality while staying firmly in the budget tier. It punches above its price class on coding and instruction-following tasks.",
+    strengths: ['Stronger than Claude 3 Haiku at a modest price increase', 'Fast and low latency', '200K context window'],
+    weaknesses: ['Pricier than Claude 3 Haiku', 'Below Sonnet quality on complex tasks'],
+    useCases: ['Budget-conscious production apps', 'Real-time chat', 'Code completion'],
+    relatedSlugs: ['claude-haiku-4', 'claude-3-5-sonnet', 'gpt-4o-mini'],
+    openRouterIds: ['anthropic/claude-3.5-haiku'],
   },
 
   // ── OpenAI ────────────────────────────────────────────────
@@ -300,6 +354,125 @@ export const ALL_MODELS: ModelData[] = [
     relatedSlugs: ['gpt-4o-mini', 'claude-3-haiku', 'mistral-small'],
     openRouterIds: ['openai/gpt-3.5-turbo'],
   },
+  {
+    slug: 'gpt-4-1',
+    name: 'GPT-4.1',
+    provider: 'OpenAI',
+    providerSlug: 'openai',
+    inputPricePerMillion: 2,
+    outputPricePerMillion: 8,
+    contextWindow: 1000000,
+    outputLimit: 32768,
+    tier: 'flagship',
+    updatedAt: U,
+    description:
+      "GPT-4.1 is OpenAI's 2025 flagship text model — more capable than GPT-4o with a massive 1M token context window. It hits a strong balance between quality and cost for production workloads.",
+    strengths: [
+      '1M token context window',
+      'Stronger instruction-following than GPT-4o',
+      'Competitive pricing vs GPT-4o',
+      'Improved coding and analysis',
+    ],
+    weaknesses: ['Superseded on reasoning tasks by o-series models', 'No native audio support'],
+    useCases: ['Long-document Q&A and RAG', 'Coding assistants', 'Enterprise chat', 'Content workflows'],
+    relatedSlugs: ['gpt-4o', 'gpt-4-1-mini', 'claude-sonnet-4'],
+    openRouterIds: ['openai/gpt-4.1'],
+  },
+  {
+    slug: 'gpt-4-1-mini',
+    name: 'GPT-4.1 mini',
+    provider: 'OpenAI',
+    providerSlug: 'openai',
+    inputPricePerMillion: 0.4,
+    outputPricePerMillion: 1.6,
+    contextWindow: 1000000,
+    outputLimit: 32768,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "GPT-4.1 mini brings GPT-4.1-class quality to a budget price point — with the same 1M context window at a fraction of the cost. A strong replacement for GPT-4o mini in most pipelines.",
+    strengths: ['1M context at sub-$0.50 input pricing', 'Better quality than GPT-4o mini', 'Low latency'],
+    weaknesses: ['Below GPT-4.1 quality on complex tasks', 'No reasoning capability'],
+    useCases: ['Cost-sensitive production pipelines', 'Long-document extraction', 'Simple chat'],
+    relatedSlugs: ['gpt-4-1', 'gpt-4o-mini', 'gpt-4-1-nano'],
+    openRouterIds: ['openai/gpt-4.1-mini'],
+  },
+  {
+    slug: 'gpt-4-1-nano',
+    name: 'GPT-4.1 nano',
+    provider: 'OpenAI',
+    providerSlug: 'openai',
+    inputPricePerMillion: 0.1,
+    outputPricePerMillion: 0.4,
+    contextWindow: 1000000,
+    outputLimit: 32768,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "GPT-4.1 nano is OpenAI's ultra-cheap model — matching Gemini Flash pricing while packing a 1M context window. Ideal for high-volume classification and extraction at minimal cost.",
+    strengths: ['Ultra-cheap at $0.10/1M input', '1M context window for this price class', 'Fast'],
+    weaknesses: ['Limited capability on nuanced tasks', 'Smallest of the 4.1 family'],
+    useCases: ['Bulk classification', 'High-volume extraction', 'Simple Q&A at scale'],
+    relatedSlugs: ['gpt-4-1-mini', 'gpt-4o-mini', 'gemini-2-0-flash'],
+    openRouterIds: ['openai/gpt-4.1-nano'],
+  },
+  {
+    slug: 'o1',
+    name: 'OpenAI o1',
+    provider: 'OpenAI',
+    providerSlug: 'openai',
+    inputPricePerMillion: 15,
+    outputPricePerMillion: 60,
+    contextWindow: 200000,
+    outputLimit: 100000,
+    tier: 'reasoning',
+    updatedAt: U,
+    description:
+      "OpenAI o1 is the original frontier reasoning model — extended chain-of-thought processing for maximum accuracy on math, science, and complex coding. Pricier than o3/o4-mini but benchmarked at the top of its generation.",
+    strengths: ['Top-tier accuracy on hard STEM problems', '200K context, 100K output limit', 'Established benchmark leader at release'],
+    weaknesses: ['Most expensive OpenAI model at $15/$60 per million', 'Slower than o4-mini', 'Superseded by o3 on most tasks'],
+    useCases: ['High-stakes scientific computation', 'Complex proof verification', 'Advanced code generation'],
+    relatedSlugs: ['gpt-o3', 'o4-mini', 'o1-mini'],
+    openRouterIds: ['openai/o1'],
+  },
+  {
+    slug: 'o1-mini',
+    name: 'OpenAI o1-mini',
+    provider: 'OpenAI',
+    providerSlug: 'openai',
+    inputPricePerMillion: 1.1,
+    outputPricePerMillion: 4.4,
+    contextWindow: 128000,
+    outputLimit: 65536,
+    tier: 'reasoning',
+    updatedAt: U,
+    description:
+      "OpenAI o1-mini is the budget version of o1 — chain-of-thought reasoning at a fraction of the cost, optimized for STEM tasks. Largely succeeded by o4-mini but still widely deployed.",
+    strengths: ['Reasoning at o4-mini price point', 'Strong STEM and coding performance', 'Faster than full o1'],
+    weaknesses: ['128K context (smaller than o1/o3)', 'Succeeded by o3-mini and o4-mini'],
+    useCases: ['Budget reasoning workflows', 'Coding with logic-heavy tasks', 'Math tutoring'],
+    relatedSlugs: ['o4-mini', 'o3-mini', 'gpt-o3'],
+    openRouterIds: ['openai/o1-mini'],
+  },
+  {
+    slug: 'o3-mini',
+    name: 'OpenAI o3-mini',
+    provider: 'OpenAI',
+    providerSlug: 'openai',
+    inputPricePerMillion: 1.1,
+    outputPricePerMillion: 4.4,
+    contextWindow: 200000,
+    outputLimit: 100000,
+    tier: 'reasoning',
+    updatedAt: U,
+    description:
+      "OpenAI o3-mini delivers o3-class reasoning at o4-mini pricing — the sweet spot for teams that need reliable step-by-step reasoning without paying for full o3. Strong on coding and math.",
+    strengths: ['200K context + 100K output', 'Better reasoning than o1-mini', 'Competitive pricing'],
+    weaknesses: ['Superseded by o4-mini on most tasks', 'Still slower than non-reasoning models'],
+    useCases: ['Coding assistants with reasoning', 'Moderate-complexity math', 'Logic-heavy analysis pipelines'],
+    relatedSlugs: ['o4-mini', 'gpt-o3', 'claude-3-7-sonnet'],
+    openRouterIds: ['openai/o3-mini'],
+  },
 
   // ── Google ────────────────────────────────────────────────
   {
@@ -402,6 +575,25 @@ export const ALL_MODELS: ModelData[] = [
     relatedSlugs: ['gemini-2-0-flash', 'gpt-4o-mini', 'claude-haiku-4'],
     openRouterIds: ['google/gemini-flash-1.5'],
   },
+  {
+    slug: 'gemini-2-0-flash-lite',
+    name: 'Gemini 2.0 Flash Lite',
+    provider: 'Google',
+    providerSlug: 'google',
+    inputPricePerMillion: 0.075,
+    outputPricePerMillion: 0.3,
+    contextWindow: 1000000,
+    outputLimit: 8192,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Gemini 2.0 Flash Lite is Google's cheapest capable model — matching Gemini 1.5 Flash pricing while running on the newer 2.0 architecture. The best entry point for cost-optimized 1M-context workloads.",
+    strengths: ['1M context at $0.075/1M input — one of the cheapest', 'Newer architecture than 1.5 Flash', 'Fast'],
+    weaknesses: ['Smallest output limit in the Gemini 2.x family', 'Not for complex reasoning'],
+    useCases: ['Ultra-cheap bulk document processing', 'Simple extraction at scale', 'Cost floor for 1M-context pipelines'],
+    relatedSlugs: ['gemini-2-0-flash', 'gemini-1-5-flash', 'gpt-4-1-nano'],
+    openRouterIds: ['google/gemini-2.0-flash-lite'],
+  },
 
   // ── Meta (Llama) ──────────────────────────────────────────
   {
@@ -461,6 +653,144 @@ export const ALL_MODELS: ModelData[] = [
     relatedSlugs: ['llama-3-1-70b', 'gpt-4o-mini', 'gemini-1-5-flash'],
     openRouterIds: ['meta-llama/llama-3.1-8b-instruct'],
   },
+  {
+    slug: 'llama-3-3-70b',
+    name: 'Llama 3.3 70B',
+    provider: 'Meta',
+    providerSlug: 'meta',
+    inputPricePerMillion: 0.59,
+    outputPricePerMillion: 0.79,
+    contextWindow: 128000,
+    outputLimit: 8192,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "Llama 3.3 70B improves on Llama 3.1 70B with better instruction-following and reasoning, at the same price point. The recommended Llama 70B for new projects — same hosting cost, meaningfully better quality.",
+    strengths: ['Better than 3.1 70B on most benchmarks', 'Same affordable hosted pricing', 'Open weights'],
+    weaknesses: ['128K context', 'Still outclassed by frontier models on hardest tasks'],
+    useCases: ['Production chat at scale', 'Self-hosted general workloads', 'Fine-tuning base'],
+    relatedSlugs: ['llama-3-1-70b', 'llama-4-scout', 'gpt-4o-mini'],
+    openRouterIds: ['meta-llama/llama-3.3-70b-instruct'],
+  },
+  {
+    slug: 'llama-3-2-3b',
+    name: 'Llama 3.2 3B',
+    provider: 'Meta',
+    providerSlug: 'meta',
+    inputPricePerMillion: 0.06,
+    outputPricePerMillion: 0.06,
+    contextWindow: 128000,
+    outputLimit: 4096,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Llama 3.2 3B is a tiny but surprisingly capable open-weight model — one of the cheapest LLMs available from any provider. Fits on edge hardware and consumer GPUs with room to spare.",
+    strengths: ['Extremely cheap to host and call', 'Fits on consumer hardware (single GPU)', '128K context for the size'],
+    weaknesses: ['Limited reasoning and generation quality', 'Not suitable for complex tasks'],
+    useCases: ['On-device inference', 'Simple extraction', 'Prototype chatbots'],
+    relatedSlugs: ['llama-3-2-1b', 'llama-3-1-8b', 'phi-4'],
+    openRouterIds: ['meta-llama/llama-3.2-3b-instruct'],
+  },
+  {
+    slug: 'llama-3-2-1b',
+    name: 'Llama 3.2 1B',
+    provider: 'Meta',
+    providerSlug: 'meta',
+    inputPricePerMillion: 0.04,
+    outputPricePerMillion: 0.04,
+    contextWindow: 128000,
+    outputLimit: 4096,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Llama 3.2 1B is one of the smallest capable LLMs — sub-$0.05 per million tokens and runs on CPUs. Useful for classification and routing at extreme scale or very constrained hardware.",
+    strengths: ['Cheapest capable model — $0.04/1M', 'Runs on CPU / mobile', 'Open weights'],
+    weaknesses: ['Very limited generation quality', 'Only suitable for simplest tasks'],
+    useCases: ['Intent classification', 'On-device routing', 'Edge inference'],
+    relatedSlugs: ['llama-3-2-3b', 'llama-3-1-8b', 'phi-4'],
+    openRouterIds: ['meta-llama/llama-3.2-1b-instruct'],
+  },
+  {
+    slug: 'llama-3-2-11b',
+    name: 'Llama 3.2 11B Vision',
+    provider: 'Meta',
+    providerSlug: 'meta',
+    inputPricePerMillion: 0.16,
+    outputPricePerMillion: 0.16,
+    contextWindow: 128000,
+    outputLimit: 4096,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Llama 3.2 11B Vision is Meta's small open-weight multimodal model — capable of understanding images at a fraction of GPT-4o's cost. The go-to for budget image + text pipelines.",
+    strengths: ['Multimodal (image + text) at $0.16/1M', 'Open weights — self-hostable', 'Fast'],
+    weaknesses: ['Below GPT-4o Vision on complex visual reasoning', 'Small output limit'],
+    useCases: ['Image classification', 'Visual Q&A on a budget', 'Document OCR pipelines'],
+    relatedSlugs: ['llama-3-2-90b', 'gpt-4o', 'gemini-2-0-flash'],
+    openRouterIds: ['meta-llama/llama-3.2-11b-vision-instruct'],
+  },
+  {
+    slug: 'llama-3-2-90b',
+    name: 'Llama 3.2 90B Vision',
+    provider: 'Meta',
+    providerSlug: 'meta',
+    inputPricePerMillion: 0.9,
+    outputPricePerMillion: 0.9,
+    contextWindow: 128000,
+    outputLimit: 4096,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "Llama 3.2 90B Vision is Meta's large open-weight multimodal model — strong on image understanding and visual reasoning while remaining self-hostable. Best open multimodal option before Llama 4.",
+    strengths: ['Best open-weight multimodal before Llama 4', 'Self-hostable', 'Competitive visual reasoning'],
+    weaknesses: ['Hosting requires significant GPU resources', 'Symmetric pricing model'],
+    useCases: ['Production vision pipelines', 'On-prem multimodal apps', 'Visual document analysis'],
+    relatedSlugs: ['llama-3-2-11b', 'llama-4-maverick', 'gpt-4o'],
+    openRouterIds: ['meta-llama/llama-3.2-90b-vision-instruct'],
+  },
+  {
+    slug: 'llama-4-scout',
+    name: 'Llama 4 Scout',
+    provider: 'Meta',
+    providerSlug: 'meta',
+    inputPricePerMillion: 0.17,
+    outputPricePerMillion: 0.17,
+    contextWindow: 10000000,
+    outputLimit: 16384,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Llama 4 Scout is Meta's latest MoE model with an industry-leading 10M token context window at an affordable price. Remarkable context-to-cost ratio — suitable for entire-codebase and very long document tasks.",
+    strengths: [
+      '10M token context window — largest available',
+      'Very cheap at $0.17/1M symmetric',
+      'MoE architecture for efficient inference',
+      'Open weights',
+    ],
+    weaknesses: ['Very long contexts require specialist infrastructure', 'MoE quality varies by host'],
+    useCases: ['Entire-codebase analysis', 'Ultra-long document processing', 'Long-running agent tasks'],
+    relatedSlugs: ['llama-4-maverick', 'llama-3-3-70b', 'gemini-2-5-pro'],
+    openRouterIds: ['meta-llama/llama-4-scout'],
+  },
+  {
+    slug: 'llama-4-maverick',
+    name: 'Llama 4 Maverick',
+    provider: 'Meta',
+    providerSlug: 'meta',
+    inputPricePerMillion: 0.4,
+    outputPricePerMillion: 0.4,
+    contextWindow: 1000000,
+    outputLimit: 16384,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "Llama 4 Maverick is Meta's flagship open-weight model in the Llama 4 generation — multimodal, 1M context, and competitive with GPT-4o at a fraction of the API cost.",
+    strengths: ['Frontier-quality open-weight model', 'Native multimodal', '1M context at $0.40/1M', 'Self-hostable'],
+    weaknesses: ['Hosting large MoE at scale requires careful infrastructure planning'],
+    useCases: ['Production multimodal apps', 'On-prem frontier replacement', 'Long-context chat'],
+    relatedSlugs: ['llama-4-scout', 'gpt-4o', 'claude-sonnet-4'],
+    openRouterIds: ['meta-llama/llama-4-maverick'],
+  },
 
   // ── DeepSeek ──────────────────────────────────────────────
   {
@@ -501,6 +831,25 @@ export const ALL_MODELS: ModelData[] = [
     relatedSlugs: ['deepseek-v3', 'gpt-o3', 'o4-mini'],
     openRouterIds: ['deepseek/deepseek-r1'],
   },
+  {
+    slug: 'deepseek-v3-0324',
+    name: 'DeepSeek V3 0324',
+    provider: 'DeepSeek',
+    providerSlug: 'deepseek',
+    inputPricePerMillion: 0.27,
+    outputPricePerMillion: 1.1,
+    contextWindow: 128000,
+    outputLimit: 8000,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "DeepSeek V3 0324 is an updated drop-in replacement for DeepSeek V3 — same pricing, noticeably improved coding and instruction-following. The recommended V3 variant for new projects.",
+    strengths: ['Better coding and reasoning than original V3', 'Same affordable pricing', 'Open weights'],
+    weaknesses: ['Still a smaller context than US-led models', 'Less mature host support than V3'],
+    useCases: ['Coding tools on a budget', 'Self-hosted improved general chat', 'Migration from DeepSeek V3'],
+    relatedSlugs: ['deepseek-v3', 'deepseek-r1', 'llama-4-maverick'],
+    openRouterIds: ['deepseek/deepseek-chat-v3-0324'],
+  },
 
   // ── xAI ───────────────────────────────────────────────────
   {
@@ -540,6 +889,25 @@ export const ALL_MODELS: ModelData[] = [
     useCases: ['Real-time analytics', 'Coding assistants with current info', 'Research with live data'],
     relatedSlugs: ['grok-2', 'gpt-o3', 'claude-opus-4'],
     openRouterIds: ['x-ai/grok-3'],
+  },
+  {
+    slug: 'grok-3-mini',
+    name: 'Grok 3 Mini',
+    provider: 'xAI',
+    providerSlug: 'xai',
+    inputPricePerMillion: 0.3,
+    outputPricePerMillion: 0.5,
+    contextWindow: 131072,
+    outputLimit: 8192,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Grok 3 Mini is xAI's budget model — lightweight reasoning at very low cost with the same real-time X (Twitter) data access as its bigger siblings.",
+    strengths: ['Very cheap at $0.30/1M input', 'Real-time X data integration', 'Solid reasoning for the price'],
+    weaknesses: ['Less capable than Grok 3 on complex tasks', 'Smaller output limit'],
+    useCases: ['Social media signal parsing', 'Budget chatbots with real-time data', 'High-volume classification'],
+    relatedSlugs: ['grok-3', 'grok-2', 'gpt-4o-mini'],
+    openRouterIds: ['x-ai/grok-3-mini'],
   },
 
   // ── Mistral ───────────────────────────────────────────────
@@ -619,7 +987,253 @@ export const ALL_MODELS: ModelData[] = [
     relatedSlugs: ['mistral-large', 'gpt-4o', 'claude-sonnet-4'],
     openRouterIds: ['mistralai/codestral'],
   },
+  {
+    slug: 'mistral-medium-3',
+    name: 'Mistral Medium 3',
+    provider: 'Mistral',
+    providerSlug: 'mistral',
+    inputPricePerMillion: 0.4,
+    outputPricePerMillion: 2,
+    contextWindow: 128000,
+    outputLimit: 8192,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "Mistral Medium 3 slots between Small and Large — better quality than Small on complex tasks at a fraction of Large's price. Strong multilingual and coding performance in a mid-tier form factor.",
+    strengths: ['Strong quality-per-dollar in the mid tier', 'Multilingual performance', 'Good function calling support'],
+    weaknesses: ['Less capable than Mistral Large on hardest tasks', 'Smaller ecosystem than OpenAI'],
+    useCases: ['Production apps needing more than Small', 'Multilingual workflows', 'Function-calling pipelines'],
+    relatedSlugs: ['mistral-large', 'mistral-small', 'gpt-4o-mini'],
+    openRouterIds: ['mistralai/mistral-medium-3'],
+  },
+  {
+    slug: 'pixtral-12b',
+    name: 'Pixtral 12B',
+    provider: 'Mistral',
+    providerSlug: 'mistral',
+    inputPricePerMillion: 0.1,
+    outputPricePerMillion: 0.1,
+    contextWindow: 128000,
+    outputLimit: 4096,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Pixtral 12B is Mistral's multimodal model — a 12B vision-language model designed for image understanding at a very low price. Self-hostable and capable of document and image analysis tasks.",
+    strengths: ['Multimodal at $0.10/1M — extremely cheap for vision', 'Open weights', 'Good document and chart understanding'],
+    weaknesses: ['Not for complex visual reasoning', 'Smaller than GPT-4o Vision'],
+    useCases: ['Budget image classification', 'Document OCR', 'Visual data extraction'],
+    relatedSlugs: ['mistral-large', 'llama-3-2-11b', 'gemini-2-0-flash'],
+    openRouterIds: ['mistralai/pixtral-12b'],
+  },
+
+  // ── Qwen (Alibaba) ────────────────────────────────────────
+  {
+    slug: 'qwen-2-5-72b',
+    name: 'Qwen 2.5 72B',
+    provider: 'Qwen',
+    providerSlug: 'qwen',
+    inputPricePerMillion: 0.35,
+    outputPricePerMillion: 0.4,
+    contextWindow: 128000,
+    outputLimit: 8192,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "Qwen 2.5 72B is Alibaba's flagship open-weight model — surprisingly strong on coding and math benchmarks, competitive with GPT-4o class models at a fraction of the cost. A top choice for self-hosted general workloads.",
+    strengths: [
+      'Excellent coding and math benchmark scores',
+      'Open weights — self-hostable',
+      'Cheap at $0.35/1M input',
+      'Strong multilingual support (Chinese, Japanese, etc.)',
+    ],
+    weaknesses: ['Less mature Western ecosystem', 'Below frontier on non-STEM tasks'],
+    useCases: ['Coding assistants on a budget', 'APAC multilingual apps', 'Self-hosted high-quality chat'],
+    relatedSlugs: ['qwq-32b', 'llama-3-3-70b', 'gpt-4o'],
+    openRouterIds: ['qwen/qwen-2.5-72b-instruct'],
+  },
+  {
+    slug: 'qwq-32b',
+    name: 'QwQ 32B',
+    provider: 'Qwen',
+    providerSlug: 'qwen',
+    inputPricePerMillion: 0.15,
+    outputPricePerMillion: 0.6,
+    contextWindow: 131072,
+    outputLimit: 32768,
+    tier: 'reasoning',
+    updatedAt: U,
+    description:
+      "QwQ 32B is Qwen's open-weight reasoning model — chain-of-thought capabilities rivaling much larger models at a remarkably low price. One of the best value reasoning models available.",
+    strengths: [
+      'Reasoning quality comparable to o1-mini at much lower cost',
+      'Open weights — can be self-hosted',
+      '$0.15/1M input — cheapest reasoning model class',
+    ],
+    weaknesses: ['Chain-of-thought can be verbose', 'Less capable than o3 on hardest problems'],
+    useCases: ['Budget reasoning pipelines', 'Open-weight o-series alternative', 'STEM education tools'],
+    relatedSlugs: ['qwen-2-5-72b', 'deepseek-r1', 'o3-mini'],
+    openRouterIds: ['qwen/qwq-32b'],
+  },
+
+  // ── Cohere ────────────────────────────────────────────────
+  {
+    slug: 'command-r-plus',
+    name: 'Command R+',
+    provider: 'Cohere',
+    providerSlug: 'cohere',
+    inputPricePerMillion: 2.5,
+    outputPricePerMillion: 10,
+    contextWindow: 128000,
+    outputLimit: 4096,
+    tier: 'flagship',
+    updatedAt: U,
+    description:
+      "Command R+ is Cohere's flagship model, purpose-built for enterprise RAG and tool use. Its grounded generation reduces hallucination in retrieval pipelines, making it a leading choice for document Q&A applications.",
+    strengths: ['Purpose-built for RAG with grounded generation', 'Strong tool use and function calling', 'Multilingual support'],
+    weaknesses: ['Not as strong as GPT-4o on general tasks', 'Smaller output limit'],
+    useCases: ['Enterprise document Q&A', 'RAG pipelines', 'Tool-use agents', 'Multilingual enterprise apps'],
+    relatedSlugs: ['command-r', 'gpt-4o', 'claude-sonnet-4'],
+    openRouterIds: ['cohere/command-r-plus'],
+  },
+  {
+    slug: 'command-r',
+    name: 'Command R',
+    provider: 'Cohere',
+    providerSlug: 'cohere',
+    inputPricePerMillion: 0.5,
+    outputPricePerMillion: 1.5,
+    contextWindow: 128000,
+    outputLimit: 4096,
+    tier: 'balanced',
+    updatedAt: U,
+    description:
+      "Command R is Cohere's mid-tier RAG-optimized model — same grounded generation as Command R+ at a significantly lower price. The best Cohere option for cost-sensitive retrieval workloads.",
+    strengths: ['RAG-optimized grounded generation', 'Much cheaper than Command R+', 'Solid multilingual support'],
+    weaknesses: ['Less capable than Command R+ on complex instructions'],
+    useCases: ['Cost-sensitive document Q&A', 'Production RAG pipelines', 'Multilingual search'],
+    relatedSlugs: ['command-r-plus', 'gpt-4o-mini', 'mistral-medium-3'],
+    openRouterIds: ['cohere/command-r'],
+  },
+
+  // ── Amazon ────────────────────────────────────────────────
+  {
+    slug: 'nova-pro',
+    name: 'Amazon Nova Pro',
+    provider: 'Amazon',
+    providerSlug: 'amazon',
+    inputPricePerMillion: 0.8,
+    outputPricePerMillion: 3.2,
+    contextWindow: 300000,
+    outputLimit: 5120,
+    tier: 'flagship',
+    updatedAt: U,
+    description:
+      "Amazon Nova Pro is AWS's flagship generative AI model — multimodal, 300K context, and deeply integrated with the AWS ecosystem. The natural choice for teams already on AWS Bedrock.",
+    strengths: [
+      'Native AWS Bedrock integration',
+      '300K context window',
+      'Multimodal (text, image, video)',
+      'Competitive pricing for AWS workloads',
+    ],
+    weaknesses: ['Best-supported on AWS only', 'Below frontier quality vs GPT-4o/Claude Sonnet'],
+    useCases: ['AWS-native AI applications', 'Enterprise document processing on Bedrock', 'Multimodal AWS pipelines'],
+    relatedSlugs: ['nova-lite', 'claude-sonnet-4', 'gpt-4o'],
+    openRouterIds: ['amazon/nova-pro-v1'],
+  },
+  {
+    slug: 'nova-lite',
+    name: 'Amazon Nova Lite',
+    provider: 'Amazon',
+    providerSlug: 'amazon',
+    inputPricePerMillion: 0.06,
+    outputPricePerMillion: 0.24,
+    contextWindow: 300000,
+    outputLimit: 5120,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Amazon Nova Lite is a very cheap multimodal model from AWS — $0.06/1M input with a 300K context window and image understanding. Excellent for AWS-native high-volume pipelines.",
+    strengths: ['Very cheap at $0.06/1M input', '300K context', 'Multimodal', 'AWS Bedrock native'],
+    weaknesses: ['Weaker than Nova Pro on complex tasks', 'AWS-centric'],
+    useCases: ['High-volume AWS pipelines', 'Budget multimodal on Bedrock', 'Document extraction at scale'],
+    relatedSlugs: ['nova-pro', 'nova-micro', 'gemini-2-0-flash'],
+    openRouterIds: ['amazon/nova-lite-v1'],
+  },
+  {
+    slug: 'nova-micro',
+    name: 'Amazon Nova Micro',
+    provider: 'Amazon',
+    providerSlug: 'amazon',
+    inputPricePerMillion: 0.035,
+    outputPricePerMillion: 0.14,
+    contextWindow: 128000,
+    outputLimit: 5120,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Amazon Nova Micro is AWS's text-only budget model — the cheapest offering in the Nova family at $0.035/1M input. Optimized for high-throughput, low-latency tasks within the AWS ecosystem.",
+    strengths: ['Cheapest Nova model at $0.035/1M', 'Low latency', 'AWS Bedrock native'],
+    weaknesses: ['Text-only, no multimodal', '128K context (smallest of the Nova family)'],
+    useCases: ['High-volume text classification on AWS', 'Simple Q&A pipelines', 'Cost floor for Bedrock workloads'],
+    relatedSlugs: ['nova-lite', 'nova-pro', 'gpt-4-1-nano'],
+    openRouterIds: ['amazon/nova-micro-v1'],
+  },
+
+  // ── Microsoft ─────────────────────────────────────────────
+  {
+    slug: 'phi-4',
+    name: 'Phi-4',
+    provider: 'Microsoft',
+    providerSlug: 'microsoft',
+    inputPricePerMillion: 0.07,
+    outputPricePerMillion: 0.14,
+    contextWindow: 16384,
+    outputLimit: 4096,
+    tier: 'fast',
+    updatedAt: U,
+    description:
+      "Phi-4 is Microsoft's small language model — a 14B parameter model that punches above its weight class on reasoning and math benchmarks. Designed for on-device and edge inference where quality-per-parameter matters.",
+    strengths: [
+      'Best reasoning quality at this parameter count',
+      'Very cheap — $0.07/1M input',
+      'Efficient: great for edge and on-device deployment',
+      'Strong on STEM tasks relative to size',
+    ],
+    weaknesses: ['16K context limit — much smaller than competitors', 'Not for long-document tasks'],
+    useCases: ['Edge and on-device reasoning', 'STEM tutoring apps', 'Budget math/coding assistance'],
+    relatedSlugs: ['llama-3-2-3b', 'mistral-small', 'gpt-4-1-nano'],
+    openRouterIds: ['microsoft/phi-4'],
+  },
 ]
+
+// ── Merge curated editorial with the daily live feed ────────────────────────
+// 1. Refresh each curated entry's pricing/context from the live feed (keyed by
+//    its openRouterIds), so prices stay current without touching this file.
+for (const m of CURATED_MODELS) {
+  for (const id of m.openRouterIds ?? []) {
+    const lp = LIVE_PRICING[id]
+    if (lp) {
+      m.inputPricePerMillion = lp.input
+      m.outputPricePerMillion = lp.output
+      if (lp.context) m.contextWindow = lp.context
+      m.updatedAt = LIVE_UPDATED_AT
+      break
+    }
+  }
+}
+
+// 2. Append every live model that a curated entry doesn't already cover (matched
+//    by slug or by OpenRouter id), so new model ships appear automatically.
+const curatedSlugs = new Set(CURATED_MODELS.map((m) => m.slug))
+const curatedIds = new Set(CURATED_MODELS.flatMap((m) => m.openRouterIds ?? []))
+const liveExtras = EXTRA_MODELS.filter(
+  (m) => !curatedSlugs.has(m.slug) && !(m.openRouterIds ?? []).some((id) => curatedIds.has(id)),
+)
+
+export const ALL_MODELS: ModelData[] = [...CURATED_MODELS, ...liveExtras]
+
+// Public "last updated" date — the day the live feed was last regenerated.
+export const MODELS_UPDATED_AT = LIVE_UPDATED_AT || U
 
 export function getModelBySlug(slug: string): ModelData | undefined {
   return ALL_MODELS.find((m) => m.slug === slug)
@@ -697,6 +1311,34 @@ export const PROVIDERS: ProviderInfo[] = [
     description:
       'Mistral AI is a French AI lab building open and proprietary models with a focus on European languages, function calling, and code-specialized variants.',
     url: 'https://mistral.ai',
+  },
+  {
+    name: 'Qwen',
+    slug: 'qwen',
+    description:
+      "Qwen is Alibaba's family of open-weight language and multimodal models. The Qwen 2.5 and QwQ series consistently top open-source benchmarks for coding and math, with strong multilingual support across Asian languages.",
+    url: 'https://qwenlm.github.io',
+  },
+  {
+    name: 'Cohere',
+    slug: 'cohere',
+    description:
+      'Cohere builds enterprise-focused LLMs optimized for retrieval-augmented generation (RAG) and tool use. The Command R series is purpose-built for grounded, citation-accurate answers in document Q&A pipelines.',
+    url: 'https://cohere.com',
+  },
+  {
+    name: 'Amazon',
+    slug: 'amazon',
+    description:
+      "Amazon's Nova family of generative AI models is natively integrated with AWS Bedrock, offering text, image, and video understanding across Pro, Lite, and Micro tiers — optimized for enterprise AWS workloads.",
+    url: 'https://aws.amazon.com/bedrock',
+  },
+  {
+    name: 'Microsoft',
+    slug: 'microsoft',
+    description:
+      "Microsoft's Phi family of small language models (SLMs) is designed for edge and on-device inference. Phi-4 delivers frontier-class reasoning within a 14B parameter footprint, optimized for STEM and coding tasks.",
+    url: 'https://azure.microsoft.com/en-us/products/phi',
   },
 ]
 
