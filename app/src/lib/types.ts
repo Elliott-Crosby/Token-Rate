@@ -9,6 +9,7 @@ export interface ModelPricing {
   contextLength?: number
   qualityIndex?: number        // 0–100 composite score (AA Intelligence Index or Arena Elo normalised)
   qualitySource?: 'aa' | 'arena'
+  isVariant?: boolean          // speed/preview tier or dated snapshot — deprioritised in "popular"
 }
 
 export interface ProviderGroup {

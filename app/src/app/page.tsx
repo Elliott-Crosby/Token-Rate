@@ -25,6 +25,17 @@ interface OpenRouterModel {
   context_length?: number
 }
 
+// Speed/preview tiers and dated snapshots — kept in the list but pushed below the
+// primary models so the "most popular" sort surfaces the real flagship, not a
+// pricier "(Fast)" variant or an old dated checkpoint.
+function isVariantModel(id: string, name: string): boolean {
+  const s = `${id} ${name}`.toLowerCase()
+  if (/\(fast\)|\bfast\b|preview|beta|experimental|\bexp\b|online|nitro|thinking|latest/.test(s)) return true
+  if (/-20\d{2}(-\d{2})*\b/.test(id)) return true // dated snapshots: -2024-08-06, -2025
+  if (/-\d{4}\b/.test(id)) return true            // -2407, -0125, -2501
+  return false
+}
+
 const PROVIDER_MAP: { prefix: string; label: string }[] = [
   { prefix: 'anthropic/', label: 'Anthropic' },
   { prefix: 'openai/', label: 'OpenAI' },
@@ -79,6 +90,7 @@ async function fetchModels(): Promise<ProviderGroup[]> {
         contextLength: m.context_length,
         qualityIndex: quality?.score,
         qualitySource: quality?.source,
+        isVariant: isVariantModel(m.id, name),
       })
     }
 

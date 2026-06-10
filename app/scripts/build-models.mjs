@@ -12,7 +12,7 @@
 // and per-model pages stay current without hand-editing models.ts. New model ships
 // (e.g. a fresh Claude/GPT/Gemini) appear automatically the next day.
 
-import { writeFileSync, existsSync } from 'node:fs'
+import { writeFileSync, existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
@@ -138,11 +138,112 @@ function synthUseCases(tier, modality) {
   return ['Customer-facing AI apps', 'Code generation and review', 'Content creation at scale', 'Conversational interfaces']
 }
 
+// ── Quality scores (Arena Elo + Artificial Analysis) ───────────────────────
+// Drives the "most popular" sort. Fetched fresh every run so the ordering tracks
+// the live leaderboards. Baked into the catalogue (and re-exported as
+// QUALITY_BY_KEY) so production gets AA coverage without the key at runtime —
+// the GitHub Action holds AA_API_KEY and bakes the scores in.
+
+function normalizeQ(s) {
+  return String(s || '')
+    .toLowerCase()
+    .split('/').pop()
+    .replace(/[._\s]+/g, '-')
+    .replace(/-(thinking|preview|instruct|latest|exp|turbo|high|low|medium|chat|reasoning)(-\d+k)?$/g, '')
+    .replace(/-\d{4}-\d{2}-\d{2}$/, '')        // -2024-11-20
+    .replace(/-\d{8}$/, '')                     // -20251101
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+async function fetchArenaQuality() {
+  const map = new Map()
+  try {
+    const r = await fetch('https://api.wulong.dev/arena-ai-leaderboards/v1/leaderboard?name=text')
+    if (!r.ok) return map
+    const j = await r.json()
+    const ELO_MIN = 1150, ELO_MAX = 1600
+    for (const m of j.models ?? []) {
+      const score = Math.round(Math.min(100, Math.max(0, ((m.score - ELO_MIN) / (ELO_MAX - ELO_MIN)) * 100)))
+      const key = normalizeQ(m.model)
+      // keep the highest score seen for a normalized key (thinking variants etc.)
+      if (key && (!map.has(key) || map.get(key).score < score)) map.set(key, { score, source: 'arena' })
+    }
+  } catch { /* offline — fall back to baked/static */ }
+  return map
+}
+
+async function fetchAAQuality() {
+  const map = new Map()
+  const apiKey = process.env.AA_API_KEY
+  if (!apiKey) return map
+  try {
+    const r = await fetch('https://artificialanalysis.ai/api/v2/data/llms/models', {
+      headers: { 'x-api-key': apiKey, Accept: 'application/json' },
+    })
+    if (!r.ok) return map
+    const j = await r.json()
+    for (const m of j.data ?? []) {
+      const raw = m.evaluations?.artificial_analysis_intelligence_index
+      if (raw == null) continue
+      const entry = { score: Math.round(raw), source: 'aa' }
+      const slug = normalizeQ(m.slug)
+      const name = normalizeQ(m.name)
+      if (slug) map.set(slug, entry)
+      if (name && name !== slug) map.set(name, entry)
+    }
+  } catch { /* ignore */ }
+  return map
+}
+
+// Recover previously-baked AA scores from the committed file. Lets a build run
+// WITHOUT AA_API_KEY (Vercel, local dev) keep the gold-standard scores the daily
+// Action baked in, instead of regressing to Arena-only coverage.
+function readPriorAAQuality() {
+  const map = new Map()
+  if (!existsSync(OUT)) return map
+  try {
+    const text = readFileSync(OUT, 'utf8')
+    const m = text.match(/QUALITY_BY_KEY[^=]*=\s*(\{[\s\S]*?\})\s*\n\nexport const EXTRA_MODELS/)
+    if (!m) return map
+    const obj = JSON.parse(m[1])
+    for (const [k, v] of Object.entries(obj)) {
+      if (v?.source === 'aa' && typeof v.score === 'number') map.set(k, v)
+    }
+  } catch { /* ignore — just means no prior AA data */ }
+  return map
+}
+
+function lookupQ(map, id, name) {
+  const idKey = normalizeQ(id)
+  const nameKey = normalizeQ(name)
+  // 1. exact match (version preserved — no minor-version conflation)
+  if (idKey && map.has(idKey)) return map.get(idKey)
+  if (nameKey && map.has(nameKey)) return map.get(nameKey)
+  // 2. version-stripped exact (claude-opus-4-8 -> claude-opus-4) as a softer match
+  const idBase = idKey.replace(/-\d+$/, '')
+  const nameBase = nameKey.replace(/-\d+$/, '')
+  if (idBase && map.has(idBase)) return map.get(idBase)
+  if (nameBase && map.has(nameBase)) return map.get(nameBase)
+  return null
+}
+
 // ── Fetch + build ─────────────────────────────────────────────────────────────
 async function main() {
-  const res = await fetch('https://openrouter.ai/api/v1/models', { headers: { Accept: 'application/json' } })
+  const [res, arenaQ, aaQ] = await Promise.all([
+    fetch('https://openrouter.ai/api/v1/models', { headers: { Accept: 'application/json' } }),
+    fetchArenaQuality(),
+    fetchAAQuality(),
+  ])
   if (!res.ok) throw new Error(`OpenRouter ${res.status}`)
   const json = await res.json()
+
+  // Merge: prior baked AA (preserved when this run has no key) ← live Arena ←
+  // fresh AA. Fresh AA, when available, overwrites the preserved snapshot.
+  const qualityMap = new Map(readPriorAAQuality())
+  for (const [k, v] of arenaQ) qualityMap.set(k, v)
+  for (const [k, v] of aaQ) qualityMap.set(k, v)
 
   const today = new Date().toISOString().slice(0, 10)
 
@@ -173,6 +274,7 @@ async function main() {
     const tier = detectTier(name, input)
     const modality = m.architecture?.modality || ''
     const outputLimit = m.top_provider?.max_completion_tokens || OUTPUT_LIMIT_DEFAULT[tier]
+    const q = lookupQ(qualityMap, m.id, name)
 
     extras.push({
       slug,
@@ -193,6 +295,7 @@ async function main() {
       openRouterIds: [m.id],
       auto: true,
       variant: isVariant(slug),
+      ...(q ? { qualityIndex: q.score, qualitySource: q.source } : {}),
     })
   }
 
@@ -209,21 +312,31 @@ async function main() {
 
   extras.sort((a, b) => a.inputPricePerMillion - b.inputPricePerMillion)
 
+  // Quality map for runtime lookup (normalized key -> {score, source}). Includes
+  // AA scores when the Action ran with AA_API_KEY, so production gets full
+  // coverage without holding the key itself.
+  const qualityByKey = {}
+  for (const [k, v] of qualityMap) qualityByKey[k] = v
+
+  const scored = extras.filter((e) => e.qualityIndex != null).length
+
   const header = `// AUTO-GENERATED by scripts/build-models.mjs — DO NOT EDIT BY HAND.
-// Regenerated daily from the live OpenRouter model feed.
-// Last run: ${today} · ${extras.length} live models · ${Object.keys(livePricing).length} priced endpoints.
+// Regenerated daily from the live OpenRouter model feed + quality leaderboards.
+// Last run: ${today} · ${extras.length} live models · ${scored} with quality scores.
 import type { ModelData } from './models'
 
 export const LIVE_UPDATED_AT = '${today}'
 
 export const LIVE_PRICING: Record<string, { input: number; output: number; context: number }> = ${JSON.stringify(livePricing, null, 2)}
 
+export const QUALITY_BY_KEY: Record<string, { score: number; source: 'arena' | 'aa' }> = ${JSON.stringify(qualityByKey, null, 2)}
+
 export const EXTRA_MODELS: ModelData[] = ${JSON.stringify(extras, null, 2)}
 `
 
   writeFileSync(OUT, header, 'utf8')
   console.log(`Wrote ${OUT}`)
-  console.log(`  ${extras.length} live models, ${Object.keys(livePricing).length} priced endpoints, dated ${today}`)
+  console.log(`  ${extras.length} live models, ${scored} scored, ${Object.keys(qualityByKey).length} quality keys, dated ${today}`)
 }
 
 main().catch((e) => {

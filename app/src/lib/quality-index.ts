@@ -2,6 +2,8 @@
  *  and/or the Arena AI leaderboard (no auth). Results are merged and cached for
  *  the same 1-hour window as OpenRouter pricing. */
 
+import { QUALITY_BY_KEY } from './models.generated'
+
 export type QualitySource = 'aa' | 'arena'
 
 export interface QualityEntry {
@@ -113,6 +115,13 @@ const STATIC_FALLBACK: Record<string, number> = {
   'o4-mini':                   75,
 
   // ── Anthropic ──
+  'claude-fable-5':            74,
+  'claude-opus-4-8':           73,
+  'claude-opus-4-7':           76,
+  'claude-opus-4-6':           78,
+  'claude-opus-4-5':           72,
+  'claude-opus-4-1':           70,
+  'claude-opus-4':             68,
   'claude-sonnet-4-7':         80,
   'claude-sonnet-4-6':         78,
   'claude-sonnet-4-5':         75,
@@ -208,8 +217,17 @@ export async function getQualityMap(): Promise<Map<string, QualityEntry>> {
   const [aaMap, arenaMap] = await Promise.all([fetchAA(), fetchArena()])
   const staticMap = buildStaticMap()
 
-  // Precedence: static (baseline) ← Arena (live Elo, top-20) ← AA (gold standard, full coverage)
+  // Daily snapshot baked by the model generator (Arena + AA-via-CI). Gives full,
+  // up-to-date coverage at runtime even though production has no AA_API_KEY.
+  const bakedMap = new Map<string, QualityEntry>()
+  for (const [k, v] of Object.entries(QUALITY_BY_KEY)) {
+    bakedMap.set(k, { score: v.score, source: v.source })
+  }
+
+  // Precedence (low → high): static baseline ← daily baked snapshot ←
+  // live Arena Elo ← live AA (gold standard). Later sources overwrite earlier.
   const merged = new Map<string, QualityEntry>(staticMap)
+  for (const [k, v] of bakedMap) merged.set(k, v)
   for (const [k, v] of arenaMap) merged.set(k, v)
   for (const [k, v] of aaMap)    merged.set(k, v)
 
@@ -222,18 +240,31 @@ export function lookupQuality(
   modelId: string,
   modelName: string,
 ): QualityEntry | null {
-  const idKey  = normalizeId(modelId)
-  const nameKey = normalizeKey(modelName)
+  // Full keys preserve the minor version so "claude-opus-4.8" doesn't collapse
+  // onto "claude-opus-4" before we've tried an exact match.
+  const idFull   = normalizeKey(modelId)
+  const nameFull = normalizeKey(modelName)
+  const idBase   = normalizeId(modelId)    // version-stripped, for fuzzy fallback
+  const nameBase = normalizeId(modelName)
 
-  // 1. Exact match
-  if (idKey   && map.has(idKey))   return map.get(idKey)!
-  if (nameKey && map.has(nameKey)) return map.get(nameKey)!
+  // 1. Exact match on the version-preserving key (most precise).
+  if (idFull   && map.has(idFull))   return map.get(idFull)!
+  if (nameFull && map.has(nameFull)) return map.get(nameFull)!
 
-  // 2. Prefix / substring match (handles minor version mismatches)
+  // 2. Exact match on the version-stripped key (e.g. dated snapshot → base model).
+  if (idBase   && map.has(idBase))   return map.get(idBase)!
+  if (nameBase && map.has(nameBase)) return map.get(nameBase)!
+
+  // 3. Prefix / substring match (last resort for minor key drift). Prefer the
+  // longest matching key so we don't grab an unrelated shorter prefix.
+  let best: QualityEntry | null = null
+  let bestLen = 0
   for (const [k, v] of map) {
-    if (idKey   && (idKey.startsWith(k)   || k.startsWith(idKey)))   return v
-    if (nameKey && (nameKey.startsWith(k) || k.startsWith(nameKey))) return v
+    if (!k) continue
+    const hit =
+      (idFull   && (idFull.startsWith(k)   || k.startsWith(idFull)))   ||
+      (nameFull && (nameFull.startsWith(k) || k.startsWith(nameFull)))
+    if (hit && k.length > bestLen) { best = v; bestLen = k.length }
   }
-
-  return null
+  return best
 }

@@ -22,6 +22,9 @@ export interface ModelData {
   // A near-duplicate variant (speed/preview tier or dated snapshot) — noindex'd
   // and excluded from the sitemap to protect crawl budget.
   variant?: boolean
+  // Quality score (0–100) from the daily leaderboard fetch; drives sorting.
+  qualityIndex?: number
+  qualitySource?: 'arena' | 'aa'
 }
 
 // Reference date for the hand-curated editorial entries below. Live pricing and

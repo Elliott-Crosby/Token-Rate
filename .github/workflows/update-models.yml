@@ -31,8 +31,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Regenerate model catalog from OpenRouter
+      - name: Regenerate model catalog from OpenRouter + quality leaderboards
         working-directory: app
+        env:
+          # Optional: add AA_API_KEY as a repo Actions secret for full
+          # Artificial Analysis quality coverage (free key at artificialanalysis.ai).
+          # Without it, quality falls back to the live Arena leaderboard + baseline.
+          AA_API_KEY: ${{ secrets.AA_API_KEY }}
         run: node scripts/build-models.mjs
 
       - name: Commit catalog if it changed

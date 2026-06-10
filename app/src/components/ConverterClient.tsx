@@ -198,13 +198,17 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
       }
       for (const p of Object.keys(byProvider)) {
         byProvider[p].sort((a, b) => {
+          // Primary models rank above their speed/preview/dated variants so the
+          // real flagship surfaces — not a pricier "(Fast)" or old snapshot.
+          if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
           const at = TIER_RANK[detectTier(a.name)] ?? 2
           const bt = TIER_RANK[detectTier(b.name)] ?? 2
           if (at !== bt) return at - bt
           const aq = a.qualityIndex ?? -1
           const bq = b.qualityIndex ?? -1
           if (aq !== bq) return bq - aq
-          return b.inputPricePerToken - a.inputPricePerToken
+          // Tie-break: cheaper first (more accessible = more "popular"), not pricier.
+          return a.inputPricePerToken - b.inputPricePerToken
         })
       }
 
