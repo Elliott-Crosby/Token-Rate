@@ -8,15 +8,7 @@ import PriceCompareClient from './PriceCompareClient'
 import FilterPanel, { TIER_KEYS, type CostPreset, type QualityPreset } from './FilterPanel'
 import { track } from '@/lib/track'
 
-// ── Tier detection ─────────────────────────────────────────────────────────
-function detectTier(name: string): 'flagship' | 'balanced' | 'fast' | 'reasoning' {
-  const n = name.toLowerCase()
-  if (/\bo\d(?:[\s-]mini)?\b|deepseek[\s-]?r\d|\br1\b/.test(n)) return 'reasoning'
-  if (/haiku|flash[\s-]?lite|nano|4o[\s-]mini|gpt[\s-]?4o[\s-]?mini|claude[\s-]haiku|gemini[\s-]flash/.test(n)) return 'fast'
-  if (/\bmini\b/.test(n) && !/\bo\d/.test(n)) return 'fast'
-  if (/opus|mistral[\s-]large|405b|\bgpt[\s-]?5\b(?![\s-]?mini|[\s-]?nano)|gemini[\s-]2[\s-]?\.?5[\s-]pro|claude[\s-]opus/.test(n)) return 'flagship'
-  return 'balanced'
-}
+import { detectTier } from '@/lib/tier'
 
 const TIER_LABEL: Record<string, string> = {
   flagship: 'Flagship',

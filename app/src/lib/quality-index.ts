@@ -255,15 +255,17 @@ export function lookupQuality(
   if (idBase   && map.has(idBase))   return map.get(idBase)!
   if (nameBase && map.has(nameBase)) return map.get(nameBase)!
 
-  // 3. Prefix / substring match (last resort for minor key drift). Prefer the
-  // longest matching key so we don't grab an unrelated shorter prefix.
+  // 3. Prefix match (last resort for minor key drift). Only match when the model
+  // key EXTENDS a leaderboard key (model is more specific) — never the reverse,
+  // or a lookup for "gpt-4o" would wrongly grab "gpt-4o-mini". Prefer the longest
+  // (most specific) matching key.
   let best: QualityEntry | null = null
   let bestLen = 0
   for (const [k, v] of map) {
-    if (!k) continue
+    if (!k || k.length < 4) continue
     const hit =
-      (idFull   && (idFull.startsWith(k)   || k.startsWith(idFull)))   ||
-      (nameFull && (nameFull.startsWith(k) || k.startsWith(nameFull)))
+      (idFull   && idFull.startsWith(k + '-')) ||
+      (nameFull && nameFull.startsWith(k + '-'))
     if (hit && k.length > bestLen) { best = v; bestLen = k.length }
   }
   return best

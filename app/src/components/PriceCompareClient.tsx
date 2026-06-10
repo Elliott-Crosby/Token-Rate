@@ -3,15 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import type { ProviderGroup, ModelPricing, InputMode } from '@/lib/types'
 import { track } from '@/lib/track'
-
-function detectTier(name: string): 'flagship' | 'balanced' | 'fast' | 'reasoning' {
-  const n = name.toLowerCase()
-  if (/\bo\d(?:[\s-]mini)?\b|deepseek[\s-]?r\d|\br1\b/.test(n)) return 'reasoning'
-  if (/haiku|flash[\s-]?lite|nano|4o[\s-]mini|gpt[\s-]?4o[\s-]?mini|claude[\s-]haiku|gemini[\s-]flash/.test(n)) return 'fast'
-  if (/\bmini\b/.test(n) && !/\bo\d/.test(n)) return 'fast'
-  if (/opus|mistral[\s-]large|405b|\bgpt[\s-]?5\b(?![\s-]?mini|[\s-]?nano)|gemini[\s-]2[\s-]?\.?5[\s-]pro|claude[\s-]opus/.test(n)) return 'flagship'
-  return 'balanced'
-}
+import { detectTier } from '@/lib/tier'
 
 const TIER_COLORS: Record<string, string> = {
   flagship: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400',

@@ -5742,23 +5742,23 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputPricePerMillion": 3.9,
     "contextWindow": 262144,
     "outputLimit": 32768,
-    "tier": "balanced",
+    "tier": "flagship",
     "updatedAt": "2026-06-10",
     "description": "Qwen3-Max is an updated release built on the Qwen3 series, offering major improvements in reasoning, instruction following, multilingual support, and long-tail knowledge coverage compared to the January 2025 version.  It...",
     "strengths": [
       "Affordable at $0.78/1M input tokens",
       "Large 262K-token context window",
-      "Strong general-purpose performance"
+      "Frontier-class quality on complex tasks"
     ],
     "weaknesses": [
       "Quality and availability can vary by hosting provider",
       "Quality and availability can vary by hosting provider"
     ],
     "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
+      "Complex research and analysis",
+      "Advanced coding and architecture",
+      "Long-form content generation",
+      "High-stakes production workloads"
     ],
     "relatedSlugs": [
       "qwen3-max-thinking",
@@ -5973,12 +5973,12 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputPricePerMillion": 6.24,
     "contextWindow": 262144,
     "outputLimit": 65536,
-    "tier": "balanced",
+    "tier": "flagship",
     "updatedAt": "2026-06-10",
     "description": "Qwen3. 6-Max-Preview is a proprietary frontier model from Alibaba Cloud built on a sparse mixture-of-experts architecture with approximately 1 trillion total parameters.",
     "strengths": [
       "Large 262K-token context window",
-      "Strong general-purpose performance",
+      "Frontier-class quality on complex tasks",
       "Strong general-purpose performance"
     ],
     "weaknesses": [
@@ -5986,10 +5986,10 @@ export const EXTRA_MODELS: ModelData[] = [
       "Quality and availability can vary by hosting provider"
     ],
     "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
+      "Complex research and analysis",
+      "Advanced coding and architecture",
+      "Long-form content generation",
+      "High-stakes production workloads"
     ],
     "relatedSlugs": [
       "qwen3-7-max",
@@ -6163,12 +6163,12 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputPricePerMillion": 3.75,
     "contextWindow": 1000000,
     "outputLimit": 65536,
-    "tier": "balanced",
+    "tier": "flagship",
     "updatedAt": "2026-06-10",
-    "description": "Qwen3.7 Max is Qwen's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $1.25 per million input tokens with a 1M-token context window.",
+    "description": "Qwen3.7 Max is Qwen's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $1.25 per million input tokens with a 1M-token context window.",
     "strengths": [
       "Massive 1M-token context window",
-      "Strong general-purpose performance",
+      "Frontier-class quality on complex tasks",
       "Strong general-purpose performance"
     ],
     "weaknesses": [
@@ -6176,10 +6176,10 @@ export const EXTRA_MODELS: ModelData[] = [
       "Quality and availability can vary by hosting provider"
     ],
     "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
+      "Complex research and analysis",
+      "Advanced coding and architecture",
+      "Long-form content generation",
+      "High-stakes production workloads"
     ],
     "relatedSlugs": [
       "qwen3-6-max-preview",
@@ -6202,24 +6202,24 @@ export const EXTRA_MODELS: ModelData[] = [
     "inputPricePerMillion": 1.25,
     "outputPricePerMillion": 2.5,
     "contextWindow": 1000000,
-    "outputLimit": 16000,
-    "tier": "balanced",
+    "outputLimit": 32000,
+    "tier": "flagship",
     "updatedAt": "2026-06-10",
-    "description": "Grok 4.3 is xAI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $1.25 per million input tokens with a 1M-token context window and native image understanding.",
+    "description": "Grok 4.3 is xAI's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $1.25 per million input tokens with a 1M-token context window and native image understanding.",
     "strengths": [
       "Massive 1M-token context window",
-      "Multimodal: understands images as well as text",
-      "Strong general-purpose performance"
+      "Frontier-class quality on complex tasks",
+      "Multimodal: understands images as well as text"
     ],
     "weaknesses": [
       "Quality and availability can vary by hosting provider",
       "Quality and availability can vary by hosting provider"
     ],
     "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
+      "Complex research and analysis",
+      "Advanced coding and architecture",
+      "Multimodal document understanding",
+      "High-stakes production workloads"
     ],
     "relatedSlugs": [
       "grok-4-20",
@@ -6240,24 +6240,24 @@ export const EXTRA_MODELS: ModelData[] = [
     "inputPricePerMillion": 1.25,
     "outputPricePerMillion": 2.5,
     "contextWindow": 2000000,
-    "outputLimit": 16000,
-    "tier": "balanced",
+    "outputLimit": 32000,
+    "tier": "flagship",
     "updatedAt": "2026-06-10",
     "description": "Grok 4. 20 is a reasoning model from xAI with industry-leading speed and agentic tool calling capabilities.",
     "strengths": [
       "Massive 2M-token context window",
-      "Multimodal: understands images as well as text",
-      "Strong general-purpose performance"
+      "Frontier-class quality on complex tasks",
+      "Multimodal: understands images as well as text"
     ],
     "weaknesses": [
       "Quality and availability can vary by hosting provider",
       "Quality and availability can vary by hosting provider"
     ],
     "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
+      "Complex research and analysis",
+      "Advanced coding and architecture",
+      "Multimodal document understanding",
+      "High-stakes production workloads"
     ],
     "relatedSlugs": [
       "grok-4-3",
@@ -6964,24 +6964,24 @@ export const EXTRA_MODELS: ModelData[] = [
     "inputPricePerMillion": 2,
     "outputPricePerMillion": 6,
     "contextWindow": 2000000,
-    "outputLimit": 16000,
-    "tier": "balanced",
+    "outputLimit": 32000,
+    "tier": "flagship",
     "updatedAt": "2026-06-10",
-    "description": "Grok 4.20 Multi-Agent is xAI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $2.00 per million input tokens with a 2M-token context window and native image understanding.",
+    "description": "Grok 4.20 Multi-Agent is xAI's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $2.00 per million input tokens with a 2M-token context window and native image understanding.",
     "strengths": [
       "Massive 2M-token context window",
-      "Multimodal: understands images as well as text",
-      "Strong general-purpose performance"
+      "Frontier-class quality on complex tasks",
+      "Multimodal: understands images as well as text"
     ],
     "weaknesses": [
       "Quality and availability can vary by hosting provider",
       "Quality and availability can vary by hosting provider"
     ],
     "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
+      "Complex research and analysis",
+      "Advanced coding and architecture",
+      "Multimodal document understanding",
+      "High-stakes production workloads"
     ],
     "relatedSlugs": [
       "grok-4-3",
@@ -7194,24 +7194,24 @@ export const EXTRA_MODELS: ModelData[] = [
     "inputPricePerMillion": 2,
     "outputPricePerMillion": 8,
     "contextWindow": 1047576,
-    "outputLimit": 16000,
-    "tier": "balanced",
+    "outputLimit": 32000,
+    "tier": "flagship",
     "updatedAt": "2026-06-10",
     "description": "GPT-4. 1 is a flagship large language model optimized for advanced instruction following, real-world software engineering, and long-context reasoning.",
     "strengths": [
       "Massive 1M-token context window",
-      "Multimodal: understands images as well as text",
-      "Strong general-purpose performance"
+      "Frontier-class quality on complex tasks",
+      "Multimodal: understands images as well as text"
     ],
     "weaknesses": [
       "Quality and availability can vary by hosting provider",
       "Quality and availability can vary by hosting provider"
     ],
     "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
+      "Complex research and analysis",
+      "Advanced coding and architecture",
+      "Multimodal document understanding",
+      "High-stakes production workloads"
     ],
     "relatedSlugs": [
       "o4-mini-deep-research",
