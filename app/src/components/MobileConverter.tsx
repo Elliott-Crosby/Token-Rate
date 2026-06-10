@@ -521,10 +521,10 @@ export default function MobileConverter({ providerGroups }: { providerGroups: Pr
       for (const p of Object.keys(byProvider)) {
         byProvider[p].sort((a, b) => {
           if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
-          const at = TIER_RANK[detectTier(a.name)] ?? 2, bt = TIER_RANK[detectTier(b.name)] ?? 2
-          if (at !== bt) return at - bt
           const aq = a.qualityIndex ?? -1, bq = b.qualityIndex ?? -1
           if (aq !== bq) return bq - aq
+          const at = TIER_RANK[detectTier(a.name)] ?? 2, bt = TIER_RANK[detectTier(b.name)] ?? 2
+          if (at !== bt) return at - bt
           return a.inputPricePerToken - b.inputPricePerToken
         })
       }

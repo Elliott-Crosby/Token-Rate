@@ -193,13 +193,14 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
           // Primary models rank above their speed/preview/dated variants so the
           // real flagship surfaces — not a pricier "(Fast)" or old snapshot.
           if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
-          const at = TIER_RANK[detectTier(a.name)] ?? 2
-          const bt = TIER_RANK[detectTier(b.name)] ?? 2
-          if (at !== bt) return at - bt
+          // Most powerful first: quality drives the order within each company.
           const aq = a.qualityIndex ?? -1
           const bq = b.qualityIndex ?? -1
           if (aq !== bq) return bq - aq
-          // Tie-break: cheaper first (more accessible = more "popular"), not pricier.
+          // Tie-breaks: flagship tier, then cheaper first.
+          const at = TIER_RANK[detectTier(a.name)] ?? 2
+          const bt = TIER_RANK[detectTier(b.name)] ?? 2
+          if (at !== bt) return at - bt
           return a.inputPricePerToken - b.inputPricePerToken
         })
       }

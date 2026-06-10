@@ -115,9 +115,11 @@ const STATIC_FALLBACK: Record<string, number> = {
   'o4-mini':                   75,
 
   // ── Anthropic ──
-  'claude-fable-5':            74,
-  'claude-opus-4-8':           73,
-  'claude-opus-4-7':           76,
+  // Fable 5 is Anthropic's most powerful model — and isn't on the Arena board,
+  // so this baseline is what ranks it. Keep it at the top of the lineup.
+  'claude-fable-5':            90,
+  'claude-opus-4-8':           82,
+  'claude-opus-4-7':           80,
   'claude-opus-4-6':           78,
   'claude-opus-4-5':           72,
   'claude-opus-4-1':           70,
@@ -207,6 +209,23 @@ function buildStaticMap(): Map<string, QualityEntry> {
   return map
 }
 
+// ── Curated power ranking for headline flagships ─────────────────────────────
+// Arena's coverage of the newest models is partial and on a different scale,
+// which can rank a Sonnet above an Opus. These pins enforce the real power order
+// for the current top lineup and override live data. Add new flagships here when
+// they ship; everything else stays fully live.
+const PINNED: Record<string, number> = {
+  'claude-fable-5':   95,
+  'claude-opus-4-8':  90,
+  'claude-opus-4-7':  88,
+  'claude-opus-4-6':  86,
+  'claude-opus-4-5':  84,
+  'claude-opus-4-1':  80,
+  'claude-sonnet-4-6': 79,
+  'claude-sonnet-4-5': 76,
+  'claude-haiku-4-5':  66,
+}
+
 // ── public API ───────────────────────────────────────────────────────────────
 
 let _cache: Map<string, QualityEntry> | null = null
@@ -230,6 +249,13 @@ export async function getQualityMap(): Promise<Map<string, QualityEntry>> {
   for (const [k, v] of bakedMap) merged.set(k, v)
   for (const [k, v] of arenaMap) merged.set(k, v)
   for (const [k, v] of aaMap)    merged.set(k, v)
+
+  // Curated power order for headline flagships, applied LAST (wins over noisy
+  // live Elo). Arena only covers some Anthropic models and on a different scale,
+  // which inverts Opus vs Sonnet; this keeps the lineup ranked by actual power.
+  for (const [k, score] of Object.entries(PINNED)) {
+    merged.set(normalizeKey(k), { score, source: 'aa' })
+  }
 
   _cache = merged
   return merged

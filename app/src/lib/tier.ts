@@ -12,6 +12,6 @@ export function detectTier(name: string): Tier {
   if (/\bmini\b/.test(n) && !/\bo[1-9]/.test(n)) return 'fast'
   // Flagship / frontier. Includes current top families so newer models (Grok 4+,
   // Gemini 3+) aren't mistakenly ranked below older flagships in "popular".
-  if (/opus|mistral[\s-]large|405b|\bgpt[\s-]?5\b(?![\s-]?mini|[\s-]?nano)|gpt[\s-]?4\.1\b|gemini[\s-]?2[\s-]?\.?5[\s-]pro|gemini[\s-]?[3-9]\b|grok[\s-]?[4-9]|claude[\s-]opus|\bultra\b|\bmax\b/.test(n)) return 'flagship'
+  if (/opus|fable|mistral[\s-]large|405b|\bgpt[\s-]?5\b(?![\s-]?mini|[\s-]?nano)|gpt[\s-]?4\.1\b|gemini[\s-]?2[\s-]?\.?5[\s-]pro|gemini[\s-]?[3-9]\b|grok[\s-]?[4-9]|claude[\s-]opus|\bultra\b|\bmax\b/.test(n)) return 'flagship'
   return 'balanced'
 }

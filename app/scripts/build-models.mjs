@@ -67,7 +67,7 @@ function detectTier(name, inputPerM) {
   const n = name.toLowerCase()
   if (/\bo[1-9]\b|\bo[1-9][\s-]mini\b|deepseek[\s-]?r\d|\br1\b|reason|thinking|qwq/.test(n)) return 'reasoning'
   if (/haiku|flash|\blite\b|nano|mini|micro|small|8b|7b|3b|1b|\bphi\b/.test(n)) return 'fast'
-  if (/opus|large|405b|70b|72b|\bpro\b|ultra|\bmax\b|\bgpt[\s-]?5\b|gpt[\s-]?4\.1|grok[\s-]?[4-9]|gemini[\s-]?[3-9]|gemini[\s-]?2[\s-.]?5[\s-]?pro/.test(n)) return 'flagship'
+  if (/opus|fable|large|405b|70b|72b|\bpro\b|ultra|\bmax\b|\bgpt[\s-]?5\b|gpt[\s-]?4\.1|grok[\s-]?[4-9]|gemini[\s-]?[3-9]|gemini[\s-]?2[\s-.]?5[\s-]?pro/.test(n)) return 'flagship'
   if (inputPerM >= 8) return 'flagship'
   if (inputPerM <= 0.3) return 'fast'
   return 'balanced'
