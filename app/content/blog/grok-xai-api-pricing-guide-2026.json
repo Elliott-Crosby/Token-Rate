@@ -1,0 +1,73 @@
+{
+  "slug": "grok-xai-api-pricing-guide-2026",
+  "category": "providers",
+  "kind": "guide",
+  "keyword": "Grok API pricing",
+  "title": "Grok API Pricing in 2026: xAI's 2x Output Rule Changes the Math",
+  "description": "xAI prices Grok output at just 2x input — versus 5-6x everywhere else. Here's the full Grok 4.x price breakdown and the workloads where that quirk wins.",
+  "tldr": "xAI's June 2026 lineup: Grok 4.3 and Grok 4.20 both at $1.25 in / $2.50 out per 1M tokens (4.20 carries a 2M-token context window, the largest mainstream window on the market), and Grok Build 0.1 for coding at $1 / $2. The standout is the output multiplier: 2x instead of the industry's 5-6x, which makes Grok disproportionately cheap for output-heavy work — generation, long reports, code scaffolding.",
+  "readTime": "6 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Grok", "xAI", "Pricing", "Providers"],
+  "comparison": {
+    "caption": "xAI Grok API pricing, verified June 10, 2026 (USD per 1M tokens)",
+    "columns": ["Model", "Input / 1M", "Output / 1M", "Context", "Output multiplier"],
+    "rows": [
+      ["Grok 4.20", "$1.25", "$2.50", "2M", "2x"],
+      ["Grok 4.3", "$1.25", "$2.50", "1M", "2x"],
+      ["Grok Build 0.1", "$1.00", "$2.00", "256K", "2x"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "The pricing quirk everyone misses",
+      "body": "Every provider charges more for output tokens than input tokens, but the ratio varies wildly: Claude holds 5x across its lineup, OpenAI runs 6x on its current models, Gemini 6x. xAI charges 2x.\n\nThat single number rearranges the rankings for any output-heavy workload. The intuition for why is in [the output multiplier piece](/blog/cost-optimization/output-multiplier-decides-your-llm-bill), but here's the concrete version: generate a 5,000-token report from a 500-token brief, and on GPT-5.4 you pay $0.00125 input + $0.075 output — the output is 98% of the bill. The same job on Grok 4.3: $0.000625 + $0.0125. Grok ends up 6x cheaper on that task while being only 2x cheaper on input price."
+    },
+    {
+      "heading": "The lineup: 4.3, 4.20, and Build",
+      "body": "Grok 4.3 ($1.25 / $2.50, 1M context) is the general-purpose flagship at a mid-tier price — it sits between Gemini 3.5 Flash and GPT-5.4 on cost.\n\nGrok 4.20 (same $1.25 / $2.50) is the interesting one: a 2M-token context window, the largest I track on a mainstream API, and an Arena score of 72 that puts it within three points of the frontier trio. Two million tokens is roughly 1.5 million words — a small codebase or a year of meeting transcripts in a single request.\n\nGrok Build 0.1 ($1 / $2, 256K context) is the coding specialist. I compared it head-to-head against Claude's fast tier in [the Grok Build vs Opus 4.8 Fast piece](/blog/comparisons/grok-build-vs-claude-opus-4-8-fast-coding-model-price) — the short version is that Build's economics shine for code generation volume, while Opus wins on the hardest debugging."
+    },
+    {
+      "heading": "What the 2M context window really costs",
+      "body": "A window that size deserves the same sober math I apply to every long-context model: filling 2M tokens of context costs $2.50 per request on Grok 4.20, every request, because input bills on every send. A 20-turn conversation that keeps 500K tokens in context pays for roughly 10M input tokens of resends — $12.50.\n\nThe honest use case for giant windows isn't conversation; it's single-shot analysis. One request, the entire corpus, one comprehensive answer: $2.50 of input is a bargain next to building a retrieval pipeline. For iterative work, retrieval still wins, as covered in [the 1M-token context piece](/blog/fundamentals/real-cost-1-million-token-context)."
+    },
+    {
+      "heading": "Where Grok wins on real workloads",
+      "body": "Content generation at scale: drafting 10,000 product descriptions a month (200 tokens in, 600 out each) costs $2.50 input + $15 output = $17.50 on Grok 4.3, versus $3 + $54 = $57 on Gemini 3.5 Flash and $1.50 + $27 = $28.50 on GPT-5.4-mini. The 2x multiplier does the work.\n\nReport and email generation, code scaffolding, data-to-text pipelines — anywhere the output is several times longer than the input, Grok's effective price lands near the budget tier while its quality score sits near the mid tier.\n\nWhere it doesn't win: input-dominated workloads. RAG with fat retrieved context, document classification, summarization of long inputs — there the $1.25 input rate faces Gemini Flash-Lite at $0.25 and DeepSeek V4 Flash at $0.10, and Grok is the expensive option. Match the multiplier to your input:output ratio; [the calculator](/) does this arithmetic for you."
+    },
+    {
+      "heading": "Caveats and the bottom line",
+      "body": "The caveats: xAI iterates in public, with beta-suffixed models appearing and graduating quickly — pin versions and keep a fallback. The ecosystem around tooling and enterprise compliance is younger than OpenAI's or Google's. And quality at the very top end still trails the frontier trio by a few Arena points, consistent with its mid-tier price.\n\nThe bottom line I'd give a friend: if your workload writes more than it reads, Grok is probably the cheapest credible option you're not considering, and Grok 4.20's quality score of 72 makes it more than a curiosity — see [where it lands against Sonnet](/blog/comparisons/grok-4-vs-claude-sonnet-quality-index) and the [live pricing table](/models) for current numbers."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much does the Grok API cost?",
+      "answer": "As of June 2026: Grok 4.3 and Grok 4.20 both cost $1.25 per million input tokens and $2.50 per million output tokens; Grok Build 0.1 (coding) costs $1 / $2. A typical chat message costs about three-tenths of a cent."
+    },
+    {
+      "question": "Why does Grok's 2x output multiplier matter?",
+      "answer": "Most providers charge 5-6x more for output than input; xAI charges only 2x. For output-heavy work — long generations from short prompts — this makes Grok several times cheaper than nominally similar-priced rivals, because output dominates those bills."
+    },
+    {
+      "question": "What is the largest context window on the Grok API?",
+      "answer": "Grok 4.20 offers a 2M-token context window — the largest mainstream API window as of June 2026, roughly 1.5 million words per request. Filling it costs about $2.50 in input tokens per request."
+    },
+    {
+      "question": "Is Grok good for coding?",
+      "answer": "Grok Build 0.1 is xAI's dedicated coding model at $1/$2 per million tokens with a 256K context. Its economics are strong for high-volume code generation; for the hardest debugging and agentic work, frontier models still hold an edge."
+    }
+  ],
+  "sources": [
+    { "label": "xAI — Official API pricing", "url": "https://x.ai/api" },
+    { "label": "OpenRouter — Live xAI model pricing feed", "url": "https://openrouter.ai/x-ai" },
+    { "label": "LMArena — Text leaderboard (Grok 4.20 score)", "url": "https://lmarena.ai/leaderboard" }
+  ],
+  "ctaText": "Check whether your input-output ratio makes Grok the cheap option — compare live across 200+ models.",
+  "relatedSlugs": [
+    "grok-build-vs-claude-opus-4-8-fast-coding-model-price",
+    "grok-4-vs-claude-sonnet-quality-index",
+    "output-multiplier-decides-your-llm-bill",
+    "claude-api-pricing-guide-2026"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "slug": "how-much-does-an-ai-chatbot-cost-to-run-2026",
+  "category": "building",
+  "kind": "guide",
+  "keyword": "AI chatbot running cost",
+  "title": "How Much Does an AI Chatbot Cost to Run in 2026? Full Worked Example",
+  "description": "I priced the same 10,000-conversation support chatbot on ten different models. The answers ranged from $11 to $810 a month — here's the complete math.",
+  "tldr": "A support chatbot handling 10,000 conversations a month (6 turns each, ~9,000 cumulative input tokens and 1,200 output tokens per conversation) costs roughly: $11/month on DeepSeek V4 Flash, $41 on Gemini Flash-Lite, $122 on GPT-5.4-mini, $150 on Claude Haiku 4.5, $243 on Gemini 3.5 Flash, $450 on Claude Sonnet 4.6, and $810 on GPT-5.5. The dominant cost driver isn't the model's reply — it's resending the conversation history every turn.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Chatbot", "Cost Estimation", "Building"],
+  "comparison": {
+    "caption": "Same chatbot, ten models — 10,000 conversations/month, June 2026 prices",
+    "columns": ["Model", "Input / 1M", "Output / 1M", "Per conversation", "Per month"],
+    "rows": [
+      ["Claude Haiku 4.5", "$1.00", "$5.00", "$0.015", "$150"],
+      ["DeepSeek V4 Flash", "$0.10", "$0.20", "$0.0011", "$11"],
+      ["Gemini 3.1 Flash-Lite", "$0.25", "$1.50", "$0.0041", "$41"],
+      ["GPT-5.4-mini", "$0.75", "$4.50", "$0.0122", "$122"],
+      ["Grok 4.3", "$1.25", "$2.50", "$0.0142", "$142"],
+      ["Gemini 3.5 Flash", "$1.50", "$9.00", "$0.0243", "$243"],
+      ["GPT-5.4", "$2.50", "$15.00", "$0.0405", "$405"],
+      ["Claude Sonnet 4.6", "$3.00", "$15.00", "$0.045", "$450"],
+      ["Claude Opus 4.8", "$5.00", "$25.00", "$0.075", "$750"],
+      ["GPT-5.5", "$5.00", "$30.00", "$0.081", "$810"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "The model conversation, spelled out",
+      "body": "Every chatbot cost estimate lives or dies on its assumptions, so here are mine, all adjustable to your case.\n\nOne conversation: 6 turns. A 500-token system prompt (instructions, persona, guardrails). Users write about 150 tokens per message; the bot replies with about 200. The crucial mechanic: on every turn, the API receives the system prompt plus the entire conversation so far — LLM APIs are stateless, so history gets resent and re-billed each time.\n\nAdd it up across six turns and one conversation consumes roughly 9,150 input tokens but only 1,200 output tokens. That 7.6-to-1 input-to-output ratio is the signature of chat workloads, and it's why the input price and caching policy of your model matter more than the headline output price. If tokens are still fuzzy, start with [what tokens are](/blog/fundamentals/what-are-ai-tokens) and come back."
+    },
+    {
+      "heading": "Why history resending dominates the bill",
+      "body": "Turn one sends about 950 tokens. Turn six sends about 2,400, because it carries every previous message. The later turns of a conversation cost two to three times the early ones, and a 12-turn conversation costs roughly four times a 6-turn one — not double — because cumulative context grows quadratically with conversation length.\n\nThis has two practical consequences. First, truncate or summarize history: if your bot only needs the last few turns to stay coherent, dropping older turns cuts real money at scale. Second, watch your turn-length distribution in production — a small share of marathon conversations can eat a surprising share of the budget. I've covered the diagnosis side in [why your LLM bill is higher than expected](/blog/cost-optimization/why-your-llm-bill-is-higher-than-expected)."
+    },
+    {
+      "heading": "Reading the ten-model table honestly",
+      "body": "The spread is 70x from cheapest to priciest, and the right pick depends on what the bot does.\n\nFor classic tier-one support — FAQs, order status, password resets — the budget tier handles it: DeepSeek V4 Flash at $11/month if its jurisdictional profile works for you (see [the DeepSeek guide](/blog/providers/deepseek-api-pricing-guide-2026)), otherwise Gemini Flash-Lite at $41 or GPT-5.4-mini at $122.\n\nFor anything customer-visible where tone and judgment matter, the mid tier earns its keep: Claude Haiku 4.5 at $150 or Gemini 3.5 Flash at $243 — Flash scores 73 on Arena, frontier-adjacent, which is remarkable at this price.\n\nFrontier models (Sonnet, Opus, GPT-5.5) at $450-810/month belong in chat products where the conversation is the product — coaching, tutoring, expert assistance — not in deflection-rate support bots. Quality-per-dollar rankings across all tiers live in [the showdown piece](/blog/comparisons/claude-vs-gpt-vs-gemini-quality-per-dollar-showdown)."
+    },
+    {
+      "heading": "Caching: the lever that changes the rankings",
+      "body": "Remember that 7.6-to-1 input ratio. Prompt caching attacks exactly that: the system prompt and the stable prefix of history can be served from cache at a steep discount — cached reads bill at roughly a tenth of the normal input rate on the major providers.\n\nIn this scenario, caching the system prompt and prior history cuts the effective input bill by half or more, which compresses the table dramatically: Haiku drops from $150 toward $80, Sonnet from $450 toward $250. Providers differ in mechanics (Anthropic uses explicit cache breakpoints; OpenAI and Google cache automatically above a minimum prefix length), and the details are in [the prompt caching guide](/blog/cost-optimization/prompt-caching-save-90-percent-on-ai-costs).\n\nThe corollary: structure your prompt so the stable parts come first and the per-turn parts last. Cache-friendliness is a prompt-architecture decision, not a billing checkbox."
+    },
+    {
+      "heading": "From per-conversation cost to a real budget",
+      "body": "Three more line items separate the napkin math from a production budget.\n\nRetries and overruns: failed JSON parses, timeouts, and safety re-prompts add 5-15% in my experience. Budget it.\n\nRAG context: if each turn retrieves 1,000-2,000 tokens of documentation into the prompt, input costs double or triple — rerun the table with your real per-turn context. [The RAG cost piece](/blog/building/rag-pipeline-cost-optimization) covers trimming that.\n\nEvals and development: testing prompt changes against a few hundred recorded conversations before each deploy is cheap insurance (a few dollars a run on a mid-tier model) but it's a real recurring cost most budgets forget. For the full production-budgeting picture, see [token budgeting for production apps](/blog/cost-optimization/token-budgeting-for-production-ai-apps).\n\nThen validate against reality: instrument actual token counts per conversation from day one, because real users never match the model conversation exactly. Paste your observed averages into [the calculator](/) and re-rank."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much does it cost to run an AI chatbot per month?",
+      "answer": "For 10,000 six-turn conversations a month at June 2026 prices: between $11 (DeepSeek V4 Flash) and $810 (GPT-5.5), with the practical sweet spot at $41-243 — Gemini Flash-Lite, GPT-5.4-mini, Claude Haiku 4.5, or Gemini 3.5 Flash depending on quality needs."
+    },
+    {
+      "question": "How much does one chatbot conversation cost?",
+      "answer": "A six-turn conversation consumes roughly 9,000 input tokens and 1,200 output tokens (history is resent every turn). That's about a tenth of a cent on DeepSeek V4 Flash, 1.5 cents on Claude Haiku 4.5, and 8 cents on GPT-5.5."
+    },
+    {
+      "question": "Why do chatbot input tokens cost more than output tokens in total?",
+      "answer": "Per-token, output is pricier — but chat resends the system prompt and full history on every turn, so a six-turn conversation racks up about 7-8x more input tokens than output tokens. Input volume, not output price, dominates chat bills."
+    },
+    {
+      "question": "How can I cut my chatbot's API costs?",
+      "answer": "In order of impact: enable prompt caching (cuts the dominant input cost by half or more), truncate or summarize old history, route easy questions to a cheaper model, and trim the system prompt. Together these routinely cut bills 50-80% without visible quality loss."
+    }
+  ],
+  "sources": [
+    { "label": "Anthropic — Prompt caching documentation", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" },
+    { "label": "OpenAI — Prompt caching documentation", "url": "https://platform.openai.com/docs/guides/prompt-caching" },
+    { "label": "OpenRouter — Live model pricing feed", "url": "https://openrouter.ai/models" }
+  ],
+  "ctaText": "Plug in your own turns-per-conversation and volume — see your chatbot's monthly cost on every model at once.",
+  "relatedSlugs": [
+    "prompt-caching-save-90-percent-on-ai-costs",
+    "token-budgeting-for-production-ai-apps",
+    "why-your-llm-bill-is-higher-than-expected",
+    "ai-saas-cost-per-user-calculation"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "slug": "claude-api-pricing-guide-2026",
+  "category": "providers",
+  "kind": "guide",
+  "keyword": "Claude API pricing",
+  "title": "Claude API Pricing in 2026: Every Model, Every Tier, Real Costs",
+  "description": "The complete guide to Anthropic's Claude API pricing — Fable 5, Opus 4.8, Sonnet 4.6, and Haiku 4.5 — with worked examples from the workloads I actually run.",
+  "tldr": "Anthropic's June 2026 lineup spans $1 to $10 per million input tokens: Haiku 4.5 ($1 in / $5 out), Sonnet 4.6 ($3 / $15), Opus 4.8 ($5 / $25), and Fable 5 ($10 / $50). Opus 4.8 Fast trades 2x the price for lower latency at the same quality. For a typical chat message (1,500 tokens in, 400 out), that ranges from a third of a cent on Haiku to three and a half cents on Fable 5.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Claude", "Anthropic", "Pricing", "Providers"],
+  "comparison": {
+    "caption": "Claude API pricing, verified June 10, 2026 (USD per 1M tokens)",
+    "columns": ["Model", "Input / 1M", "Output / 1M", "Context", "Cost per chat message*"],
+    "rows": [
+      ["Claude Sonnet 4.6", "$3.00", "$15.00", "1M", "$0.0105"],
+      ["Claude Haiku 4.5", "$1.00", "$5.00", "200K", "$0.0035"],
+      ["Claude Opus 4.8", "$5.00", "$25.00", "1M", "$0.0175"],
+      ["Claude Opus 4.8 Fast", "$10.00", "$50.00", "1M", "$0.035"],
+      ["Claude Fable 5", "$10.00", "$50.00", "1M", "$0.035"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "How Anthropic structures its pricing",
+      "body": "Anthropic bills the same way every major provider does: a price per million input tokens (everything you send — system prompt, conversation history, documents) and a separate, higher price per million output tokens (everything Claude writes back). Across the whole Claude lineup the output multiplier is exactly 5x — output tokens cost five times what input tokens do. That consistency is unusual; OpenAI's multiplier swings between 4x and 8x depending on the model.\n\nThe 5x rule is the single most useful thing to memorize, because it means verbose responses dominate your bill long before big prompts do. I cover why this matters so much in [the output multiplier piece](/blog/cost-optimization/output-multiplier-decides-your-llm-bill).\n\n* The per-message figure in the table above assumes 1,500 input tokens and 400 output tokens — a realistic chat turn with a system prompt and some history."
+    },
+    {
+      "heading": "The four tiers, and who each one is for",
+      "body": "Haiku 4.5 ($1 in / $5 out, 200K context) is the workhorse for classification, extraction, routing, and short support replies. It is the only current Claude without the 1M-token context window, and for high-volume pipelines that rarely matters.\n\nSonnet 4.6 ($3 / $15, 1M context) is the default I recommend when someone asks where to start. It handles long documents, serious coding, and multi-step reasoning at a fifth the price of Fable 5.\n\nOpus 4.8 ($5 / $25, 1M context) sits in a strange and useful spot: frontier-class quality at half the price of Fable 5. On the Arena leaderboard it scores within a point of GPT-5.5 while costing the same on input and less on output.\n\nFable 5 ($10 / $50, 1M context) is Anthropic's newest flagship. You pay for the ceiling: the hardest reasoning, agentic, and long-horizon tasks. If your task doesn't visibly fail on Opus 4.8, Fable 5 is probably overkill — that's not a knock, it's just where the price-performance curve bends."
+    },
+    {
+      "heading": "Opus 4.8 Fast: paying for speed, not smarts",
+      "body": "Opus 4.8 Fast is the same model as Opus 4.8 served on faster infrastructure, at exactly double the price ($10 / $50 instead of $5 / $25). The output is the same quality; it just arrives sooner.\n\nWhen I priced this out for interactive use cases, the math came down to one question: does a human sit there waiting for the response? For a coding assistant or a live chat UI, latency is the product, and 2x on a few cents is nothing. For a batch summarization pipeline running overnight, paying double for speed nobody perceives is pure waste. There's a longer comparison in [the Grok Build vs Opus 4.8 Fast piece](/blog/comparisons/grok-build-vs-claude-opus-4-8-fast-coding-model-price)."
+    },
+    {
+      "heading": "The discounts: caching and batch",
+      "body": "Two levers cut these list prices dramatically, and I rarely see new teams use either.\n\nPrompt caching lets you mark a stable prefix (system prompt, tool definitions, a big document) so repeat requests read it at a fraction of the input price instead of paying full rate every time. If you run a chatbot that resends an 800-token system prompt on every one of a million daily requests, caching is the difference between paying for 800 billion tokens a month and paying a small fraction of that. Details and worked math in [the prompt caching guide](/blog/cost-optimization/prompt-caching-save-90-percent-on-ai-costs).\n\nThe Batch API takes 50% off both input and output for any work that can tolerate up to 24 hours of turnaround — evals, backfills, nightly reports. Half off for changing a deadline is the easiest discount in the industry; I walk through it in [the batch API guide](/blog/cost-optimization/batch-api-cut-ai-costs-in-half)."
+    },
+    {
+      "heading": "What real workloads cost on Claude",
+      "body": "Some concrete scenarios I've priced with [the calculator](/), using the June 2026 rates.\n\nA support chatbot handling 10,000 conversations a month (roughly 9,000 cumulative input tokens and 1,200 output tokens per conversation, since history gets resent every turn): about $150/month on Haiku 4.5, $450 on Sonnet 4.6, $750 on Opus 4.8.\n\nSummarizing 1,000 long documents (50,000 tokens in, 1,000 out each): about $165 on Sonnet 4.6 ($150 of input plus $15 of output) — or roughly $82 with batch pricing.\n\nA heavy agentic coding session that burns 2M input and 150K output tokens: $8.25 on Sonnet 4.6, $13.75 on Opus 4.8, $27.50 on Fable 5. Run twenty of those a month and model choice is suddenly a nearly $400/month decision.\n\nExtended thinking deserves its own line item: thinking tokens bill as output, and on hard problems they can multiply the response cost several times over. I've broken that down in [the extended thinking cost analysis](/blog/providers/claude-extended-thinking-cost-analysis)."
+    },
+    {
+      "heading": "How Claude prices compare to the field",
+      "body": "Against OpenAI: Sonnet 4.6 ($3 / $15) undercuts GPT-5.5 ($5 / $30) on both meters, while Opus 4.8 matches GPT-5.5's input price with cheaper output ($25 vs $30). Against Google: Gemini 3.5 Flash ($1.50 / $9) sits between Haiku and Sonnet and is the strongest cross-provider rival at that tier.\n\nThe honest summary: Anthropic is no longer the premium-priced option it was in 2024. Opus 4.8 at $5 / $25 is one of the better frontier-class deals on the market right now, and the lineup's uniform 5x output multiplier makes bills easier to predict than most. For the full cross-provider picture, see [the provider comparison](/blog/comparisons/ai-provider-comparison-2026-cost) and the live [pricing table](/models)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does the Claude API cost per message?",
+      "answer": "For a typical chat message (1,500 input tokens, 400 output tokens): about $0.0035 on Haiku 4.5, $0.0105 on Sonnet 4.6, $0.0175 on Opus 4.8, and $0.035 on Fable 5, at June 2026 rates."
+    },
+    {
+      "question": "Is Claude cheaper than GPT?",
+      "answer": "At comparable tiers, currently yes. Sonnet 4.6 ($3 in / $15 out per 1M tokens) is cheaper than GPT-5.5 ($5 / $30) on both meters, and Opus 4.8 ($5 / $25) beats GPT-5.5 on output price. At the budget tier, GPT-5.4-mini ($0.75 / $4.50) slightly undercuts Haiku 4.5 ($1 / $5)."
+    },
+    {
+      "question": "What is the difference between Opus 4.8 and Opus 4.8 Fast?",
+      "answer": "Same model, same output quality — Fast is served on lower-latency infrastructure and costs exactly double ($10 / $50 vs $5 / $25 per 1M tokens). Pay for it when a human is waiting on the response; skip it for batch work."
+    },
+    {
+      "question": "Do thinking tokens cost extra on Claude?",
+      "answer": "Extended thinking tokens are billed at the model's normal output rate. They don't have a separate price, but on hard problems the model can emit thousands of thinking tokens before the visible answer, so budget for response costs being several times larger when extended thinking is on."
+    }
+  ],
+  "sources": [
+    { "label": "Anthropic — Official API pricing", "url": "https://www.anthropic.com/pricing" },
+    { "label": "Anthropic — Prompt caching documentation", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" },
+    { "label": "OpenRouter — Live Claude model pricing feed", "url": "https://openrouter.ai/anthropic" }
+  ],
+  "ctaText": "Paste your actual prompt and see what it costs on every Claude model side by side — live prices, no signup.",
+  "relatedSlugs": [
+    "openai-api-pricing-guide-2026",
+    "google-gemini-api-pricing-guide-2026",
+    "claude-extended-thinking-cost-analysis",
+    "opus-4-8-vs-gpt-5-5-vs-gemini-3-5-flash-price-comparison"
+  ]
+}

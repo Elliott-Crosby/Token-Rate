@@ -1,0 +1,68 @@
+{
+  "slug": "llm-api-pricing-glossary",
+  "category": "fundamentals",
+  "kind": "guide",
+  "keyword": "LLM pricing terms",
+  "title": "The LLM API Pricing Glossary: Every Billing Term, Plainly Explained",
+  "description": "Cached input, output multiplier, blended cost, TPM limits, reasoning tokens — every term you'll meet on an AI pricing page or invoice, defined with real numbers.",
+  "tldr": "LLM billing reduces to a handful of concepts: you pay per token (roughly 4 characters), with separate meters for input and output (output costs 2-6x more), discounted lanes for cached input (~90% off repeated prefixes) and batch processing (50% off non-urgent work), a surcharge dynamic for reasoning tokens (billed as output), and rate limits (RPM/TPM) that cap throughput rather than cost. Master those and any provider's pricing page reads in thirty seconds.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Fundamentals", "Glossary", "Pricing"],
+  "sections": [
+    {
+      "heading": "The unit: tokens, context, and caps",
+      "body": "Token: the unit everything is priced in — a chunk of text roughly 4 characters or three-quarters of an English word. 'Unbelievable' is about 3 tokens; 1,000 words is about 1,330 tokens. Full primer in [what are AI tokens](/blog/fundamentals/what-are-ai-tokens).\n\nPer-1M pricing: prices are quoted per million tokens ('$3 / 1M input'). Some older pages quote per 1,000 — same number divided by a thousand. When comparing providers, always normalize to per-1M; that's what every table on [this site](/models) uses.\n\nContext window: the maximum tokens a model can hold in one request — prompt plus history plus its own reply. Current windows run from 131K (some DeepSeek models) through 1M (most flagships) to 10M (Llama 4 Scout). The window is a capacity, not a price: you pay only for tokens you actually send, but see 'context resending' below for the trap. More in [understanding context windows](/blog/fundamentals/understanding-context-windows-api-costs).\n\nOutput cap (max output tokens): a separate, smaller limit on how long a single reply can be — typically 8K-128K. Hitting it truncates your response mid-sentence; [what happens when you exceed limits](/blog/fundamentals/what-happens-when-you-exceed-token-limit) covers the failure modes."
+    },
+    {
+      "heading": "The two meters: input, output, and the multiplier",
+      "body": "Input tokens: everything you send — system prompt, conversation history, retrieved documents, the user's question. Billed at the input rate on every request, which means resent history is re-billed every turn. This 'context resending' is the dominant cost in chat applications, as the math in [the chatbot cost guide](/blog/building/how-much-does-an-ai-chatbot-cost-to-run-2026) shows.\n\nOutput tokens: everything the model writes back. Always pricier per token than input, because generation is the compute-expensive direction.\n\nOutput multiplier: the output price divided by the input price — the single most revealing number on a pricing page. In June 2026: Claude runs a uniform 5x, OpenAI and Google mostly 6x, xAI's Grok an unusual 2x. A low multiplier favors generation-heavy work; a low input price favors context-heavy work. The full argument is in [the output multiplier piece](/blog/cost-optimization/output-multiplier-decides-your-llm-bill)."
+    },
+    {
+      "heading": "The discount lanes: caching and batch",
+      "body": "Cached input (prompt caching): repeated prompt prefixes — system prompts, tool definitions, that 50-page document you keep asking about — can be served from the provider's cache at roughly a tenth of the normal input rate. Anthropic uses explicit cache breakpoints with a small write premium the first time; OpenAI and Google apply caching automatically past a minimum prefix length. On prefix-heavy workloads this is the single biggest lever you control: [the caching guide](/blog/cost-optimization/prompt-caching-save-90-percent-on-ai-costs) has worked examples.\n\nCache write / cache read: the two cached-input line items on an Anthropic invoice — writes cost slightly more than regular input (you're paying to populate the cache), reads cost a small fraction of it. Profitable whenever a prefix is reused more than once or twice.\n\nBatch API: submit a file of requests, get results within a deadline (up to 24h), pay a flat 50% off both meters. The easiest discount in the industry for evals, backfills, and nightly jobs — see [the batch guide](/blog/cost-optimization/batch-api-cut-ai-costs-in-half)."
+    },
+    {
+      "heading": "The quiet surcharge: reasoning tokens",
+      "body": "Reasoning tokens (thinking tokens): when a reasoning model — Claude with extended thinking, OpenAI's reasoning modes, DeepSeek R1 — works through a problem, its internal chain of thought is metered and billed as output, even though you may never see it. A question with a 200-token visible answer can quietly bill 3,000 thinking tokens behind it, making the real cost 15x the apparent one.\n\nThis is the most common source of 'why is my bill 5x my estimate' tickets I hear about, and it's invisible if you estimate from response length alone. Always estimate reasoning workloads from billed usage on real samples, never from output you can read. The cost anatomy is in [the extended thinking analysis](/blog/providers/claude-extended-thinking-cost-analysis) and [whether reasoning models are worth it](/blog/fundamentals/reasoning-models-worth-the-cost).\n\nEffort or thinking budget controls — settings that cap how long the model reasons — are billing controls as much as quality controls; turning effort down is often a 50%+ cost cut on reasoning-heavy pipelines."
+    },
+    {
+      "heading": "Derived metrics: how to compare models on one number",
+      "body": "Blended cost per 1M: input and output prices collapsed into one number using your workload's mix — typically 0.75 x input + 0.25 x output for chat-shaped work. The basis of every comparison in [the $50 budget guide](/blog/cost-optimization/what-50-dollars-a-month-buys-llm-api-2026).\n\nTokens per dollar: the inverse view — how many tokens a dollar buys. Useful for intuition, hazardous for decisions if computed only from input price; [the tokens-per-dollar comparison](/blog/comparisons/tokens-per-dollar-comparison-2026) does it properly.\n\nCost per request: blended cost applied to your average request shape (say 1,500 in / 400 out). The number that actually belongs in your unit economics, next to cost per user from [the SaaS cost-per-user piece](/blog/building/ai-saas-cost-per-user-calculation).\n\nQuality per dollar: a leaderboard score divided by blended cost — the closest thing to a value ranking. How TokenRate computes it is documented in [the quality score methodology](/blog/fundamentals/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "The throughput fine print: rate limits and tiers",
+      "body": "RPM / TPM: requests per minute and tokens per minute — caps on throughput, separate from cost. You can have budget left and still be throttled; a 429 error is the API telling you to slow down, not that you're out of money. Some providers split TPM into input and output limits (ITPM/OTPM).\n\nUsage tiers: providers raise rate limits as your account ages and spends — new accounts start with tight limits that can bottleneck a launch. If you're planning a high-traffic release, check your tier's TPM against expected peak load weeks early; tier upgrades are usually automatic but not instant.\n\nPriority and provisioned tiers: some providers sell guaranteed-latency or reserved-capacity lanes at a premium over standard list price — relevant once you have strict SLOs, irrelevant before. With those terms down, every pricing page is the same five questions: per-1M prices on both meters, multiplier, caching mechanics, batch discount, and your tier's TPM. The answers for every major model live in [the live table](/models)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What is the difference between input and output tokens?",
+      "answer": "Input tokens are everything you send the model (prompts, history, documents); output tokens are everything it writes back. They're billed at different rates — output typically costs 2-6x more per token depending on the provider."
+    },
+    {
+      "question": "What does cached input mean on my API bill?",
+      "answer": "It's the discounted lane for repeated prompt prefixes (system prompts, reused documents). Cached reads bill at roughly 10% of the normal input rate. On Anthropic you'll also see cache writes, which cost slightly more than regular input the first time a prefix is stored."
+    },
+    {
+      "question": "Why is my reasoning model bill higher than my output suggests?",
+      "answer": "Reasoning models bill their internal thinking tokens as output even though you don't see them. A 200-token visible answer can carry thousands of billed thinking tokens behind it. Estimate from real billed usage, not from visible response length."
+    },
+    {
+      "question": "What do RPM and TPM mean?",
+      "answer": "Requests per minute and tokens per minute — rate limits that cap how fast you can call the API, independent of budget. Hitting them returns 429 errors. Limits rise with your account's usage tier, so check them before a high-traffic launch."
+    }
+  ],
+  "sources": [
+    { "label": "Anthropic — API pricing and caching documentation", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" },
+    { "label": "OpenAI — API pricing documentation", "url": "https://platform.openai.com/docs/pricing" },
+    { "label": "Google AI — Gemini API pricing documentation", "url": "https://ai.google.dev/pricing" }
+  ],
+  "ctaText": "See every term in this glossary as a live number — real prices across 200+ models, updated daily.",
+  "relatedSlugs": [
+    "what-are-ai-tokens",
+    "how-ai-api-pricing-works",
+    "output-multiplier-decides-your-llm-bill",
+    "what-50-dollars-a-month-buys-llm-api-2026"
+  ]
+}

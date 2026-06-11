@@ -1,0 +1,78 @@
+{
+  "slug": "open-weight-vs-proprietary-llm-costs-2026",
+  "category": "fundamentals",
+  "kind": "guide",
+  "keyword": "open weight vs proprietary LLM cost",
+  "title": "Open-Weight vs Proprietary LLMs in 2026: The Real Cost Comparison",
+  "description": "Hosted open-weight models (Llama, Qwen, Mistral, DeepSeek) cost 5-30x less than proprietary APIs. Here's when that discount is real, and when it evaporates.",
+  "tldr": "Hosted open-weight models are dramatically cheaper per token in June 2026: Llama 4 Maverick at $0.15 in / $0.60 out per 1M tokens, Llama 4 Scout at $0.10 / $0.30 (with a 10M-token context window), Qwen 3.7 Plus at $0.40 / $1.60, Mistral Large at $0.50 / $1.50 — versus $2.50-5 input for proprietary mid and frontier tiers. The discount is real for well-defined, high-volume tasks. It evaporates when you need frontier reasoning, polished tooling, or someone else to carry the eval burden. Self-hosting almost never beats hosted APIs below very large scale.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Open Source", "Llama", "Qwen", "Fundamentals"],
+  "comparison": {
+    "caption": "Hosted open-weight vs proprietary pricing, verified June 10, 2026 (USD per 1M tokens)",
+    "columns": ["Model", "Weights", "Input / 1M", "Output / 1M", "Context"],
+    "rows": [
+      ["Llama 4 Maverick", "Open", "$0.15", "$0.60", "1M"],
+      ["Llama 4 Scout", "Open", "$0.10", "$0.30", "10M"],
+      ["Qwen 3.7 Plus", "Open", "$0.40", "$1.60", "1M"],
+      ["Mistral Large 2512", "Open", "$0.50", "$1.50", "262K"],
+      ["DeepSeek V4 Pro", "Open", "$0.44", "$0.87", "1M"],
+      ["GPT-5.4", "Proprietary", "$2.50", "$15.00", "1M"],
+      ["Claude Sonnet 4.6", "Proprietary", "$3.00", "$15.00", "1M"],
+      ["Gemini 3.5 Flash", "Proprietary", "$1.50", "$9.00", "1M"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "First, the terms: open-weight is not self-hosted",
+      "body": "An open-weight model is one whose parameters you can download — Llama, Qwen, Mistral, DeepSeek, GLM. That's separate from how you run it. The comparison most teams actually face isn't 'API versus my own GPUs'; it's 'proprietary API versus an open-weight model served by a host' — Together, Fireworks, Groq, DeepInfra, or an aggregator like OpenRouter that fronts all of them.\n\nThat distinction matters because hosted open-weight inference has become a brutally competitive commodity market: any host can serve Llama, so margins compress toward hardware cost. Proprietary models have no such competition — there is exactly one seller of Claude tokens. The price gap in the table above is that market structure, made visible. I touched related ground in [the OpenRouter vs direct piece](/blog/cost-optimization/openrouter-vs-direct-api-pricing-llm)."
+    },
+    {
+      "heading": "How big the discount really is",
+      "body": "Run my standard chat workload (1,500 tokens in, 400 out) across the table: Llama 4 Maverick costs $0.000465 per message; Claude Sonnet 4.6 costs $0.0105 — 23x more. At a million messages a month, that's $465 versus $10,500.\n\nThe quality picture is the necessary other half. The strongest open-weight models now post leaderboard scores level with proprietary mid tiers — Qwen 3.7 Max and GLM 5.1 both score 72 on Arena, two points behind GPT-5.4 and within three of GPT-5.5. What open weights still don't reach in mid-2026 is the frontier: nothing open touches Gemini 3.1 Pro, Opus 4.8, or GPT-5.5 on hard reasoning and long-horizon agentic work. So the honest framing: open weights compete with — and underprice — everything except the top shelf. My earlier survey of [underrated bargain models](/blog/cost-optimization/underrated-bargain-llms-qwen-mistral-llama) digs into specific picks."
+    },
+    {
+      "heading": "What the per-token price doesn't include",
+      "body": "Three costs hide outside the token price, and they're why proprietary APIs keep winning deals they lose on paper.\n\nEvals and integration: proprietary vendors ship models heavily tuned for instruction-following, tool use, and structured output. Open-weight deployments more often need prompt iteration, output validation, and occasionally a fine-tune to match that polish. That's engineering time, and at small scale engineering time dwarfs token savings — the same trap as [fine-tuning vs prompt engineering](/blog/cost-optimization/fine-tuning-vs-prompt-engineering-cost).\n\nOperational variance: host quality differs — quantization choices, context handling, throughput, uptime. Two hosts serving 'the same' Llama can behave measurably differently. Budget a bake-off.\n\nEcosystem features: first-party prompt caching, batch discounts, vision pricing, and enterprise compliance paperwork are mature on the big three and uneven across open-weight hosts. If caching would halve your bill (see [the caching guide](/blog/cost-optimization/prompt-caching-save-90-percent-on-ai-costs)), check the host supports it before comparing list prices."
+    },
+    {
+      "heading": "The self-hosting math, briefly and honestly",
+      "body": "Renting a single H100-class GPU runs roughly $2-3 an hour, $1,500-2,200 a month — before redundancy, autoscaling, and the engineer who owns it. A serious deployment of a large model needs several. Hosted open-weight APIs amortize those same GPUs across thousands of customers at much higher utilization than you'll ever achieve solo.\n\nThe crossover where self-hosting wins on cost sits at sustained, predictable volume — think hundreds of millions of tokens a day — or when a hard constraint (data cannot leave your network, sub-50ms latency, custom fine-tunes) forces the issue regardless of cost. Below that, self-hosting is a strategic choice you pay for, not a savings plan. For everyone else, the hosted route captures 90% of the open-weight discount with none of the pager duty."
+    },
+    {
+      "heading": "The strategic argument: open weights as price insurance",
+      "body": "There's a second-order benefit that doesn't show up in any monthly bill: exit rights. A proprietary model can be repriced, deprecated, or retired on its vendor's schedule — and migrations off a deprecated model are real, recurring engineering costs. An open-weight model, once your stack runs on it, can't be taken away: if your host raises prices, five competitors serve identical weights tomorrow.\n\nIn practice I see this shape sensible 2026 architectures: proprietary frontier models for the hard, high-stakes 10% of calls, open-weight workhorses for the bulk lane, and the routing layer between them as the real asset — the pattern from [multi-model routing](/blog/building/multi-model-routing-with-quality-scores). That portfolio gets frontier quality where it pays, commodity prices where it doesn't, and negotiating leverage everywhere. Current prices for both camps sit side by side in [the live table](/models)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much cheaper are open-weight models than proprietary APIs?",
+      "answer": "Hosted open-weight models run 5-30x cheaper per token in June 2026: Llama 4 Maverick costs $0.15/$0.60 per million tokens versus $3/$15 for Claude Sonnet 4.6 — about 23x cheaper on a typical chat message. Against proprietary budget tiers the gap narrows to 2-7x."
+    },
+    {
+      "question": "Are open-weight models as good as GPT or Claude?",
+      "answer": "The best open models (Qwen 3.7 Max, GLM 5.1, both scoring 72 on Arena) match proprietary mid tiers like GPT-5.4 within a couple of points. None currently match the frontier — Gemini 3.1 Pro, GPT-5.5, Claude Opus 4.8 — on hard reasoning and agentic work."
+    },
+    {
+      "question": "Is it cheaper to self-host an open-weight LLM?",
+      "answer": "Rarely. GPU rental starts around $1,500-2,200/month per H100-class card before redundancy and staffing, while hosted open-weight APIs amortize hardware across thousands of customers. Self-hosting wins only at very large sustained volume or under hard data-locality constraints."
+    },
+    {
+      "question": "Which open-weight model has the largest context window?",
+      "answer": "Llama 4 Scout, with a 10M-token context window — the largest of any model I track, open or proprietary — at $0.10/$0.30 per million tokens. Whether you should actually fill 10M tokens per request is a separate cost question."
+    }
+  ],
+  "sources": [
+    { "label": "OpenRouter — Live open-weight model pricing across hosts", "url": "https://openrouter.ai/models" },
+    { "label": "Meta — Llama models and license", "url": "https://www.llama.com/" },
+    { "label": "LMArena — Text leaderboard", "url": "https://lmarena.ai/leaderboard" }
+  ],
+  "ctaText": "Compare open-weight and proprietary models on your actual workload — live prices from every major host.",
+  "relatedSlugs": [
+    "deepseek-api-pricing-guide-2026",
+    "underrated-bargain-llms-qwen-mistral-llama",
+    "openrouter-vs-direct-api-pricing-llm",
+    "multi-model-routing-with-quality-scores"
+  ]
+}

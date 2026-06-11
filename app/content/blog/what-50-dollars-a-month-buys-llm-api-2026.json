@@ -1,0 +1,82 @@
+{
+  "slug": "what-50-dollars-a-month-buys-llm-api-2026",
+  "category": "cost-optimization",
+  "kind": "guide",
+  "keyword": "LLM API budget",
+  "title": "What $50/Month Buys You on Every Major LLM API in 2026",
+  "description": "The same $50 budget buys 2.5 million tokens on Claude Fable 5 or 400 million on DeepSeek V4 Flash. A complete tour of what a small fixed budget gets you, model by model.",
+  "tldr": "At June 2026 prices, $50/month of API spend (assuming a typical 3:1 input-to-output mix) buys roughly: 400M tokens on DeepSeek V4 Flash, 108M on GPT-5.4-nano, 89M on Gemini Flash-Lite, 32M on Grok 4.3, 25M on Claude Haiku 4.5, 15M on Gemini 3.5 Flash, 8-9M on GPT-5.4 or Claude Sonnet 4.6, 5M on Claude Opus 4.8, 4.4M on GPT-5.5, and 2.5M on Claude Fable 5. For context, 25M tokens is about 19 million words — most side projects never get close.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Budget", "Cost Optimization", "Planning"],
+  "comparison": {
+    "caption": "What $50 buys at a 3:1 input:output mix, June 2026 prices",
+    "columns": ["Model", "Blended cost / 1M*", "Tokens per $50", "Words (approx)"],
+    "rows": [
+      ["Claude Haiku 4.5", "$2.00", "25M", "18.8M"],
+      ["DeepSeek V4 Flash", "$0.13", "400M", "300M"],
+      ["GPT-5.4-nano", "$0.46", "108M", "81M"],
+      ["Gemini 3.1 Flash-Lite", "$0.56", "89M", "67M"],
+      ["Grok 4.3", "$1.56", "32M", "24M"],
+      ["Gemini 3.5 Flash", "$3.38", "15M", "11M"],
+      ["GPT-5.4", "$5.63", "8.9M", "6.7M"],
+      ["Claude Sonnet 4.6", "$6.00", "8.3M", "6.2M"],
+      ["Gemini 3.1 Pro", "$4.50", "11M", "8.3M"],
+      ["Claude Opus 4.8", "$10.00", "5M", "3.8M"],
+      ["GPT-5.5", "$11.25", "4.4M", "3.3M"],
+      ["Claude Fable 5", "$20.00", "2.5M", "1.9M"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "Why I price budgets in blended cost",
+      "body": "Provider price pages quote two numbers — input and output per million tokens — which makes budget math annoying. So for budget planning I collapse them into one: blended cost per million tokens, assuming a 3:1 input-to-output mix (75% of tokens in, 25% out), which is close to what I observe across chat, RAG, and coding workloads.\n\nThe formula is simple: blended = 0.75 x input price + 0.25 x output price. Claude Haiku 4.5 at $1 in / $5 out blends to $2 per million. Your $50 buys 25 million tokens.\n\nIf your workload is output-heavy (content generation) or input-heavy (document analysis), shift the ratio and the rankings move — Grok's cheap output makes it climb for generation work, while cheap-input models climb for RAG. The asterisk on the table is doing real work; [the calculator](/) lets you set your own ratio. For why the input-output distinction exists at all, see [how AI API pricing works](/blog/fundamentals/how-ai-api-pricing-works)."
+    },
+    {
+      "heading": "What those token numbers mean physically",
+      "body": "Tokens are abstract until you convert them. Using the standard 0.75 words per token: 25M tokens (Haiku's $50 allotment) is about 18.8 million words — the complete works of Shakespeare twenty times over, or about 75,000 typical support conversations' worth of processing. Even Fable 5's 'small' 2.5M tokens is about 1.9 million words of combined reading and writing.\n\nThis is the most underrated fact in AI budgeting: for personal projects, prototypes, and small products, a $50/month budget on a sensibly chosen model is effectively unlimited. The conversion math is in [tokens to dollars](/blog/fundamentals/tokens-to-dollars-conversion) and [how many tokens in 1,000 words](/blog/fundamentals/how-many-tokens-in-1000-words)."
+    },
+    {
+      "heading": "Three realistic $50 builds",
+      "body": "Build one: a personal coding assistant. Heavy sessions burn 2M input + 150K output tokens; on Claude Sonnet 4.6 that's $8.25 a session, so $50 buys six serious sessions — or thirty-plus on Gemini 3.5 Flash. This is exactly why cascading matters at small scale.\n\nBuild two: a newsletter summarizer that ingests 200 articles a week (3,000 tokens each) and writes 200-token summaries. Weekly: 600K in, 40K out. Monthly: about 2.6M tokens — $5.20 on Haiku, $1.45 on Flash-Lite. You're using a tenth of the budget.\n\nBuild three: a niche RAG chatbot doing 5,000 questions a month (3,000 tokens of context in, 300 out each): 15M in + 1.5M out monthly. On Gemini 3.5 Flash that's $22.50 + $13.50 = $36 — fits with room to spare; on Sonnet it's $45 + $22.50 = $67.50 and you're over budget. At fixed budgets, the model choice IS the product decision."
+    },
+    {
+      "heading": "Stretching the budget: the multipliers stack",
+      "body": "Three discounts turn $50 into an effective $150-plus.\n\nPrompt caching: chat and RAG workloads resend the same prefixes constantly; cached input bills at roughly a tenth of list rate. On input-heavy workloads (which is most of them — see the 3:1 mix) caching alone can nearly double your effective budget. Details in [the caching guide](/blog/cost-optimization/prompt-caching-save-90-percent-on-ai-costs).\n\nBatch APIs: anything that can wait a few hours gets a flat 50% off on Anthropic and OpenAI. The summarizer in build two drops to $2.60/month.\n\nRouting: send the easy 80% of requests to a budget model and reserve the mid tier for the hard 20%. A Flash-Lite-plus-Sonnet cascade typically lands at a quarter of all-Sonnet cost at near-identical perceived quality — the approach from [the routing piece](/blog/building/multi-model-routing-with-quality-scores). Stack all three and the RAG bot from build three runs comfortably under $15."
+    },
+    {
+      "heading": "When $50 stops being enough",
+      "body": "Budgets break at predictable thresholds, and knowing yours in advance beats discovering it on an invoice.\n\nThe math is linear: the RAG bot at $36/month for 5,000 questions becomes $360 at 50,000 and $3,600 at 500,000. The thresholds where teams typically re-architect: around $500/month is where caching and routing stop being optional; around $2,000/month is where serious eval-driven model selection pays for itself (a 20% saving covers real engineering time); around $10,000/month is where open-weight models on dedicated hosting enter the conversation, covered in [the open-weight cost guide](/blog/fundamentals/open-weight-vs-proprietary-llm-costs-2026).\n\nSet a billing alert at half your budget on day one. Token spend is silent — there's no progress bar — and every provider's console buries usage a few clicks deep. The diagnostic habit is in [token usage auditing](/blog/cost-optimization/token-usage-auditing-find-hidden-costs)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How many tokens does $50 buy on the major LLM APIs?",
+      "answer": "At June 2026 prices with a typical 3:1 input:output mix: about 400M tokens on DeepSeek V4 Flash, 89-108M on the budget tiers (Gemini Flash-Lite, GPT-5.4-nano), 25M on Claude Haiku 4.5, 15M on Gemini 3.5 Flash, 8-9M on Sonnet 4.6 or GPT-5.4, and 2.5-5M on the frontier tier."
+    },
+    {
+      "question": "Is $50 a month enough for an AI side project?",
+      "answer": "Almost always. 25M tokens (Haiku's $50 allotment) is roughly 19 million words of combined processing — about 75,000 support-style conversations. Most prototypes and personal tools use under 10% of that. The exceptions are agentic coding loops and video/image-heavy workloads."
+    },
+    {
+      "question": "What is blended cost per million tokens?",
+      "answer": "A single planning number that combines input and output prices weighted by your usage mix — typically 75% input, 25% output. Formula: 0.75 x input price + 0.25 x output price. It makes cross-model budget comparisons one number instead of two."
+    },
+    {
+      "question": "How do I make a fixed LLM budget go further?",
+      "answer": "Stack three discounts: prompt caching (cached input bills at ~10% of list, nearly doubling input-heavy budgets), batch APIs (flat 50% off for non-urgent work), and model routing (cheap model for easy requests, mid-tier for hard ones). Together they routinely triple effective capacity."
+    }
+  ],
+  "sources": [
+    { "label": "OpenRouter — Live cross-provider pricing feed", "url": "https://openrouter.ai/models" },
+    { "label": "Anthropic — Batch API pricing", "url": "https://docs.anthropic.com/en/docs/build-with-claude/batch-processing" },
+    { "label": "OpenAI — Official API pricing", "url": "https://openai.com/api/pricing/" }
+  ],
+  "ctaText": "Enter your budget and see exactly how many tokens and words it buys on every model — live prices, no signup.",
+  "relatedSlugs": [
+    "how-much-does-an-ai-chatbot-cost-to-run-2026",
+    "tokens-to-dollars-conversion",
+    "prompt-caching-save-90-percent-on-ai-costs",
+    "ai-api-cost-for-mvp-startups"
+  ]
+}

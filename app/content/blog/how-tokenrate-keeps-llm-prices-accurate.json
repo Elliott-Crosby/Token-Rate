@@ -1,0 +1,64 @@
+{
+  "slug": "how-tokenrate-keeps-llm-prices-accurate",
+  "category": "building",
+  "kind": "guide",
+  "keyword": "LLM pricing data accuracy",
+  "title": "How TokenRate Keeps 200+ LLM Prices Accurate (And What Broke Along the Way)",
+  "description": "A transparency post: the exact pipeline behind this site's pricing data — daily syncs, quality-score merging, the bugs I've shipped, and what I do when sources disagree.",
+  "tldr": "Every price on TokenRate comes from a two-layer pipeline: a daily automated sync against the OpenRouter feed (200+ models, regenerated every morning by a scheduled job) plus a manually curated layer for descriptions, tiers, and models the feed misses. Quality scores merge in from public leaderboards daily. Calculator prices revalidate hourly. When sources disagree, the provider's official page wins. Corrections ship within 24 hours of confirmation — and yes, I've shipped bugs, two of which I describe below.",
+  "readTime": "6 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Methodology", "Transparency", "Building"],
+  "sections": [
+    {
+      "heading": "Why I'm writing down the plumbing",
+      "body": "A pricing site is only as useful as it is current, and AI pricing changes constantly — new models ship weekly, prices get cut mid-quarter, and a 'flagship' from January is a legacy tier by June. Sites that hand-maintain price tables rot in weeks; I know because TokenRate's earliest version was exactly that, and it rotted.\n\nThis post documents how the data actually flows, in the same spirit as the [About page methodology](/about) but with the engineering specifics. If you're building anything on top of LLM pricing data — a router, a budget dashboard, an internal cost report — the failure modes below will save you some pain. And if you ever catch a wrong number here, the [contact page](/contact) reaches me directly; corrections ship within a day."
+    },
+    {
+      "heading": "Layer one: the daily automated sync",
+      "body": "Every morning, a scheduled job pulls the complete OpenRouter model feed — currently 203 live models — and regenerates the site's pricing catalogue from it. OpenRouter aggregates real-time prices from providers and their hosts, which makes it the best single source I've found for breadth; when Anthropic or OpenAI changes a price, the feed reflects it within hours.\n\nThe job normalizes model identifiers (more on why that's hard below), maps prices to per-million-token rates, captures context windows, and writes a generated data file that the site builds from. Nothing in this layer is hand-typed, which is the point: the failure mode of manual tables isn't the price you got wrong, it's the price that silently went stale.\n\nOn top of the daily rebuild, the calculator's live prices revalidate every hour via incremental static regeneration — each page is served as static HTML, with prices refreshed against the feed on a 60-minute cycle."
+    },
+    {
+      "heading": "Layer two: the curated overlay",
+      "body": "Raw feed data isn't a product. The second layer is a hand-maintained file that overlays the generated one: plain-English model descriptions, strengths and weaknesses, tier classifications (flagship, balanced, fast, reasoning), and reference prices for a handful of models the feed doesn't carry.\n\nThe merge rule is strict: live feed prices always win over curated copy for anything numeric. Curated text wins for anything editorial. This split keeps opinions and numbers from contaminating each other — I can be wrong in an opinion without corrupting a price, and the feed can't overwrite a judgment call.\n\nQuality scores follow the same pattern: a daily job ingests public leaderboard standings (Arena-style ELO scores), normalizes them to the 0-100 scale explained in [the quality score methodology](/blog/fundamentals/how-llm-quality-scores-are-calculated), and attaches them to matching models. Only a minority of models have scores — currently 10 of 203 from the primary source — and the site shows nothing rather than guessing for the rest."
+    },
+    {
+      "heading": "Two bugs I actually shipped, and the rules they bought",
+      "body": "Transparency means the embarrassing parts too.\n\nBug one: dots versus dashes. Providers are inconsistent about model identifiers — claude-opus-4.8 in one system is claude-opus-4-8 in another. For a stretch, my ID normalization missed that, so a handful of models silently failed to match their live prices and fell back to older reference numbers. The fix was boring (canonicalize both forms before matching); the rule it bought was not: every unmatched model ID now gets surfaced at build time instead of failing silent.\n\nBug two: the popularity sort. An early version of the 'most popular' ordering let one provider's model family flood the top of the list, which made the default view quietly misleading even though every individual number was correct. The current sort round-robins across providers — documented in [the popular-sort explainer](/blog/fundamentals/popular-sort-round-robin-providers-llm) — and the rule it bought: ranking logic is content, and gets reviewed like content.\n\nNeither bug produced a wrong price on a model page, but both taught the same lesson: in a data product, the pipeline is the editorial policy."
+    },
+    {
+      "heading": "When sources disagree, and what I don't do",
+      "body": "Disagreements happen weekly. A host serves a model at a markup; a provider page shows a price the feed hasn't caught up to; a model has different prices above a context threshold. The precedence is fixed: the provider's official pricing page is ground truth, the live feed is the fast-moving proxy, and where they conflict for more than a day I pin the official number and note the date. Every model page shows when its reference price was last verified, and the [About page](/about) carries the standing advice: for mission-critical decisions, confirm against the provider's page — prices here are decision support, not a quote.\n\nWhat I don't do, as a matter of policy: no affiliate links, no paid placement, no commissions from any provider. Rankings move on public data or they don't move; nobody can buy a position in [the comparison table](/models). That independence is cheap to promise and expensive to fake, which is exactly why it's worth stating in writing."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Where does TokenRate's pricing data come from?",
+      "answer": "Primary source: the OpenRouter live model feed, synced in full every morning by an automated job, with calculator prices revalidating hourly. A curated overlay adds descriptions and tiers, and providers' official pricing pages serve as ground truth when sources disagree."
+    },
+    {
+      "question": "How often are prices updated?",
+      "answer": "The full 200+ model catalogue regenerates daily; live calculator prices revalidate every hour. Each model page displays the date its reference price was last verified."
+    },
+    {
+      "question": "What happens if a price on TokenRate is wrong?",
+      "answer": "Report it via the contact page and a confirmed correction ships within 24 hours. Build-time checks surface unmatched models so silent staleness — the usual failure mode of pricing sites — gets caught before deploy."
+    },
+    {
+      "question": "Does TokenRate earn money from the providers it ranks?",
+      "answer": "No. No affiliate links, paid placements, or provider commissions — the site is supported by ads only. Rankings are computed from public pricing and leaderboard data and can't be bought."
+    }
+  ],
+  "sources": [
+    { "label": "OpenRouter — Models API (the primary feed)", "url": "https://openrouter.ai/docs/api-reference/list-available-models" },
+    { "label": "LMArena — Public leaderboard (quality score source)", "url": "https://lmarena.ai/leaderboard" },
+    { "label": "TokenRate — Methodology section on the About page", "url": "https://tokenrate.dev/about" }
+  ],
+  "ctaText": "See the pipeline's output for yourself — 200+ models with live prices, updated daily, no signup.",
+  "relatedSlugs": [
+    "how-llm-quality-scores-are-calculated",
+    "popular-sort-round-robin-providers-llm",
+    "openrouter-vs-direct-api-pricing-llm",
+    "llm-api-pricing-glossary"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "slug": "google-gemini-api-pricing-guide-2026",
+  "category": "providers",
+  "kind": "guide",
+  "keyword": "Gemini API pricing",
+  "title": "Gemini API Pricing in 2026: Why Google Is the Value Play",
+  "description": "Google's Gemini 3.x API pricing explained — 3.1 Pro, 3.5 Flash, and Flash-Lite — and why Flash has quietly become the best quality-per-dollar deal at its tier.",
+  "tldr": "Google's June 2026 Gemini lineup is aggressively priced: Gemini 3.1 Pro at $2 in / $12 out per 1M tokens (Arena score 75 — above GPT-5.5 and Opus 4.8 for a fraction of the price), Gemini 3.5 Flash at $1.50 / $9 (Arena 73, frontier-adjacent quality at budget prices), and Flash-Lite at $0.25 / $1.50 for volume work. If you're optimizing purely for quality per dollar, Gemini is currently the strongest default.",
+  "readTime": "6 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["Gemini", "Google", "Pricing", "Providers"],
+  "comparison": {
+    "caption": "Gemini API pricing, verified June 10, 2026 (USD per 1M tokens)",
+    "columns": ["Model", "Input / 1M", "Output / 1M", "Arena score", "Cost per chat message*"],
+    "rows": [
+      ["Gemini 3.5 Flash", "$1.50", "$9.00", "73", "$0.0059"],
+      ["Gemini 3.1 Flash-Lite", "$0.25", "$1.50", "—", "$0.001"],
+      ["Gemini 3.1 Pro", "$2.00", "$12.00", "75", "$0.0078"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "The headline: Google is underpricing the competition",
+      "body": "When I re-verified prices on June 10, the cross-provider picture at the frontier looked like this: Gemini 3.1 Pro at $2 in / $12 out, Claude Opus 4.8 at $5 / $25, GPT-5.5 at $5 / $30 per million tokens. On the Arena leaderboard those three score 75, 74, and 74 respectively.\n\nRead that again: the model with the highest score of the three costs 40% as much on input. Whatever you think of any single leaderboard — and I've written about [their limits](/blog/fundamentals/llm-leaderboards-2026-which-to-trust) — the pricing asymmetry is real and large. Google is buying market share, and API consumers are the beneficiaries.\n\nThe per-message column above assumes 1,500 input tokens and 400 output tokens, my standard chat-turn yardstick across these guides."
+    },
+    {
+      "heading": "Gemini 3.5 Flash: the anomaly worth knowing about",
+      "body": "Flash is normally a provider's 'fast and cheap' tier — useful, unglamorous. Gemini 3.5 Flash breaks that pattern: it scores 73 on Arena, level with GPT-5.4 ($2.50 / $15) and within two points of the frontier trio, while costing $1.50 / $9.\n\nThat makes Flash the model I check first whenever someone asks what to use for serious-but-high-volume work: drafting, code review comments, RAG answer synthesis, long-document Q&A. The catch I've found in practice is variance — Flash is more sensitive to prompt quality than the Pro tiers, so invest in your system prompt before judging it. The [Flash vs Flash-Lite comparison](/blog/comparisons/gemini-3-5-flash-vs-flash-lite-price-comparison) covers when to step down a tier."
+    },
+    {
+      "heading": "Flash-Lite: the volume tier",
+      "body": "Gemini 3.1 Flash-Lite at $0.25 / $1.50 competes with GPT-5.4-nano ($0.20 / $1.25) for classification, routing, tagging, and extraction. At a tenth of a cent per typical message, the pricing question stops mattering and the engineering question takes over: which one holds your output schema more reliably at your volume. Run a few hundred real examples through both before committing — at this tier the eval costs pennies.\n\nOne thing Flash-Lite shares with its bigger siblings: the full multimodal stack. If your volume workload involves images — receipts, screenshots, forms — Gemini's vision pricing at this tier has been the cheapest path I've found. More on that in [the multimodal token costs piece](/blog/fundamentals/multimodal-token-costs-images-vision)."
+    },
+    {
+      "heading": "Context windows and long-document economics",
+      "body": "Every current Gemini model ships roughly a 1M-token context window. The marketing writes itself — drop a whole codebase in — but the economics deserve sober math: filling a 1M context on 3.1 Pro costs about $2 per request, every request, because you pay for input tokens every time you send them.\n\nA conversation that keeps a 200K-token document in context for 20 turns pays for roughly 4M input tokens of resends — $8 on Pro, $6 on Flash — unless you use context caching, which Google offers precisely for this pattern. The general trap and the fixes are covered in [the 1M-token context piece](/blog/fundamentals/real-cost-1-million-token-context); the short version is that retrieval (sending only relevant chunks) usually beats brute-force stuffing by 10-50x on cost."
+    },
+    {
+      "heading": "What real workloads cost on Gemini",
+      "body": "My standard scenarios, priced at June 2026 rates with [the calculator](/).\n\nA support chatbot, 10,000 conversations a month (9,000 cumulative input tokens, 1,200 output per conversation): about $243/month on Flash, $40 on Flash-Lite, $324 on 3.1 Pro.\n\nSummarizing 1,000 long documents (50,000 tokens in, 1,000 out): $75 on Flash, $100 on Pro.\n\nA RAG product answering 100,000 questions a month (3,000 tokens of retrieved context in, 300 out each): $450 input + $270 output = $720/month on Flash — versus $1,500+ on GPT-5.5 input alone. For value-tier math across providers, see [the quality-per-dollar ranking](/blog/comparisons/quality-per-dollar-llm-ranking-2026)."
+    },
+    {
+      "heading": "The honest caveats",
+      "body": "Three things temper the enthusiasm. First, model churn: Google iterates fast and deprecates fast, and several strong Gemini variants ship as previews — fine for experiments, riskier as a hard production dependency without a migration plan.\n\nSecond, quotas: the attractive list prices come with per-minute token limits that need a quota request to lift at scale; budget lead time for that conversation.\n\nThird, ecosystem lock-in points the other way: the discounts get deeper inside Vertex AI, which is great if you're already on Google Cloud and friction if you're not. None of these flip the conclusion — Gemini is the value play of mid-2026 — but they're the fine print I'd want stated. Cross-check current numbers on the [live pricing table](/models) before committing."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much does the Gemini API cost?",
+      "answer": "As of June 2026: Gemini 3.1 Pro costs $2 per million input tokens and $12 per million output tokens; Gemini 3.5 Flash costs $1.50 / $9; Gemini 3.1 Flash-Lite costs $0.25 / $1.50. A typical chat message costs between a tenth of a cent (Flash-Lite) and eight-tenths of a cent (Pro)."
+    },
+    {
+      "question": "Is Gemini cheaper than GPT and Claude?",
+      "answer": "At the frontier tier, substantially: Gemini 3.1 Pro ($2/$12) versus GPT-5.5 ($5/$30) and Claude Opus 4.8 ($5/$25), while scoring slightly higher on the Arena leaderboard (75 vs 74 for both rivals)."
+    },
+    {
+      "question": "Is Gemini 3.5 Flash good enough for production?",
+      "answer": "For most workloads, yes — it scores 73 on Arena, level with GPT-5.4 and within two points of the frontier models, at $1.50/$9 per million tokens. It's more prompt-sensitive than the Pro tier, so test with your real prompts before deciding."
+    },
+    {
+      "question": "Does a 1M-token context window cost extra on Gemini?",
+      "answer": "There's no surcharge for the window itself — you pay normal per-token rates for whatever you actually send. The trap is resending: a full 1M-token context costs about $2 per request on 3.1 Pro, every request. Context caching and retrieval are the standard fixes."
+    }
+  ],
+  "sources": [
+    { "label": "Google AI — Official Gemini API pricing", "url": "https://ai.google.dev/pricing" },
+    { "label": "Google AI — Context caching documentation", "url": "https://ai.google.dev/gemini-api/docs/caching" },
+    { "label": "OpenRouter — Live Google model pricing feed", "url": "https://openrouter.ai/google" }
+  ],
+  "ctaText": "See what your workload costs on Gemini 3.1 Pro, Flash, and Flash-Lite next to every rival — live prices, no signup.",
+  "relatedSlugs": [
+    "claude-api-pricing-guide-2026",
+    "openai-api-pricing-guide-2026",
+    "gemini-3-5-flash-vs-flash-lite-price-comparison",
+    "quality-per-dollar-llm-ranking-2026"
+  ]
+}
