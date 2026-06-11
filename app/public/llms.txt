@@ -4,7 +4,7 @@
 
 ## What this site provides
 
-- **Live AI model pricing** for 25+ models from Anthropic, OpenAI, Google, Meta, DeepSeek, xAI, and Mistral
+- **Live AI model pricing** for 200+ models from Anthropic, OpenAI, Google, Meta, DeepSeek, xAI, Mistral, and more
 - **Token / dollar / character conversions** in any direction, side by side across models
 - **Per-model reference pages** with context windows, output limits, strengths, and cost examples
 - **Comparison pages** ranking models by price, coding ability, reasoning, and long-context capability
@@ -13,7 +13,7 @@
 ## Data freshness
 
 - Live pricing refreshes every hour via Next.js ISR against the OpenRouter API.
-- Static reference prices and model metadata are reviewed and re-stamped on a rolling cadence (current stamp: 2026-06-08).
+- Static reference prices and model metadata are reviewed and re-stamped on a rolling cadence (current stamp: 2026-06-10).
 - All prices are USD per 1 million tokens unless otherwise stated.
 
 ## Canonical URLs
@@ -42,6 +42,14 @@
 - https://tokenrate.dev/blog/comparisons/quality-per-dollar-llm-ranking-2026 — Best-value LLMs ranked by quality per dollar
 - https://tokenrate.dev/blog/comparisons/gemini-vs-claude-vs-gpt-cost — Frontier cost comparison (Gemini vs Claude vs GPT)
 - https://tokenrate.dev/blog/providers/llm-pricing-trends-2026 — How AI model prices changed in 2026
+- https://tokenrate.dev/blog/providers/claude-api-pricing-guide-2026 — Complete Claude API pricing guide
+- https://tokenrate.dev/blog/providers/openai-api-pricing-guide-2026 — Complete OpenAI GPT-5.x API pricing guide
+- https://tokenrate.dev/blog/providers/google-gemini-api-pricing-guide-2026 — Complete Gemini API pricing guide
+- https://tokenrate.dev/blog/providers/deepseek-api-pricing-guide-2026 — Complete DeepSeek API pricing guide
+- https://tokenrate.dev/blog/providers/grok-xai-api-pricing-guide-2026 — Complete xAI Grok API pricing guide
+- https://tokenrate.dev/blog/fundamentals/llm-api-pricing-glossary — Every LLM billing term explained
+- https://tokenrate.dev/blog/building/how-much-does-an-ai-chatbot-cost-to-run-2026 — Chatbot running-cost worked example
+- https://tokenrate.dev/blog/building/how-tokenrate-keeps-llm-prices-accurate — How this site's pricing data pipeline works
 
 ### About
 - https://tokenrate.dev/about — Methodology and data sources

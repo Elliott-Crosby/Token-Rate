@@ -139,6 +139,9 @@ const RELATED: { href: string; label: string; description: string }[] = [
   { href: '/blog/comparisons/quality-per-dollar-llm-ranking-2026', label: 'Quality Per Dollar: Best-Value LLMs', description: 'Which models deliver the most quality for each dollar in 2026.' },
   { href: '/blog/comparisons/gemini-vs-claude-vs-gpt-cost', label: 'Gemini vs Claude vs GPT Cost', description: 'A full side-by-side cost comparison of the three frontier model families.' },
   { href: '/blog/providers/llm-pricing-trends-2026', label: 'LLM Pricing Trends 2026', description: 'How AI model costs have shifted across providers this year.' },
+  { href: '/blog/providers/claude-api-pricing-guide-2026', label: 'Claude API Pricing Guide 2026', description: 'Every Claude model and tier with real worked costs.' },
+  { href: '/blog/building/how-much-does-an-ai-chatbot-cost-to-run-2026', label: 'What an AI Chatbot Costs to Run', description: 'The same 10,000-conversation chatbot priced on ten models.' },
+  { href: '/blog/fundamentals/llm-api-pricing-glossary', label: 'LLM Pricing Glossary', description: 'Cached input, output multiplier, TPM limits — every billing term explained.' },
 ]
 
 export default async function Home() {
