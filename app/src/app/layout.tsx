@@ -38,8 +38,8 @@ export const metadata: Metadata = {
     'LLM pricing',
     'tokens per dollar',
   ],
-  authors: [{ name: 'TokenRate' }],
-  creator: 'TokenRate',
+  authors: [{ name: 'Elliott Crosby', url: 'https://tokenrate.dev/about#author' }],
+  creator: 'Elliott Crosby',
   openGraph: {
     type: 'website',
     locale: 'en_US',

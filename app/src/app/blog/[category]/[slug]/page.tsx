@@ -7,7 +7,7 @@ import { getCategory, isCategorySlug } from '@/lib/categories'
 import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import RelatedPages from '@/components/RelatedPages'
-import JsonLd, { articleSchema, breadcrumbSchema } from '@/components/JsonLd'
+import JsonLd, { articleSchema, breadcrumbSchema, AUTHOR_NAME } from '@/components/JsonLd'
 import AdSlot from '@/components/AdSlot'
 
 const IN_ARTICLE_SLOT = process.env.NEXT_PUBLIC_ADSENSE_SLOT_IN_ARTICLE
@@ -171,7 +171,14 @@ export default async function PostPage({
           <p className="text-zinc-500 dark:text-zinc-400 text-base leading-relaxed mb-3">{post.description}</p>
           {post.publishedAt && (
             <p className="text-xs text-zinc-400 dark:text-zinc-500">
-              Published{' '}
+              By{' '}
+              <Link
+                href="/about#author"
+                className="text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline underline-offset-2"
+              >
+                {AUTHOR_NAME}
+              </Link>
+              {' · '}Published{' '}
               <time dateTime={post.publishedAt}>
                 {new Date(post.publishedAt).toLocaleDateString('en-US', {
                   year: 'numeric',

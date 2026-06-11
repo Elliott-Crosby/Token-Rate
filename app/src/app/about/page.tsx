@@ -38,6 +38,30 @@ export default function AboutPage() {
           prompt cost?"</em> and <em>"how many words can my budget buy across models?"</em>
         </p>
 
+        <section id="author">
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">Who runs TokenRate</h2>
+          <p>
+            TokenRate is built and maintained by{' '}
+            <strong className="text-zinc-800 dark:text-zinc-200">Elliott Crosby</strong>{' '}
+            (
+            <a
+              href="https://github.com/Elliott-Crosby"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-600 dark:text-emerald-400 hover:underline"
+            >
+              GitHub
+            </a>
+            ). I started TokenRate in 2026 after one too many surprise AI API bills: provider
+            pricing pages each use their own units, quality leaderboards live somewhere else
+            entirely, and nobody answers the only question that matters — what will{' '}
+            <em>my</em> workload cost on <em>this</em> model? I write the guides, maintain the
+            data pipeline that re-verifies prices daily, and review every number on this site.
+            If you catch an error, <Link href="/contact" className="text-emerald-600 dark:text-emerald-400 hover:underline">tell me</Link> and
+            I'll fix it within a day.
+          </p>
+        </section>
+
         <section>
           <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">Coverage</h2>
           <p>

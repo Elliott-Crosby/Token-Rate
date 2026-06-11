@@ -5,6 +5,9 @@ interface JsonLdProps {
 const SITE_URL = 'https://tokenrate.dev'
 const SITE_NAME = 'TokenRate'
 
+export const AUTHOR_NAME = 'Elliott Crosby'
+const AUTHOR_URL = `${SITE_URL}/about#author`
+
 export default function JsonLd({ data }: JsonLdProps) {
   return (
     <script
@@ -36,7 +39,21 @@ export function organizationSchema() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: { '@type': 'ImageObject', url: `${SITE_URL}/icon.png`, width: 512, height: 512 },
+    founder: { '@id': `${SITE_URL}/#author` },
     sameAs: [],
+  }
+}
+
+export function personSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${SITE_URL}/#author`,
+    name: AUTHOR_NAME,
+    url: AUTHOR_URL,
+    worksFor: { '@id': `${SITE_URL}/#organization` },
+    knowsAbout: ['AI API pricing', 'LLM tokens', 'AI cost optimization'],
+    sameAs: ['https://github.com/Elliott-Crosby'],
   }
 }
 
@@ -60,7 +77,7 @@ export function websiteSchema() {
 }
 
 export function siteSchemas() {
-  return [organizationSchema(), websiteSchema()]
+  return [organizationSchema(), websiteSchema(), personSchema()]
 }
 
 export function faqSchema(faqs: { question: string; answer: string }[]) {
@@ -95,7 +112,7 @@ export function articleSchema({
   datePublished,
   dateModified,
   imageUrl,
-  authorName = SITE_NAME,
+  authorName = AUTHOR_NAME,
 }: {
   title: string
   description: string
@@ -117,7 +134,7 @@ export function articleSchema({
     datePublished: published,
     dateModified: modified,
     image: imageUrl ? [imageUrl] : undefined,
-    author: { '@type': 'Organization', name: authorName, url: SITE_URL },
+    author: { '@type': 'Person', '@id': `${SITE_URL}/#author`, name: authorName, url: AUTHOR_URL },
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
