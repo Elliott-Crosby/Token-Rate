@@ -166,6 +166,15 @@ export default async function Home() {
           <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
             AI Token Calculator &amp; Live Pricing Comparison
           </h1>
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/30 px-3 py-1">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+            </span>
+            <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+              Prices updated daily — last verified {MODELS_UPDATED_AT}
+            </span>
+          </div>
         </div>
 
         {/* Calculator — desktop table view, hidden on mobile */}
@@ -181,7 +190,7 @@ export default async function Home() {
         <div className="mt-12 grid grid-cols-3 gap-4 text-center">
           {[
             { value: `${ALL_MODELS.length}+`, label: 'Models tracked' },
-            { value: 'Live', label: 'Pricing data' },
+            { value: 'Daily', label: 'Prices updated' },
             { value: 'Free', label: 'No sign-up' },
           ].map((stat) => (
             <div key={stat.label} className="flex flex-col gap-0.5 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">

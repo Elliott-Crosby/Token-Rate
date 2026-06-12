@@ -22,16 +22,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://tokenrate.dev'),
   title: {
-    default: 'TokenRate — AI Token Calculator & Pricing Comparison',
+    default: 'TokenRate — AI Token Calculator, Prices Updated Daily',
     template: '%s | TokenRate',
   },
   description:
-    'Free AI token calculator and live pricing comparison. Convert between money, tokens, and characters for Claude, GPT-4o, Gemini, and more. See exactly what your AI API calls cost.',
+    'Free AI token calculator with prices updated daily. Convert between money, tokens, and characters across Claude, GPT-5, Gemini, and 200+ models — and see exactly what your AI API calls cost. Always-current pricing, no sign-up.',
   keywords: [
     'AI token calculator',
     'AI pricing comparison',
-    'Claude pricing',
-    'GPT-4o pricing',
+    'AI pricing updated daily',
+    'current LLM pricing',
+    'Claude Opus 4.8 pricing',
+    'GPT-5 pricing',
     'Gemini pricing',
     'tokens to dollars',
     'AI API cost',
@@ -45,14 +47,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://tokenrate.dev',
     siteName: 'TokenRate',
-    title: 'AI Token Calculator — Free, Live Pricing | TokenRate',
+    title: 'AI Token Calculator — Prices Updated Daily | TokenRate',
     description:
-      'Free AI token calculator with live pricing. Convert tokens to dollars and compare AI cost across Claude, GPT-4o, Gemini, and more — instantly.',
+      'Free AI token calculator with prices updated daily. Convert tokens to dollars and compare AI cost across Claude, GPT-5, Gemini, and 200+ models — instantly.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Token Calculator — Free, Live Pricing | TokenRate',
-    description: 'Free AI token calculator with live pricing. Convert tokens to dollars and compare AI cost across Claude, GPT-4o, Gemini, and more.',
+    title: 'AI Token Calculator — Prices Updated Daily | TokenRate',
+    description: 'Free AI token calculator with prices updated daily. Convert tokens to dollars and compare AI cost across Claude, GPT-5, Gemini, and 200+ models.',
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://tokenrate.dev' },
