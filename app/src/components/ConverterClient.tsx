@@ -119,14 +119,14 @@ const PRESETS: Record<InputMode, { label: string; value: number }[]> = {
 const MODE_PREFIX: Record<InputMode, string> = { money: '$', tokens: '#', characters: 'Aa' }
 const MODE_PLACEHOLDER: Record<InputMode, string> = { money: '1.00', tokens: '1,000,000', characters: '4,000,000' }
 
-type SortOption = 'popular' | 'value' | 'quality' | 'cheapest' | 'expensive' | 'name' | 'provider'
+type SortOption = 'newest' | 'value' | 'quality' | 'cheapest' | 'expensive' | 'name' | 'provider'
 
 // ── Main component ──────────────────────────────────────────────────────────
 export default function ConverterClient({ providerGroups }: { providerGroups: ProviderGroup[] }) {
   const [mode, setMode] = useState<InputMode>('money')
   const [raw, setRaw] = useState('')
   const [activeProvider, setActiveProvider] = useState<string>('All')
-  const [sort, setSort] = useState<SortOption>('popular')
+  const [sort, setSort] = useState<SortOption>('newest')
   const [sortOpen, setSortOpen] = useState(false)
   const [compareMode, setCompareMode] = useState(false)
 
@@ -161,7 +161,6 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
   }, [raw])
 
   const filteredSorted = useMemo(() => {
-    const PROVIDER_ORDER = ['Anthropic', 'OpenAI', 'Google', 'Meta', 'DeepSeek', 'Mistral', 'xAI']
     let models = activeProvider === 'All' ? allModels : allModels.filter((m) => m.provider === activeProvider)
 
     // ── Cost filter ────────────────────────────────────────────────────────
@@ -178,58 +177,19 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
     else if (qualityPreset === 'good50') models = models.filter(m => m.qualityIndex != null && m.qualityIndex >= 50)
     else if (qualityPreset === 'rated')  models = models.filter(m => m.qualityIndex != null)
 
-    // ── 'popular': round-robin across providers (flagships first, then everything else) ──
-    if (sort === 'popular') {
-      const TIER_RANK: Record<string, number> = { flagship: 0, reasoning: 1, balanced: 2, fast: 3 }
-
-      // Group + sort each provider's models internally: tier > quality > price
-      const byProvider: Record<string, ModelPricing[]> = {}
-      for (const m of models) {
-        if (!byProvider[m.provider]) byProvider[m.provider] = []
-        byProvider[m.provider].push(m)
-      }
-      for (const p of Object.keys(byProvider)) {
-        byProvider[p].sort((a, b) => {
-          // Primary models rank above their speed/preview/dated variants so the
-          // real flagship surfaces — not a pricier "(Fast)" or old snapshot.
-          if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
-          // Most powerful first: quality drives the order within each company.
-          const aq = a.qualityIndex ?? -1
-          const bq = b.qualityIndex ?? -1
-          if (aq !== bq) return bq - aq
-          // Tie-breaks: flagship tier, then cheaper first.
-          const at = TIER_RANK[detectTier(a.name)] ?? 2
-          const bt = TIER_RANK[detectTier(b.name)] ?? 2
-          if (at !== bt) return at - bt
-          return a.inputPricePerToken - b.inputPricePerToken
-        })
-      }
-
-      // Provider iteration order: known providers first (by fame), then anything else
-      const orderedProviders = [
-        ...PROVIDER_ORDER.filter(p => byProvider[p]?.length),
-        ...Object.keys(byProvider).filter(p => !PROVIDER_ORDER.includes(p)),
-      ]
-
-      // Round-robin: depth 0 → every provider's flagship, depth 1 → 2nd best, etc.
-      const result: ModelPricing[] = []
-      let depth = 0
-      let added = true
-      while (added) {
-        added = false
-        for (const p of orderedProviders) {
-          if (byProvider[p][depth]) {
-            result.push(byProvider[p][depth])
-            added = true
-          }
-        }
-        depth++
-      }
-      return result
-    }
-
-    // ── Tier filter (non-popular sorts only) ───────────────────────────────
+    // ── Tier filter ────────────────────────────────────────────────────────
     models = models.filter(m => filterTiers.has(detectTier(m.name)))
+
+    // ── 'newest': most recently released model first (OpenRouter `created`) ──
+    if (sort === 'newest') {
+      return [...models].sort((a, b) => {
+        const ac = a.created ?? 0, bc = b.created ?? 0
+        if (ac !== bc) return bc - ac                          // newest release first
+        // Same release date: primaries above dated/preview variants, then quality.
+        if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
+        return (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1)
+      })
+    }
 
     if (sort === 'cheapest') {
       return [...models].sort((a, b) => {
@@ -290,7 +250,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
   }, [numericValue, mode])
 
   const SORT_LABELS: Record<SortOption, string> = {
-    popular: 'most popular',
+    newest: 'newest first',
     value: 'best value',
     quality: 'highest quality',
     cheapest: 'cheapest first',

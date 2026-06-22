@@ -339,12 +339,40 @@ export const EXTRA_MODELS: ModelData[] = ${JSON.stringify(extras, null, 2)}
   console.log(`  ${extras.length} live models, ${scored} scored, ${Object.keys(qualityByKey).length} quality keys, dated ${today}`)
 }
 
+// How old the committed snapshot may get before we treat the feed as broken.
+// The catalog is regenerated on every dev start, build, and Vercel deploy, plus a
+// daily GitHub Action — so anything beyond a couple of days means the live fetch
+// has been silently failing and the data is genuinely rotting.
+const MAX_STALE_DAYS = 3
+
+// Days between the existing snapshot's LIVE_UPDATED_AT and today. null if unknown.
+function snapshotAgeDays() {
+  try {
+    const text = readFileSync(OUT, 'utf8')
+    const m = text.match(/LIVE_UPDATED_AT\s*=\s*'(\d{4}-\d{2}-\d{2})'/)
+    if (!m) return null
+    const then = new Date(m[1] + 'T00:00:00Z').getTime()
+    const now = new Date(new Date().toISOString().slice(0, 10) + 'T00:00:00Z').getTime()
+    return Math.round((now - then) / 86_400_000)
+  } catch {
+    return null
+  }
+}
+
 main().catch((e) => {
   console.error('build-models failed:', e.message)
   // Don't break a deploy if OpenRouter is briefly unreachable — keep the last
   // committed snapshot. Only hard-fail if there's no generated file at all.
   if (existsSync(OUT)) {
-    console.error('Keeping existing models.generated.ts')
+    const age = snapshotAgeDays()
+    console.error(`Keeping existing models.generated.ts (snapshot is ${age ?? '?'} day(s) old)`)
+    // In the daily GitHub Action, fail loudly once the snapshot is rotting so the
+    // run goes red and we actually notice the dead feed — but never break a Vercel
+    // deploy or a local dev start over a transient OpenRouter hiccup.
+    if (process.env.GITHUB_ACTIONS && age != null && age > MAX_STALE_DAYS) {
+      console.error(`::error::Model catalog is ${age} days stale (> ${MAX_STALE_DAYS}) — the live feed has been failing. Investigate OpenRouter access.`)
+      process.exit(1)
+    }
     process.exit(0)
   }
   process.exit(1)

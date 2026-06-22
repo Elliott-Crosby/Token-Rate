@@ -138,13 +138,13 @@ const PRESETS: Record<InputMode, { l: string; v: number }[]> = {
   characters: [{ l: '4K', v: 4000 }, { l: '40K', v: 40000 }, { l: '400K', v: 400000 }, { l: '4M', v: 4000000 }],
 }
 
-type SortOption = 'popular' | 'value' | 'quality' | 'cheapest' | 'expensive' | 'name' | 'provider'
+type SortOption = 'newest' | 'value' | 'quality' | 'cheapest' | 'expensive' | 'name' | 'provider'
 const SORTS: [SortOption, string][] = [
-  ['popular', 'Most popular'], ['value', 'Best value'], ['quality', 'Highest quality'],
+  ['newest', 'Newest first'], ['value', 'Best value'], ['quality', 'Highest quality'],
   ['cheapest', 'Cheapest first'], ['expensive', 'Most expensive'], ['name', 'Name'], ['provider', 'Provider'],
 ]
 const SORT_SHORT: Record<SortOption, string> = {
-  popular: 'popular', value: 'best value', quality: 'quality', cheapest: 'cheapest', expensive: 'priciest', name: 'name', provider: 'provider',
+  newest: 'newest', value: 'best value', quality: 'quality', cheapest: 'cheapest', expensive: 'priciest', name: 'name', provider: 'provider',
 }
 const COST_PRESETS: [CostPreset, string][] = [['all', 'All'], ['under1', 'Under $1'], ['1to10', '$1 – $10'], ['over10', 'Over $10']]
 const QUAL_PRESETS: [QualityPreset, string][] = [['all', 'All'], ['top75', 'Top (75+)'], ['good50', 'Good (50+)'], ['rated', 'Rated only']]
@@ -485,7 +485,7 @@ export default function MobileConverter({ providerGroups }: { providerGroups: Pr
   const [raw, setRaw] = useState('')
   const [view, setView] = useState<'all' | 'compare'>('all')
   const [activeProvider, setActiveProvider] = useState('All')
-  const [sort, setSort] = useState<SortOption>('popular')
+  const [sort, setSort] = useState<SortOption>('newest')
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [sheet, setSheet] = useState<string | null>(null) // 'sort' | 'filter' | provider name
   const [filterTiers, setFilterTiers] = useState<Set<string>>(new Set(TIER_KEYS))
@@ -503,7 +503,6 @@ export default function MobileConverter({ providerGroups }: { providerGroups: Pr
   const activeFilterCount = (filterTiers.size < TIER_KEYS.length ? 1 : 0) + (costPreset !== 'all' ? 1 : 0) + (qualPreset !== 'all' ? 1 : 0)
 
   const filtered = useMemo(() => {
-    const PROVIDER_ORDER = ['Anthropic', 'OpenAI', 'Google', 'Meta', 'DeepSeek', 'Mistral', 'xAI']
     let models = activeProvider === 'All' ? allModels : allModels.filter((m) => m.provider === activeProvider)
 
     if (costPreset === 'under1') models = models.filter((m) => perM(m.inputPricePerToken) < 1)
@@ -514,37 +513,17 @@ export default function MobileConverter({ providerGroups }: { providerGroups: Pr
     else if (qualPreset === 'good50') models = models.filter((m) => m.qualityIndex != null && m.qualityIndex >= 50)
     else if (qualPreset === 'rated') models = models.filter((m) => m.qualityIndex != null)
 
-    if (sort === 'popular') {
-      const TIER_RANK: Record<string, number> = { flagship: 0, reasoning: 1, balanced: 2, fast: 3 }
-      const byProvider: Record<string, ModelPricing[]> = {}
-      for (const m of models) (byProvider[m.provider] ||= []).push(m)
-      for (const p of Object.keys(byProvider)) {
-        byProvider[p].sort((a, b) => {
-          if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
-          const aq = a.qualityIndex ?? -1, bq = b.qualityIndex ?? -1
-          if (aq !== bq) return bq - aq
-          const at = TIER_RANK[detectTier(a.name)] ?? 2, bt = TIER_RANK[detectTier(b.name)] ?? 2
-          if (at !== bt) return at - bt
-          return a.inputPricePerToken - b.inputPricePerToken
-        })
-      }
-      const ordered = [
-        ...PROVIDER_ORDER.filter((p) => byProvider[p]?.length),
-        ...Object.keys(byProvider).filter((p) => !PROVIDER_ORDER.includes(p)),
-      ]
-      const out: ModelPricing[] = []
-      let depth = 0, added = true
-      while (added) {
-        added = false
-        for (const p of ordered) {
-          if (byProvider[p][depth]) { out.push(byProvider[p][depth]); added = true }
-        }
-        depth++
-      }
-      return out
-    }
-
     models = models.filter((m) => filterTiers.has(detectTier(m.name)))
+    if (sort === 'newest') {
+      // Most recently released first (OpenRouter `created`). Tie-break: primaries
+      // above dated/preview variants, then higher quality.
+      return [...models].sort((a, b) => {
+        const ac = a.created ?? 0, bc = b.created ?? 0
+        if (ac !== bc) return bc - ac
+        if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
+        return (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1)
+      })
+    }
     if (sort === 'cheapest') return [...models].sort((a, b) => a.inputPricePerToken - b.inputPricePerToken || (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1))
     if (sort === 'expensive') return [...models].sort((a, b) => b.inputPricePerToken - a.inputPricePerToken || (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1))
     if (sort === 'quality') return [...models].sort((a, b) => (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1))

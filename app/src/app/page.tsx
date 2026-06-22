@@ -23,6 +23,7 @@ interface OpenRouterModel {
   name: string
   pricing?: { prompt?: string; completion?: string }
   context_length?: number
+  created?: number // unix seconds — release date, used for "newest first" sort
 }
 
 // Speed/preview tiers and dated snapshots — kept in the list but pushed below the
@@ -91,6 +92,7 @@ async function fetchModels(): Promise<ProviderGroup[]> {
         qualityIndex: quality?.score,
         qualitySource: quality?.source,
         isVariant: isVariantModel(m.id, name),
+        created: m.created,
       })
     }
 
