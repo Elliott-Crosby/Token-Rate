@@ -41,15 +41,43 @@ jobs:
         run: node scripts/build-models.mjs
 
       - name: Commit catalog if it changed
+        id: commit
         run: |
           git config user.name "TokenRate ModelBot"
           git config user.email "bot@tokenrate.dev"
           git add app/src/lib/models.generated.ts
           if git diff --cached --quiet; then
             echo "No model changes today."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             COUNT=$(grep -c '"slug":' app/src/lib/models.generated.ts || echo "?")
             git commit -m "models: daily refresh from OpenRouter (${COUNT} live models)"
             git pull --rebase origin main
             git push origin main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      # Best-effort: tell IndexNow (Bing, Yandex, …) to re-crawl, so newly-shipped
+      # model/blog/compare pages get submitted the day they appear instead of
+      # waiting for an organic crawl — directly addresses the indexing bottleneck.
+      # Only runs when the catalog actually changed (avoids daily no-op spam).
+      # Requires INDEXNOW_PING_SECRET as a repo Actions secret; INDEXNOW_KEY lives
+      # on Vercel. No-ops (never fails the job) if the secret isn't configured.
+      - name: Ping IndexNow
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          INDEXNOW_PING_SECRET: ${{ secrets.INDEXNOW_PING_SECRET }}
+        run: |
+          if [ -z "$INDEXNOW_PING_SECRET" ]; then
+            echo "INDEXNOW_PING_SECRET not set — skipping IndexNow ping."
+            exit 0
+          fi
+          # Give Vercel a head start to deploy the new commit so the endpoint's
+          # URL list includes today's new models. The full set is resubmitted on
+          # every change, so any stragglers are caught on the next run.
+          sleep 180
+          echo "Submitting URLs to IndexNow…"
+          curl -sS -X POST https://tokenrate.dev/api/indexnow \
+            -H "Authorization: Bearer $INDEXNOW_PING_SECRET" \
+            -w "\nHTTP %{http_code}\n" || true
