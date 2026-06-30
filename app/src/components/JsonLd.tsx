@@ -24,7 +24,7 @@ export function webAppSchema() {
     name: SITE_NAME,
     url: SITE_URL,
     description:
-      'Free AI token calculator and pricing comparison. Convert between money, tokens, and characters across Claude, GPT-4o, Gemini, and more.',
+      'Free AI token calculator and pricing comparison. Convert between money, tokens, and characters across Claude, GPT-5, Gemini, and more.',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'All',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

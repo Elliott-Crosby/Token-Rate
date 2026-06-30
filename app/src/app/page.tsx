@@ -14,7 +14,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: { absolute: 'AI Token Calculator — Free, Live Pricing | TokenRate' },
-  description: `Free AI token calculator with live pricing. Convert tokens to dollars and compare AI cost across Claude, GPT-4o, Gemini, and ${ALL_MODELS.length}+ models instantly.`,
+  description: `Free AI token calculator with live pricing. Convert tokens to dollars and compare AI cost across Claude, GPT-5, Gemini, and ${ALL_MODELS.length}+ models instantly.`,
   alternates: { canonical: SITE_URL },
 }
 

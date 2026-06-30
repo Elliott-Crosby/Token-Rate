@@ -105,9 +105,33 @@ function firstSentences(text, max = 2) {
     .replace(/\s+/g, ' ')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // strip markdown links
     .trim()
-  const parts = cleaned.match(/[^.!?]+[.!?]+/g)
-  if (!parts) return cleaned.slice(0, 280)
-  let out = parts.slice(0, max).join(' ').trim()
+  // Mask the dot inside decimals / version numbers ("4.8", "30.5B", "v2.5") before
+  // sentence-splitting, so the splitter doesn't treat it as a sentence boundary and
+  // mangle "Claude Opus 4.8" into "Claude Opus 4. 8". Restored verbatim afterward.
+  const DOT = '__DOTSEP__'
+  const masked = cleaned.replace(/(\d)\.(?=\d)/g, `$1${DOT}`)
+  const restore = (s) => s.split(DOT).join('.')
+  const parts = masked.match(/[^.!?]+[.!?]+/g)
+  if (!parts) {
+    const only = restore(masked).trim().replace(/[\s,;:]*\.{2,}\s*$/, '.')
+    return only.length > 280 ? only.slice(0, 277).trimEnd() + '…' : only
+  }
+  const chosen = parts.slice(0, max).map((s) => s.trim())
+  // A source description cut off mid-thought ends its last fragment in an ellipsis
+  // ("…with reasoning support and…"). Drop that dangling fragment when a complete
+  // sentence still remains, rather than terminate it with an awkward bare period.
+  while (chosen.length > 1 && /(\.{3,}|…)\s*$/.test(chosen[chosen.length - 1])) chosen.pop()
+  let out = restore(chosen.join(' ')).trim()
+  // Tidy any trailing ellipsis the source left on the LAST kept sentence, and
+  // collapse double spaces introduced by the rejoin.
+  out = out.replace(/[\s,;:]*\.{2,}\s*$/, '.').replace(/…\s*$/, '.').replace(/\s{2,}/g, ' ')
+  // Single run-on source sentences sometimes get cut mid-clause ("…and improvements
+  // across the."). If we're left ending on a dangling function word, trim back to the
+  // previous comma boundary so the sentence closes cleanly.
+  if (/\b(and|or|with|for|to|of|the|a|an|across|including|by|from|featuring)\.$/i.test(out)) {
+    const cut = out.lastIndexOf(',')
+    if (cut >= 40) out = out.slice(0, cut).replace(/[\s,;:]+$/, '') + '.'
+  }
   if (out.length > 320) out = out.slice(0, 317).trimEnd() + '…'
   return out
 }

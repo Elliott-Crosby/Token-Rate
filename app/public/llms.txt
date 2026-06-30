@@ -4,7 +4,7 @@
 
 ## What this site provides
 
-- **Live AI model pricing** for 200+ models from Anthropic, OpenAI, Google, Meta, DeepSeek, xAI, Mistral, and more
+- **Live AI model pricing** for 250+ models across 29 providers — Anthropic (Claude), OpenAI (GPT), Google (Gemini), Meta (Llama), DeepSeek, xAI (Grok), Mistral, Qwen (Alibaba), Zhipu (GLM), Moonshot (Kimi), MiniMax, Cohere, Amazon (Nova), Microsoft (Phi), NVIDIA (Nemotron), IBM (Granite), and more
 - **Token / dollar / character conversions** in any direction, side by side across models
 - **Per-model reference pages** with context windows, output limits, strengths, and cost examples
 - **Comparison pages** ranking models by price, coding ability, reasoning, and long-context capability

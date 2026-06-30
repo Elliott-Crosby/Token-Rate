@@ -14,11 +14,11 @@ const FOOTER_COLS = [
     label: 'Models',
     links: [
       { href: '/models', label: 'All Models' },
-      { href: '/models/claude-sonnet-4', label: 'Claude Sonnet 4' },
-      { href: '/models/gpt-4o', label: 'GPT-4o' },
+      { href: '/models/claude-opus-4-8', label: 'Claude Opus 4.8' },
+      { href: '/models/claude-sonnet-5', label: 'Claude Sonnet 5' },
+      { href: '/models/gpt-5', label: 'GPT-5' },
       { href: '/models/gemini-2-5-pro', label: 'Gemini 2.5 Pro' },
       { href: '/models/deepseek-v3', label: 'DeepSeek V3' },
-      { href: '/models/llama-3-1-405b', label: 'Llama 3.1 405B' },
     ],
   },
   {
@@ -36,7 +36,7 @@ const FOOTER_COLS = [
     label: 'Compare',
     links: [
       { href: '/compare/cheapest-ai-models', label: 'Cheapest AI Models' },
-      { href: '/compare/gpt-4o-vs-claude-sonnet-4', label: 'GPT-4o vs Claude' },
+      { href: '/compare/claude-sonnet-5-vs-opus-4-8', label: 'Sonnet 5 vs Opus 4.8' },
       { href: '/compare/best-models-for-coding', label: 'Best for Coding' },
     ],
   },

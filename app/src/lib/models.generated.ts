@@ -1407,7 +1407,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Granite-4. 0-H-Micro is a 3B parameter from the Granite 4 family of models.",
+    "description": "Granite-4.0-H-Micro is a 3B parameter from the Granite 4 family of models. These models are the latest in a series of models released by IBM.",
     "strengths": [
       "Extremely cheap at $0.017/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1443,7 +1443,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Meta's latest class of model (Llama 3. 1) launched with a variety of sizes & flavors.",
+    "description": "Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flavors. This 8B instruct-tuned version is fast and efficient.",
     "strengths": [
       "Extremely cheap at $0.020/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1481,7 +1481,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "A 12B parameter model with a 128k token context length built by Mistral in collaboration with NVIDIA.  The model is multilingual, supporting English, French, German, Spanish, Italian, Portuguese, Chinese, Japanese,...",
+    "description": "A 12B parameter model with a 128k token context length built by Mistral in collaboration with NVIDIA.",
     "strengths": [
       "Extremely cheap at $0.020/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1519,7 +1519,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 60000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Llama 3. 2 1B is a 1-billion-parameter language model focused on efficiently performing natural language tasks, such as summarization, dialogue, and multilingual text analysis.",
+    "description": "Llama 3.2 1B is a 1-billion-parameter language model focused on efficiently performing natural language tasks, such as summarization, dialogue, and multilingual text analysis.",
     "strengths": [
       "Extremely cheap at $0.027/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1557,7 +1557,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the Apache 2. 0 license.",
+    "description": "gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the Apache 2.0 license.",
     "strengths": [
       "Extremely cheap at $0.029/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1595,7 +1595,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "LFM2-24B-A2B is the largest model in the LFM2 family of hybrid architectures designed for efficient on-device deployment.  Built as a 24B parameter Mixture-of-Experts model with only 2B active parameters per...",
+    "description": "LFM2-24B-A2B is the largest model in the LFM2 family of hybrid architectures designed for efficient on-device deployment.",
     "strengths": [
       "Extremely cheap at $0.030/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1629,7 +1629,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language model from OpenAI designed for high-reasoning, agentic, and general-purpose production use cases.  It activates 5.",
+    "description": "gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language model from OpenAI designed for high-reasoning, agentic, and general-purpose production use cases.",
     "strengths": [
       "Extremely cheap at $0.030/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1667,7 +1667,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 5120,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Amazon Nova Micro 1. 0 is a text-only model that delivers the lowest latency responses in the Amazon Nova family of models at a very low cost.",
+    "description": "Amazon Nova Micro 1.0 is a text-only model that delivers the lowest latency responses in the Amazon Nova family of models at a very low cost.",
     "strengths": [
       "Extremely cheap at $0.035/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1705,7 +1705,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Command R7B (12-2024) is a small, fast update of the Command R+ model, delivered in December 2024.  It excels at RAG, tool use, agents, and similar tasks requiring complex reasoning...",
+    "description": "Command R7B (12-2024) is a small, fast update of the Command R+ model, delivered in December 2024.",
     "strengths": [
       "Extremely cheap at $0.037/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1743,7 +1743,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen2. 5 7B is the latest series of Qwen large language models.",
+    "description": "Qwen2.5 7B is the latest series of Qwen large language models.",
     "strengths": [
       "Extremely cheap at $0.040/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1781,7 +1781,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Trinity Mini is a 26B-parameter (3B active) sparse mixture-of-experts language model featuring 128 experts with 8 active per token.  Engineered for efficient reasoning over long contexts (131k) with robust function...",
+    "description": "Trinity Mini is a 26B-parameter (3B active) sparse mixture-of-experts language model featuring 128 experts with 8 active per token.",
     "strengths": [
       "Extremely cheap at $0.045/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1819,7 +1819,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-30B-A3B-Instruct-2507 is a 30. 5B-parameter mixture-of-experts language model from Qwen, with 3.",
+    "description": "Qwen3-30B-A3B-Instruct-2507 is a 30.5B-parameter mixture-of-experts language model from Qwen, with 3.3B active parameters per inference.",
     "strengths": [
       "Extremely cheap at $0.048/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1857,7 +1857,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Granite 4. 1 8B is a dense, decoder-only 8-billion-parameter language model from IBM, part of the Granite 4.",
+    "description": "Granite 4.1 8B is a dense, decoder-only 8-billion-parameter language model from IBM, part of the Granite 4.1 family.",
     "strengths": [
       "Extremely cheap at $0.050/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -1893,7 +1893,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 228000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest compute efficiency and accuracy for developers to build specialized agentic AI systems.  The model is fully...",
+    "description": "NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest compute efficiency and accuracy for developers to build specialized agentic AI systems.",
     "strengths": [
       "Extremely cheap at $0.050/1M input tokens",
       "Large 262K-token context window",
@@ -1931,7 +1931,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized for developer tools, rapid interactions, and ultra-low latency environments.  While limited in reasoning depth compared to its larger...",
+    "description": "GPT-5-Nano is the smallest and fastest variant in the GPT-5 system, optimized for developer tools, rapid interactions, and ultra-low latency environments.",
     "strengths": [
       "Extremely cheap at $0.050/1M input tokens",
       "Large 400K-token context window",
@@ -1970,7 +1970,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-8B is a dense 8. 2B parameter causal language model from the Qwen3 series, designed for both reasoning-heavy tasks and efficient dialogue.",
+    "description": "Qwen3-8B is a dense 8.2B parameter causal language model from the Qwen3 series, designed for both reasoning-heavy tasks and efficient dialogue.",
     "strengths": [
       "Extremely cheap at $0.050/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2008,7 +2008,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemma 3 introduces multimodality, supporting vision-language input and text outputs.  It handles context windows up to 128k tokens, understands over 140 languages, and offers improved math, reasoning, and chat capabilities,...",
+    "description": "Gemma 3 introduces multimodality, supporting vision-language input and text outputs.",
     "strengths": [
       "Extremely cheap at $0.050/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2046,7 +2046,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemma 3 introduces multimodality, supporting vision-language input and text outputs.  It handles context windows up to 128k tokens, understands over 140 languages, and offers improved math, reasoning, and chat capabilities,...",
+    "description": "Gemma 3 introduces multimodality, supporting vision-language input and text outputs.",
     "strengths": [
       "Extremely cheap at $0.050/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2084,7 +2084,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Small 3 is a 24B-parameter language model optimized for low-latency performance across common AI tasks.  Released under the Apache 2.",
+    "description": "Mistral Small 3 is a 24B-parameter language model optimized for low-latency performance across common AI tasks.",
     "strengths": [
       "Extremely cheap at $0.050/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2122,7 +2122,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 80000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Llama 3. 2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization.",
+    "description": "Llama 3.2 3B is a 3-billion-parameter multilingual large language model, optimized for advanced natural language processing tasks like dialogue generation, reasoning, and summarization.",
     "strengths": [
       "Extremely cheap at $0.051/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2160,7 +2160,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemma 4 26B A4B IT is an instruction-tuned Mixture-of-Experts (MoE) model from Google DeepMind.  Despite 25.",
+    "description": "Gemma 4 26B A4B IT is an instruction-tuned Mixture-of-Experts (MoE) model from Google DeepMind.",
     "strengths": [
       "Extremely cheap at $0.060/1M input tokens",
       "Large 262K-token context window",
@@ -2199,7 +2199,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "As a 30B-class SOTA model, GLM-4. 7-Flash offers a new option that balances performance and efficiency.",
+    "description": "As a 30B-class SOTA model, GLM-4.7-Flash offers a new option that balances performance and efficiency.",
     "strengths": [
       "Extremely cheap at $0.060/1M input tokens",
       "Large 203K-token context window",
@@ -2237,7 +2237,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemma 3n E4B-it is optimized for efficient execution on mobile and low-resource devices, such as phones, laptops, and tablets.  It supports multimodal inputs—including text, visual data, and audio—enabling diverse tasks...",
+    "description": "Gemma 3n E4B-it is optimized for efficient execution on mobile and low-resource devices, such as phones, laptops, and tablets.",
     "strengths": [
       "Extremely cheap at $0.060/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2275,7 +2275,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 5120,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Amazon Nova Lite 1. 0 is a very low-cost multimodal model from Amazon that focused on fast processing of image, video, and text inputs to generate text output.",
+    "description": "Amazon Nova Lite 1.0 is a very low-cost multimodal model from Amazon that focused on fast processing of image, video, and text inputs to generate text output.",
     "strengths": [
       "Extremely cheap at $0.060/1M input tokens",
       "Large 300K-token context window",
@@ -2314,7 +2314,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Hy3 preview is a high-efficiency Mixture-of-Experts model from Tencent designed for agentic workflows and production use.  It supports configurable reasoning levels across disabled, low, and high modes, allowing it to...",
+    "description": "Hy3 preview is a high-efficiency Mixture-of-Experts model from Tencent designed for agentic workflows and production use.",
     "strengths": [
       "Extremely cheap at $0.063/1M input tokens",
       "Large 262K-token context window",
@@ -2350,7 +2350,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "The Qwen3. 5 native vision-language Flash models are built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency.",
+    "description": "The Qwen3.5 native vision-language Flash models are built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency.",
     "strengths": [
       "Extremely cheap at $0.065/1M input tokens",
       "Massive 1M-token context window",
@@ -2389,7 +2389,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-Coder-30B-A3B-Instruct is a 30. 5B parameter Mixture-of-Experts (MoE) model with 128 experts (8 active per forward pass), designed for advanced code generation, repository-scale understanding, and agentic tool use.",
+    "description": "Qwen3-Coder-30B-A3B-Instruct is a 30.5B parameter Mixture-of-Experts (MoE) model with 128 experts (8 active per forward pass), designed for advanced code generation, repository-scale understanding, and agentic tool use.",
     "strengths": [
       "Extremely cheap at $0.070/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2427,7 +2427,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Microsoft Research Phi-4 is designed to perform well in complex reasoning tasks and can operate efficiently in situations with limited memory or where quick responses are needed.  At 14 billion...",
+    "description": "Microsoft Research Phi-4 is designed to perform well in complex reasoning tasks and can operate efficiently in situations with limited memory or where quick responses are needed.",
     "strengths": [
       "Extremely cheap at $0.070/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2463,7 +2463,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Seed 1. 6 Flash is an ultra-fast multimodal deep thinking model by ByteDance Seed, supporting both text and visual understanding.",
+    "description": "Seed 1.6 Flash is an ultra-fast multimodal deep thinking model by ByteDance Seed, supporting both text and visual understanding.",
     "strengths": [
       "Extremely cheap at $0.075/1M input tokens",
       "Large 262K-token context window",
@@ -2502,7 +2502,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "gpt-oss-safeguard-20b is a safety reasoning model from OpenAI built upon gpt-oss-20b.  This open-weight, 21B-parameter Mixture-of-Experts (MoE) model offers lower latency for safety tasks like content classification, LLM filtering, and trust...",
+    "description": "gpt-oss-safeguard-20b is a safety reasoning model from OpenAI built upon gpt-oss-20b.",
     "strengths": [
       "Extremely cheap at $0.075/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2540,7 +2540,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Mistral-Small-3. 2-24B-Instruct-2506 is an updated 24B parameter model from Mistral optimized for instruction following, repetition reduction, and improved function calling.",
+    "description": "Mistral-Small-3.2-24B-Instruct-2506 is an updated 24B parameter model from Mistral optimized for instruction following, repetition reduction, and improved function calling.",
     "strengths": [
       "Extremely cheap at $0.075/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2578,7 +2578,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-VL-8B-Instruct is a multimodal vision-language model from the Qwen3-VL series, built for high-fidelity understanding and reasoning across text, images, and video.  It features improved multimodal fusion with Interleaved-MRoPE for long-horizon...",
+    "description": "Qwen3-VL-8B-Instruct is a multimodal vision-language model from the Qwen3-VL series, built for high-fidelity understanding and reasoning across text, images, and video.",
     "strengths": [
       "Extremely cheap at $0.080/1M input tokens",
       "Large 256K-token context window",
@@ -2617,7 +2617,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-30B-A3B-Thinking-2507 is a 30B parameter Mixture-of-Experts reasoning model optimized for complex tasks requiring extended multi-step thinking.  The model is designed specifically for “thinking mode,” where internal reasoning traces are separated...",
+    "description": "Qwen3-30B-A3B-Thinking-2507 is a 30B parameter Mixture-of-Experts reasoning model optimized for complex tasks requiring extended multi-step thinking.",
     "strengths": [
       "Extremely cheap at $0.080/1M input tokens",
       "Step-by-step chain-of-thought reasoning",
@@ -2655,7 +2655,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-32B is a dense 32. 8B parameter causal language model from the Qwen3 series, optimized for both complex reasoning and efficient dialogue.",
+    "description": "Qwen3-32B is a dense 32.8B parameter causal language model from the Qwen3 series, optimized for both complex reasoning and efficient dialogue.",
     "strengths": [
       "Extremely cheap at $0.080/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2693,7 +2693,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemma 3 introduces multimodality, supporting vision-language input and text outputs.  It handles context windows up to 128k tokens, understands over 140 languages, and offers improved math, reasoning, and chat capabilities,...",
+    "description": "Gemma 3 introduces multimodality, supporting vision-language input and text outputs.",
     "strengths": [
       "Extremely cheap at $0.080/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2731,7 +2731,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "NVIDIA Nemotron 3 Super is a 120B-parameter open hybrid MoE model, activating just 12B parameters for maximum compute efficiency and accuracy in complex multi-agent applications.  Built on a hybrid Mamba-Transformer...",
+    "description": "NVIDIA Nemotron 3 Super is a 120B-parameter open hybrid MoE model, activating just 12B parameters for maximum compute efficiency and accuracy in complex multi-agent applications.",
     "strengths": [
       "Extremely cheap at $0.085/1M input tokens",
       "Massive 1M-token context window",
@@ -2769,7 +2769,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-Next-80B-A3B-Instruct is an instruction-tuned chat model in the Qwen3-Next series optimized for fast, stable responses without “thinking” traces.  It targets complex tasks across reasoning, code generation, knowledge QA, and multilingual...",
+    "description": "Qwen3-Next-80B-A3B-Instruct is an instruction-tuned chat model in the Qwen3-Next series optimized for fast, stable responses without “thinking” traces.",
     "strengths": [
       "Extremely cheap at $0.090/1M input tokens",
       "Large 262K-token context window",
@@ -2807,7 +2807,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-235B-A22B-Instruct-2507 is a multilingual, instruction-tuned mixture-of-experts language model based on the Qwen3-235B architecture, with 22B active parameters per forward pass.  It is optimized for general-purpose text generation, including instruction following,...",
+    "description": "Qwen3-235B-A22B-Instruct-2507 is a multilingual, instruction-tuned mixture-of-experts language model based on the Qwen3-235B architecture, with 22B active parameters per forward pass.",
     "strengths": [
       "Extremely cheap at $0.090/1M input tokens",
       "Large 262K-token context window",
@@ -2845,7 +2845,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-Next-80B-A3B-Thinking is a reasoning-first chat model in the Qwen3-Next line that outputs structured “thinking” traces by default.  It’s designed for hard multi-step problems; math proofs, code synthesis/debugging, logic, and agentic...",
+    "description": "Qwen3-Next-80B-A3B-Thinking is a reasoning-first chat model in the Qwen3-Next line that outputs structured “thinking” traces by default.",
     "strengths": [
       "Extremely cheap at $0.098/1M input tokens",
       "Large 262K-token context window",
@@ -2883,7 +2883,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek V4 Flash is an efficiency-optimized Mixture-of-Experts model from DeepSeek with 284B total parameters and 13B activated parameters, supporting a 1M-token context window.  It is designed for fast inference and...",
+    "description": "DeepSeek V4 Flash is an efficiency-optimized Mixture-of-Experts model from DeepSeek with 284B total parameters and 13B activated parameters, supporting a 1M-token context window.",
     "strengths": [
       "Extremely cheap at $0.098/1M input tokens",
       "Massive 1M-token context window",
@@ -2921,7 +2921,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Reka Edge is an extremely efficient 7B multimodal vision-language model that accepts image/video+text inputs and generates text outputs.  This model is optimized specifically to deliver industry-leading performance in image understanding,...",
+    "description": "Reka Edge is an extremely efficient 7B multimodal vision-language model that accepts image/video+text inputs and generates text outputs.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -2957,7 +2957,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262144,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3.5-9B is Qwen's a fast, low-cost model tuned for high-throughput tasks like classification, extraction, and simple chat. It costs $0.100 per million input tokens with a 262K-token context window and native image understanding.",
+    "description": "Qwen3.5-9B is a multimodal foundation model from the Qwen3.5 family, designed to deliver strong reasoning, coding, and visual understanding in an efficient 9B-parameter architecture.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Large 262K-token context window",
@@ -2996,7 +2996,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Seed-2. 0-mini targets latency-sensitive, high-concurrency, and cost-sensitive scenarios, emphasizing fast response and flexible inference deployment.",
+    "description": "Seed-2.0-mini targets latency-sensitive, high-concurrency, and cost-sensitive scenarios, emphasizing fast response and flexible inference deployment.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Large 262K-token context window",
@@ -3073,7 +3073,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Voxtral Small is an enhancement of Mistral Small 3, incorporating state-of-the-art audio input capabilities while retaining best-in-class text performance.  It excels at speech transcription, translation and audio understanding.",
+    "description": "Voxtral Small is an enhancement of Mistral Small 3, incorporating state-of-the-art audio input capabilities while retaining best-in-class text performance. It excels at speech transcription, translation and audio understanding.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3111,7 +3111,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65535,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 2. 5 Flash-Lite is a lightweight reasoning model in the Gemini 2.",
+    "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Massive 1M-token context window",
@@ -3150,7 +3150,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 2048,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "UI-TARS-1. 5 is a multimodal vision-language agent optimized for GUI-based environments, including desktop interfaces, web browsers, mobile systems, and games.",
+    "description": "UI-TARS-1.5 is a multimodal vision-language agent optimized for GUI-based environments, including desktop interfaces, web browsers, mobile systems, and games.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3188,7 +3188,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65535,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 2. 5 Flash-Lite is a lightweight reasoning model in the Gemini 2.",
+    "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Massive 1M-token context window",
@@ -3227,7 +3227,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 40960,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-14B is a dense 14. 8B parameter causal language model from the Qwen3 series, designed for both complex reasoning and efficient dialogue.",
+    "description": "Qwen3-14B is a dense 14.8B parameter causal language model from the Qwen3 series, designed for both complex reasoning and efficient dialogue.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3265,7 +3265,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "For tasks that demand low latency, GPT‑4. 1 nano is the fastest and cheapest model in the GPT-4.",
+    "description": "For tasks that demand low latency, GPT‑4.1 nano is the fastest and cheapest model in the GPT-4.1 series.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Massive 1M-token context window",
@@ -3304,7 +3304,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Llama 4 Scout 17B Instruct (16E) is a mixture-of-experts (MoE) language model developed by Meta, activating 17 billion parameters out of a total of 109B.  It supports native multimodal input...",
+    "description": "Llama 4 Scout 17B Instruct (16E) is a mixture-of-experts (MoE) language model developed by Meta, activating 17 billion parameters out of a total of 109B.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Massive 10M-token context window",
@@ -3343,7 +3343,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Reka Flash 3 is a general-purpose, instruction-tuned large language model with 21 billion parameters, developed by Reka.  It excels at general chat, coding tasks, instruction-following, and function calling.",
+    "description": "Reka Flash 3 is a general-purpose, instruction-tuned large language model with 21 billion parameters, developed by Reka. It excels at general chat, coding tasks, instruction-following, and function calling.",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3379,7 +3379,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "The Meta Llama 3. 3 multilingual large language model (LLM) is a pretrained and instruction tuned generative model in 70B (text in/text out).",
+    "description": "The Meta Llama 3.3 multilingual large language model (LLM) is a pretrained and instruction tuned generative model in 70B (text in/text out).",
     "strengths": [
       "Extremely cheap at $0.100/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -3417,7 +3417,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-VL-32B-Instruct is a large-scale multimodal vision-language model designed for high-precision understanding and reasoning across text, images, and video.  With 32 billion parameters, it combines deep visual perception with advanced text...",
+    "description": "Qwen3-VL-32B-Instruct is a large-scale multimodal vision-language model designed for high-precision understanding and reasoning across text, images, and video.",
     "strengths": [
       "Extremely cheap at $0.104/1M input tokens",
       "Large 262K-token context window",
@@ -3456,7 +3456,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262144,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-Coder-Next is an open-weight causal language model optimized for coding agents and local development workflows.  It uses a sparse MoE design with 80B total parameters and only 3B activated per...",
+    "description": "Qwen3-Coder-Next is an open-weight causal language model optimized for coding agents and local development workflows.",
     "strengths": [
       "Extremely cheap at $0.110/1M input tokens",
       "Large 262K-token context window",
@@ -3494,7 +3494,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-VL-8B-Thinking is the reasoning-optimized variant of the Qwen3-VL-8B multimodal model, designed for advanced visual and textual reasoning across complex scenes, documents, and temporal sequences.  It integrates enhanced multimodal alignment and...",
+    "description": "Qwen3-VL-8B-Thinking is the reasoning-optimized variant of the Qwen3-VL-8B multimodal model, designed for advanced visual and textual reasoning across complex scenes, documents, and temporal sequences.",
     "strengths": [
       "Extremely cheap at $0.117/1M input tokens",
       "Large 256K-token context window",
@@ -3533,7 +3533,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262144,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemma 4 31B Instruct is Google DeepMind's 30. 7B dense multimodal model supporting text and image input with text output.",
+    "description": "Gemma 4 31B Instruct is Google DeepMind's 30.7B dense multimodal model supporting text and image input with text output.",
     "strengths": [
       "Extremely cheap at $0.120/1M input tokens",
       "Large 262K-token context window",
@@ -3572,7 +3572,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 196608,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax-M2. 5 is a SOTA large language model designed for real-world productivity.",
+    "description": "MiniMax-M2.5 is a SOTA large language model designed for real-world productivity.",
     "strengths": [
       "Extremely cheap at $0.120/1M input tokens",
       "Large 205K-token context window",
@@ -3610,7 +3610,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3, the latest generation in the Qwen large language model series, features both dense and mixture-of-experts (MoE) architectures to excel in reasoning, multilingual support, and advanced agent tasks.  Its unique...",
+    "description": "Qwen3, the latest generation in the Qwen large language model series, features both dense and mixture-of-experts (MoE) architectures to excel in reasoning, multilingual support, and advanced agent tasks.",
     "strengths": [
       "Extremely cheap at $0.120/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3648,7 +3648,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generation with visual understanding for images and videos.  Its Thinking variant enhances reasoning in STEM, math, and complex tasks.",
+    "description": "Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generation with visual understanding for images and videos. Its Thinking variant enhances reasoning in STEM, math, and complex tasks.",
     "strengths": [
       "Extremely cheap at $0.130/1M input tokens",
       "Step-by-step chain-of-thought reasoning",
@@ -3686,7 +3686,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-VL-30B-A3B-Instruct is a multimodal model that unifies strong text generation with visual understanding for images and videos.  Its Instruct variant optimizes instruction-following for general multimodal tasks.",
+    "description": "Qwen3-VL-30B-A3B-Instruct is a multimodal model that unifies strong text generation with visual understanding for images and videos. Its Instruct variant optimizes instruction-following for general multimodal tasks.",
     "strengths": [
       "Extremely cheap at $0.130/1M input tokens",
       "Large 262K-token context window",
@@ -3725,7 +3725,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Hermes 4 70B is a hybrid reasoning model from Nous Research, built on Meta-Llama-3. 1-70B.",
+    "description": "Hermes 4 70B is a hybrid reasoning model from Nous Research, built on Meta-Llama-3.1-70B.",
     "strengths": [
       "Extremely cheap at $0.130/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -3763,7 +3763,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 98304,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GLM-4. 5-Air is the lightweight variant of our latest flagship model family, also purpose-built for agent-centric applications.",
+    "description": "GLM-4.5-Air is the lightweight variant of our latest flagship model family, also purpose-built for agent-centric applications.",
     "strengths": [
       "Extremely cheap at $0.130/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3801,7 +3801,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262144,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3. 6-35B-A3B is an open-weight multimodal model from Alibaba Cloud with 35 billion total parameters and 3 billion active parameters per token.",
+    "description": "Qwen3.6-35B-A3B is an open-weight multimodal model from Alibaba Cloud with 35 billion total parameters and 3 billion active parameters per token.",
     "strengths": [
       "Extremely cheap at $0.140/1M input tokens",
       "Large 262K-token context window",
@@ -3840,7 +3840,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 81920,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "The Qwen3. 5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency.",
+    "description": "The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency.",
     "strengths": [
       "Extremely cheap at $0.140/1M input tokens",
       "Large 262K-token context window",
@@ -3879,7 +3879,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Hunyuan-A13B is a 13B active parameter Mixture-of-Experts (MoE) language model developed by Tencent, with a total parameter count of 80B and support for reasoning via Chain-of-Thought.  It offers competitive benchmark...",
+    "description": "Hunyuan-A13B is a 13B active parameter Mixture-of-Experts (MoE) language model developed by Tencent, with a total parameter count of 80B and support for reasoning via Chain-of-Thought.",
     "strengths": [
       "Extremely cheap at $0.140/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3915,7 +3915,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors.  This 8B instruct-tuned version was optimized for high quality dialogue usecases.",
+    "description": "Meta's latest class of model (Llama 3) launched with a variety of sizes & flavors. This 8B instruct-tuned version was optimized for high quality dialogue usecases.",
     "strengths": [
       "Extremely cheap at $0.140/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -3953,7 +3953,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-235B-A22B-Thinking-2507 is a high-performance, open-weight Mixture-of-Experts (MoE) language model optimized for complex reasoning tasks.  It activates 22B of its 235B parameters per forward pass and natively supports up to 262,144...",
+    "description": "Qwen3-235B-A22B-Thinking-2507 is a high-performance, open-weight Mixture-of-Experts (MoE) language model optimized for complex reasoning tasks.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Large 262K-token context window",
@@ -3991,7 +3991,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Small 4 is the next major release in the Mistral Small family, unifying the capabilities of several flagship Mistral models into a single system.  It combines strong reasoning from...",
+    "description": "Mistral Small 4 is the next major release in the Mistral Small family, unifying the capabilities of several flagship Mistral models into a single system.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Large 262K-token context window",
@@ -4030,7 +4030,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Solar Pro 3 is Upstage's powerful Mixture-of-Experts (MoE) language model.  With 102B total parameters and 12B active parameters per forward pass, it delivers exceptional performance while maintaining computational efficiency.",
+    "description": "Solar Pro 3 is Upstage's powerful Mixture-of-Experts (MoE) language model. With 102B total parameters and 12B active parameters per forward pass, it delivers exceptional performance while maintaining computational efficiency.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -4103,7 +4103,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Olmo 3 32B Think is a large-scale, 32-billion-parameter model purpose-built for deep reasoning, complex logic chains and advanced instruction-following scenarios.  Its capacity enables strong performance on demanding evaluation tasks and...",
+    "description": "Olmo 3 32B Think is a large-scale, 32-billion-parameter model purpose-built for deep reasoning, complex logic chains and advanced instruction-following scenarios.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4137,7 +4137,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Llama 4 Maverick 17B Instruct (128E) is a high-capacity multimodal language model from Meta, built on a mixture-of-experts (MoE) architecture with 128 experts and 17 billion active parameters per forward...",
+    "description": "Llama 4 Maverick 17B Instruct (128E) is a high-capacity multimodal language model from Meta, built on a mixture-of-experts (MoE) architecture with 128 experts and 17 billion active parameters per forward.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Massive 1M-token context window",
@@ -4176,7 +4176,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4o mini Search Preview is a specialized model for web search in Chat Completions.  It is trained to understand and execute web search queries.",
+    "description": "GPT-4o mini Search Preview is a specialized model for web search in Chat Completions. It is trained to understand and execute web search queries.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4214,7 +4214,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "command-r-08-2024 is an update of the Command R with improved performance for multilingual retrieval-augmented generation (RAG) and tool use.  More broadly, it is better at math, code and reasoning and...",
+    "description": "command-r-08-2024 is an update of the Command R with improved performance for multilingual retrieval-augmented generation (RAG) and tool use.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4252,7 +4252,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4o mini is OpenAI's newest model after GPT-4 Omni, supporting both text and image inputs with text outputs.  As their most advanced small model, it is many multiples more affordable...",
+    "description": "GPT-4o mini is OpenAI's newest model after GPT-4 Omni, supporting both text and image inputs with text outputs.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4290,7 +4290,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4o mini is OpenAI's newest model after GPT-4 Omni, supporting both text and image inputs with text outputs.  As their most advanced small model, it is many multiples more affordable...",
+    "description": "GPT-4o mini is OpenAI's newest model after GPT-4 Omni, supporting both text and image inputs with text outputs.",
     "strengths": [
       "Extremely cheap at $0.150/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4328,7 +4328,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 196608,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax-M2. 7 is a next-generation large language model designed for autonomous, real-world productivity and continuous improvement.",
+    "description": "MiniMax-M2.7 is a next-generation large language model designed for autonomous, real-world productivity and continuous improvement.",
     "strengths": [
       "Extremely cheap at $0.180/1M input tokens",
       "Large 205K-token context window",
@@ -4366,7 +4366,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Llama Guard 4 is a Llama 4 Scout-derived multimodal pretrained model, fine-tuned for content safety classification.  Similar to previous versions, it can be used to classify content in both LLM...",
+    "description": "Llama Guard 4 is a Llama 4 Scout-derived multimodal pretrained model, fine-tuned for content safety classification.",
     "strengths": [
       "Extremely cheap at $0.180/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4404,7 +4404,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3. 6 Flash is a fast, efficient language model from Alibaba's Qwen 3.",
+    "description": "Qwen3.6 Flash is a fast, efficient language model from Alibaba's Qwen 3.6 series. It supports text, image, and video input with a 1M token context window.",
     "strengths": [
       "Extremely cheap at $0.188/1M input tokens",
       "Massive 1M-token context window",
@@ -4443,7 +4443,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "The Qwen3. 5 27B native vision-language Dense model incorporates a linear attention mechanism, delivering fast response times while balancing inference speed and performance.",
+    "description": "The Qwen3.5 27B native vision-language Dense model incorporates a linear attention mechanism, delivering fast response times while balancing inference speed and performance.",
     "strengths": [
       "Extremely cheap at $0.195/1M input tokens",
       "Large 262K-token context window",
@@ -4482,7 +4482,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3 Coder Flash is Alibaba's fast and cost efficient version of their proprietary Qwen3 Coder Plus.  It is a powerful coding agent model specializing in autonomous programming via tool calling...",
+    "description": "Qwen3 Coder Flash is Alibaba's fast and cost efficient version of their proprietary Qwen3 Coder Plus.",
     "strengths": [
       "Extremely cheap at $0.195/1M input tokens",
       "Massive 1M-token context window",
@@ -4520,7 +4520,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 4 nano is the most lightweight and cost-efficient variant of the GPT-5.",
+    "description": "GPT-5.4 nano is the most lightweight and cost-efficient variant of the GPT-5.4 family, optimized for speed-critical and high-volume tasks.",
     "strengths": [
       "Extremely cheap at $0.200/1M input tokens",
       "Large 400K-token context window",
@@ -4559,7 +4559,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "The largest model in the Ministral 3 family, Ministral 3 14B offers frontier capabilities and performance comparable to its larger Mistral Small 3. 2 24B counterpart.",
+    "description": "The largest model in the Ministral 3 family, Ministral 3 14B offers frontier capabilities and performance comparable to its larger Mistral Small 3.2 24B counterpart.",
     "strengths": [
       "Extremely cheap at $0.200/1M input tokens",
       "Large 262K-token context window",
@@ -4598,7 +4598,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-VL-235B-A22B Instruct is an open-weight multimodal model that unifies strong text generation with visual understanding across images and video.  The Instruct model targets general vision-language use (VQA, document parsing, chart/table...",
+    "description": "Qwen3-VL-235B-A22B Instruct is an open-weight multimodal model that unifies strong text generation with visual understanding across images and video.",
     "strengths": [
       "Extremely cheap at $0.200/1M input tokens",
       "Large 262K-token context window",
@@ -4637,7 +4637,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek V3, a 685B-parameter, mixture-of-experts model, is the latest iteration of the flagship chat model family from the DeepSeek team.  It succeeds the DeepSeek V3 model and performs really well...",
+    "description": "DeepSeek V3, a 685B-parameter, mixture-of-experts model, is the latest iteration of the flagship chat model family from the DeepSeek team.",
     "strengths": [
       "Extremely cheap at $0.200/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4675,7 +4675,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Saba is a 24B-parameter language model specifically designed for the Middle East and South Asia, delivering accurate and contextually relevant responses while maintaining efficient performance.  Trained on curated regional...",
+    "description": "Mistral Saba is a 24B-parameter language model specifically designed for the Middle East and South Asia, delivering accurate and contextually relevant responses while maintaining efficient performance.",
     "strengths": [
       "Extremely cheap at $0.200/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4713,7 +4713,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 1000192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax-01 is a combines MiniMax-Text-01 for text generation and MiniMax-VL-01 for image understanding.  It has 456 billion parameters, with 45.",
+    "description": "MiniMax-01 is a combines MiniMax-Text-01 for text generation and MiniMax-VL-01 for image understanding.",
     "strengths": [
       "Extremely cheap at $0.200/1M input tokens",
       "Massive 1M-token context window",
@@ -4752,7 +4752,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek-V3 is the latest model from the DeepSeek team, building upon the instruction following and coding abilities of the previous versions.  Pre-trained on nearly 15 trillion tokens, the reported evaluations...",
+    "description": "DeepSeek-V3 is the latest model from the DeepSeek team, building upon the instruction following and coding abilities of the previous versions.",
     "strengths": [
       "Affordable at $0.20/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4790,7 +4790,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek-V3. 1 is a large hybrid reasoning model (671B parameters, 37B active) that supports both thinking and non-thinking modes via prompt templates.",
+    "description": "DeepSeek-V3.1 is a large hybrid reasoning model (671B parameters, 37B active) that supports both thinking and non-thinking modes via prompt templates.",
     "strengths": [
       "Affordable at $0.21/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4828,7 +4828,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation model developed by the Qwen team.  It is optimized for agentic coding tasks such as function calling, tool use, and long-context reasoning over...",
+    "description": "Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation model developed by the Qwen team.",
     "strengths": [
       "Affordable at $0.22/1M input tokens",
       "Massive 1M-token context window",
@@ -4866,7 +4866,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek-V3. 2 is a large language model designed to harmonize high computational efficiency with strong reasoning and agentic tool-use performance.",
+    "description": "DeepSeek-V3.2 is a large language model designed to harmonize high computational efficiency with strong reasoning and agentic tool-use performance.",
     "strengths": [
       "Affordable at $0.23/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4904,7 +4904,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 66000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Nano Banana 2 Lite (Gemini 3. 1 Flash Lite Image) is Google's fastest, most cost-efficient Gemini image model, built for high-velocity developer pipelines and rapid-fire visual exploration.",
+    "description": "Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image) is Google's fastest, most cost-efficient Gemini image model, built for high-velocity developer pipelines and rapid-fire visual exploration.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -4942,7 +4942,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 3. 1 Flash Lite is Google’s GA high-efficiency multimodal model optimized for low-latency, high-volume workloads.",
+    "description": "Gemini 3.1 Flash Lite is Google’s GA high-efficiency multimodal model optimized for low-latency, high-volume workloads.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Massive 1M-token context window",
@@ -4981,7 +4981,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 80000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Trinity Large Thinking is a powerful open source reasoning model from the team at Arcee AI.  It shows strong performance in PinchBench, agentic workloads, and reasoning tasks.",
+    "description": "Trinity Large Thinking is a powerful open source reasoning model from the team at Arcee AI. It shows strong performance in PinchBench, agentic workloads, and reasoning tasks.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Large 262K-token context window",
@@ -5019,7 +5019,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Seed-2. 0-Lite is a versatile, cost‑efficient enterprise workhorse that delivers strong multimodal and agent capabilities while offering noticeably lower latency, making it a practical default choice for most production workloads across...",
+    "description": "Seed-2.0-Lite is a versatile, cost‑efficient enterprise workhorse that delivers strong multimodal and agent capabilities while offering noticeably lower latency.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Large 262K-token context window",
@@ -5058,7 +5058,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 3. 1 Flash Lite Preview is Google's high-efficiency model optimized for high-volume use cases.",
+    "description": "Gemini 3.1 Flash Lite Preview is Google's high-efficiency model optimized for high-volume use cases.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Massive 1M-token context window",
@@ -5097,7 +5097,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Seed 1. 6 is a general-purpose model released by the ByteDance Seed team.",
+    "description": "Seed 1.6 is a general-purpose model released by the ByteDance Seed team. It incorporates multimodal capabilities and adaptive deep thinking with a 256K context window.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Large 262K-token context window",
@@ -5136,7 +5136,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 1-Codex-Mini is a smaller and faster version of GPT-5.",
+    "description": "GPT-5.1-Codex-Mini is a smaller and faster version of GPT-5.1-Codex",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Large 400K-token context window",
@@ -5175,7 +5175,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5 Mini is a compact version of GPT-5, designed to handle lighter-weight reasoning tasks.  It provides the same instruction-following and safety-tuning benefits as GPT-5, but with reduced latency and cost....",
+    "description": "GPT-5 Mini is a compact version of GPT-5, designed to handle lighter-weight reasoning tasks.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Large 400K-token context window",
@@ -5214,7 +5214,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Claude 3 Haiku is Anthropic's fastest and most compact model for near-instant responsiveness.  Quick and accurate targeted performance.",
+    "description": "Claude 3 Haiku is Anthropic's fastest and most compact model for near-instant responsiveness. Quick and accurate targeted performance.",
     "strengths": [
       "Affordable at $0.25/1M input tokens",
       "Large 200K-token context window",
@@ -5253,7 +5253,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 196608,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax-M2 is a compact, high-efficiency large language model optimized for end-to-end coding and agentic workflows.  With 10 billion activated parameters (230 billion total), it delivers near-frontier intelligence across general reasoning,...",
+    "description": "MiniMax-M2 is a compact, high-efficiency large language model optimized for end-to-end coding and agentic workflows.",
     "strengths": [
       "Affordable at $0.26/1M input tokens",
       "Large 205K-token context window",
@@ -5291,7 +5291,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262144,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "The Qwen3. 5 122B-A10B native vision-language model is built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency.",
+    "description": "The Qwen3.5 122B-A10B native vision-language model is built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency.",
     "strengths": [
       "Affordable at $0.26/1M input tokens",
       "Large 262K-token context window",
@@ -5330,7 +5330,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "The Qwen3. 5 native vision-language series Plus models are built on a hybrid architecture that integrates linear attention mechanisms with sparse mixture-of-experts models, achieving higher inference efficiency.",
+    "description": "The Qwen3.5 native vision-language series Plus models are built on a hybrid architecture that integrates linear attention mechanisms with sparse mixture-of-experts models, achieving higher inference efficiency.",
     "strengths": [
       "Affordable at $0.26/1M input tokens",
       "Massive 1M-token context window",
@@ -5369,7 +5369,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-VL-235B-A22B Thinking is a multimodal model that unifies strong text generation with visual understanding across images and video.  The Thinking model is optimized for multimodal reasoning in STEM and math....",
+    "description": "Qwen3-VL-235B-A22B Thinking is a multimodal model that unifies strong text generation with visual understanding across images and video.",
     "strengths": [
       "Affordable at $0.26/1M input tokens",
       "Step-by-step chain-of-thought reasoning",
@@ -5445,7 +5445,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen-Plus, based on the Qwen2. 5 foundation model, is a 131K context model with a balanced performance, speed, and cost combination.",
+    "description": "Qwen-Plus, based on the Qwen2.5 foundation model, is a 131K context model with a balanced performance, speed, and cost combination.",
     "strengths": [
       "Affordable at $0.26/1M input tokens",
       "Massive 1M-token context window",
@@ -5483,7 +5483,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek-V3. 2-Exp is an experimental large language model released by DeepSeek as an intermediate step between V3.",
+    "description": "DeepSeek-V3.2-Exp is an experimental large language model released by DeepSeek as an intermediate step between V3.1 and future architectures.",
     "strengths": [
       "Affordable at $0.27/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -5521,7 +5521,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek V3.1 Terminus is DeepSeek's a fast, low-cost model tuned for high-throughput tasks like classification, extraction, and simple chat. It costs $0.270 per million input tokens with a 164K-token context window.",
+    "description": "DeepSeek-V3.1 Terminus is an update to DeepSeek V3.1 that maintains the model's original capabilities while addressing issues reported by users, including language consistency and agent capabilities, further optimizing the model's.",
     "strengths": [
       "Affordable at $0.27/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -5559,7 +5559,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262140,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3. 6 27B is a dense 27-billion-parameter language model from the Qwen Team at Alibaba, released in April 2026.",
+    "description": "Qwen3.6 27B is a dense 27-billion-parameter language model from the Qwen Team at Alibaba, released in April 2026.",
     "strengths": [
       "Affordable at $0.29/1M input tokens",
       "Large 262K-token context window",
@@ -5598,7 +5598,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 196608,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax-M2. 1 is a lightweight, state-of-the-art large language model optimized for coding, agentic workflows, and modern application development.",
+    "description": "MiniMax-M2.1 is a lightweight, state-of-the-art large language model optimized for coding, agentic workflows, and modern application development.",
     "strengths": [
       "Affordable at $0.29/1M input tokens",
       "Large 205K-token context window",
@@ -5636,7 +5636,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 512000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax-M3 is a multimodal foundation model from MiniMax.  It supports text, image, and video inputs with text output, a 1M-token context window, and is suited for long-horizon agentic work, coding,...",
+    "description": "MiniMax M3 is MiniMax's a fast, low-cost model tuned for high-throughput tasks like classification, extraction, and simple chat. It costs $0.300 per million input tokens with a 1M-token context window and native image understanding.",
     "strengths": [
       "Affordable at $0.30/1M input tokens",
       "Massive 1M-token context window",
@@ -5675,7 +5675,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3. 5 Plus (April 2026) is a large-scale multimodal language model from Alibaba.",
+    "description": "Qwen3.5 Plus (April 2026) is a large-scale multimodal language model from Alibaba. It accepts text, image, and video input and produces text output, with a 1M token context window.",
     "strengths": [
       "Affordable at $0.30/1M input tokens",
       "Massive 1M-token context window",
@@ -5714,7 +5714,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 2048,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax M2-her is a dialogue-first large language model built for immersive roleplay, character-driven chat, and expressive multi-turn conversations.  Designed to stay consistent in tone and personality, it supports rich message...",
+    "description": "MiniMax M2-her is a dialogue-first large language model built for immersive roleplay, character-driven chat, and expressive multi-turn conversations.",
     "strengths": [
       "Affordable at $0.30/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -5752,7 +5752,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GLM-4. 6V is a large multimodal model designed for high-fidelity visual understanding and long-context reasoning across images, documents, and mixed media.",
+    "description": "GLM-4.6V is a large multimodal model designed for high-fidelity visual understanding and long-context reasoning across images, documents, and mixed media.",
     "strengths": [
       "Affordable at $0.30/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -5790,7 +5790,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65535,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Nova 2 Lite is a fast, cost-effective reasoning model for everyday workloads that can process text, images, and videos to generate text.  Nova 2 Lite demonstrates standout capabilities in processing...",
+    "description": "Nova 2 Lite is a fast, cost-effective reasoning model for everyday workloads that can process text, images, and videos to generate text.",
     "strengths": [
       "Affordable at $0.30/1M input tokens",
       "Massive 1M-token context window",
@@ -5867,7 +5867,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Mistral's cutting-edge language model for coding released end of July 2025.  Codestral specializes in low-latency, high-frequency tasks such as fill-in-the-middle (FIM), code correction and test generation.",
+    "description": "Mistral's cutting-edge language model for coding released end of July 2025. Codestral specializes in low-latency, high-frequency tasks such as fill-in-the-middle (FIM), code correction and test generation.",
     "strengths": [
       "Affordable at $0.30/1M input tokens",
       "Large 256K-token context window",
@@ -5905,7 +5905,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65535,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 2. 5 Flash is Google's state-of-the-art workhorse model, specifically designed for advanced reasoning, coding, mathematics, and scientific tasks.",
+    "description": "Gemini 2.5 Flash is Google's state-of-the-art workhorse model, specifically designed for advanced reasoning, coding, mathematics, and scientific tasks.",
     "strengths": [
       "Affordable at $0.30/1M input tokens",
       "Massive 1M-token context window",
@@ -5944,7 +5944,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3.7 Plus is Qwen's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.320 per million input tokens with a 1M-token context window and native image understanding.",
+    "description": "Qwen3.7-Plus is a cost-effective model in Alibaba's Qwen3.7 series.",
     "strengths": [
       "Affordable at $0.32/1M input tokens",
       "Massive 1M-token context window",
@@ -5982,7 +5982,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Qwen 3. 6 Plus builds on a hybrid architecture that combines efficient linear attention with sparse mixture-of-experts routing, enabling strong scalability and high-performance inference.",
+    "description": "Qwen 3.6 Plus builds on a hybrid architecture that combines efficient linear attention with sparse mixture-of-experts routing, enabling strong scalability and high-performance inference.",
     "strengths": [
       "Affordable at $0.33/1M input tokens",
       "Massive 1M-token context window",
@@ -6020,7 +6020,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Llama 3. 2 11B Vision is a multimodal model with 11 billion parameters, designed to handle tasks combining visual and textual data.",
+    "description": "Llama 3.2 11B Vision is a multimodal model with 11 billion parameters, designed to handle tasks combining visual and textual data.",
     "strengths": [
       "Affordable at $0.34/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -6058,7 +6058,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Small 3. 1 24B Instruct is an upgraded variant of Mistral Small 3 (2501), featuring 24 billion parameters with advanced multimodal capabilities.",
+    "description": "Mistral Small 3.1 24B Instruct is an upgraded variant of Mistral Small 3 (2501), featuring 24 billion parameters with advanced multimodal capabilities.",
     "strengths": [
       "Affordable at $0.35/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -6096,7 +6096,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Qwen2. 5 72B is the latest series of Qwen large language models.",
+    "description": "Qwen2.5 72B is the latest series of Qwen large language models.",
     "strengths": [
       "Affordable at $0.36/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -6134,7 +6134,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Kimi K2. 5 is Moonshot AI's native multimodal model, delivering state-of-the-art visual coding capability and a self-directed agent swarm paradigm.",
+    "description": "Kimi K2.5 is Moonshot AI's native multimodal model, delivering state-of-the-art visual coding capability and a self-directed agent swarm paradigm.",
     "strengths": [
       "Affordable at $0.38/1M input tokens",
       "Large 262K-token context window",
@@ -6172,7 +6172,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "The Qwen3. 5 series 397B-A17B native vision-language model is built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency.",
+    "description": "The Qwen3.5 series 397B-A17B native vision-language model is built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency.",
     "strengths": [
       "Affordable at $0.39/1M input tokens",
       "Large 256K-token context window",
@@ -6211,7 +6211,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GLM 4.7 is Zhipu AI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.400 per million input tokens with a 203K-token context window.",
+    "description": "GLM-4.7 is Z. ai’s latest flagship model, featuring upgrades in two key areas: enhanced programming capabilities and more stable multi-step reasoning/execution.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Large 203K-token context window",
@@ -6249,7 +6249,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Devstral 2 is a state-of-the-art open-source model by Mistral AI specializing in agentic coding.  It is a 123B-parameter dense transformer model supporting a 256K context window.",
+    "description": "Devstral 2 is a state-of-the-art open-source model by Mistral AI specializing in agentic coding. It is a 123B-parameter dense transformer model supporting a 256K context window.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Large 262K-token context window",
@@ -6287,7 +6287,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Llama 3.3 Nemotron Super 49B V1.5 is NVIDIA's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.400 per million input tokens with a 131K-token context window.",
+    "description": "Llama-3.3-Nemotron-Super-49B-v1.5 is a 49B-parameter, English-centric reasoning/chat model derived from Meta’s Llama-3.3-70B-Instruct with a 128K context.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Strong general-purpose performance",
@@ -6325,7 +6325,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Medium 3. 1 is an updated version of Mistral Medium 3, which is a high-performance enterprise-grade language model designed to deliver frontier-level capabilities at significantly reduced operational cost.",
+    "description": "Mistral Medium 3.1 is an updated version of Mistral Medium 3, which is a high-performance enterprise-grade language model designed to deliver frontier-level capabilities at significantly reduced operational cost.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Multimodal: understands images as well as text",
@@ -6363,7 +6363,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 40000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "MiniMax-M1 is a large-scale, open-weight reasoning model designed for extended context and high-efficiency inference.  It leverages a hybrid Mixture-of-Experts (MoE) architecture paired with a custom \"lightning attention\" mechanism, allowing it...",
+    "description": "MiniMax-M1 is a large-scale, open-weight reasoning model designed for extended context and high-efficiency inference.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Massive 1M-token context window",
@@ -6401,7 +6401,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Medium 3 is a high-performance enterprise-grade language model designed to deliver frontier-level capabilities at significantly reduced operational cost.  It balances state-of-the-art reasoning and multimodal performance with 8× lower cost...",
+    "description": "Mistral Medium 3 is a high-performance enterprise-grade language model designed to deliver frontier-level capabilities at significantly reduced operational cost.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Multimodal: understands images as well as text",
@@ -6439,7 +6439,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4. 1 Mini is a mid-sized model delivering performance competitive with GPT-4o at substantially lower latency and cost.",
+    "description": "GPT-4.1 Mini is a mid-sized model delivering performance competitive with GPT-4o at substantially lower latency and cost.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Massive 1M-token context window",
@@ -6478,7 +6478,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Meta's latest class of model (Llama 3. 1) launched with a variety of sizes & flavors.",
+    "description": "Meta's latest class of model (Llama 3.1) launched with a variety of sizes & flavors. This 70B instruct-tuned version is optimized for high quality dialogue usecases.",
     "strengths": [
       "Affordable at $0.40/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -6516,7 +6516,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "ERNIE-4. 5-VL-424B-A47B is a multimodal Mixture-of-Experts (MoE) model from Baidu’s ERNIE 4.",
+    "description": "ERNIE-4.5-VL-424B-A47B is a multimodal Mixture-of-Experts (MoE) model from Baidu’s ERNIE 4.5 series, featuring 424B total parameters with 47B active per token.",
     "strengths": [
       "Affordable at $0.42/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -6550,7 +6550,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 131072,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Compared with GLM-4. 5, this generation brings several key improvements: Longer context window: The context window has been expanded from 128K to 200K tokens, enabling the model to handle more complex...",
+    "description": "Compared with GLM-4.5, this generation brings several key improvements: Longer context window: The context window has been expanded from 128K to 200K tokens, enabling the model to handle more complex.",
     "strengths": [
       "Affordable at $0.43/1M input tokens",
       "Large 203K-token context window",
@@ -6588,7 +6588,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 384000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1. 6T total parameters and 49B activated parameters, supporting a 1M-token context window.",
+    "description": "DeepSeek V4 Pro is a large-scale Mixture-of-Experts model from DeepSeek with 1.6T total parameters and 49B activated parameters, supporting a 1M-token context window.",
     "strengths": [
       "Affordable at $0.43/1M input tokens",
       "Massive 1M-token context window",
@@ -6626,7 +6626,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-235B-A22B is a 235B parameter mixture-of-experts (MoE) model developed by Qwen, activating 22B parameters per forward pass.  It supports seamless switching between a \"thinking\" mode for complex reasoning, math, and...",
+    "description": "Qwen3-235B-A22B is a 235B parameter mixture-of-experts (MoE) model developed by Qwen, activating 22B parameters per forward pass.",
     "strengths": [
       "Affordable at $0.45/1M input tokens",
       "Strong general-purpose performance",
@@ -6702,7 +6702,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "NVIDIA Nemotron 3 Ultra is an open frontier-reasoning and orchestration model from NVIDIA, with 55B active parameters out of 550B total (MoE).  Built on a hybrid Transformer-Mamba mixture-of-experts architecture, it...",
+    "description": "NVIDIA Nemotron 3 Ultra is an open frontier-reasoning and orchestration model from NVIDIA, with 55B active parameters out of 550B total (MoE).",
     "strengths": [
       "Affordable at $0.50/1M input tokens",
       "Massive 1M-token context window",
@@ -6778,7 +6778,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65535,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 3 Flash Preview is a high speed, high value thinking model designed for agentic workflows, multi turn chat, and coding assistance.  It delivers near Pro level reasoning and tool...",
+    "description": "Gemini 3 Flash Preview is a high speed, high value thinking model designed for agentic workflows, multi turn chat, and coding assistance.",
     "strengths": [
       "Affordable at $0.50/1M input tokens",
       "Massive 1M-token context window",
@@ -6819,7 +6819,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Large 3 2512 is Mistral’s most capable model to date, featuring a sparse mixture-of-experts architecture with 41B active parameters (675B total), and released under the Apache 2. 0 license.",
+    "description": "Mistral Large 3 2512 is Mistral’s most capable model to date, featuring a sparse mixture-of-experts architecture with 41B active parameters (675B total), and released under the Apache 2.0 license.",
     "strengths": [
       "Affordable at $0.50/1M input tokens",
       "Large 262K-token context window",
@@ -6858,7 +6858,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "May 28th update to the original DeepSeek R1 Performance on par with OpenAI o1, but open-sourced and with fully open reasoning tokens.  It's 671B parameters in size, with 37B active...",
+    "description": "May 28th update to the original DeepSeek R1 Performance on par with OpenAI o1, but open-sourced and with fully open reasoning tokens.",
     "strengths": [
       "Affordable at $0.50/1M input tokens",
       "Step-by-step chain-of-thought reasoning",
@@ -6896,7 +6896,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Coder‑Large is a 32 B‑parameter offspring of Qwen 2. 5‑Instruct that has been further trained on permissively‑licensed GitHub, CodeSearchNet and synthetic bug‑fix corpora.",
+    "description": "Coder‑Large is a 32 B‑parameter offspring of Qwen 2.5‑Instruct that has been further trained on permissively‑licensed GitHub, CodeSearchNet and synthetic bug‑fix corpora.",
     "strengths": [
       "Affordable at $0.50/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -6934,7 +6934,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GPT-3.5 Turbo is OpenAI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.500 per million input tokens with a 16K-token context window.",
+    "description": "GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural language or code, and is optimized for chat and traditional completion tasks.",
     "strengths": [
       "Affordable at $0.50/1M input tokens",
       "Strong general-purpose performance",
@@ -6972,7 +6972,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262144,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Kimi K2. 6 is Moonshot AI's next-generation multimodal model, designed for long-horizon coding, coding-driven UI/UX generation, and multi-agent orchestration.",
+    "description": "Kimi K2.6 is Moonshot AI's next-generation multimodal model, designed for long-horizon coding, coding-driven UI/UX generation, and multi-agent orchestration.",
     "strengths": [
       "Affordable at $0.55/1M input tokens",
       "Large 262K-token context window",
@@ -7010,7 +7010,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100352,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Kimi K2 Instruct is a large-scale Mixture-of-Experts (MoE) language model developed by Moonshot AI, featuring 1 trillion total parameters with 32 billion active per forward pass.  It is optimized for...",
+    "description": "Kimi K2 Instruct is a large-scale Mixture-of-Experts (MoE) language model developed by Moonshot AI, featuring 1 trillion total parameters with 32 billion active per forward pass.",
     "strengths": [
       "Affordable at $0.57/1M input tokens",
       "Strong general-purpose performance",
@@ -7086,7 +7086,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Palmyra X5 is Writer's most advanced model, purpose-built for building and scaling AI agents across the enterprise.  It delivers industry-leading speed and efficiency on context windows up to 1 million...",
+    "description": "Palmyra X5 is Writer's most advanced model, purpose-built for building and scaling AI agents across the enterprise.",
     "strengths": [
       "Affordable at $0.60/1M input tokens",
       "Massive 1M-token context window",
@@ -7120,7 +7120,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "A cost-efficient version of GPT Audio.  The new snapshot features an upgraded decoder for more natural sounding voices and maintains better voice consistency.",
+    "description": "A cost-efficient version of GPT Audio. The new snapshot features an upgraded decoder for more natural sounding voices and maintains better voice consistency.",
     "strengths": [
       "Affordable at $0.60/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -7158,7 +7158,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 262144,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Kimi K2 Thinking is Moonshot AI’s most advanced open reasoning model to date, extending the K2 series into agentic, long-horizon reasoning.  Built on the trillion-parameter Mixture-of-Experts (MoE) architecture introduced in...",
+    "description": "Kimi K2 Thinking is Moonshot AI’s most advanced open reasoning model to date, extending the K2 series into agentic, long-horizon reasoning.",
     "strengths": [
       "Affordable at $0.60/1M input tokens",
       "Large 262K-token context window",
@@ -7196,7 +7196,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100352,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Kimi K2 0905 is the September update of Kimi K2 0711.  It is a large-scale Mixture-of-Experts (MoE) language model developed by Moonshot AI, featuring 1 trillion total parameters with 32...",
+    "description": "Kimi K2 0905 is Moonshot AI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.600 per million input tokens with a 262K-token context window.",
     "strengths": [
       "Affordable at $0.60/1M input tokens",
       "Large 262K-token context window",
@@ -7234,7 +7234,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GLM-4. 5V is a vision-language foundation model for multimodal agent applications.",
+    "description": "GLM-4.5V is a vision-language foundation model for multimodal agent applications.",
     "strengths": [
       "Affordable at $0.60/1M input tokens",
       "Multimodal: understands images as well as text",
@@ -7272,7 +7272,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 98304,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GLM-4. 5 is our latest flagship foundation model, purpose-built for agent-based applications.",
+    "description": "GLM-4.5 is our latest flagship foundation model, purpose-built for agent-based applications. It leverages a Mixture-of-Experts (MoE) architecture and supports a context length of up to 128k tokens.",
     "strengths": [
       "Affordable at $0.60/1M input tokens",
       "Strong general-purpose performance",
@@ -7310,7 +7310,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model.  It demonstrates highly competitive performance compared to leading proprietary models, and it consistently outperforms all existing state-of-the-art opensource models.",
+    "description": "WizardLM-2 8x22B is Microsoft AI's most advanced Wizard model. It demonstrates highly competitive performance compared to leading proprietary models, and it consistently outperforms all existing state-of-the-art opensource models.",
     "strengths": [
       "Affordable at $0.62/1M input tokens",
       "Strong general-purpose performance",
@@ -7346,7 +7346,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3 Coder Plus is Alibaba's proprietary version of the Open Source Qwen3 Coder 480B A35B.  It is a powerful coding agent model specializing in autonomous programming via tool calling and...",
+    "description": "Qwen3 Coder Plus is Alibaba's proprietary version of the Open Source Qwen3 Coder 480B A35B.",
     "strengths": [
       "Affordable at $0.65/1M input tokens",
       "Massive 1M-token context window",
@@ -7384,7 +7384,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 2048,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemma 2 27B by Google is an open model built from the same research and technology used to create the Gemini models.  Gemma models are well-suited for a variety of...",
+    "description": "Gemma 2 27B by Google is an open model built from the same research and technology used to create the Gemini models.",
     "strengths": [
       "Affordable at $0.65/1M input tokens",
       "Low latency for high-throughput workloads",
@@ -7422,7 +7422,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Qwen2. 5-Coder is the latest series of Code-Specific Qwen large language models (formerly known as CodeQwen).",
+    "description": "Qwen2.5-Coder is the latest series of Code-Specific Qwen large language models (formerly known as CodeQwen).",
     "strengths": [
       "Affordable at $0.66/1M input tokens",
       "Strong general-purpose performance",
@@ -7460,7 +7460,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek R1 is here: Performance on par with OpenAI o1, but open-sourced and with fully open reasoning tokens.  It's 671B parameters in size, with 37B active in an inference pass....",
+    "description": "DeepSeek R1 is here: Performance on par with OpenAI o1, but open-sourced and with fully open reasoning tokens.",
     "strengths": [
       "Affordable at $0.70/1M input tokens",
       "Step-by-step chain-of-thought reasoning",
@@ -7498,7 +7498,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence, and improvements across the...",
+    "description": "Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence.",
     "strengths": [
       "Affordable at $0.70/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -7536,7 +7536,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "MoonshotAI: Kimi K2. 7 Code is a coding-focused model in Moonshot AI's Kimi K2 family, built to complete end-to-end programming tasks reliably over long contexts.",
+    "description": "MoonshotAI: Kimi K2.7 Code is a coding-focused model in Moonshot AI's Kimi K2 family, built to complete end-to-end programming tasks reliably over long contexts.",
     "strengths": [
       "Affordable at $0.74/1M input tokens",
       "Large 262K-token context window",
@@ -7574,7 +7574,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5.4 Mini is OpenAI's a fast, low-cost model tuned for high-throughput tasks like classification, extraction, and simple chat. It costs $0.750 per million input tokens with a 400K-token context window and native image understanding.",
+    "description": "GPT-5.4 mini brings the core capabilities of GPT-5.4 to a faster, more efficient model optimized for high-throughput workloads.",
     "strengths": [
       "Affordable at $0.75/1M input tokens",
       "Large 400K-token context window",
@@ -7613,7 +7613,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Virtuoso‑Large is Arcee's top‑tier general‑purpose LLM at 72 B parameters, tuned to tackle cross‑domain reasoning, creative writing and enterprise QA.  Unlike many 70 B peers, it retains the 128 k...",
+    "description": "Virtuoso‑Large is Arcee's top‑tier general‑purpose LLM at 72 B parameters, tuned to tackle cross‑domain reasoning, creative writing and enterprise QA.",
     "strengths": [
       "Affordable at $0.75/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -7651,7 +7651,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-Max-Thinking is the flagship reasoning model in the Qwen3 series, designed for high-stakes cognitive tasks that require deep, multi-step reasoning.  By significantly scaling model capacity and reinforcement learning compute, it...",
+    "description": "Qwen3-Max-Thinking is the flagship reasoning model in the Qwen3 series, designed for high-stakes cognitive tasks that require deep, multi-step reasoning.",
     "strengths": [
       "Affordable at $0.78/1M input tokens",
       "Large 262K-token context window",
@@ -7689,7 +7689,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3-Max is an updated release built on the Qwen3 series, offering major improvements in reasoning, instruction following, multilingual support, and long-tail knowledge coverage compared to the January 2025 version.  It...",
+    "description": "Qwen3-Max is an updated release built on the Qwen3 series, offering major improvements in reasoning, instruction following, multilingual support, and long-tail knowledge coverage compared to the January 2025 version.",
     "strengths": [
       "Affordable at $0.78/1M input tokens",
       "Large 262K-token context window",
@@ -7727,7 +7727,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Qwen2. 5-VL is proficient in recognizing common objects such as flowers, birds, fish, and insects.",
+    "description": "Qwen2.5-VL is proficient in recognizing common objects such as flowers, birds, fish, and insects. It is also highly capable of analyzing texts, charts, icons, graphics, and layouts within images.",
     "strengths": [
       "Affordable at $0.80/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -7765,7 +7765,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "DeepSeek R1 Distill Llama 70B is a distilled large language model based on Llama-3. 3-70B-Instruct, using outputs from DeepSeek R1.",
+    "description": "DeepSeek R1 Distill Llama 70B is a distilled large language model based on Llama-3.3-70B-Instruct, using outputs from DeepSeek R1.",
     "strengths": [
       "Affordable at $0.80/1M input tokens",
       "Step-by-step chain-of-thought reasoning",
@@ -7803,7 +7803,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 5120,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Amazon Nova Pro 1. 0 is a capable multimodal model from Amazon focused on providing a combination of accuracy, speed, and cost for a wide range of tasks.",
+    "description": "Amazon Nova Pro 1.0 is a capable multimodal model from Amazon focused on providing a combination of accuracy, speed, and cost for a wide range of tasks.",
     "strengths": [
       "Affordable at $0.80/1M input tokens",
       "Large 300K-token context window",
@@ -7880,7 +7880,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GLM-5. 1 delivers a major leap in coding capability, with particularly significant gains in handling long-horizon tasks.",
+    "description": "GLM-5.1 delivers a major leap in coding capability, with particularly significant gains in handling long-horizon tasks.",
     "strengths": [
       "Affordable at $0.97/1M input tokens",
       "Large 203K-token context window",
@@ -7920,7 +7920,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Grok Build 0. 1 is xAI’s fast coding model trained specifically for agentic software engineering workflows.",
+    "description": "Grok Build 0.1 is xAI’s fast coding model trained specifically for agentic software engineering workflows.",
     "strengths": [
       "Affordable at $1.00/1M input tokens",
       "Large 256K-token context window",
@@ -7958,7 +7958,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Claude Haiku 4. 5 is Anthropic’s fastest and most efficient model, delivering near-frontier intelligence at a fraction of the cost and latency of larger Claude models.",
+    "description": "Claude Haiku 4.5 is Anthropic’s fastest and most efficient model, delivering near-frontier intelligence at a fraction of the cost and latency of larger Claude models.",
     "strengths": [
       "Affordable at $1.00/1M input tokens",
       "Large 200K-token context window",
@@ -7997,7 +7997,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Hermes 4 is a large-scale reasoning model built on Meta-Llama-3. 1-405B and released by Nous Research.",
+    "description": "Hermes 4 is a large-scale reasoning model built on Meta-Llama-3.1-405B and released by Nous Research.",
     "strengths": [
       "Affordable at $1.00/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -8035,7 +8035,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Sonar is lightweight, affordable, fast, and simple to use — now featuring citations and the ability to customize sources.  It is designed for companies seeking to integrate lightweight question-and-answer features...",
+    "description": "Sonar is lightweight, affordable, fast, and simple to use — now featuring citations and the ability to customize sources.",
     "strengths": [
       "Affordable at $1.00/1M input tokens",
       "Multimodal: understands images as well as text",
@@ -8073,7 +8073,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence, and improvements across the...",
+    "description": "Hermes 3 is a generalist language model with many improvements over Hermes 2, including advanced agentic capabilities, much better roleplaying, reasoning, multi-turn conversation, long context coherence.",
     "strengths": [
       "Affordable at $1.00/1M input tokens",
       "Frontier-class quality on complex tasks",
@@ -8111,7 +8111,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GPT-3.5 Turbo (older v0613) is OpenAI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $1.00 per million input tokens with a 4K-token context window.",
+    "description": "GPT-3.5 Turbo is OpenAI's fastest model. It can understand and generate natural language or code, and is optimized for chat and traditional completion tasks.",
     "strengths": [
       "Affordable at $1.00/1M input tokens",
       "Strong general-purpose performance",
@@ -8149,7 +8149,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3. 6-Max-Preview is a proprietary frontier model from Alibaba Cloud built on a sparse mixture-of-experts architecture with approximately 1 trillion total parameters.",
+    "description": "Qwen3.6-Max-Preview is a proprietary frontier model from Alibaba Cloud built on a sparse mixture-of-experts architecture with approximately 1 trillion total parameters.",
     "strengths": [
       "Large 262K-token context window",
       "Frontier-class quality on complex tasks",
@@ -8187,7 +8187,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "OpenAI o4-mini-high is the same model as o4-mini with reasoning_effort set to high.  OpenAI o4-mini is a compact reasoning model in the o-series, optimized for fast, cost-efficient performance while retaining...",
+    "description": "OpenAI o4-mini-high is the same model as o4-mini with reasoning_effort set to high.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -8225,7 +8225,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "OpenAI o4-mini is a compact reasoning model in the o-series, optimized for fast, cost-efficient performance while retaining strong multimodal and agentic capabilities.  It supports tool use and demonstrates competitive reasoning...",
+    "description": "OpenAI o4-mini is a compact reasoning model in the o-series, optimized for fast, cost-efficient performance while retaining strong multimodal and agentic capabilities.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -8263,7 +8263,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "OpenAI o3-mini-high is the same model as o3-mini with reasoning_effort set to high.  o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and...",
+    "description": "OpenAI o3-mini-high is the same model as o3-mini with reasoning_effort set to high.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -8301,7 +8301,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "OpenAI o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding.  This model supports the `reasoning_effort` parameter, which can be set to...",
+    "description": "OpenAI o3-mini is a cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -8415,7 +8415,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Qwen3.7 Max is Qwen's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $1.25 per million input tokens with a 1M-token context window.",
+    "description": "Qwen3.7-Max is the flagship model in Alibaba's Qwen3.7 series.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -8493,7 +8493,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Grok 4.20 Multi-Agent is xAI's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $1.25 per million input tokens with a 2M-token context window and native image understanding.",
+    "description": "Grok 4.20 Multi-Agent is a variant of xAI’s Grok 4.20 designed for collaborative, agent-based workflows.",
     "strengths": [
       "Massive 2M-token context window",
       "Frontier-class quality on complex tasks",
@@ -8531,7 +8531,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Grok 4. 20 is a reasoning model from xAI with industry-leading speed and agentic tool calling capabilities.",
+    "description": "Grok 4.20 is a reasoning model from xAI with industry-leading speed and agentic tool calling capabilities.",
     "strengths": [
       "Massive 2M-token context window",
       "Frontier-class quality on complex tasks",
@@ -8569,7 +8569,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 1-Codex-Max is OpenAI’s latest agentic coding model, designed for long-running, high-context software development tasks.",
+    "description": "GPT-5.1-Codex-Max is OpenAI’s latest agentic coding model, designed for long-running, high-context software development tasks.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -8607,7 +8607,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 1 is the latest frontier-grade model in the GPT-5 series, offering stronger general-purpose reasoning, improved instruction adherence, and a more natural conversational style compared to GPT-5.",
+    "description": "GPT-5.1 is the latest frontier-grade model in the GPT-5 series, offering stronger general-purpose reasoning, improved instruction adherence, and a more natural conversational style compared to GPT-5.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -8645,7 +8645,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 1 Chat (AKA Instant is the fast, lightweight member of the 5.",
+    "description": "GPT-5.1 Chat (AKA Instant is the fast, lightweight member of the 5.1 family, optimized for low-latency chat while retaining strong general intelligence.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Multimodal: understands images as well as text",
@@ -8683,7 +8683,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5.1-Codex is OpenAI's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $1.25 per million input tokens with a 400K-token context window and native image understanding.",
+    "description": "GPT-5.1-Codex is a specialized version of GPT-5.1 optimized for software engineering and coding workflows.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -8721,7 +8721,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5-Codex is a specialized version of GPT-5 optimized for software engineering and coding workflows.  It is designed for both interactive development sessions and long, independent execution of complex engineering tasks....",
+    "description": "GPT-5-Codex is a specialized version of GPT-5 optimized for software engineering and coding workflows.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -8797,7 +8797,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5 is OpenAI’s most advanced model, offering major improvements in reasoning, code quality, and user experience.  It is optimized for complex tasks that require step-by-step reasoning, instruction following, and accuracy...",
+    "description": "GPT-5 is OpenAI’s most advanced model, offering major improvements in reasoning, code quality, and user experience.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -8835,7 +8835,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 2. 5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks.",
+    "description": "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks.",
     "strengths": [
       "Massive 1M-token context window",
       "Low latency for high-throughput workloads",
@@ -8873,7 +8873,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 2. 5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks.",
+    "description": "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks.",
     "strengths": [
       "Massive 1M-token context window",
       "Low latency for high-throughput workloads",
@@ -8911,7 +8911,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65535,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 2. 5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks.",
+    "description": "Gemini 2.5 Pro is Google’s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks.",
     "strengths": [
       "Massive 1M-token context window",
       "Low latency for high-throughput workloads",
@@ -8949,7 +8949,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 3. 5 Flash is Google's high-efficiency multimodal model, bringing near-Pro level coding and reasoning at Flash-tier cost and speed.",
+    "description": "Gemini 3.5 Flash is Google's high-efficiency multimodal model, bringing near-Pro level coding and reasoning at Flash-tier cost and speed.",
     "strengths": [
       "Massive 1M-token context window",
       "Low latency for high-throughput workloads",
@@ -8989,7 +8989,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Mistral Medium 3. 5 is a dense 128B instruction-following model from Mistral AI.",
+    "description": "Mistral Medium 3.5 is a dense 128B instruction-following model from Mistral AI.",
     "strengths": [
       "Large 262K-token context window",
       "Multimodal: understands images as well as text",
@@ -9027,7 +9027,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "This model is a variant of GPT-3. 5 Turbo tuned for instructional prompts and omitting chat-related optimizations.",
+    "description": "This model is a variant of GPT-3.5 Turbo tuned for instructional prompts and omitting chat-related optimizations. Training data: up to Sep 2021.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -9065,7 +9065,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 3 Chat is an update to ChatGPT's most-used model that makes everyday conversations smoother, more useful, and more directly helpful.",
+    "description": "GPT-5.3 Chat is an update to ChatGPT's most-used model that makes everyday conversations smoother, more useful, and more directly helpful.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Multimodal: understands images as well as text",
@@ -9103,7 +9103,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 3-Codex is OpenAI’s most advanced agentic coding model, combining the frontier software engineering performance of GPT-5.",
+    "description": "GPT-5.3-Codex is OpenAI’s most advanced agentic coding model, combining the frontier software engineering performance of GPT-5.2-Codex with the broader reasoning and professional knowledge capabilities of GPT-5.2.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -9141,7 +9141,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5.2-Codex is OpenAI's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $1.75 per million input tokens with a 400K-token context window and native image understanding.",
+    "description": "GPT-5.2-Codex is an upgraded version of GPT-5.1-Codex optimized for software engineering and coding workflows.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -9179,7 +9179,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 2 Chat (AKA Instant) is the fast, lightweight member of the 5.",
+    "description": "GPT-5.2 Chat (AKA Instant) is the fast, lightweight member of the 5.2 family, optimized for low-latency chat while retaining strong general intelligence.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Multimodal: understands images as well as text",
@@ -9217,7 +9217,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 2 is the latest frontier-grade model in the GPT-5 series, offering stronger agentic and long context perfomance compared to GPT-5.",
+    "description": "GPT-5.2 is the latest frontier-grade model in the GPT-5 series, offering stronger agentic and long context perfomance compared to GPT-5.1.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -9255,7 +9255,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Sonnet 5 is Anthropic's most capable Sonnet-class model, with frontier performance across coding, agents, and professional work.  It supports adaptive thinking with selectable reasoning effort levels (low, medium, high, max,...",
+    "description": "Sonnet 5 is Anthropic's most capable Sonnet-class model, with frontier performance across coding, agents, and professional work.",
     "strengths": [
       "Massive 1M-token context window",
       "Multimodal: understands images as well as text",
@@ -9293,7 +9293,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Nano Banana Pro is Google’s most advanced image-generation and editing model, built on Gemini 3 Pro.  It extends the original Nano Banana with significantly improved multimodal reasoning, real-world grounding, and...",
+    "description": "Nano Banana Pro is Google’s most advanced image-generation and editing model, built on Gemini 3 Pro.",
     "strengths": [
       "Low latency for high-throughput workloads",
       "Multimodal: understands images as well as text",
@@ -9331,7 +9331,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 3. 1 Pro Preview Custom Tools is a variant of Gemini 3.",
+    "description": "Gemini 3.1 Pro Preview Custom Tools is a variant of Gemini 3.1 Pro that improves tool selection behavior by preventing overuse of a general bash tool when more efficient third-party.",
     "strengths": [
       "Massive 1M-token context window",
       "Low latency for high-throughput workloads",
@@ -9369,7 +9369,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 65536,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Gemini 3. 1 Pro Preview is Google’s frontier reasoning model, delivering enhanced software engineering performance, improved agentic reliability, and more efficient token usage across complex workflows.",
+    "description": "Gemini 3.1 Pro Preview is Google’s frontier reasoning model, delivering enhanced software engineering performance, improved agentic reliability, and more efficient token usage across complex workflows.",
     "strengths": [
       "Massive 1M-token context window",
       "Low latency for high-throughput workloads",
@@ -9409,7 +9409,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32768,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "Nano Banana Pro is Google’s most advanced image-generation and editing model, built on Gemini 3 Pro.  It extends the original Nano Banana with significantly improved multimodal reasoning, real-world grounding, and...",
+    "description": "Nano Banana Pro is Google’s most advanced image-generation and editing model, built on Gemini 3 Pro.",
     "strengths": [
       "Low latency for high-throughput workloads",
       "Multimodal: understands images as well as text",
@@ -9447,7 +9447,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "o4-mini-deep-research is OpenAI's faster, more affordable deep research model—ideal for tackling complex, multi-step research tasks.  Note: This model always uses the 'web_search' tool which adds additional cost.",
+    "description": "o4-mini-deep-research is OpenAI's faster, more affordable deep research model—ideal for tackling complex, multi-step research tasks. Note: This model always uses the 'web_search' tool which adds additional cost.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -9485,7 +9485,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Jamba Large 1. 7 is the latest model in the Jamba open family, offering improvements in grounding, instruction-following, and overall efficiency.",
+    "description": "Jamba Large 1.7 is the latest model in the Jamba open family, offering improvements in grounding, instruction-following, and overall efficiency.",
     "strengths": [
       "Large 256K-token context window",
       "Frontier-class quality on complex tasks",
@@ -9519,7 +9519,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "o3 is a well-rounded and powerful model across domains.  It sets a new standard for math, science, coding, and visual reasoning tasks.",
+    "description": "o3 is a well-rounded and powerful model across domains. It sets a new standard for math, science, coding, and visual reasoning tasks.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -9557,7 +9557,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4. 1 is a flagship large language model optimized for advanced instruction following, real-world software engineering, and long-context reasoning.",
+    "description": "GPT-4.1 is a flagship large language model optimized for advanced instruction following, real-world software engineering, and long-context reasoning.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -9595,7 +9595,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "Note: Sonar Pro pricing includes Perplexity search pricing.  See details here Sonar Reasoning Pro is a premier reasoning model powered by DeepSeek R1 with Chain of Thought (CoT).",
+    "description": "Note: Sonar Pro pricing includes Perplexity search pricing. See details here Sonar Reasoning Pro is a premier reasoning model powered by DeepSeek R1 with Chain of Thought (CoT).",
     "strengths": [
       "Step-by-step chain-of-thought reasoning",
       "Multimodal: understands images as well as text",
@@ -9633,7 +9633,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Sonar Deep Research is a research-focused model designed for multi-step retrieval, synthesis, and reasoning across complex topics.  It autonomously searches, reads, and evaluates sources, refining its approach as it gathers...",
+    "description": "Sonar Deep Research is a research-focused model designed for multi-step retrieval, synthesis, and reasoning across complex topics.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -9671,7 +9671,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "This is Mistral AI's flagship model, Mistral Large 2 (version mistral-large-2407).  It's a proprietary weights-available model and excels at reasoning, code, JSON, chat, and more.",
+    "description": "This is Mistral AI's flagship model, Mistral Large 2 (version mistral-large-2407). It's a proprietary weights-available model and excels at reasoning, code, JSON, chat, and more.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Strong general-purpose performance",
@@ -9709,7 +9709,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Mistral's official instruct fine-tuned version of Mixtral 8x22B.  It uses 39B active parameters out of 141B, offering unparalleled cost efficiency for its size.",
+    "description": "Mistral's official instruct fine-tuned version of Mixtral 8x22B. It uses 39B active parameters out of 141B, offering unparalleled cost efficiency for its size.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -9747,7 +9747,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "This is Mistral AI's flagship model, Mistral Large 2 (version `mistral-large-2407`).  It's a proprietary weights-available model and excels at reasoning, code, JSON, chat, and more.",
+    "description": "This is Mistral AI's flagship model, Mistral Large 2 (version `mistral-large-2407`). It's a proprietary weights-available model and excels at reasoning, code, JSON, chat, and more.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Strong general-purpose performance",
@@ -9785,7 +9785,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 4 is OpenAI’s latest frontier model, unifying the Codex and GPT lines into a single system.",
+    "description": "GPT-5.4 is OpenAI’s latest frontier model, unifying the Codex and GPT lines into a single system.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -9825,7 +9825,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "The gpt-audio model is OpenAI's first generally available audio model.  The new snapshot features an upgraded decoder for more natural sounding voices and maintains better voice consistency.",
+    "description": "The gpt-audio model is OpenAI's first generally available audio model. The new snapshot features an upgraded decoder for more natural sounding voices and maintains better voice consistency.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -9901,7 +9901,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "fast",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5 Image Mini combines OpenAI's advanced language capabilities, powered by GPT-5 Mini, with GPT Image 1 Mini for efficient image generation.  This natively multimodal model features superior instruction following, text...",
+    "description": "GPT-5 Image Mini combines OpenAI's advanced language capabilities, powered by GPT-5 Mini, with GPT Image 1 Mini for efficient image generation.",
     "strengths": [
       "Large 400K-token context window",
       "Low latency for high-throughput workloads",
@@ -9939,7 +9939,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8192,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Command A is an open-weights 111B parameter model with a 256k context window focused on delivering great performance across agentic, multilingual, and coding use cases.  Compared to other leading proprietary...",
+    "description": "Command A is an open-weights 111B parameter model with a 256k context window focused on delivering great performance across agentic, multilingual, and coding use cases.",
     "strengths": [
       "Large 256K-token context window",
       "Strong general-purpose performance",
@@ -9977,7 +9977,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4o Search Previewis a specialized model for web search in Chat Completions.  It is trained to understand and execute web search queries.",
+    "description": "GPT-4o Search Previewis a specialized model for web search in Chat Completions. It is trained to understand and execute web search queries.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -10015,7 +10015,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "The 2024-11-20 version of GPT-4o offers a leveled-up creative writing ability with more natural, engaging, and tailored writing to improve relevance & readability.  It’s also better at working with uploaded...",
+    "description": "The 2024-11-20 version of GPT-4o offers a leveled-up creative writing ability with more natural, engaging, and tailored writing to improve relevance & readability.",
     "strengths": [
       "Multimodal: understands images as well as text",
       "Strong general-purpose performance",
@@ -10053,7 +10053,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 1024,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Inflection 3 Pi powers Inflection's Pi chatbot, including backstory, emotional intelligence, productivity, and safety.  It has access to recent news, and excels in scenarios like customer support and roleplay.",
+    "description": "Inflection 3 Pi powers Inflection's Pi chatbot, including backstory, emotional intelligence, productivity, and safety. It has access to recent news, and excels in scenarios like customer support and roleplay.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -10089,7 +10089,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 1024,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Inflection 3 Productivity is optimized for following instructions.  It is better for tasks requiring JSON output or precise adherence to provided guidelines.",
+    "description": "Inflection 3 Productivity is optimized for following instructions. It is better for tasks requiring JSON output or precise adherence to provided guidelines.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -10125,7 +10125,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "command-r-plus-08-2024 is an update of the Command R+ with roughly 50% higher throughput and 25% lower latencies as compared to the previous Command R+ version, while keeping the hardware footprint...",
+    "description": "command-r-plus-08-2024 is an update of the Command R+ with roughly 50% higher throughput and 25% lower latencies as compared to the previous Command R+ version, while keeping the hardware footprint.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -10163,7 +10163,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "The 2024-08-06 version of GPT-4o offers improved performance in structured outputs, with the ability to supply a JSON schema in the respone_format.  Read more here.",
+    "description": "The 2024-08-06 version of GPT-4o offers improved performance in structured outputs, with the ability to supply a JSON schema in the respone_format. Read more here.",
     "strengths": [
       "Multimodal: understands images as well as text",
       "Strong general-purpose performance",
@@ -10201,7 +10201,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 16384,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs.  It maintains the intelligence level of GPT-4 Turbo while being twice as...",
+    "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs.",
     "strengths": [
       "Multimodal: understands images as well as text",
       "Strong general-purpose performance",
@@ -10239,7 +10239,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Sonnet 4. 6 is Anthropic's most capable Sonnet-class model yet, with frontier performance across coding, agents, and professional work.",
+    "description": "Sonnet 4.6 is Anthropic's most capable Sonnet-class model yet, with frontier performance across coding, agents, and professional work.",
     "strengths": [
       "Massive 1M-token context window",
       "Multimodal: understands images as well as text",
@@ -10277,7 +10277,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Exclusively available on the OpenRouter API, Sonar Pro's new Pro Search mode is Perplexity's most advanced agentic search system.  It is designed for deeper reasoning and analysis.",
+    "description": "Exclusively available on the OpenRouter API, Sonar Pro's new Pro Search mode is Perplexity's most advanced agentic search system. It is designed for deeper reasoning and analysis.",
     "strengths": [
       "Large 200K-token context window",
       "Frontier-class quality on complex tasks",
@@ -10315,7 +10315,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Claude Sonnet 4. 5 is Anthropic’s most advanced Sonnet model to date, optimized for real-world agents and coding workflows.",
+    "description": "Claude Sonnet 4.5 is Anthropic’s most advanced Sonnet model to date, optimized for real-world agents and coding workflows.",
     "strengths": [
       "Massive 1M-token context window",
       "Multimodal: understands images as well as text",
@@ -10353,7 +10353,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonnet 3. 7, excelling in both coding and reasoning tasks with improved precision and controllability.",
+    "description": "Claude Sonnet 4 significantly enhances the capabilities of its predecessor, Sonnet 3.7, excelling in both coding and reasoning tasks with improved precision and controllability.",
     "strengths": [
       "Massive 1M-token context window",
       "Multimodal: understands images as well as text",
@@ -10391,7 +10391,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 8000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Note: Sonar Pro pricing includes Perplexity search pricing.  See details here For enterprises seeking more advanced capabilities, the Sonar Pro API can handle in-depth, multi-step queries with added extensibility, like...",
+    "description": "Sonar Pro is Perplexity's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $3.00 per million input tokens with a 200K-token context window and native image understanding.",
     "strengths": [
       "Large 200K-token context window",
       "Frontier-class quality on complex tasks",
@@ -10429,7 +10429,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "This model offers four times the context length of gpt-3. 5-turbo, allowing it to support approximately 20 pages of text in a single request at a higher cost.",
+    "description": "This model offers four times the context length of gpt-3.5-turbo, allowing it to support approximately 20 pages of text in a single request at a higher cost.",
     "strengths": [
       "Strong general-purpose performance",
       "Strong general-purpose performance",
@@ -10467,7 +10467,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Claude Opus 4. 8 is Anthropic's most capable generally available model in the Opus family.",
+    "description": "Claude Opus 4.8 is Anthropic's most capable generally available model in the Opus family.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -10507,7 +10507,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GPT Chat Latest points to OpenAI's stable API alias `chat-latest` that always resolves to the latest Instant chat model used in ChatGPT.  As OpenAI rolls out new Instant model updates...",
+    "description": "GPT Chat Latest points to OpenAI's stable API alias `chat-latest` that always resolves to the latest Instant chat model used in ChatGPT.",
     "strengths": [
       "Large 400K-token context window",
       "Multimodal: understands images as well as text",
@@ -10545,7 +10545,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 5 is OpenAI’s frontier model designed for complex professional workloads, building on GPT-5.",
+    "description": "GPT-5.5 is OpenAI’s frontier model designed for complex professional workloads, building on GPT-5.4 with stronger reasoning, higher reliability, and improved token efficiency on hard tasks.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -10585,7 +10585,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Opus 4. 7 is the next generation of Anthropic's Opus family, built for long-running, asynchronous agents.",
+    "description": "Opus 4.7 is the next generation of Anthropic's Opus family, built for long-running, asynchronous agents.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -10625,7 +10625,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Opus 4. 6 is Anthropic’s strongest model for coding and long-running professional tasks.",
+    "description": "Opus 4.6 is Anthropic’s strongest model for coding and long-running professional tasks.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -10665,7 +10665,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 64000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Claude Opus 4. 5 is Anthropic’s frontier reasoning model optimized for complex software engineering, agentic workflows, and long-horizon computer use.",
+    "description": "Claude Opus 4.5 is Anthropic’s frontier reasoning model optimized for complex software engineering, agentic workflows, and long-horizon computer use.",
     "strengths": [
       "Large 200K-token context window",
       "Frontier-class quality on complex tasks",
@@ -10703,7 +10703,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "balanced",
     "updatedAt": "2026-06-30",
-    "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs.  It maintains the intelligence level of GPT-4 Turbo while being twice as...",
+    "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs.",
     "strengths": [
       "Multimodal: understands images as well as text",
       "Strong general-purpose performance",
@@ -10741,7 +10741,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5.4 Image 2 is OpenAI's a flagship-tier model built for the most demanding reasoning, coding, and long-form tasks. It costs $8.00 per million input tokens with a 272K-token context window and native image understanding.",
+    "description": "GPT-5.4 Image 2 combines OpenAI's GPT-5.4 model with state-of-the-art image generation capabilities from GPT Image 2.",
     "strengths": [
       "Large 272K-token context window",
       "Frontier-class quality on complex tasks",
@@ -10779,7 +10779,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Claude Fable 5 is a Mythos-class model from Anthropic, built for autonomous knowledge work and coding.  It supports text, image, and file inputs with text output, with reasoning support and...",
+    "description": "Claude Fable 5 is a Mythos-class model from Anthropic, built for autonomous knowledge work and coding.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -10819,7 +10819,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Fast-mode variant of Opus 4. 8 - identical capabilities with higher output speed at 2x pricing relative to regular Opus 4.",
+    "description": "Fast-mode variant of Opus 4.8 - identical capabilities with higher output speed at 2x pricing relative to regular Opus 4.8. Learn more in Anthropic's docs: https://platform.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -10857,7 +10857,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5 Image combines OpenAI's GPT-5 model with state-of-the-art image generation capabilities.  It offers major improvements in reasoning, code quality, and user experience while incorporating GPT Image 1's superior instruction following,...",
+    "description": "GPT-5 Image combines OpenAI's GPT-5 model with state-of-the-art image generation capabilities.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -10895,7 +10895,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "o3-deep-research is OpenAI's advanced model for deep research, designed to tackle complex, multi-step research tasks.  Note: This model always uses the 'web_search' tool which adds additional cost.",
+    "description": "o3-deep-research is OpenAI's advanced model for deep research, designed to tackle complex, multi-step research tasks. Note: This model always uses the 'web_search' tool which adds additional cost.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -10933,7 +10933,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "The latest GPT-4 Turbo model with vision capabilities.  Vision requests can now use JSON mode and function calling.",
+    "description": "The latest GPT-4 Turbo model with vision capabilities. Vision requests can now use JSON mode and function calling.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Multimodal: understands images as well as text",
@@ -10971,7 +10971,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "The preview GPT-4 model with improved instruction following, JSON mode, reproducible outputs, parallel function calling, and more.  Training data: up to Dec 2023.",
+    "description": "The preview GPT-4 model with improved instruction following, JSON mode, reproducible outputs, parallel function calling, and more. Training data: up to Dec 2023.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Strong general-purpose performance",
@@ -11009,7 +11009,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5 Pro is OpenAI’s most advanced model, offering major improvements in reasoning, code quality, and user experience.  It is optimized for complex tasks that require step-by-step reasoning, instruction following, and...",
+    "description": "GPT-5 Pro is OpenAI’s most advanced model, offering major improvements in reasoning, code quality, and user experience.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -11047,7 +11047,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Claude Opus 4. 1 is an updated version of Anthropic’s flagship model, offering improved performance in coding, reasoning, and agentic tasks.",
+    "description": "Claude Opus 4.1 is an updated version of Anthropic’s flagship model, offering improved performance in coding, reasoning, and agentic tasks.",
     "strengths": [
       "Large 200K-token context window",
       "Frontier-class quality on complex tasks",
@@ -11085,7 +11085,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 32000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Claude Opus 4 is benchmarked as the world’s best coding model, at time of release, bringing sustained performance on complex, long-running tasks and agent workflows.  It sets new benchmarks in...",
+    "description": "Claude Opus 4 is benchmarked as the world’s best coding model, at time of release, bringing sustained performance on complex, long-running tasks and agent workflows.",
     "strengths": [
       "Large 200K-token context window",
       "Frontier-class quality on complex tasks",
@@ -11123,7 +11123,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.  The o1 model series is trained with large-scale reinforcement learning to reason...",
+    "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -11161,7 +11161,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "The o-series of models are trained with reinforcement learning to think before they answer and perform complex reasoning.  The o3-pro model uses more compute to think harder and provide consistently...",
+    "description": "The o-series of models are trained with reinforcement learning to think before they answer and perform complex reasoning.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
@@ -11199,7 +11199,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 2 Pro is OpenAI’s most advanced model, offering major improvements in agentic coding and long context performance over GPT-5 Pro.",
+    "description": "GPT-5.2 Pro is OpenAI’s most advanced model, offering major improvements in agentic coding and long context performance over GPT-5 Pro.",
     "strengths": [
       "Large 400K-token context window",
       "Frontier-class quality on complex tasks",
@@ -11237,7 +11237,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "Fast-mode variant of Opus 4. 7 - identical capabilities with higher output speed at premium 6x pricing.",
+    "description": "Fast-mode variant of Opus 4.7 - identical capabilities with higher output speed at premium 6x pricing. Learn more in Anthropic's docs: https://platform.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -11275,7 +11275,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 5 Pro is OpenAI’s high-capability model optimized for deep reasoning and accuracy on complex, high-stakes workloads.",
+    "description": "GPT-5.5 Pro is OpenAI’s high-capability model optimized for deep reasoning and accuracy on complex, high-stakes workloads.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -11313,7 +11313,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 128000,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "GPT-5. 4 Pro is OpenAI's most advanced model, building on GPT-5.",
+    "description": "GPT-5.4 Pro is OpenAI's most advanced model, building on GPT-5.4's unified architecture with enhanced reasoning capabilities for complex, high-stakes tasks.",
     "strengths": [
       "Massive 1M-token context window",
       "Frontier-class quality on complex tasks",
@@ -11351,7 +11351,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 4096,
     "tier": "flagship",
     "updatedAt": "2026-06-30",
-    "description": "OpenAI's flagship model, GPT-4 is a large-scale multimodal language model capable of solving difficult problems with greater accuracy than previous models due to its broader general knowledge and advanced reasoning...",
+    "description": "OpenAI's flagship model, GPT-4 is a large-scale multimodal language model capable of solving difficult problems with greater accuracy than previous models due to its broader general knowledge and advanced reasoning.",
     "strengths": [
       "Frontier-class quality on complex tasks",
       "Strong general-purpose performance",
@@ -11389,7 +11389,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "outputLimit": 100000,
     "tier": "reasoning",
     "updatedAt": "2026-06-30",
-    "description": "The o1 series of models are trained with reinforcement learning to think before they answer and perform complex reasoning.  The o1-pro model uses more compute to think harder and provide...",
+    "description": "The o1 series of models are trained with reinforcement learning to think before they answer and perform complex reasoning.",
     "strengths": [
       "Large 200K-token context window",
       "Step-by-step chain-of-thought reasoning",
