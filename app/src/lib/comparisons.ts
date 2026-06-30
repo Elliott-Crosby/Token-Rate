@@ -16,6 +16,30 @@ const U = '2026-05-22'
 
 export const ALL_COMPARISONS: ComparisonData[] = [
   {
+    slug: 'claude-sonnet-5-vs-opus-4-8',
+    title: 'Claude Sonnet 5 vs Claude Opus 4.8',
+    description:
+      'Anthropic says Sonnet 5 closes the gap with Opus 4.8 — at a fraction of the price. Compare pricing, agentic coding and knowledge-work benchmarks, and context window.',
+    modelSlugs: ['claude-sonnet-5', 'claude-opus-4-8'],
+    verdict:
+      "On knowledge work the two are effectively tied (Anthropic's Elo: Sonnet 5 1618 vs Opus 4.8 1615), yet Sonnet 5 costs ~40% less at the standard rate ($3/$15 vs $5/$25) and ~60% less during the launch promo ($2/$10 through Aug 31, 2026). Opus 4.8 still leads on agentic coding (69.2% vs 63.2%) and on some alignment metrics, so it remains the pick for the hardest engineering and highest-stakes autonomous work. For most workloads, Sonnet 5 is the better value.",
+    winnerSlug: 'claude-sonnet-5',
+    tags: ['anthropic', 'flagship', 'balanced', 'agents'],
+    updatedAt: '2026-06-30',
+  },
+  {
+    slug: 'claude-sonnet-5-vs-sonnet-4-6',
+    title: 'Claude Sonnet 5 vs Claude Sonnet 4.6',
+    description:
+      'Sonnet 5 is a substantial upgrade over Sonnet 4.6 at the same standard price. Compare the benchmark jump, safety improvements, and context window.',
+    modelSlugs: ['claude-sonnet-5', 'claude-sonnet-4-6'],
+    verdict:
+      'Sonnet 5 beats Sonnet 4.6 on every benchmark Anthropic published — agentic coding rises 58.1% to 63.2% and knowledge work jumps 1395 to 1618 — while costing the same after the promo ($3/$15) and less during it. It is also safer in agentic settings, with better prompt-injection resistance and less hallucination. Both share a 1M-token context window, so the migration is low-risk: a near-drop-in upgrade.',
+    winnerSlug: 'claude-sonnet-5',
+    tags: ['anthropic', 'balanced', 'agents', 'upgrade'],
+    updatedAt: '2026-06-30',
+  },
+  {
     slug: 'gpt-4o-vs-claude-sonnet-4',
     title: 'GPT-4o vs Claude Sonnet 4',
     description:

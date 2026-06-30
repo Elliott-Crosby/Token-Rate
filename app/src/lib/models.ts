@@ -38,6 +38,41 @@ const U = '2026-06-10'
 const CURATED_MODELS: ModelData[] = [
   // ── Anthropic ─────────────────────────────────────────────
   {
+    slug: 'claude-sonnet-5',
+    name: 'Claude Sonnet 5',
+    provider: 'Anthropic',
+    providerSlug: 'anthropic',
+    // Standard rate ($3/$15). Launch promo of $2/$10 runs through Aug 31, 2026;
+    // the live feed overlays the real current price when OpenRouter lists it.
+    inputPricePerMillion: 3,
+    outputPricePerMillion: 15,
+    contextWindow: 1000000,
+    outputLimit: 128000,
+    tier: 'balanced',
+    updatedAt: '2026-06-30',
+    description:
+      "Claude Sonnet 5 is Anthropic's most agentic Sonnet model yet (released June 30, 2026) — it plans, uses tools like browsers and terminals, and runs multi-step tasks autonomously, even checking its own output. It matches Opus 4.8 on knowledge work and lands just behind it on agentic coding, at a fraction of the cost. Launch pricing is $2/$10 per million tokens through Aug 31, 2026, then the standard $3/$15.",
+    strengths: [
+      'Near-Opus-4.8 quality on knowledge work at a fraction of the price',
+      'Most agentic Sonnet yet — strong tool use, planning, and self-checking',
+      '1M-token context window',
+      'Default model for Claude Free and Pro',
+    ],
+    weaknesses: [
+      'Trails Opus 4.8 on the hardest agentic coding (63.2% vs 69.2%)',
+      'Behind Opus 4.8 on some alignment/safety metrics',
+      'Launch promo pricing expires Aug 31, 2026',
+    ],
+    useCases: [
+      'Production coding and software-engineering agents',
+      'Tool-using autonomous agents (browsers, terminals)',
+      'Long-context RAG and document analysis',
+      'High-volume customer-facing apps',
+    ],
+    relatedSlugs: ['claude-sonnet-4-6', 'claude-opus-4-8', 'claude-fable-5'],
+    openRouterIds: ['anthropic/claude-sonnet-5'],
+  },
+  {
     slug: 'claude-opus-4',
     name: 'Claude Opus 4',
     provider: 'Anthropic',
@@ -1264,6 +1299,46 @@ export interface ProviderInfo {
   description: string
   url?: string
 }
+
+// Single source of truth for OpenRouter id-prefix → provider mapping. The live
+// calculator (homepage) and the compare-prices tool both derive their PROVIDER_MAP
+// from this so they can never drift out of sync. The daily catalog generator
+// (scripts/build-models.mjs) mirrors this list — it's a standalone Node script that
+// can't import this module at generate-time, so keep the two in step when editing.
+export const PROVIDER_PREFIXES: { prefix: string; slug: string; name: string }[] = [
+  { prefix: 'anthropic/', slug: 'anthropic', name: 'Anthropic' },
+  { prefix: 'openai/', slug: 'openai', name: 'OpenAI' },
+  { prefix: 'google/', slug: 'google', name: 'Google' },
+  { prefix: 'meta-llama/', slug: 'meta', name: 'Meta' },
+  { prefix: 'deepseek/', slug: 'deepseek', name: 'DeepSeek' },
+  { prefix: 'mistralai/', slug: 'mistral', name: 'Mistral' },
+  { prefix: 'x-ai/', slug: 'xai', name: 'xAI' },
+  { prefix: 'qwen/', slug: 'qwen', name: 'Qwen' },
+  { prefix: 'cohere/', slug: 'cohere', name: 'Cohere' },
+  { prefix: 'amazon/', slug: 'amazon', name: 'Amazon' },
+  { prefix: 'microsoft/', slug: 'microsoft', name: 'Microsoft' },
+  // ── Expanded provider coverage ──────────────────────────────────────────
+  { prefix: 'z-ai/', slug: 'zhipu', name: 'Zhipu AI' },
+  { prefix: 'moonshotai/', slug: 'moonshot', name: 'Moonshot AI' },
+  { prefix: 'nvidia/', slug: 'nvidia', name: 'NVIDIA' },
+  { prefix: 'minimax/', slug: 'minimax', name: 'MiniMax' },
+  { prefix: 'perplexity/', slug: 'perplexity', name: 'Perplexity' },
+  { prefix: 'nousresearch/', slug: 'nous', name: 'Nous Research' },
+  // ByteDance ships under two OpenRouter prefixes — both map to one provider.
+  { prefix: 'bytedance-seed/', slug: 'bytedance', name: 'ByteDance' },
+  { prefix: 'bytedance/', slug: 'bytedance', name: 'ByteDance' },
+  { prefix: 'arcee-ai/', slug: 'arcee', name: 'Arcee AI' },
+  { prefix: 'ai21/', slug: 'ai21', name: 'AI21 Labs' },
+  { prefix: 'rekaai/', slug: 'reka', name: 'Reka AI' },
+  { prefix: 'ibm-granite/', slug: 'ibm', name: 'IBM' },
+  { prefix: 'tencent/', slug: 'tencent', name: 'Tencent' },
+  { prefix: 'inflection/', slug: 'inflection', name: 'Inflection AI' },
+  { prefix: 'liquid/', slug: 'liquid', name: 'Liquid AI' },
+  { prefix: 'allenai/', slug: 'allenai', name: 'Allen Institute for AI' },
+  { prefix: 'baidu/', slug: 'baidu', name: 'Baidu' },
+  { prefix: 'writer/', slug: 'writer', name: 'Writer' },
+  { prefix: 'upstage/', slug: 'upstage', name: 'Upstage' },
+]
 
 export const PROVIDERS: ProviderInfo[] = [
   {
