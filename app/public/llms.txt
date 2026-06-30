@@ -13,7 +13,7 @@
 ## Data freshness
 
 - Live pricing refreshes every hour via Next.js ISR against the OpenRouter API.
-- Static reference prices and model metadata are reviewed and re-stamped on a rolling cadence (current stamp: 2026-06-10).
+- Static reference prices and model metadata are reviewed and re-stamped on a rolling cadence (current stamp: 2026-06-30).
 - All prices are USD per 1 million tokens unless otherwise stated.
 
 ## Canonical URLs
@@ -23,17 +23,22 @@
 - https://tokenrate.dev/tools/words-to-tokens — Paste text, get token count
 - https://tokenrate.dev/tools/token-to-usd — Token count to USD across models
 - https://tokenrate.dev/tools/api-cost-estimator — Project monthly API spend
+- https://tokenrate.dev/tools/compare-prices — Pick models by provider, compare token prices side by side
 
 ### Reference
 - https://tokenrate.dev/models — All tracked models
+- https://tokenrate.dev/models/claude-sonnet-5 — Claude Sonnet 5 pricing, context window & API cost
 - https://tokenrate.dev/providers — All tracked providers
 - https://tokenrate.dev/compare — Comparison index
+- https://tokenrate.dev/compare/claude-sonnet-5-vs-opus-4-8 — Claude Sonnet 5 vs Opus 4.8
+- https://tokenrate.dev/compare/claude-sonnet-5-vs-sonnet-4-6 — Claude Sonnet 5 vs Sonnet 4.6
 - https://tokenrate.dev/compare/cheapest-ai-models — Cheapest models ranked
 - https://tokenrate.dev/compare/best-models-for-coding — Best models for code
 - https://tokenrate.dev/compare/reasoning-models-compared — Reasoning models
 
 ### Guides
 - https://tokenrate.dev/blog — Blog & guide index
+- https://tokenrate.dev/blog/comparisons/claude-sonnet-5-vs-opus-4-8-sonnet-4-6-fable-5 — Claude Sonnet 5 vs Opus 4.8, Sonnet 4.6 & Fable 5 (pricing + agentic benchmarks)
 - https://tokenrate.dev/blog/fundamentals/what-are-ai-tokens — Token primer
 - https://tokenrate.dev/blog/fundamentals/how-ai-api-pricing-works — Per-token pricing model
 - https://tokenrate.dev/blog/fundamentals/how-many-tokens-in-1000-words — Quick reference

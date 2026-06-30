@@ -7,7 +7,7 @@ import RelatedPages from '@/components/RelatedPages'
 import SideRailAds from '@/components/SideRailAds'
 import JsonLd, { webAppSchema, faqSchema } from '@/components/JsonLd'
 import { HOME_FAQS } from '@/lib/faqs'
-import { ALL_MODELS, MODELS_UPDATED_AT, getCheapestModels, getModelBySlug } from '@/lib/models'
+import { ALL_MODELS, MODELS_UPDATED_AT, PROVIDER_PREFIXES, getCheapestModels, getModelBySlug } from '@/lib/models'
 import { getQualityMap, lookupQuality } from '@/lib/quality-index'
 import { SITE_URL } from '@/lib/seo'
 import Link from 'next/link'
@@ -37,19 +37,12 @@ function isVariantModel(id: string, name: string): boolean {
   return false
 }
 
-const PROVIDER_MAP: { prefix: string; label: string }[] = [
-  { prefix: 'anthropic/', label: 'Anthropic' },
-  { prefix: 'openai/', label: 'OpenAI' },
-  { prefix: 'google/', label: 'Google' },
-  { prefix: 'meta-llama/', label: 'Meta' },
-  { prefix: 'deepseek/', label: 'DeepSeek' },
-  { prefix: 'mistralai/', label: 'Mistral' },
-  { prefix: 'x-ai/', label: 'xAI' },
-  { prefix: 'qwen/', label: 'Qwen' },
-  { prefix: 'cohere/', label: 'Cohere' },
-  { prefix: 'amazon/', label: 'Amazon' },
-  { prefix: 'microsoft/', label: 'Microsoft' },
-]
+// Derived from the single source of truth in models.ts so the live calculator
+// always covers exactly the providers the catalogue knows about.
+const PROVIDER_MAP: { prefix: string; label: string }[] = PROVIDER_PREFIXES.map((p) => ({
+  prefix: p.prefix,
+  label: p.name,
+}))
 
 async function fetchModels(): Promise<ProviderGroup[]> {
   try {
@@ -96,12 +89,17 @@ async function fetchModels(): Promise<ProviderGroup[]> {
       })
     }
 
-    return PROVIDER_MAP
-      .filter(({ label }) => groups[label].length > 0)
-      .map(({ label }) => ({
-        name: label,
-        models: groups[label].sort((a, b) => b.inputPricePerToken - a.inputPricePerToken),
-      }))
+    // Dedupe by label — a provider can map from more than one id-prefix
+    // (e.g. ByteDance ships under both bytedance/ and bytedance-seed/).
+    const emitted = new Set<string>()
+    return PROVIDER_MAP.filter(({ label }) => {
+      if (emitted.has(label) || groups[label].length === 0) return false
+      emitted.add(label)
+      return true
+    }).map(({ label }) => ({
+      name: label,
+      models: groups[label].sort((a, b) => b.inputPricePerToken - a.inputPricePerToken),
+    }))
   } catch {
     return [
       {

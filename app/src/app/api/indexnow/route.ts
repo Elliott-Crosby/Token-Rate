@@ -19,6 +19,7 @@ function allUrls(): string[] {
     `${BASE}/tools/words-to-tokens`,
     `${BASE}/tools/token-to-usd`,
     `${BASE}/tools/api-cost-estimator`,
+    `${BASE}/tools/compare-prices`,
   ]
   const modelUrls = ALL_MODELS.map((m) => `${BASE}/models/${m.slug}`)
   const compareUrls = ALL_COMPARISONS.map((c) => `${BASE}/compare/${c.slug}`)

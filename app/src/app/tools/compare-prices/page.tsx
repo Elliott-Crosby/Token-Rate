@@ -3,6 +3,7 @@ import type { ModelPricing, ProviderGroup } from '@/lib/types'
 import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import PriceCompareClient from '@/components/PriceCompareClient'
+import { PROVIDER_PREFIXES } from '@/lib/models'
 
 export const metadata: Metadata = buildMetadata({
   title: 'Compare AI Token Prices — Multi-Model Price Comparison',
@@ -18,15 +19,9 @@ interface OpenRouterModel {
   context_length?: number
 }
 
-const PROVIDER_MAP = [
-  { prefix: 'anthropic/', label: 'Anthropic' },
-  { prefix: 'openai/', label: 'OpenAI' },
-  { prefix: 'google/', label: 'Google' },
-  { prefix: 'meta-llama/', label: 'Meta' },
-  { prefix: 'deepseek/', label: 'DeepSeek' },
-  { prefix: 'mistralai/', label: 'Mistral' },
-  { prefix: 'x-ai/', label: 'xAI' },
-]
+// Derived from the single source of truth in models.ts — keeps this tool in sync
+// with the homepage calculator and the model catalogue.
+const PROVIDER_MAP = PROVIDER_PREFIXES.map((p) => ({ prefix: p.prefix, label: p.name }))
 
 async function fetchProviderGroups(): Promise<ProviderGroup[]> {
   try {
@@ -58,9 +53,13 @@ async function fetchProviderGroups(): Promise<ProviderGroup[]> {
       })
     }
 
-    return PROVIDER_MAP
-      .filter(({ label }) => groups[label].length > 0)
-      .map(({ label }) => ({ name: label, models: groups[label].sort((a, b) => b.inputPricePerToken - a.inputPricePerToken) }))
+    // Dedupe by label — one provider can map from multiple id-prefixes.
+    const emitted = new Set<string>()
+    return PROVIDER_MAP.filter(({ label }) => {
+      if (emitted.has(label) || groups[label].length === 0) return false
+      emitted.add(label)
+      return true
+    }).map(({ label }) => ({ name: label, models: groups[label].sort((a, b) => b.inputPricePerToken - a.inputPricePerToken) }))
   } catch {
     return []
   }

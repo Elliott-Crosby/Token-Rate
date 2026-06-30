@@ -1418,6 +1418,132 @@ export const PROVIDERS: ProviderInfo[] = [
       "Microsoft's Phi family of small language models (SLMs) is designed for edge and on-device inference. Phi-4 delivers frontier-class reasoning within a 14B parameter footprint, optimized for STEM and coding tasks.",
     url: 'https://azure.microsoft.com/en-us/products/phi',
   },
+  {
+    name: 'Zhipu AI',
+    slug: 'zhipu',
+    description:
+      "Zhipu AI (Z.ai) is a Beijing-based lab spun out of Tsinghua University, building the open-weight GLM series. The GLM-4.5, 4.6, 4.7 and GLM-5 models are strong agentic and coding performers with vision (GLM-V) variants, popular for self-hosting at a fraction of frontier API prices.",
+    url: 'https://z.ai',
+  },
+  {
+    name: 'Moonshot AI',
+    slug: 'moonshot',
+    description:
+      "Moonshot AI is the Chinese lab behind the Kimi family. Kimi K2 is a large open-weight Mixture-of-Experts model tuned for agentic tool use, coding, and very long context — a leading open alternative to closed frontier models at low API cost.",
+    url: 'https://www.moonshot.ai',
+  },
+  {
+    name: 'NVIDIA',
+    slug: 'nvidia',
+    description:
+      "NVIDIA publishes the open Nemotron family — models post-trained for reasoning, agentic workflows, and tool use, including Llama-Nemotron variants. They're designed to run efficiently on NVIDIA hardware and are freely available for self-hosting.",
+    url: 'https://build.nvidia.com',
+  },
+  {
+    name: 'MiniMax',
+    slug: 'minimax',
+    description:
+      'MiniMax is a Shanghai-based lab whose MiniMax-M series pairs very long context windows (up to 1M+ tokens) with strong agentic and coding performance at aggressive prices. The models are open-weight and widely hosted.',
+    url: 'https://www.minimax.io',
+  },
+  {
+    name: 'Perplexity',
+    slug: 'perplexity',
+    description:
+      "Perplexity builds the Sonar family — models with built-in web search that return grounded, citation-backed answers. Sonar, Sonar Pro, and the Sonar Reasoning and Deep Research tiers are the engine behind Perplexity's answer product.",
+    url: 'https://www.perplexity.ai',
+  },
+  {
+    name: 'Nous Research',
+    slug: 'nous',
+    description:
+      'Nous Research builds the open-weight Hermes series — steerable, instruction-tuned fine-tunes of Llama with strong function-calling and minimal refusals. A favourite of the open-source community for agents and self-hosting.',
+    url: 'https://nousresearch.com',
+  },
+  {
+    name: 'ByteDance',
+    slug: 'bytedance',
+    description:
+      "ByteDance (TikTok's parent) ships the Seed family of general-purpose models and UI-TARS, a GUI-agent model that controls computers from screenshots. The Seed models offer long context and competitive pricing across flagship and flash tiers.",
+    url: 'https://seed.bytedance.com',
+  },
+  {
+    name: 'Arcee AI',
+    slug: 'arcee',
+    description:
+      'Arcee AI builds small, efficient enterprise models — the Virtuoso, Coder, and Trinity families — using model-merging and distillation. They target strong quality-per-dollar for coding, reasoning, and on-prem deployment.',
+    url: 'https://www.arcee.ai',
+  },
+  {
+    name: 'AI21 Labs',
+    slug: 'ai21',
+    description:
+      'AI21 Labs is an Israeli lab whose Jamba models use a hybrid Mamba-Transformer architecture for efficient very-long-context inference. Jamba targets enterprise document and RAG workloads with 256K-token windows.',
+    url: 'https://www.ai21.com',
+  },
+  {
+    name: 'Reka AI',
+    slug: 'reka',
+    description:
+      'Reka AI is a research lab building compact multimodal models — the Reka Flash and Edge series understand text, images, audio, and video. Designed to be efficient enough for on-device and edge deployment.',
+    url: 'https://www.reka.ai',
+  },
+  {
+    name: 'IBM',
+    slug: 'ibm',
+    description:
+      "IBM's open-weight Granite family targets enterprise use — small, efficient, commercially-licensed models with strong governance and transparency. Granite is tuned for coding, RAG, and tool use within IBM watsonx.",
+    url: 'https://www.ibm.com/granite',
+  },
+  {
+    name: 'Tencent',
+    slug: 'tencent',
+    description:
+      "Tencent builds the Hunyuan family of models, including Mixture-of-Experts variants. Hunyuan powers Tencent's products and is available open-weight for general chat, reasoning, and multilingual workloads.",
+    url: 'https://hunyuan.tencent.com',
+  },
+  {
+    name: 'Inflection AI',
+    slug: 'inflection',
+    description:
+      'Inflection AI builds emotionally-intelligent models behind Pi, its personal AI. The Inflection-3 models — Pi (conversational) and Productivity (instruction-following) — target empathetic, safe enterprise assistants.',
+    url: 'https://inflection.ai',
+  },
+  {
+    name: 'Liquid AI',
+    slug: 'liquid',
+    description:
+      'Liquid AI, an MIT spin-out, builds Liquid Foundation Models (LFMs) using a non-transformer architecture for high efficiency. LFMs are tiny, fast, and designed for on-device and edge inference with low memory footprints.',
+    url: 'https://www.liquid.ai',
+  },
+  {
+    name: 'Allen Institute for AI',
+    slug: 'allenai',
+    description:
+      'The Allen Institute for AI (Ai2) builds OLMo — fully open models that release weights, training data, and code together. OLMo is a reference point for reproducible, transparent open-source AI research.',
+    url: 'https://allenai.org',
+  },
+  {
+    name: 'Baidu',
+    slug: 'baidu',
+    description:
+      "Baidu builds the ERNIE family, China's longest-running large-model line. ERNIE 4.5 includes large Mixture-of-Experts and vision-language variants, available open-weight and via Baidu's cloud.",
+    url: 'https://yiyan.baidu.com',
+  },
+  {
+    name: 'Writer',
+    slug: 'writer',
+    description:
+      'Writer builds the Palmyra family of enterprise models tuned for business writing, domain-specific knowledge work, and long-context document tasks. Palmyra X5 offers a 1M-token window for whole-document workflows.',
+    url: 'https://writer.com',
+  },
+  {
+    name: 'Upstage',
+    slug: 'upstage',
+    description:
+      'Upstage is a South Korean lab building the Solar family — small, efficient models that punch above their parameter count via depth-up-scaling. Solar Pro targets strong document understanding and multilingual performance at low cost.',
+    url: 'https://www.upstage.ai',
+  },
 ]
 
 export function getProviderBySlug(slug: string): ProviderInfo | undefined {

@@ -20,18 +20,42 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUT = join(__dirname, '..', 'src', 'lib', 'models.generated.ts')
 
 // ── Providers we surface (prefix on the OpenRouter id) ──────────────────────
+// MIRROR of PROVIDER_PREFIXES in src/lib/models.ts. This is a standalone Node
+// script that runs before the app is built, so it can't import the TS module —
+// keep the two lists in step when adding or removing a provider.
 const PROVIDER_META = [
-  { prefix: 'anthropic/',  slug: 'anthropic',  name: 'Anthropic' },
-  { prefix: 'openai/',     slug: 'openai',     name: 'OpenAI' },
-  { prefix: 'google/',     slug: 'google',     name: 'Google' },
-  { prefix: 'meta-llama/', slug: 'meta',       name: 'Meta' },
-  { prefix: 'deepseek/',   slug: 'deepseek',   name: 'DeepSeek' },
-  { prefix: 'mistralai/',  slug: 'mistral',    name: 'Mistral' },
-  { prefix: 'x-ai/',       slug: 'xai',        name: 'xAI' },
-  { prefix: 'qwen/',       slug: 'qwen',       name: 'Qwen' },
-  { prefix: 'cohere/',     slug: 'cohere',     name: 'Cohere' },
-  { prefix: 'amazon/',     slug: 'amazon',     name: 'Amazon' },
-  { prefix: 'microsoft/',  slug: 'microsoft',  name: 'Microsoft' },
+  { prefix: 'anthropic/',     slug: 'anthropic',  name: 'Anthropic' },
+  { prefix: 'openai/',        slug: 'openai',     name: 'OpenAI' },
+  { prefix: 'google/',        slug: 'google',     name: 'Google' },
+  { prefix: 'meta-llama/',    slug: 'meta',       name: 'Meta' },
+  { prefix: 'deepseek/',      slug: 'deepseek',   name: 'DeepSeek' },
+  { prefix: 'mistralai/',     slug: 'mistral',    name: 'Mistral' },
+  { prefix: 'x-ai/',          slug: 'xai',        name: 'xAI' },
+  { prefix: 'qwen/',          slug: 'qwen',       name: 'Qwen' },
+  { prefix: 'cohere/',        slug: 'cohere',     name: 'Cohere' },
+  { prefix: 'amazon/',        slug: 'amazon',     name: 'Amazon' },
+  { prefix: 'microsoft/',     slug: 'microsoft',  name: 'Microsoft' },
+  // ── Expanded provider coverage ────────────────────────────────────────────
+  { prefix: 'z-ai/',          slug: 'zhipu',      name: 'Zhipu AI' },
+  { prefix: 'moonshotai/',    slug: 'moonshot',   name: 'Moonshot AI' },
+  { prefix: 'nvidia/',        slug: 'nvidia',     name: 'NVIDIA' },
+  { prefix: 'minimax/',       slug: 'minimax',    name: 'MiniMax' },
+  { prefix: 'perplexity/',    slug: 'perplexity', name: 'Perplexity' },
+  { prefix: 'nousresearch/',  slug: 'nous',       name: 'Nous Research' },
+  // ByteDance ships under two OpenRouter prefixes — both map to one provider.
+  { prefix: 'bytedance-seed/', slug: 'bytedance', name: 'ByteDance' },
+  { prefix: 'bytedance/',     slug: 'bytedance',  name: 'ByteDance' },
+  { prefix: 'arcee-ai/',      slug: 'arcee',      name: 'Arcee AI' },
+  { prefix: 'ai21/',          slug: 'ai21',       name: 'AI21 Labs' },
+  { prefix: 'rekaai/',        slug: 'reka',       name: 'Reka AI' },
+  { prefix: 'ibm-granite/',   slug: 'ibm',        name: 'IBM' },
+  { prefix: 'tencent/',       slug: 'tencent',    name: 'Tencent' },
+  { prefix: 'inflection/',    slug: 'inflection', name: 'Inflection AI' },
+  { prefix: 'liquid/',        slug: 'liquid',     name: 'Liquid AI' },
+  { prefix: 'allenai/',       slug: 'allenai',    name: 'Allen Institute for AI' },
+  { prefix: 'baidu/',         slug: 'baidu',      name: 'Baidu' },
+  { prefix: 'writer/',        slug: 'writer',     name: 'Writer' },
+  { prefix: 'upstage/',       slug: 'upstage',    name: 'Upstage' },
 ]
 
 function providerFor(id) {
