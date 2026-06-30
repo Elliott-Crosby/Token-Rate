@@ -9,6 +9,7 @@ import FilterPanel, { TIER_KEYS, type CostPreset, type QualityPreset } from './F
 import { track } from '@/lib/track'
 
 import { detectTier } from '@/lib/tier'
+import { byNewest } from '@/lib/sort'
 
 const TIER_LABEL: Record<string, string> = {
   flagship: 'Flagship',
@@ -181,15 +182,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
     models = models.filter(m => filterTiers.has(detectTier(m.name)))
 
     // ── 'newest': most recently released model first (OpenRouter `created`) ──
-    if (sort === 'newest') {
-      return [...models].sort((a, b) => {
-        const ac = a.created ?? 0, bc = b.created ?? 0
-        if (ac !== bc) return bc - ac                          // newest release first
-        // Same release date: primaries above dated/preview variants, then quality.
-        if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
-        return (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1)
-      })
-    }
+    if (sort === 'newest') return [...models].sort(byNewest)
 
     if (sort === 'cheapest') {
       return [...models].sort((a, b) => {

@@ -11,6 +11,7 @@ import type { InputMode, ProviderGroup, ModelPricing } from '@/lib/types'
 import { TIER_KEYS, type CostPreset, type QualityPreset } from './FilterPanel'
 import { track } from '@/lib/track'
 import { detectTier } from '@/lib/tier'
+import { byNewest } from '@/lib/sort'
 
 const TIER_LABEL: Record<string, string> = { flagship: 'Flagship', balanced: 'Balanced', fast: 'Fast', reasoning: 'Reasoning' }
 const TIER_COLOR: Record<string, string> = {
@@ -327,7 +328,7 @@ function ProviderSheet({ group, selected, onToggle, onClose }: {
   return (
     <Sheet title={group.name} onClose={onClose}>
       <div className="flex flex-col pb-1.5">
-        {group.models.map((m) => {
+        {[...group.models].sort(byNewest).map((m) => {
           const on = selected.has(m.id)
           return (
             <button
@@ -514,16 +515,7 @@ export default function MobileConverter({ providerGroups }: { providerGroups: Pr
     else if (qualPreset === 'rated') models = models.filter((m) => m.qualityIndex != null)
 
     models = models.filter((m) => filterTiers.has(detectTier(m.name)))
-    if (sort === 'newest') {
-      // Most recently released first (OpenRouter `created`). Tie-break: primaries
-      // above dated/preview variants, then higher quality.
-      return [...models].sort((a, b) => {
-        const ac = a.created ?? 0, bc = b.created ?? 0
-        if (ac !== bc) return bc - ac
-        if (!!a.isVariant !== !!b.isVariant) return a.isVariant ? 1 : -1
-        return (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1)
-      })
-    }
+    if (sort === 'newest') return [...models].sort(byNewest)
     if (sort === 'cheapest') return [...models].sort((a, b) => a.inputPricePerToken - b.inputPricePerToken || (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1))
     if (sort === 'expensive') return [...models].sort((a, b) => b.inputPricePerToken - a.inputPricePerToken || (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1))
     if (sort === 'quality') return [...models].sort((a, b) => (b.qualityIndex ?? -1) - (a.qualityIndex ?? -1))

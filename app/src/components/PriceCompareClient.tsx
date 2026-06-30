@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useMemo } from 'react'
 import type { ProviderGroup, ModelPricing, InputMode } from '@/lib/types'
 import { track } from '@/lib/track'
 import { detectTier } from '@/lib/tier'
+import { byNewest } from '@/lib/sort'
 
 const TIER_COLORS: Record<string, string> = {
   flagship: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400',
@@ -119,7 +120,14 @@ export default function PriceCompareClient({
     return () => document.removeEventListener('pointerdown', onPointerDown)
   }, [])
 
-  const allModels = useMemo(() => providerGroups.flatMap((g) => g.models), [providerGroups])
+  // Surface newly-released models at the top of each provider's picker — same
+  // newest-first ordering as the All Models list, instead of price-descending.
+  const sortedGroups = useMemo(
+    () => providerGroups.map((g) => ({ ...g, models: [...g.models].sort(byNewest) })),
+    [providerGroups],
+  )
+
+  const allModels = useMemo(() => sortedGroups.flatMap((g) => g.models), [sortedGroups])
 
   const toggle = (id: string) =>
     setSelectedIds((prev) => {
@@ -131,7 +139,7 @@ export default function PriceCompareClient({
   const clearProvider = (name: string) =>
     setSelectedIds((prev) => {
       const next = new Set(prev)
-      providerGroups.find((g) => g.name === name)?.models.forEach((m) => next.delete(m.id))
+      sortedGroups.find((g) => g.name === name)?.models.forEach((m) => next.delete(m.id))
       return next
     })
 
@@ -162,7 +170,7 @@ export default function PriceCompareClient({
       {/* Provider buttons + Reset */}
       <div className="flex items-start justify-between gap-3">
       <div ref={containerRef} className="flex flex-wrap gap-2">
-        {providerGroups.map((group) => {
+        {sortedGroups.map((group) => {
           const count = group.models.filter((m) => selectedIds.has(m.id)).length
           const isOpen = openProvider === group.name
 
