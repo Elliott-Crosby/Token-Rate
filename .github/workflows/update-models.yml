@@ -60,24 +60,28 @@ jobs:
       # Best-effort: tell IndexNow (Bing, Yandex, …) to re-crawl, so newly-shipped
       # model/blog/compare pages get submitted the day they appear instead of
       # waiting for an organic crawl — directly addresses the indexing bottleneck.
-      # Only runs when the catalog actually changed (avoids daily no-op spam).
-      # Requires INDEXNOW_PING_SECRET as a repo Actions secret; INDEXNOW_KEY lives
-      # on Vercel. No-ops (never fails the job) if the secret isn't configured.
+      # Submits straight to the IndexNow API using the PUBLIC key file served at
+      # /tokenrate-indexnow-key.txt — no secret to configure, so it self-activates.
+      # Runs only when the catalog changed; never fails the refresh.
       - name: Ping IndexNow
         if: steps.commit.outputs.changed == 'true'
         continue-on-error: true
-        env:
-          INDEXNOW_PING_SECRET: ${{ secrets.INDEXNOW_PING_SECRET }}
+        shell: bash
         run: |
-          if [ -z "$INDEXNOW_PING_SECRET" ]; then
-            echo "INDEXNOW_PING_SECRET not set — skipping IndexNow ping."
-            exit 0
-          fi
-          # Give Vercel a head start to deploy the new commit so the endpoint's
-          # URL list includes today's new models. The full set is resubmitted on
-          # every change, so any stragglers are caught on the next run.
-          sleep 180
-          echo "Submitting URLs to IndexNow…"
-          curl -sS -X POST https://tokenrate.dev/api/indexnow \
-            -H "Authorization: Bearer $INDEXNOW_PING_SECRET" \
-            -w "\nHTTP %{http_code}\n" || true
+          set +e
+          # Give Vercel a head start to deploy this run's commit so the sitemap
+          # reflects today's catalog. Stragglers are caught on the next run.
+          sleep 120
+          KEY=$(curl -fsS https://tokenrate.dev/tokenrate-indexnow-key.txt | tr -d '[:space:]')
+          if [ -z "$KEY" ]; then echo "No IndexNow key file; skipping."; exit 0; fi
+          # Canonical URLs straight from the sitemap (already excludes noindex variants).
+          URLS=$(curl -fsS https://tokenrate.dev/sitemap.xml | grep -oE '<loc>[^<]+</loc>' | sed -E 's#</?loc>##g')
+          COUNT=$(printf '%s\n' "$URLS" | grep -c .)
+          if [ "${COUNT:-0}" -eq 0 ]; then echo "No URLs in sitemap; skipping."; exit 0; fi
+          URLJSON=$(printf '%s\n' "$URLS" | sed 's/.*/"&"/' | paste -sd, -)
+          BODY=$(printf '{"host":"tokenrate.dev","key":"%s","keyLocation":"https://tokenrate.dev/tokenrate-indexnow-key.txt","urlList":[%s]}' "$KEY" "$URLJSON")
+          echo "Submitting $COUNT URLs to IndexNow…"
+          curl -sS -X POST "https://api.indexnow.org/IndexNow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            --data "$BODY" -w "\nHTTP %{http_code}\n"
+          exit 0
