@@ -1,0 +1,199 @@
+{
+  "category": "providers",
+  "slug": "new-llm-providers-glm-kimi-ernie-2026",
+  "kind": "guide",
+  "keyword": "new AI model providers 2026",
+  "title": "18 New AI Providers on TokenRate: GLM, Kimi, ERNIE, Hunyuan & More",
+  "description": "TokenRate just added 18 new AI model providers — GLM, Kimi, ERNIE, Hunyuan, Sonar, Granite, Jamba and more — taking the catalogue from 11 providers to 29. Every one has live daily pricing and a full deep-dive page. Here's what each one brings.",
+  "tldr": "TokenRate's provider coverage just went from 11 to 29. We added eighteen new model makers in one update — Zhipu (GLM), Moonshot (Kimi), MiniMax, Tencent (Hunyuan), Baidu (ERNIE), Perplexity (Sonar), ByteDance (Seed/UI-TARS), Nous Research (Hermes), IBM (Granite), AI21 (Jamba), Writer (Palmyra), Arcee, Upstage (Solar), NVIDIA (Nemotron), Reka, Liquid AI, Allen Institute (OLMo), and Inflection (Pi) — lifting the catalogue past 260 live, daily-priced models. Every provider below links to its own page with the full lineup and current pricing, and to its official site at the foot of the article.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-06-30T18:00:00.000Z",
+  "updatedAt": "2026-06-30T18:00:00.000Z",
+  "tags": [
+    "providers",
+    "open-weight",
+    "model-comparison",
+    "pricing",
+    "2026"
+  ],
+  "comparison": {
+    "caption": "The 18 providers added to TokenRate in June 2026 — model family, origin, and focus.",
+    "columns": [
+      "Provider",
+      "Flagship family",
+      "Origin",
+      "Known for"
+    ],
+    "rows": [
+      ["Zhipu AI", "GLM-4.x / GLM-5", "China", "Agentic coding, vision"],
+      ["Moonshot AI", "Kimi K2", "China", "Agentic tool use, long context"],
+      ["MiniMax", "MiniMax-M", "China", "1M+ context, low cost"],
+      ["Tencent", "Hunyuan", "China", "MoE chat & reasoning"],
+      ["Baidu", "ERNIE 4.5", "China", "MoE + vision-language"],
+      ["Perplexity", "Sonar", "USA", "Web search, cited answers"],
+      ["ByteDance", "Seed / UI-TARS", "China", "GUI agents, long context"],
+      ["Nous Research", "Hermes", "USA", "Steerable, low-refusal agents"],
+      ["IBM", "Granite", "USA", "Enterprise RAG & governance"],
+      ["AI21 Labs", "Jamba", "Israel", "256K context, Mamba hybrid"],
+      ["Writer", "Palmyra X5", "USA", "Business writing, 1M context"],
+      ["Arcee AI", "Virtuoso / Coder", "USA", "Efficient enterprise models"],
+      ["Upstage", "Solar Pro", "South Korea", "Docs & multilingual, compact"],
+      ["NVIDIA", "Nemotron", "USA", "Reasoning on NVIDIA hardware"],
+      ["Reka AI", "Reka Flash / Edge", "USA", "Multimodal, on-device"],
+      ["Liquid AI", "LFM", "USA", "Non-transformer, edge"],
+      ["Allen Institute for AI", "OLMo", "USA", "Fully open: weights + data"],
+      ["Inflection AI", "Pi (Inflection-3)", "USA", "Empathetic assistants"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "What we added — and why it matters",
+      "body": "TokenRate just tripled its provider coverage. The catalogue went from 11 providers to 29 — eighteen new model makers added in a single update, lifting the number of live, daily-priced models past 260. Every one of them now has a full deep-dive page, pricing pulled from the same daily feed as everything else, and a slot in the side-by-side [price comparison tool](/tools/compare-prices).\n\nThe point isn't size for its own sake. The frontier labs — Anthropic, OpenAI, Google — get the headlines, but a large and growing share of real production value sits with open-weight and specialist models that cost a fraction as much. You can't pick the cheapest model that clears your quality bar if it was never on the table. This update puts eighteen more makers on the table. Browse them all in the [providers directory](/providers), or read on for what each one brings.\n\nEvery provider named below links to its own TokenRate page, where you'll find the full model lineup, current input and output prices per million tokens, context windows, and tiers. The official site for each is linked in the Primary sources block at the foot of this article."
+    },
+    {
+      "heading": "The open-weight wave from China",
+      "body": "Five of the eighteen are Chinese labs shipping open-weight models that punch well above their price class. [Zhipu AI](/providers/zhipu) — a Tsinghua University spin-out, also known as Z.ai — builds the GLM series (GLM-4.5, 4.6, 4.7 and GLM-5): strong agentic and coding models with vision variants that are popular for self-hosting at a fraction of frontier API prices. [Moonshot AI](/providers/moonshot) makes Kimi, whose K2 release is a large Mixture-of-Experts model tuned for tool use, coding, and very long context — one of the leading open alternatives to closed frontier models.\n\n[MiniMax](/providers/minimax), out of Shanghai, pairs very long context windows — north of a million tokens — with aggressive pricing and solid agentic performance. [Tencent](/providers/tencent) brings the Hunyuan family, including Mixture-of-Experts variants that power its own products and are available open-weight for general chat, reasoning, and multilingual work. And [Baidu](/providers/baidu) adds ERNIE 4.5, China's longest-running large-model line, now with big MoE and vision-language variants. If you've wondered whether the open Chinese models really are as cheap as people say, you can now check the live numbers directly instead of taking anyone's word for it."
+    },
+    {
+      "heading": "Search, agents, and computer use",
+      "body": "Three of the new additions are built for doing things, not just answering them. [Perplexity](/providers/perplexity) contributes the Sonar family — models with web search built in that return grounded, citation-backed answers, including Sonar Pro and the Sonar Reasoning and Deep Research tiers. [ByteDance](/providers/bytedance), TikTok's parent company, ships the Seed family of general-purpose models plus UI-TARS, a GUI-agent model that drives a computer straight from screenshots.\n\n[Nous Research](/providers/nous) rounds out the group with Hermes — steerable, instruction-tuned fine-tunes of Llama known for strong function-calling and minimal refusals, a long-time favourite of the open-source agent community. If you're building anything that plans, calls tools, or browses, these three are worth pricing against the usual flagships before you default to a frontier model for every step."
+    },
+    {
+      "heading": "Enterprise, RAG, and writing specialists",
+      "body": "Five more target the enterprise stack, where governance, document length, and cost-per-seat matter as much as raw benchmark scores. [IBM](/providers/ibm) brings the open-weight Granite family — small, commercially-licensed, transparency-focused models tuned for coding, RAG, and tool use inside watsonx. [AI21 Labs](/providers/ai21), an Israeli lab, adds Jamba, a hybrid Mamba-Transformer architecture built for efficient very-long-context inference, with 256K-token windows aimed squarely at document and RAG workloads.\n\n[Writer](/providers/writer) contributes the Palmyra family, tuned for business writing and domain-specific knowledge work, with Palmyra X5 offering a 1M-token window for whole-document tasks. [Arcee AI](/providers/arcee) builds small, efficient models — the Virtuoso, Coder, and Trinity families — using model-merging and distillation for strong quality-per-dollar on coding and on-prem deployment. And South Korea's [Upstage](/providers/upstage) adds the Solar family: compact models that punch above their parameter count via depth-up-scaling, with Solar Pro strong on document understanding and multilingual text."
+    },
+    {
+      "heading": "Hardware, multimodal, and the fully-open lab",
+      "body": "The last five are a more eclectic bunch. [NVIDIA](/providers/nvidia) — yes, the chip company — publishes the open Nemotron family: models post-trained for reasoning and agentic workflows, including Llama-Nemotron variants, designed to run efficiently on its own hardware. [Reka AI](/providers/reka) builds compact multimodal models, the Reka Flash and Edge series, that understand text, images, audio, and video and are efficient enough for edge deployment. [Liquid AI](/providers/liquid), an MIT spin-out, takes a different path entirely with its Liquid Foundation Models — a non-transformer architecture designed to be tiny, fast, and friendly to on-device inference.\n\n[Allen Institute for AI](/providers/allenai) adds OLMo, notable for being fully open: weights, training data, and code are released together, which makes it a reference point for reproducible, transparent research. Finally, [Inflection AI](/providers/inflection) brings the Inflection-3 models behind Pi — tuned for empathetic, safe, conversational assistants. Different shapes, different goals, all now priced side by side with everything else in the catalogue."
+    },
+    {
+      "heading": "How to compare all 29 providers",
+      "body": "With 29 providers in the catalogue, the workflow is the same as it has always been: start from your real token mix, not a marketing benchmark. Drop two or more models into the [side-by-side price comparison tool](/tools/compare-prices) to see input, output, and blended cost lined up. Convert a flat monthly budget into tokens with the [token-to-USD tool](/tools/token-to-usd), or model a specific request volume on the [API cost estimator](/tools/api-cost-estimator). Every figure is driven by the same live feed that refreshes daily, so the prices you compare are the prices you'll actually pay.\n\nThe bet behind all of this hasn't changed: the right model is rarely the most expensive one — it's the cheapest one that clears your quality bar. Eighteen new providers means eighteen more chances that the cheapest model good enough for your job is one you simply hadn't priced yet. Open the [full providers directory](/providers) to explore every lineup, or run your numbers through the [calculator](/) to see what a switch could save."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which new providers did TokenRate add?",
+      "answer": "Eighteen: Zhipu AI (GLM), Moonshot AI (Kimi), MiniMax, Tencent (Hunyuan), Baidu (ERNIE), Perplexity (Sonar), ByteDance (Seed and UI-TARS), Nous Research (Hermes), IBM (Granite), AI21 Labs (Jamba), Writer (Palmyra), Arcee AI, Upstage (Solar), NVIDIA (Nemotron), Reka AI, Liquid AI, Allen Institute for AI (OLMo), and Inflection AI (Pi). That takes the catalogue from 11 providers to 29, and past 260 live models."
+    },
+    {
+      "question": "Are these new models cheaper than GPT, Claude, and Gemini?",
+      "answer": "Many of them are — often dramatically so. The open-weight models from labs like Zhipu, Moonshot, MiniMax, Tencent, and Baidu frequently land at a fraction of frontier API prices for comparable quality on coding and general tasks. But it varies by model and host, which is exactly why the live comparison matters: drop the models you're considering into the price comparison tool and check the current per-million-token rates rather than assuming."
+    },
+    {
+      "question": "Is the pricing for the new providers kept up to date?",
+      "answer": "Yes. Every new provider is wired into the same daily-refreshed pricing feed as the existing catalogue. Input and output prices, context windows, and the model lineups update automatically, so the numbers on each provider page and in the comparison tools reflect current rates rather than a one-time snapshot."
+    },
+    {
+      "question": "Which of the new providers offer open-weight models?",
+      "answer": "Most of them. Zhipu (GLM), Moonshot (Kimi), MiniMax, Tencent (Hunyuan), Baidu (ERNIE), Nous Research (Hermes), IBM (Granite), AI21 (Jamba), Arcee, NVIDIA (Nemotron), and the Allen Institute (OLMo) all ship open or openly-available weights — OLMo even releases its training data and code. Perplexity (Sonar), Writer (Palmyra), and Inflection (Pi) are primarily hosted, API-only offerings."
+    },
+    {
+      "question": "Where can I see every model from one of the new providers?",
+      "answer": "Each provider has its own page at tokenrate.dev/providers/[name] — for example /providers/zhipu or /providers/moonshot. The provider page lists the full tracked lineup with current input/output pricing, tiers, and context windows, plus a link to the provider's official site. The links throughout this article go straight to each one."
+    },
+    {
+      "question": "Which new provider is best for agents, long context, or search?",
+      "answer": "For agentic tool use and coding, Moonshot's Kimi K2 and Zhipu's GLM models are strong open-weight options, as is Nous Research's Hermes for low-refusal, steerable agents. For very long context, MiniMax (1M+ tokens) and AI21's Jamba (256K) are built for it. For search-grounded, cited answers, Perplexity's Sonar family has web search built in. Price the specific models against your workload before committing."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Zhipu AI (Z.ai) — GLM models",
+      "url": "https://z.ai",
+      "note": "Open-weight GLM-4.x and GLM-5 series, with vision variants"
+    },
+    {
+      "label": "Moonshot AI — Kimi",
+      "url": "https://www.moonshot.ai",
+      "note": "Kimi K2, a large open-weight MoE model tuned for agentic tool use"
+    },
+    {
+      "label": "MiniMax",
+      "url": "https://www.minimax.io",
+      "note": "MiniMax-M series with 1M+ token context at aggressive pricing"
+    },
+    {
+      "label": "Tencent — Hunyuan",
+      "url": "https://hunyuan.tencent.com",
+      "note": "Hunyuan family, including open-weight Mixture-of-Experts variants"
+    },
+    {
+      "label": "Baidu — ERNIE",
+      "url": "https://yiyan.baidu.com",
+      "note": "ERNIE 4.5, with large MoE and vision-language variants"
+    },
+    {
+      "label": "Perplexity — Sonar",
+      "url": "https://www.perplexity.ai",
+      "note": "Sonar family with built-in web search and citation-backed answers"
+    },
+    {
+      "label": "ByteDance — Seed & UI-TARS",
+      "url": "https://seed.bytedance.com",
+      "note": "Seed general-purpose models and the UI-TARS GUI-agent model"
+    },
+    {
+      "label": "Nous Research — Hermes",
+      "url": "https://nousresearch.com",
+      "note": "Steerable, low-refusal Llama fine-tunes with strong function-calling"
+    },
+    {
+      "label": "IBM — Granite",
+      "url": "https://www.ibm.com/granite",
+      "note": "Open-weight, commercially-licensed enterprise models for RAG and tools"
+    },
+    {
+      "label": "AI21 Labs — Jamba",
+      "url": "https://www.ai21.com",
+      "note": "Hybrid Mamba-Transformer architecture with 256K-token context"
+    },
+    {
+      "label": "Writer — Palmyra",
+      "url": "https://writer.com",
+      "note": "Enterprise writing models; Palmyra X5 offers a 1M-token window"
+    },
+    {
+      "label": "Arcee AI",
+      "url": "https://www.arcee.ai",
+      "note": "Virtuoso, Coder, and Trinity families built via model-merging"
+    },
+    {
+      "label": "Upstage — Solar",
+      "url": "https://www.upstage.ai",
+      "note": "Compact Solar models using depth-up-scaling for document tasks"
+    },
+    {
+      "label": "NVIDIA — Nemotron",
+      "url": "https://build.nvidia.com",
+      "note": "Open Nemotron models post-trained for reasoning and agentic work"
+    },
+    {
+      "label": "Reka AI",
+      "url": "https://www.reka.ai",
+      "note": "Compact multimodal Reka Flash and Edge models for on-device use"
+    },
+    {
+      "label": "Liquid AI — LFM",
+      "url": "https://www.liquid.ai",
+      "note": "Non-transformer Liquid Foundation Models for edge inference"
+    },
+    {
+      "label": "Allen Institute for AI — OLMo",
+      "url": "https://allenai.org",
+      "note": "Fully open models: weights, training data, and code released together"
+    },
+    {
+      "label": "Inflection AI — Pi",
+      "url": "https://inflection.ai",
+      "note": "Inflection-3 models behind Pi, tuned for empathetic assistants"
+    }
+  ],
+  "relatedSlugs": [
+    "ai-provider-comparison-2026-cost",
+    "open-weight-vs-proprietary-llm-costs-2026",
+    "underrated-bargain-llms-qwen-mistral-llama",
+    "openrouter-vs-direct-api-pricing-llm"
+  ],
+  "ctaText": "Eighteen new providers, one calculator. Drop any of them — GLM, Kimi, ERNIE, Jamba, Sonar, Granite and more — into the TokenRate calculator and see live, daily-refreshed pricing next to Claude, GPT, and Gemini for your exact token volume."
+}
