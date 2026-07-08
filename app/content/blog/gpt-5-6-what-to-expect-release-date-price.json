@@ -1,0 +1,116 @@
+{
+  "slug": "gpt-5-6-what-to-expect-release-date-price",
+  "category": "providers",
+  "kind": "guide",
+  "keyword": "GPT-5.6",
+  "title": "GPT-5.6: What to Expect from OpenAI's Next Model — Release, Price & Features",
+  "description": "GPT-5.6 is the next model most likely to land after GPT-5.5. Here's what OpenAI's point-release cadence actually tells us about its timing, pricing, and features — plus where the bigger GPT-6 jump fits — with live rates for the whole current lineup.",
+  "tldr": "GPT-5.6 has not been announced, but it is the most probable next release: OpenAI has moved through GPT-5.1, 5.2, 5.3, 5.4, and 5.5 in tight point-release steps, and 5.6 is the natural next one. Expect an incremental model — better reasoning and agentic reliability, a refreshed Codex variant, small tier repricing — not a new architecture or a bigger context window. On price, plan for continuity: GPT-5.5 sits at $5 per 1M input and $30 per 1M output (a 6× output multiplier), and point releases rarely reset the flagship rate card. The larger GPT-6 generational jump is a separate, later, less certain event. If you want the short version: a 5.6 gives you something concrete to test soon; GPT-6 is the thing to plan your architecture around, not wait for.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-07-08T15:30:00.000Z",
+  "tags": [
+    "gpt-5.6",
+    "gpt-6",
+    "openai",
+    "llm release date",
+    "api pricing"
+  ],
+  "comparison": {
+    "caption": "OpenAI's current GPT-5.x lineup — the base GPT-5.6 builds on. Live token rates via OpenRouter; Out ÷ In is the output multiplier (output price divided by input price).",
+    "columns": [
+      "Model",
+      "Input / 1M",
+      "Output / 1M",
+      "Out ÷ In",
+      "Context"
+    ],
+    "rows": [
+      ["GPT-5.5 Pro", "$30.00", "$180.00", "6.0×", "1.05M"],
+      ["GPT-5.5", "$5.00", "$30.00", "6.0×", "1.05M"],
+      ["GPT-5.4", "$2.50", "$15.00", "6.0×", "1.05M"],
+      ["GPT-5.4 mini", "$0.75", "$4.50", "6.0×", "400K"],
+      ["GPT-5.4 nano", "$0.20", "$1.25", "6.25×", "400K"],
+      ["GPT-5.3 Codex", "$1.75", "$14.00", "8.0×", "400K"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "Is GPT-5.6 real? What is confirmed versus expected",
+      "body": "OpenAI has not announced a model called GPT-5.6, has not given it a release date, and has not published specifications. So treat every number here as anticipation, not fact. What is real is the release pattern. OpenAI shipped GPT-5 and then moved through a rapid run of point releases — GPT-5.1, 5.2, 5.3, 5.4, and now GPT-5.5 — alongside specialised variants: the Codex line for coding, Pro tiers for maximum reasoning, and mini and nano tiers for cheap, high-volume work. That cadence is the single most reliable signal we have, and it points squarely at GPT-5.6 as the next thing you will actually be able to call from the API. This guide reads that trajectory honestly: what a point release like 5.6 typically changes, roughly when it tends to arrive, what it is likely to cost, and where the bigger GPT-6 jump fits. Every figure is anchored to the [live rates for the models OpenAI ships today](/providers/openai)."
+    },
+    {
+      "heading": "What GPT-5.6 is likely to change — and what it will not",
+      "body": "Point releases in the GPT-5.x line have followed a consistent shape, and GPT-5.6 will almost certainly fit it. Expect incremental gains where it matters most in production: more reliable multi-step reasoning, steadier agentic tool use, and fewer dropped or malformed tool calls on long autonomous runs. Expect a refreshed Codex variant tuned for multi-file coding, because that is where OpenAI has invested hardest across the 5.x series. Expect small repricing around the mini and nano tiers rather than a shake-up of the flagship rate. What you should not expect from a 5.6 is a dramatically larger context window, a new model architecture, or a step-change in raw capability — those are the hallmarks of a whole-number release, not a point release. The practical value of a 5.6 is not that it is revolutionary; it is that it gives you a concrete, testable model soon, so you can measure a real improvement against your own workload instead of waiting on the rumor cycle. Watch the [full model index](/models) — it refreshes daily from live pricing feeds, so a new OpenAI slug appears here the day it goes on sale."
+    },
+    {
+      "heading": "Expected release timing: reading the cadence",
+      "body": "No date is confirmed, so any specific day is a guess. What the cadence tells us is directional. Point releases have arrived far more frequently than generational ones, typically landing while the current architecture still has easy gains left to extract. With GPT-5.5 only recently on the price sheet and the 5.x line clearly still iterating, the signals suggest GPT-5.6 is the near-term event rather than a distant one — the kind of release OpenAI tends to ship with little advance warning. The honest answer to when is GPT-5.6 coming out is that OpenAI reveals these on its own schedule, and the most useful preparation is not a countdown but a stack that can swap a new model in on a narrow slice of traffic. If you are choosing a model this week, choose for today and keep the door open for 5.6 — do not stall a decision waiting for a release that has no announced date."
+    },
+    {
+      "heading": "What GPT-5.6 will probably cost",
+      "body": "Here the trajectory is clearer than the timing. Across the whole 5.x line, OpenAI has kept its flagship premium and has not used point releases to cut the headline rate. GPT-5.5 lists at $5.00 per 1M input tokens and $30.00 per 1M output tokens — a 6× output multiplier — with GPT-5.5 Pro climbing to $30.00 / $180.00. The base case for GPT-5.6 is continuity: expect flagship pricing in the same neighbourhood as GPT-5.5, with any movement more likely at the mini and nano tiers than at the top. The real downward pressure on OpenAI's pricing comes from competitors, not from its own habits: [Claude Sonnet 5](/models/claude-sonnet-5) matches flagship quality on knowledge work at $2/$10 (launch promo) or $3/$15 standard, and Gemini 3.5 Flash undercuts everyone at $1.50/$9. If GPT-5.6 arrives at a 5.5-style rate, its value case rests on being enough better to justify paying multiples more per token. Before assuming the input price is the whole story, run your real input-to-output ratio through the [API cost estimator](/tools/api-cost-estimator) — at a 6× output multiplier, output volume, not input, drives the bill."
+    },
+    {
+      "heading": "GPT-5.6 versus the GPT-6 question",
+      "body": "The two searches people conflate are worth separating cleanly. GPT-5.6 is the next incremental step — likely soon, likely cheap to test, likely a modest improvement. GPT-6 is the next generational jump: a whole-number release that would signal a new architecture, probably a real capability step-change, and potentially a reset of the rate card. Generational releases have historically arrived far less often than point releases, typically only after a run of 5.x updates has squeezed out the easy gains. With the 5.x line still actively iterating, the reasonable expectation — framed explicitly as a projection — is that you see one or two more point releases before GPT-6 becomes necessary. The strategic implication is simple: do not architect your product around a GPT-6 that has no date, and do not stall on a 5.6 you can test the week it ships. Build for the model you can use now, keep the integration swappable, and treat GPT-6 as the horizon you prepare for rather than the release you wait on."
+    },
+    {
+      "heading": "Why the output multiplier matters more than the version number",
+      "body": "When GPT-5.6 lands, the most consequential number is not its quality score or its context window — it is the output multiplier, the ratio of output price to input price. Every current OpenAI flagship carries a 6× multiplier: GPT-5.5 charges six times more per output token than per input token, and the Codex tier runs steeper still at 8×. That structure means any application generating substantial text — code, summaries, structured JSON, long answers — sees its bill dominated by the output line. A developer who benchmarks GPT-5.6 on its input price alone and underestimates output volume can miss their real cost by a factor of two or more. The first thing worth doing when 5.6 is announced is not reading the capability headlines but plugging its input and output rates into the [side-by-side price comparison](/tools/compare-prices) against Claude and Gemini at your actual workload mix. The version number sells the model; the output multiplier decides the invoice."
+    },
+    {
+      "heading": "How to prepare your stack before GPT-5.6 lands",
+      "body": "You do not need to wait for GPT-5.6 to be ready for it. The teams that adopt new models cleanly treat the model as a swappable component, not a hard dependency. Route the bulk of your traffic to the cheapest model that clears your quality bar today — for most workloads that is now a mid-tier model like [Sonnet 5](/models/claude-sonnet-5) or Gemini 3.5 Flash — and reserve a flagship like [Opus 4.8](/models/claude-opus-4-8) or GPT-5.5 only for the requests that genuinely need it. That architecture means the day GPT-5.6 ships, you evaluate it on a narrow slice of hard traffic instead of re-plumbing everything. Keep a benchmark set of your own real prompts so you can measure a new model on your work, not on someone else's leaderboard. And convert any launch pricing into a concrete monthly number with the [token-to-USD tool](/tools/token-to-usd) before you migrate — a model that looks cheaper per token can be more expensive per task once the output multiplier is applied. For the head-to-head against Claude's top tier, see our companion piece on [GPT-5.6 vs Claude Fable 5 and Opus 4.8 on max effort](/blog/comparisons/gpt-5-6-vs-claude-fable-5-opus-4-8)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "When is GPT-5.6 coming out?",
+      "answer": "OpenAI has not announced a release date, so any specific date is speculation. Based on the cadence — a rapid series of GPT-5.x point releases from 5.1 through 5.5 — GPT-5.6 is the most probable next release, and point releases have historically arrived with little advance warning. The best preparation is a stack that is easy to switch rather than a bet on a date."
+    },
+    {
+      "question": "How much will GPT-5.6 cost?",
+      "answer": "No pricing is confirmed. OpenAI has kept its flagship premium across the whole 5.x line — GPT-5.5 is $5 per 1M input and $30 per 1M output, a 6× output multiplier — and has not used point releases to cut the headline rate. The base case is continuity: expect GPT-5.6 flagship pricing near GPT-5.5, with any movement more likely at the mini and nano tiers. Real price pressure comes from Claude Sonnet 5 ($2/$10 promo) and Gemini 3.5 Flash ($1.50/$9)."
+    },
+    {
+      "question": "What is the difference between GPT-5.6 and GPT-6?",
+      "answer": "GPT-5.6 is the expected next incremental point release — likely soon, likely a modest improvement in reasoning and agentic reliability at similar pricing. GPT-6 is the next generational jump: a whole-number release implying a new architecture and a bigger capability step, historically arriving far less often than point releases. Expect to see GPT-5.6 well before GPT-6, and plan your architecture around swappability rather than waiting for either."
+    },
+    {
+      "question": "What features should I expect from GPT-5.6?",
+      "answer": "Extrapolating from the GPT-5.x point releases, expect incremental gains: more reliable multi-step reasoning, steadier agentic tool use, a refreshed Codex variant for coding, and minor tier repricing. Do not expect a dramatically larger context window (the flagship sits near 1.05M tokens), a new architecture, or a raw capability step-change — those are hallmarks of a generational GPT-6, not a point release."
+    },
+    {
+      "question": "Should I wait for GPT-5.6 before choosing a model now?",
+      "answer": "No. The most cost-effective approach is to route most traffic to the cheapest model that clears your quality bar today and reserve a flagship for the hardest requests, so you can evaluate GPT-5.6 on a narrow slice of traffic the day it ships instead of re-plumbing your stack. Keep your own benchmark prompts and model any new model's real cost with the API cost estimator before migrating."
+    }
+  ],
+  "ctaText": "The day OpenAI announces GPT-5.6, the number that decides your bill isn't the quality score — it's the output multiplier. Plug its input and output rates into the API cost estimator at /tools/api-cost-estimator against your real workload mix, and compare it side by side with Claude and Gemini at /tools/compare-prices before you migrate a single request.",
+  "sources": [
+    {
+      "label": "OpenAI — API pricing",
+      "url": "https://openai.com/api/pricing/",
+      "note": "Official rate card for the current GPT-5.x lineup"
+    },
+    {
+      "label": "OpenRouter — live model pricing",
+      "url": "https://openrouter.ai/models",
+      "note": "Input/output price per token and context length for every GPT model in the table"
+    },
+    {
+      "label": "TokenRate — OpenAI provider deep-dive",
+      "url": "https://tokenrate.dev/providers/openai",
+      "note": "Live rates for every OpenAI model, refreshed daily"
+    },
+    {
+      "label": "TokenRate — API cost estimator",
+      "url": "https://tokenrate.dev/tools/api-cost-estimator",
+      "note": "Model a new model's real monthly cost at your own input-to-output ratio"
+    }
+  ],
+  "relatedSlugs": [
+    "gpt-5-6-vs-claude-fable-5-opus-4-8",
+    "openai-api-pricing-guide-2026",
+    "opus-4-8-vs-gpt-5-5-vs-gemini-3-5-flash-price-comparison"
+  ]
+}

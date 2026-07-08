@@ -1,0 +1,125 @@
+{
+  "slug": "gpt-5-6-vs-claude-fable-5-opus-4-8",
+  "category": "comparisons",
+  "kind": "guide",
+  "keyword": "GPT-5.6 vs Claude",
+  "title": "GPT-5.6 vs Claude Fable 5 & Opus 4.8 (Max Effort): The Bar OpenAI Has to Clear",
+  "description": "GPT-5.6 isn't out yet — but the top tier it launches into already is. Here's exactly where Claude Fable 5 and Opus 4.8 at max effort sit on price, output multiplier, and reasoning depth today, and what GPT-5.6 has to beat to be worth switching.",
+  "tldr": "When GPT-5.6 ships it won't be judged against GPT-5.5 — it'll be judged against Claude's top tier: Fable 5, the Mythos-class ceiling at $10/$50 per 1M tokens, and Opus 4.8 run at max effort ($5/$25, a 5× output multiplier and the deepest reasoning mode). On today's numbers OpenAI's own GPT-5.5 already trails Opus 4.8 on quality-per-dollar — a point lower on quality (72 vs 73) while charging more per output token ($30 vs $25). A modest GPT-5.6 bump at the same $5/$30 won't change that. For GPT-5.6 to be worth switching to at the top of the market, it has to open a real reasoning or agentic-coding gap over Opus 4.8 at max effort, or price under it. Until it ships, Fable 5 and Opus 4.8 set the bar.",
+  "readTime": "9 min read",
+  "publishedAt": "2026-07-08T16:00:00.000Z",
+  "tags": [
+    "gpt-5.6",
+    "claude fable 5",
+    "claude opus 4.8",
+    "effort control",
+    "model comparison"
+  ],
+  "comparison": {
+    "caption": "Claude's top tier — the bar GPT-5.6 will be measured against. Live token rates via OpenRouter; Out ÷ In is the output multiplier. Opus 4.8 is shown at max (default high) effort, which holds the 5× multiplier and generates the most reasoning tokens per task. Fable 5's quality score is left blank because Anthropic has not published a comparable head-to-head number.",
+    "columns": [
+      "Model",
+      "Input / 1M",
+      "Output / 1M",
+      "Out ÷ In",
+      "Context",
+      "Quality"
+    ],
+    "rows": [
+      ["Claude Fable 5", "$10.00", "$50.00", "5.0×", "1M", "—"],
+      ["Claude Opus 4.8 (max effort)", "$5.00", "$25.00", "5.0×", "1M", "73"],
+      ["Claude Opus 4.8 (Fast)", "$10.00", "$50.00", "5.0×", "1M", "73"],
+      ["GPT-5.5 (today's OpenAI top)", "$5.00", "$30.00", "6.0×", "1.05M", "72"],
+      ["GPT-5.5 Pro", "$30.00", "$180.00", "6.0×", "1.05M", "72"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "GPT-5.6 doesn't launch into empty space",
+      "body": "Every conversation about GPT-5.6 skips the most important fact: it will not be measured against GPT-5.5. It will be measured against the best models available the day it ships — and at the top of the market that means two specific Claude configurations. [Claude Fable 5](/models/claude-fable-5) is Anthropic's Mythos-class ceiling, priced at $10/$50 per 1M tokens and built for the most demanding autonomous reasoning and longest-horizon coding. [Claude Opus 4.8](/models/claude-opus-4-8) run at max effort is the frontier workhorse: $5/$25, a 5× output multiplier, and the deepest reasoning setting the model offers. That is the bar. A GPT-5.6 that is merely a bit better than GPT-5.5 doesn't clear it — it has to beat the top of the table below. This piece lays out exactly where that bar sits today so you can judge GPT-5.6 against reality the moment it appears, rather than against OpenAI's marketing. You can always pull the current version of these rates live on the [price comparison tool](/tools/compare-prices)."
+    },
+    {
+      "heading": "Opus 4.8 on max effort: what \"max\" actually costs and buys",
+      "body": "The word max matters here, because Opus 4.8 ships with an Effort Control dial that most developers never touch — and its default is high effort. At max effort the model reasons harder and writes longer, which keeps its effective output multiplier at 5×: the $25.00 output price hits more often and harder than a naive reading of the rate card suggests. In blended terms, at a 1:4 input-to-output ratio typical of agent and reasoning pipelines, Opus 4.8 at max effort costs about $21.00 per 1M tokens. That is the price of its strongest mode — and for the hardest problems it is often worth it, because deeper reasoning chains mean fewer wrong turns and fewer follow-up calls. The key insight for a GPT-5.6 comparison is that you are comparing against Claude's most capable, most expensive configuration, not its cheapest. If GPT-5.6 wants to win at this tier, matching Opus 4.8's mid-effort output is not enough; it has to compete with Opus 4.8 thinking as hard as it can. Model the exact blended cost for your own ratio on the [API cost estimator](/tools/api-cost-estimator), and see the full effort-versus-cost breakdown in our [Effort Control deep-dive](/blog/cost-optimization/effort-control-hidden-token-cost-opus-4-8-frontier-grid)."
+    },
+    {
+      "heading": "Fable 5: the ceiling GPT-5.6 is really measured against",
+      "body": "[Fable 5](/models/claude-fable-5) sits above the entire Sonnet and Opus stack as Anthropic's Mythos-class flagship, at $10/$50 per 1M tokens — double Opus 4.8's standard input cost and the same headline as Opus 4.8's Fast variant. It is built for the work where capability matters more than the bill: the most demanding autonomous knowledge tasks and the longest-horizon coding agents. One honest caveat belongs up front — Anthropic has not published a single head-to-head quality number that lines Fable 5 up against the rest on the same scale, which is why the table above leaves its quality cell blank rather than inventing one. What that silence tells you is positioning: Fable 5 is the ceiling, not a model chasing a benchmark. For a GPT-5.6 to claim the frontier crown, this is the model it has to be compared against on the genuinely hard problems — and OpenAI's own top tier, GPT-5.5 Pro at $30/$180, is the closest analog in both intent and price posture."
+    },
+    {
+      "heading": "Where GPT-5.5 sits today — the 5.6 starting point",
+      "body": "To judge GPT-5.6, start from where its predecessor actually stands, because a point release inherits that position. GPT-5.5 costs $5.00 per 1M input and $30.00 per 1M output — a 6× multiplier — for a quality score of 72. [Opus 4.8](/models/claude-opus-4-8) delivers a 73 at $5.00 / $25.00 with a 5× multiplier. Same input price, higher quality, cheaper output: on pure token economics, Opus 4.8 at max effort already beats GPT-5.5 outright, and it does so while running its deepest reasoning mode. GPT-5.5 Pro, at $30/$180, matches Fable 5's price posture but not its framing — it is the low-volume, high-stakes tier where cost is no object. The pattern across the whole 5.x era is unambiguous: OpenAI prices its flagship at the top of the market and asks buyers to pay for the platform, not the benchmark. GPT-5.6, as a point release, starts from exactly that position — which is why a modest bump alone won't move the verdict."
+    },
+    {
+      "heading": "What GPT-5.6 has to do to beat Claude's top tier",
+      "body": "For GPT-5.6 to displace Opus 4.8 at max effort or Fable 5 as the frontier pick, it needs one of two things, ideally both. The first is a real, measurable reasoning or agentic-coding gap — not a fraction of a point on a saturated leaderboard, but a lead large enough to change what you can build on the hardest, longest tasks, where Opus 4.8 currently leads (it scores 69.2% on Anthropic's agentic-coding evaluation, and at max effort it is reasoning as deeply as it can). A model that is one point higher on a benchmark but priced above on output will not move serious top-tier traffic. The second is pricing discipline OpenAI has not shown in the 5.x era: to win on value rather than just capability, GPT-5.6 would need to hold or cut the flagship output rate rather than push it higher. If GPT-5.6 lands at a GPT-5.5-style $5/$30 or above with only an incremental quality edge, the rational top-tier choice stays Opus 4.8 at max effort for quality-per-dollar, and Fable 5 when you need the absolute ceiling. Model the exact break-even for your workload on the [API cost estimator](/tools/api-cost-estimator)."
+    },
+    {
+      "heading": "Where GPT-5.6 could genuinely win",
+      "body": "This is not a foregone conclusion for Claude. There are real openings for GPT-5.6. The first is agentic coding at the very top: if it opens a decisive lead over Opus 4.8's 69.2% on hard, multi-file, tool-using engineering, that alone justifies a premium for teams whose product is code — one extra correct decision per run compounds across a long agent loop. The second is ecosystem and tooling: OpenAI's platform integrations, the Codex line, and the breadth of its developer surface are genuine advantages that raw token price does not capture, and for teams already deep in that ecosystem the switching cost cuts the other way. The third is the output multiplier itself — if GPT-5.6 were to ship at a lower multiplier than the 6× that defines the current GPT flagship line, it would close the single biggest structural gap with Opus 4.8's 5×. The point is that GPT-5.6's path to winning at this tier runs through capability, ecosystem, or a genuine pricing change — not through incremental benchmark points at the same rate card."
+    },
+    {
+      "heading": "How to run the comparison yourself the day GPT-5.6 ships",
+      "body": "When GPT-5.6 is announced, ignore the launch-day quality headlines for the first hour and do three things instead. First, add its real input and output rates to the [side-by-side price comparison](/tools/compare-prices) alongside Fable 5 and Opus 4.8 — and be sure you are comparing against Opus 4.8 at the effort level you would actually run, because max effort changes the blended cost materially. Second, compute its output multiplier: divide the output price by the input price. If it is 6× or higher, like the rest of the GPT flagship line, budget for output to dominate your bill and note that it starts a full multiple behind Opus 4.8's 5×. Third, run your own real input-to-output ratio through the [API cost estimator](/tools/api-cost-estimator) to get a concrete monthly number, then compare that number — not the per-token sticker — against what you pay today. A model that wins a benchmark can still lose on your invoice."
+    },
+    {
+      "heading": "The verdict, pending the launch",
+      "body": "Until GPT-5.6 exists, the honest ranking at the top tier is unchanged. [Fable 5](/models/claude-fable-5) is the ceiling for frontier reasoning and the longest-horizon agents, when capability outranks cost. [Opus 4.8](/models/claude-opus-4-8) at max effort is the best top-tier quality-per-dollar reasoning model — a 73 quality score, a 5× multiplier, and a deep-reasoning mode that beats GPT-5.5 on both price and quality. GPT-5.5 remains the choice mainly when OpenAI's ecosystem or specific tooling matters more than the token bill, with GPT-5.5 Pro reserved for low-volume, high-stakes work. GPT-5.6 will rewrite one of those lines only if it does something the 5.x era has not — open a real reasoning or agentic-coding gap, or break OpenAI's top-of-market pricing and multiplier habits. Come back the day it launches and this comparison updates with real numbers; until then, build a stack that can swap it in on a narrow slice of hard traffic and let the invoice, not the announcement, decide. For the model-only view of what to expect, see [GPT-5.6: what to expect on release, price and features](/blog/providers/gpt-5-6-what-to-expect-release-date-price)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Is GPT-5.6 better than Claude Opus 4.8 at max effort?",
+      "answer": "GPT-5.6 is not released, so there is no benchmark data. What we know is the bar it must clear: Opus 4.8 scores about 73 on a 0-100 quality index, leads on agentic coding (69.2% on Anthropic's evaluation), and at max effort runs its deepest reasoning mode at $5/$25 with a 5× output multiplier. For GPT-5.6 to be better in a way that matters, it needs a measurable reasoning or coding lead over Opus 4.8 at that setting — not a fraction of a point — ideally without pricing its output above Opus 4.8's."
+    },
+    {
+      "question": "What does 'Opus 4.8 on max effort' mean for cost?",
+      "answer": "Opus 4.8 has an Effort Control parameter that adjusts reasoning depth and output verbosity, and it defaults to high effort. At max effort the model generates more output tokens per task, so its 5× output multiplier and $25.00 output price hit harder — blending to about $21.00 per 1M tokens at a 1:4 agent ratio. You get deeper reasoning and fewer follow-up calls in return. It is Claude's most capable, most expensive Opus configuration, which is exactly the bar a frontier GPT-5.6 would be measured against."
+    },
+    {
+      "question": "How does Claude Fable 5 compare to GPT-5.6?",
+      "answer": "Fable 5 is Anthropic's Mythos-class ceiling at $10/$50 per 1M tokens, built for the most demanding autonomous reasoning and longest-horizon coding. Anthropic has not published a head-to-head quality score for it, which is itself a signal that it is positioned as the ceiling rather than a benchmark chaser. GPT-5.6 is unreleased, so no direct comparison exists yet — but OpenAI's closest analog in price and intent is GPT-5.5 Pro at $30/$180, and a point-release 5.6 is unlikely to reach Fable 5's tier on its own."
+    },
+    {
+      "question": "Will GPT-5.6 be cheaper than Claude?",
+      "answer": "Nothing in OpenAI's recent pattern suggests it. Across the GPT-5.x line, OpenAI has priced its flagship at the top of the market — GPT-5.5 is $5/$30 versus Opus 4.8's $5/$25 — and every GPT flagship carries a 6× output multiplier versus Opus 4.8's 5×. Unless GPT-5.6 breaks that habit, Opus 4.8 at max effort remains the better top-tier value on pure token economics. The output multiplier, not the input price, is where the gap lives."
+    },
+    {
+      "question": "Should I switch to GPT-5.6 as soon as it launches?",
+      "answer": "No — switch only if it clears your quality bar at a better total cost than what you run today. The disciplined approach is to add GPT-5.6's real rates to a side-by-side comparison, compare against Opus 4.8 at the effort level you would actually use, compute its output multiplier, and run your actual input-to-output ratio through a cost estimator before moving traffic. A model that wins a benchmark can still lose on your invoice, so let the monthly number, not the launch announcement, make the call."
+    }
+  ],
+  "ctaText": "GPT-5.6 will launch against Claude's top tier — Fable 5 and Opus 4.8 at max effort. The day it ships, add its rates to the side-by-side comparison at /tools/compare-prices, compare against Opus 4.8 at the effort level you'd actually run, and put your real token mix through /tools/api-cost-estimator before switching. The invoice, not the announcement, should decide.",
+  "sources": [
+    {
+      "label": "OpenRouter — live model pricing",
+      "url": "https://openrouter.ai/models",
+      "note": "Input/output price per token and context length for every model in the comparison"
+    },
+    {
+      "label": "Anthropic — pricing",
+      "url": "https://www.anthropic.com/pricing",
+      "note": "Official rate card for Claude Fable 5 and Opus 4.8"
+    },
+    {
+      "label": "Anthropic — Effort Control docs",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/effort",
+      "note": "How the effort parameter changes reasoning depth and output token usage"
+    },
+    {
+      "label": "OpenAI — API pricing",
+      "url": "https://openai.com/api/pricing/",
+      "note": "Official rate card for the current GPT-5.x flagship line"
+    },
+    {
+      "label": "TokenRate — compare prices",
+      "url": "https://tokenrate.dev/tools/compare-prices",
+      "note": "Live input and output rates for every model, side by side"
+    }
+  ],
+  "relatedSlugs": [
+    "gpt-5-6-what-to-expect-release-date-price",
+    "effort-control-hidden-token-cost-opus-4-8-frontier-grid",
+    "claude-sonnet-5-vs-opus-4-8-sonnet-4-6-fable-5"
+  ]
+}

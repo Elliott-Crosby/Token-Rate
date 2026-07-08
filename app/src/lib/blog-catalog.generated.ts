@@ -4,8 +4,8 @@
 
 import type { BlogPost } from './blog-types'
 
-import post_0_gpt_6_vs_claude_opus_4_8_and_top_models from '../../content/blog/gpt-6-vs-claude-opus-4-8-and-top-models.json'
-import post_1_gpt_6_release_date_price_features_what_to_expect from '../../content/blog/gpt-6-release-date-price-features-what-to-expect.json'
+import post_0_gpt_5_6_vs_claude_fable_5_opus_4_8 from '../../content/blog/gpt-5-6-vs-claude-fable-5-opus-4-8.json'
+import post_1_gpt_5_6_what_to_expect_release_date_price from '../../content/blog/gpt-5-6-what-to-expect-release-date-price.json'
 import post_2_best_ai_tools_chrome_extensions_claude_2026 from '../../content/blog/best-ai-tools-chrome-extensions-claude-2026.json'
 import post_3_new_llm_providers_glm_kimi_ernie_2026 from '../../content/blog/new-llm-providers-glm-kimi-ernie-2026.json'
 import post_4_claude_sonnet_5_vs_opus_4_8_sonnet_4_6_fable_5 from '../../content/blog/claude-sonnet-5-vs-opus-4-8-sonnet-4-6-fable-5.json'
@@ -103,8 +103,8 @@ import post_95_how_many_tokens_in_1000_words from '../../content/blog/how-many-t
 import post_96_how_ai_api_pricing_works from '../../content/blog/how-ai-api-pricing-works.json'
 
 export const ALL_BLOG_POSTS = [
-  post_0_gpt_6_vs_claude_opus_4_8_and_top_models,
-  post_1_gpt_6_release_date_price_features_what_to_expect,
+  post_0_gpt_5_6_vs_claude_fable_5_opus_4_8,
+  post_1_gpt_5_6_what_to_expect_release_date_price,
   post_2_best_ai_tools_chrome_extensions_claude_2026,
   post_3_new_llm_providers_glm_kimi_ernie_2026,
   post_4_claude_sonnet_5_vs_opus_4_8_sonnet_4_6_fable_5,
