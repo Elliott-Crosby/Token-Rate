@@ -2,21 +2,22 @@
   "slug": "gpt-5-6-what-to-expect-release-date-price",
   "category": "providers",
   "kind": "guide",
-  "keyword": "GPT-5.6",
-  "title": "GPT-5.6: What to Expect from OpenAI's Next Model — Release, Price & Features",
-  "description": "GPT-5.6 is the next model most likely to land after GPT-5.5. Here's what OpenAI's point-release cadence actually tells us about its timing, pricing, and features — plus where the bigger GPT-6 jump fits — with live rates for the whole current lineup.",
-  "tldr": "GPT-5.6 has not been announced, but it is the most probable next release: OpenAI has moved through GPT-5.1, 5.2, 5.3, 5.4, and 5.5 in tight point-release steps, and 5.6 is the natural next one. Expect an incremental model — better reasoning and agentic reliability, a refreshed Codex variant, small tier repricing — not a new architecture or a bigger context window. On price, plan for continuity: GPT-5.5 sits at $5 per 1M input and $30 per 1M output (a 6× output multiplier), and point releases rarely reset the flagship rate card. The larger GPT-6 generational jump is a separate, later, less certain event. If you want the short version: a 5.6 gives you something concrete to test soon; GPT-6 is the thing to plan your architecture around, not wait for.",
+  "keyword": "GPT-5.6 Sol",
+  "title": "GPT-5.6 Sol, Terra & Luna: Release Date, Pricing & Benchmarks (Confirmed)",
+  "description": "OpenAI has previewed the GPT-5.6 family — Sol, Terra, and Luna. Here are the confirmed prices ($5/$30, $2.50/$15, $1/$6 per 1M tokens), the Terminal-Bench 2.1 scores, the ~1.5M context window, the release timeline, and how to get access.",
+  "tldr": "OpenAI previewed GPT-5.6 on June 26, 2026 as a three-model family: Sol (flagship, $5/$30 per 1M tokens), Terra (mid-tier, $2.50/$15), and Luna (budget, $1/$6). All three carry a 6× output multiplier and a reported ~1.5M-token context window. On OpenAI's own Terminal-Bench 2.1 agentic-coding chart, Sol in its high-effort Ultra mode scores 91.9% and base Sol scores 88.8%, edging Claude's Mythos-class model and GPT-5.5, both at 88.0%. Access is a limited preview via the API and Codex for trusted partners; the US government's access-vetting restriction was lifted on July 8 and broader rollout begins around July 9, with general availability in the coming weeks. It is not in ChatGPT yet.",
   "readTime": "8 min read",
   "publishedAt": "2026-07-08T15:30:00.000Z",
+  "updatedAt": "2026-07-08T21:30:00.000Z",
   "tags": [
     "gpt-5.6",
-    "gpt-6",
+    "gpt-5.6 sol",
     "openai",
     "llm release date",
     "api pricing"
   ],
   "comparison": {
-    "caption": "OpenAI's current GPT-5.x lineup — the base GPT-5.6 builds on. Live token rates via OpenRouter; Out ÷ In is the output multiplier (output price divided by input price).",
+    "caption": "The GPT-5.6 family (preview) versus the GPT-5.5 flagship it succeeds. GPT-5.6 pricing per OpenAI's preview announcement; context window reported at ~1.5M tokens. GPT-5.5 rates are live via OpenRouter. Out ÷ In is the output multiplier (output price ÷ input price).",
     "columns": [
       "Model",
       "Input / 1M",
@@ -25,87 +26,90 @@
       "Context"
     ],
     "rows": [
-      ["GPT-5.5 Pro", "$30.00", "$180.00", "6.0×", "1.05M"],
-      ["GPT-5.5", "$5.00", "$30.00", "6.0×", "1.05M"],
-      ["GPT-5.4", "$2.50", "$15.00", "6.0×", "1.05M"],
-      ["GPT-5.4 mini", "$0.75", "$4.50", "6.0×", "400K"],
-      ["GPT-5.4 nano", "$0.20", "$1.25", "6.25×", "400K"],
-      ["GPT-5.3 Codex", "$1.75", "$14.00", "8.0×", "400K"]
+      ["GPT-5.6 Sol / Sol Ultra", "$5.00", "$30.00", "6.0×", "~1.5M"],
+      ["GPT-5.6 Terra", "$2.50", "$15.00", "6.0×", "~1.5M"],
+      ["GPT-5.6 Luna", "$1.00", "$6.00", "6.0×", "~1.5M"],
+      ["GPT-5.5 (prior flagship)", "$5.00", "$30.00", "6.0×", "1.05M"]
     ]
   },
   "sections": [
     {
-      "heading": "Is GPT-5.6 real? What is confirmed versus expected",
-      "body": "OpenAI has not announced a model called GPT-5.6, has not given it a release date, and has not published specifications. So treat every number here as anticipation, not fact. What is real is the release pattern. OpenAI shipped GPT-5 and then moved through a rapid run of point releases — GPT-5.1, 5.2, 5.3, 5.4, and now GPT-5.5 — alongside specialised variants: the Codex line for coding, Pro tiers for maximum reasoning, and mini and nano tiers for cheap, high-volume work. That cadence is the single most reliable signal we have, and it points squarely at GPT-5.6 as the next thing you will actually be able to call from the API. This guide reads that trajectory honestly: what a point release like 5.6 typically changes, roughly when it tends to arrive, what it is likely to cost, and where the bigger GPT-6 jump fits. Every figure is anchored to the [live rates for the models OpenAI ships today](/providers/openai)."
+      "heading": "What OpenAI actually previewed",
+      "body": "On June 26, 2026, OpenAI previewed GPT-5.6, and the headline is that it is not one model but three: Sol, the flagship; Terra, the mid-tier; and Luna, the budget tier. This is a real, announced release with published pricing and benchmarks — not a rumor. The rollout has been unusual. During the preview the models are available only through the API and Codex, and only to a small group of trusted partners and organizations with an OpenAI account representative; there is no public waitlist, and GPT-5.6 is not in ChatGPT yet. Access was initially gated by a US government review that requested vetting of who could use the models, which OpenAI complied with. That restriction was lifted on July 8, 2026, clearing the way for a broader rollout beginning around July 9, with general availability planned in the coming weeks. For a point release, that is a lot of ceremony — a signal that the capability jump is large enough to have drawn government attention. You can track when the GPT-5.6 models appear on live pricing feeds via the [OpenAI provider page](/providers/openai) and the [full model index](/models), which refresh daily."
     },
     {
-      "heading": "What GPT-5.6 is likely to change — and what it will not",
-      "body": "Point releases in the GPT-5.x line have followed a consistent shape, and GPT-5.6 will almost certainly fit it. Expect incremental gains where it matters most in production: more reliable multi-step reasoning, steadier agentic tool use, and fewer dropped or malformed tool calls on long autonomous runs. Expect a refreshed Codex variant tuned for multi-file coding, because that is where OpenAI has invested hardest across the 5.x series. Expect small repricing around the mini and nano tiers rather than a shake-up of the flagship rate. What you should not expect from a 5.6 is a dramatically larger context window, a new model architecture, or a step-change in raw capability — those are the hallmarks of a whole-number release, not a point release. The practical value of a 5.6 is not that it is revolutionary; it is that it gives you a concrete, testable model soon, so you can measure a real improvement against your own workload instead of waiting on the rumor cycle. Watch the [full model index](/models) — it refreshes daily from live pricing feeds, so a new OpenAI slug appears here the day it goes on sale."
+      "heading": "GPT-5.6 pricing: Sol, Terra, and Luna",
+      "body": "OpenAI priced the family in three clean tiers, all per 1M tokens. Sol, the flagship, is $5.00 input and $30.00 output — identical to GPT-5.5's headline rate, so the flagship price did not move. Terra, the mid-tier, is $2.50 input and $15.00 output. Luna, the budget tier, is $1.00 input and $6.00 output. Every tier carries the same 6× output multiplier, which is the single most important number on the rate card: output tokens cost six times more than input tokens at every level. That structure means any workload generating substantial text — code, summaries, structured JSON, long answers — will see its bill dominated by the output line, not the input line. The naming replaces the old mini and nano labels, but the shape is familiar: one premium flagship, one balanced middle, one cheap high-volume option. Before assuming any tier is right for you, run your real input-to-output ratio through the [API cost estimator](/tools/api-cost-estimator) — with a 6× multiplier, output volume drives the cost, and the tier that looks cheapest per token is not always cheapest per task."
     },
     {
-      "heading": "Expected release timing: reading the cadence",
-      "body": "No date is confirmed, so any specific day is a guess. What the cadence tells us is directional. Point releases have arrived far more frequently than generational ones, typically landing while the current architecture still has easy gains left to extract. With GPT-5.5 only recently on the price sheet and the 5.x line clearly still iterating, the signals suggest GPT-5.6 is the near-term event rather than a distant one — the kind of release OpenAI tends to ship with little advance warning. The honest answer to when is GPT-5.6 coming out is that OpenAI reveals these on its own schedule, and the most useful preparation is not a countdown but a stack that can swap a new model in on a narrow slice of traffic. If you are choosing a model this week, choose for today and keep the door open for 5.6 — do not stall a decision waiting for a release that has no announced date."
+      "heading": "The Sol / Terra / Luna split: which tier does what",
+      "body": "Sol is the frontier model, aimed at the hardest reasoning and agentic-coding work, and it is the tier that ships with Ultra mode. Terra is the workhorse middle tier at half Sol's price, positioned for the bulk of production traffic where you want strong capability without flagship cost — the same role Sonnet-class and Flash-class models play elsewhere. Luna is the volume tier at $1/$6, built for high-throughput, cost-sensitive jobs like classification, extraction, and simple chat. The practical planning move is the same one that works across every provider: do not default your whole application to the flagship. Route most traffic to Terra or Luna and reserve Sol for the requests that genuinely need frontier reasoning. That single decision typically moves your bill more than any per-token price difference between providers. Model the split for your own traffic on the [API cost estimator](/tools/api-cost-estimator) before you commit a default."
     },
     {
-      "heading": "What GPT-5.6 will probably cost",
-      "body": "Here the trajectory is clearer than the timing. Across the whole 5.x line, OpenAI has kept its flagship premium and has not used point releases to cut the headline rate. GPT-5.5 lists at $5.00 per 1M input tokens and $30.00 per 1M output tokens — a 6× output multiplier — with GPT-5.5 Pro climbing to $30.00 / $180.00. The base case for GPT-5.6 is continuity: expect flagship pricing in the same neighbourhood as GPT-5.5, with any movement more likely at the mini and nano tiers than at the top. The real downward pressure on OpenAI's pricing comes from competitors, not from its own habits: [Claude Sonnet 5](/models/claude-sonnet-5) matches flagship quality on knowledge work at $2/$10 (launch promo) or $3/$15 standard, and Gemini 3.5 Flash undercuts everyone at $1.50/$9. If GPT-5.6 arrives at a 5.5-style rate, its value case rests on being enough better to justify paying multiples more per token. Before assuming the input price is the whole story, run your real input-to-output ratio through the [API cost estimator](/tools/api-cost-estimator) — at a 6× output multiplier, output volume, not input, drives the bill."
+      "heading": "Ultra mode: Sol's high-effort setting",
+      "body": "The most interesting new lever is Ultra mode, a compute-intensive, high-effort setting for Sol that trades cost and latency for capability. It is not the default — you opt into it — and it is where Sol posts its top benchmark numbers. On OpenAI's Terminal-Bench 2.1 agentic-coding evaluation, Sol Ultra scores 91.9% versus base Sol's 88.8%, a meaningful gap that shows Ultra mode is doing real work on the hardest tasks. Some early coverage describes Ultra mode spawning subagents to parallelize a problem, though OpenAI's own framing emphasizes it as a compute-intensive high-effort mode rather than detailing the mechanism. The parallel worth drawing is to Claude Opus 4.8's Effort Control, which similarly dials reasoning depth up at the cost of more output tokens — see our [Effort Control deep-dive](/blog/cost-optimization/effort-control-hidden-token-cost-opus-4-8-frontier-grid) for how that hidden dial reshapes the bill. Ultra mode is the same idea with a name: the highest-capability configuration is also the most expensive to run, so reserve it for tasks that clear the bar to justify it."
     },
     {
-      "heading": "GPT-5.6 versus the GPT-6 question",
-      "body": "The two searches people conflate are worth separating cleanly. GPT-5.6 is the next incremental step — likely soon, likely cheap to test, likely a modest improvement. GPT-6 is the next generational jump: a whole-number release that would signal a new architecture, probably a real capability step-change, and potentially a reset of the rate card. Generational releases have historically arrived far less often than point releases, typically only after a run of 5.x updates has squeezed out the easy gains. With the 5.x line still actively iterating, the reasonable expectation — framed explicitly as a projection — is that you see one or two more point releases before GPT-6 becomes necessary. The strategic implication is simple: do not architect your product around a GPT-6 that has no date, and do not stall on a 5.6 you can test the week it ships. Build for the model you can use now, keep the integration swappable, and treat GPT-6 as the horizon you prepare for rather than the release you wait on."
+      "heading": "Benchmarks: where GPT-5.6 lands",
+      "body": "OpenAI led with agentic coding. On Terminal-Bench 2.1, Sol Ultra scores 91.9% and base Sol scores 88.8%, edging both Claude's Mythos-class model and GPT-5.5, which sit at 88.0%. Gemini 3.1 Pro's score on that benchmark was not yet published at preview time. The more striking claim is about efficiency: on ExploitBench², OpenAI reports Sol is competitive with the Mythos preview while using only about one-third of the output tokens. If that holds on real workloads, it partly offsets the 6× output multiplier — you pay six times per output token, but you may generate far fewer of them per task. OpenAI also reports a reported context window around 1.5M tokens, up from GPT-5.5's ~1.05M, and noted safety-review findings: the models could surface software vulnerabilities but were unable to carry out autonomous cyberattacks, alongside meaningful capability gains in biology. Treat vendor benchmarks as a starting point, not a verdict — the number that matters is how the model does on your own prompts."
     },
     {
-      "heading": "Why the output multiplier matters more than the version number",
-      "body": "When GPT-5.6 lands, the most consequential number is not its quality score or its context window — it is the output multiplier, the ratio of output price to input price. Every current OpenAI flagship carries a 6× multiplier: GPT-5.5 charges six times more per output token than per input token, and the Codex tier runs steeper still at 8×. That structure means any application generating substantial text — code, summaries, structured JSON, long answers — sees its bill dominated by the output line. A developer who benchmarks GPT-5.6 on its input price alone and underestimates output volume can miss their real cost by a factor of two or more. The first thing worth doing when 5.6 is announced is not reading the capability headlines but plugging its input and output rates into the [side-by-side price comparison](/tools/compare-prices) against Claude and Gemini at your actual workload mix. The version number sells the model; the output multiplier decides the invoice."
+      "heading": "The output-multiplier catch — and the token-efficiency twist",
+      "body": "Here is the nuance most launch coverage will miss. GPT-5.6 Sol keeps the same 6× output multiplier as GPT-5.5 and prices output at $30 per 1M — higher per output token than Claude Opus 4.8's $25 at a 5× multiplier. On sticker economics alone, that makes Sol look like the more expensive way to buy frontier quality, exactly as GPT-5.5 was. But OpenAI's ExploitBench² efficiency claim, if it generalizes, changes the arithmetic: a model that reaches the same answer using one-third the output tokens can be cheaper per completed task even at a higher per-token rate, because the bill is token count times price, not price alone. That is the whole thesis behind measuring blended cost per task rather than staring at the rate card. The only way to know whether Sol's efficiency offsets its multiplier for your workload is to measure it — put your real input-to-output ratio and expected token volumes into the [side-by-side price comparison](/tools/compare-prices) and the [cost estimator](/tools/api-cost-estimator) once you have API access, and compare cost per task, not cost per token."
     },
     {
-      "heading": "How to prepare your stack before GPT-5.6 lands",
-      "body": "You do not need to wait for GPT-5.6 to be ready for it. The teams that adopt new models cleanly treat the model as a swappable component, not a hard dependency. Route the bulk of your traffic to the cheapest model that clears your quality bar today — for most workloads that is now a mid-tier model like [Sonnet 5](/models/claude-sonnet-5) or Gemini 3.5 Flash — and reserve a flagship like [Opus 4.8](/models/claude-opus-4-8) or GPT-5.5 only for the requests that genuinely need it. That architecture means the day GPT-5.6 ships, you evaluate it on a narrow slice of hard traffic instead of re-plumbing everything. Keep a benchmark set of your own real prompts so you can measure a new model on your work, not on someone else's leaderboard. And convert any launch pricing into a concrete monthly number with the [token-to-USD tool](/tools/token-to-usd) before you migrate — a model that looks cheaper per token can be more expensive per task once the output multiplier is applied. For the head-to-head against Claude's top tier, see our companion piece on [GPT-5.6 vs Claude Fable 5 and Opus 4.8 on max effort](/blog/comparisons/gpt-5-6-vs-claude-fable-5-opus-4-8)."
+      "heading": "How to get access, and what to do now",
+      "body": "During the preview you cannot simply sign up. Access is limited to trusted partners and organizations with an OpenAI account representative, through the API and Codex only, with general availability in the coming weeks now that the government restriction has lifted. If you are not in the preview, the productive move is to prepare rather than wait. Route the bulk of your traffic today to the cheapest model that clears your quality bar — for most workloads a mid-tier model like [Claude Sonnet 5](/models/claude-sonnet-5) or Gemini 3.5 Flash — and reserve a flagship like [Opus 4.8](/models/claude-opus-4-8) for the hardest requests, so that when GPT-5.6 reaches general availability you can drop it into a narrow slice of traffic and measure it against your incumbents instead of re-plumbing everything. Keep a benchmark set of your own real prompts, and convert any pricing into a concrete monthly number with the [token-to-USD tool](/tools/token-to-usd) before migrating. For the direct head-to-head against Claude's top tier, see [GPT-5.6 Sol vs Claude Fable 5 and Opus 4.8 on max effort](/blog/comparisons/gpt-5-6-vs-claude-fable-5-opus-4-8). One note on the bigger picture: GPT-5.6 is a point release; a generational GPT-6 is a separate, later step, so plan your architecture around swappability rather than waiting for a whole-number jump."
     }
   ],
   "faq": [
     {
       "question": "When is GPT-5.6 coming out?",
-      "answer": "OpenAI has not announced a release date, so any specific date is speculation. Based on the cadence — a rapid series of GPT-5.x point releases from 5.1 through 5.5 — GPT-5.6 is the most probable next release, and point releases have historically arrived with little advance warning. The best preparation is a stack that is easy to switch rather than a bet on a date."
+      "answer": "OpenAI previewed GPT-5.6 on June 26, 2026. During the preview it is limited to trusted partners via the API and Codex. A US government access-vetting restriction was lifted on July 8, 2026, and broader rollout begins around July 9, with general availability planned in the coming weeks. It is not available in ChatGPT during the preview."
     },
     {
-      "question": "How much will GPT-5.6 cost?",
-      "answer": "No pricing is confirmed. OpenAI has kept its flagship premium across the whole 5.x line — GPT-5.5 is $5 per 1M input and $30 per 1M output, a 6× output multiplier — and has not used point releases to cut the headline rate. The base case is continuity: expect GPT-5.6 flagship pricing near GPT-5.5, with any movement more likely at the mini and nano tiers. Real price pressure comes from Claude Sonnet 5 ($2/$10 promo) and Gemini 3.5 Flash ($1.50/$9)."
+      "question": "How much does GPT-5.6 cost?",
+      "answer": "GPT-5.6 is a three-tier family, priced per 1M tokens: Sol (flagship) at $5.00 input / $30.00 output, Terra (mid-tier) at $2.50 input / $15.00 output, and Luna (budget) at $1.00 input / $6.00 output. All three carry a 6× output multiplier, so output tokens cost six times more than input tokens — output volume, not the input price, drives your bill."
     },
     {
-      "question": "What is the difference between GPT-5.6 and GPT-6?",
-      "answer": "GPT-5.6 is the expected next incremental point release — likely soon, likely a modest improvement in reasoning and agentic reliability at similar pricing. GPT-6 is the next generational jump: a whole-number release implying a new architecture and a bigger capability step, historically arriving far less often than point releases. Expect to see GPT-5.6 well before GPT-6, and plan your architecture around swappability rather than waiting for either."
+      "question": "What is the difference between Sol, Terra, and Luna?",
+      "answer": "Sol is the flagship, aimed at the hardest reasoning and agentic-coding work, and it ships with a high-effort Ultra mode. Terra is the mid-tier workhorse at half Sol's price, for the bulk of production traffic. Luna is the budget tier at $1/$6 per 1M tokens, for high-volume, cost-sensitive jobs like classification and extraction. The three replace the old mini and nano labels."
     },
     {
-      "question": "What features should I expect from GPT-5.6?",
-      "answer": "Extrapolating from the GPT-5.x point releases, expect incremental gains: more reliable multi-step reasoning, steadier agentic tool use, a refreshed Codex variant for coding, and minor tier repricing. Do not expect a dramatically larger context window (the flagship sits near 1.05M tokens), a new architecture, or a raw capability step-change — those are hallmarks of a generational GPT-6, not a point release."
+      "question": "What is GPT-5.6 Sol Ultra mode?",
+      "answer": "Ultra mode is a compute-intensive, high-effort setting for Sol that trades cost and latency for capability. It is not the default. On OpenAI's Terminal-Bench 2.1 agentic-coding benchmark, Sol Ultra scores 91.9% versus base Sol's 88.8%. It is conceptually similar to Claude Opus 4.8's Effort Control: the highest-capability configuration is also the most expensive to run, so reserve it for tasks that justify it."
     },
     {
-      "question": "Should I wait for GPT-5.6 before choosing a model now?",
-      "answer": "No. The most cost-effective approach is to route most traffic to the cheapest model that clears your quality bar today and reserve a flagship for the hardest requests, so you can evaluate GPT-5.6 on a narrow slice of traffic the day it ships instead of re-plumbing your stack. Keep your own benchmark prompts and model any new model's real cost with the API cost estimator before migrating."
+      "question": "How do GPT-5.6's benchmarks compare to Claude and GPT-5.5?",
+      "answer": "On OpenAI's Terminal-Bench 2.1 agentic-coding chart, Sol Ultra scores 91.9% and base Sol 88.8%, edging Claude's Mythos-class model and GPT-5.5, which both sit at 88.0%. OpenAI also reports that on ExploitBench² Sol is competitive with the Mythos preview using only about one-third of the output tokens — an efficiency claim that, if it holds, partly offsets the 6× output multiplier. Verify against your own workload before switching."
     }
   ],
-  "ctaText": "The day OpenAI announces GPT-5.6, the number that decides your bill isn't the quality score — it's the output multiplier. Plug its input and output rates into the API cost estimator at /tools/api-cost-estimator against your real workload mix, and compare it side by side with Claude and Gemini at /tools/compare-prices before you migrate a single request.",
+  "ctaText": "GPT-5.6 Sol keeps the same $5/$30 rate and 6× output multiplier as GPT-5.5 — but OpenAI claims it hits comparable results using about a third of the output tokens. Whether that makes it cheaper than Claude Opus 4.8 depends entirely on your workload. Model your real input-to-output ratio at /tools/api-cost-estimator and compare cost per task, not per token, at /tools/compare-prices.",
   "sources": [
     {
-      "label": "OpenAI — API pricing",
-      "url": "https://openai.com/api/pricing/",
-      "note": "Official rate card for the current GPT-5.x lineup"
+      "label": "OpenAI — Previewing GPT-5.6 Sol",
+      "url": "https://openai.com/index/previewing-gpt-5-6-sol/",
+      "note": "Official preview announcement for the Sol/Terra/Luna family"
+    },
+    {
+      "label": "OpenAI Help Center — A preview of GPT-5.6 Sol, Terra, and Luna",
+      "url": "https://help.openai.com/en/articles/20001325-a-preview-of-gpt-56-sol-terra-and-luna",
+      "note": "Access, availability, and tier details"
+    },
+    {
+      "label": "CNBC — OpenAI to publicly release GPT-5.6, ending government limits",
+      "url": "https://www.cnbc.com/2026/07/08/openai-expanding-gpt-5point6-ai-model-release-ending-government-limits.html",
+      "note": "Release timeline and the lifting of the government access restriction"
     },
     {
       "label": "OpenRouter — live model pricing",
       "url": "https://openrouter.ai/models",
-      "note": "Input/output price per token and context length for every GPT model in the table"
-    },
-    {
-      "label": "TokenRate — OpenAI provider deep-dive",
-      "url": "https://tokenrate.dev/providers/openai",
-      "note": "Live rates for every OpenAI model, refreshed daily"
+      "note": "Live input/output rates; GPT-5.6 tiers appear here at general availability"
     },
     {
       "label": "TokenRate — API cost estimator",
       "url": "https://tokenrate.dev/tools/api-cost-estimator",
-      "note": "Model a new model's real monthly cost at your own input-to-output ratio"
+      "note": "Model GPT-5.6's real monthly cost at your own input-to-output ratio"
     }
   ],
   "relatedSlugs": [
