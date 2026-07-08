@@ -1,0 +1,120 @@
+{
+  "slug": "gpt-6-vs-claude-opus-4-8-and-top-models",
+  "category": "comparisons",
+  "kind": "guide",
+  "keyword": "GPT-6 vs Claude",
+  "title": "GPT-6 vs Claude Opus 4.8 & the Top Models: The Bar OpenAI Has to Clear",
+  "description": "GPT-6 isn't out yet — but the frontier it launches into already is. Here's exactly where Claude Opus 4.8, Sonnet 5, GPT-5.5, and Gemini 3.5 Flash sit on price and quality today, and what GPT-6 has to beat to be worth switching.",
+  "tldr": "GPT-6 will not be judged in a vacuum — it launches into a frontier where Claude Sonnet 5 already matches flagship quality on knowledge work at $2/$10 and Gemini 3.5 Flash does it at $1.50/$9. On today's numbers, OpenAI's own GPT-5.5 is the most expensive way to buy frontier quality: $5/$30 with a 6× output multiplier, one point behind Claude Opus 4.8 on quality while costing more per output token. For GPT-6 to be worth switching to, it has to either open a real quality gap over Opus 4.8 and Sonnet 5, or finally break OpenAI's pattern of pricing its flagship at the top of the market. Until it ships, Claude and Gemini set the bar.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-07-08T14:00:00.000Z",
+  "tags": [
+    "gpt-6",
+    "claude opus 4.8",
+    "claude sonnet 5",
+    "gemini 3.5 flash",
+    "model comparison"
+  ],
+  "comparison": {
+    "caption": "Today's frontier — the models GPT-6 will be benchmarked against. Live token rates via OpenRouter; quality is a 0-100 score blending Arena Elo and Artificial Analysis. Sonnet 5 shows its launch-promo rate (through Aug 31, 2026); it reverts to $3/$15.",
+    "columns": [
+      "Model",
+      "Input / 1M",
+      "Output / 1M",
+      "Context",
+      "Quality"
+    ],
+    "rows": [
+      ["Claude Opus 4.8", "$5.00", "$25.00", "1M", "73"],
+      ["Claude Sonnet 5", "$2.00*", "$10.00*", "1M", "73"],
+      ["GPT-5.5", "$5.00", "$30.00", "1.05M", "72"],
+      ["GPT-5.5 Pro", "$30.00", "$180.00", "1.05M", "72"],
+      ["Gemini 3.5 Flash", "$1.50", "$9.00", "1.05M", "73"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "GPT-6 doesn't launch into empty space",
+      "body": "Every conversation about GPT-6 skips the most important fact: it will not be measured against GPT-5.5. It will be measured against the best model available the day it ships — and right now that field is unusually crowded at the top. [Claude Opus 4.8](/models/claude-opus-4-8) holds the flagship quality crown at $5/$25 per 1M tokens. [Claude Sonnet 5](/models/claude-sonnet-5) matches it on knowledge work while costing a fraction as much. Google's Gemini 3.5 Flash matches flagship quality at $1.50/$9. And OpenAI's own GPT-5.5 sits at $5/$30 — a point behind Opus 4.8 on quality while charging more per output token. That is the bar. GPT-6 doesn't get credit for beating a year-old model; it has to beat the table above. This piece lays out exactly where that bar sits today so you can judge GPT-6 against reality the moment it appears, rather than against OpenAI's marketing. You can always pull the current version of this table live on the [price comparison tool](/tools/compare-prices)."
+    },
+    {
+      "heading": "The uncomfortable truth: GPT-5.5 is the priciest frontier quality today",
+      "body": "Start with the numbers OpenAI has already committed to, because they set the expectation for GPT-6. GPT-5.5 costs $5.00 per 1M input tokens and $30.00 per 1M output — a 6× output multiplier — for a quality score of 72. [Opus 4.8](/models/claude-opus-4-8) delivers a 73 at $5.00 / $25.00, a 5× multiplier. Same input price, higher quality, cheaper output: on pure token economics, Opus 4.8 beats GPT-5.5 outright. Step down to the mid tier and the gap widens into a chasm — [Sonnet 5](/models/claude-sonnet-5) and Gemini 3.5 Flash both hit that same 73 quality tier while costing a fraction of GPT-5.5's output rate. GPT-5.5 Pro, at $30/$180, is in a category of its own reserved for low-volume, high-stakes work where cost is no object. The pattern is unambiguous: for the last several releases, OpenAI has priced its flagship at the top of the market and asked buyers to pay for the brand, not the benchmark. GPT-6 inherits that starting position."
+    },
+    {
+      "heading": "What GPT-6 has to do to beat Claude Opus 4.8",
+      "body": "For GPT-6 to displace [Opus 4.8](/models/claude-opus-4-8) as the default flagship, it needs one of two things, and ideally both. The first is a real, measurable quality gap — not a fraction of a point on a saturated benchmark, but a lead large enough to change what you can actually build, especially on agentic coding and long-horizon autonomous tasks where Opus 4.8 currently leads (it scores 69.2% on Anthropic's agentic-coding evaluation). A model that is one point higher on a leaderboard but priced 20% above on output will not move serious production traffic. The second is pricing discipline OpenAI has not shown in the 5.x era: to win on value rather than just capability, GPT-6 would need to hold or cut the flagship output rate rather than push it higher. If GPT-6 lands at a GPT-5.5-style $5/$30 or above with only a marginal quality edge, the rational choice for most teams stays Opus 4.8 — or drops to Sonnet 5 entirely. Model the exact break-even for your workload on the [API cost estimator](/tools/api-cost-estimator)."
+    },
+    {
+      "heading": "The harder problem: beating Sonnet 5 and Gemini 3.5 Flash on value",
+      "body": "The flagship fight is the headline, but the real battleground is the mid tier, and here GPT-6 faces its steepest climb. [Claude Sonnet 5](/models/claude-sonnet-5) matches Opus 4.8 on knowledge work (a near-tie on Anthropic's Elo-style score, 1618 to 1615) at $2/$10 during its launch promo and $3/$15 standard — that is flagship-class quality at a third of the flagship price. Gemini 3.5 Flash does the same trick at $1.50/$9. This is the structural shift GPT-6 walks into: frontier quality is no longer a premium-tier exclusive, so a GPT-6 flagship priced like GPT-5.5 isn't competing against other flagships — it's competing against mid-tier models that already clear the quality bar for most real workloads. OpenAI would need a GPT-6 mini or nano tier that undercuts Sonnet 5 and Flash on price while matching them on quality to be the value pick, not just the capability pick. Nothing in the [current GPT-5.x lineup](/providers/openai) suggests that is where OpenAI is aiming."
+    },
+    {
+      "heading": "Where GPT-6 could genuinely win",
+      "body": "This is not a foregone conclusion for Claude and Gemini. There are real openings for GPT-6. The first is agentic coding at the very top: if GPT-6 opens a decisive lead over Opus 4.8's 69.2% on hard, multi-file, tool-using engineering tasks, that alone justifies a premium for the teams whose product is code — one extra correct decision per run compounds across a long agent loop. The second is ecosystem and tooling: OpenAI's platform integrations, the Codex line, and the breadth of its developer surface are genuine advantages that raw token price does not capture, and for teams already deep in that ecosystem the switching cost cuts the other way. The third is multimodal reach — if GPT-6 meaningfully extends image and rich input-output capability beyond what the current field offers, it competes on a dimension where price-per-token isn't the deciding metric. The point is that GPT-6's path to winning runs through capability and lock-in, not through price. On price, it starts behind."
+    },
+    {
+      "heading": "How to run the comparison yourself the day GPT-6 ships",
+      "body": "When GPT-6 is announced, ignore the launch-day quality headlines for the first hour and do three things instead. First, add its real input and output rates to the [side-by-side price comparison](/tools/compare-prices) alongside Opus 4.8, Sonnet 5, and Gemini 3.5 Flash — the table in this article, kept live. Second, compute its output multiplier: divide the output price by the input price. If it is 6× or higher, like the rest of the GPT flagship line, budget for output to dominate your bill. Third, run your own real input-to-output ratio through the [API cost estimator](/tools/api-cost-estimator) to get a concrete monthly number, then compare that number — not the per-token sticker — against what you pay today. A model that wins on a benchmark can still lose on your invoice. The whole premise of [choosing by quality-per-dollar](/blog/comparisons/quality-per-dollar-llm-ranking-2026) is that the right model is the cheapest one that clears your quality bar, and GPT-6 has to earn that title against a very strong incumbent field."
+    },
+    {
+      "heading": "The verdict, pending the launch",
+      "body": "Until GPT-6 exists, the honest ranking for most production workloads is unchanged: [Sonnet 5](/models/claude-sonnet-5) is the default for the bulk of agentic, coding, and knowledge work on quality-per-dollar; [Opus 4.8](/models/claude-opus-4-8) is the flagship pick for the hardest agentic coding and the strongest safety profile; Gemini 3.5 Flash is the throughput-and-scale value play; and GPT-5.5 is the choice mainly when OpenAI's ecosystem or specific tooling matters more than the token bill. GPT-6 will rewrite exactly one of those lines only if it does something the 5.x era has not — open a real quality gap or break OpenAI's top-of-market pricing habit. Come back the day it launches and this comparison updates with real numbers; until then, the smart move is to build a stack that can swap it in on a narrow slice of hard traffic and let the invoice, not the announcement, decide."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Is GPT-6 better than Claude Opus 4.8?",
+      "answer": "GPT-6 is not released, so there is no benchmark data to compare. What we know is the bar it has to clear: Claude Opus 4.8 scores about 73 on a 0-100 quality index and leads on agentic coding (69.2% on Anthropic's evaluation) at $5/$25 per 1M tokens. For GPT-6 to be better in a way that matters, it needs a measurable quality lead over Opus 4.8, not a fraction of a point — and ideally without pricing its output above Opus 4.8's."
+    },
+    {
+      "question": "Will GPT-6 be cheaper than Claude or Gemini?",
+      "answer": "Nothing in OpenAI's recent pattern suggests it. Across the GPT-5.x line, OpenAI has priced its flagship at the top of the market — GPT-5.5 is $5/$30 versus Opus 4.8's $5/$25, Sonnet 5's $2/$10 promo, and Gemini 3.5 Flash's $1.50/$9. Unless GPT-6 breaks that habit, Claude and Gemini remain the value picks. The output multiplier — output price divided by input price — is 6× on GPT-5.5, so output volume drives the real bill."
+    },
+    {
+      "question": "GPT-6 vs Claude Sonnet 5: which should I plan around?",
+      "answer": "Plan around Sonnet 5 today and evaluate GPT-6 when it ships. Sonnet 5 already matches flagship quality on knowledge work at $2/$10 (promo) or $3/$15 standard, which is the value bar GPT-6 has to beat. Because GPT flagships have launched at premium pricing, the likelier scenario is that GPT-6 competes on capability and ecosystem, not price — so keep Sonnet 5 as your default and test GPT-6 on the specific hard tasks where a flagship might justify the cost."
+    },
+    {
+      "question": "What is the output multiplier and why does it matter for GPT-6?",
+      "answer": "The output multiplier is the output price divided by the input price. Every current GPT flagship carries a 6× multiplier (GPT-5.5 is $5 input, $30 output), meaning output tokens cost six times more than input tokens. Because most applications generate more output than input, the multiplier — not the headline input price — usually decides your bill. When GPT-6 launches, computing its output multiplier is the fastest way to gauge its true cost against Claude's 5× on Opus 4.8."
+    },
+    {
+      "question": "Should I switch to GPT-6 as soon as it launches?",
+      "answer": "No — switch only if it clears your quality bar at a better total cost than what you run today. The disciplined approach is to add GPT-6's real rates to a side-by-side comparison, compute its output multiplier, and run your actual input-to-output ratio through a cost estimator before moving any traffic. A model that wins a benchmark can still lose on your invoice, so let the monthly number, not the launch announcement, make the call."
+    }
+  ],
+  "ctaText": "GPT-6 will launch into a field where Claude Sonnet 5 and Gemini 3.5 Flash already deliver flagship quality at mid-tier prices. The day it ships, add its rates to the side-by-side comparison at /tools/compare-prices and run your real token mix through /tools/api-cost-estimator before switching — the invoice, not the announcement, should decide.",
+  "sources": [
+    {
+      "label": "OpenRouter — live model pricing",
+      "url": "https://openrouter.ai/models",
+      "note": "Input/output price per token and context length for every model in the comparison"
+    },
+    {
+      "label": "Anthropic — pricing",
+      "url": "https://www.anthropic.com/pricing",
+      "note": "Official rate card for Claude Opus 4.8 and Sonnet 5"
+    },
+    {
+      "label": "OpenAI — API pricing",
+      "url": "https://openai.com/api/pricing/",
+      "note": "Official rate card for the current GPT-5.x flagship line"
+    },
+    {
+      "label": "Google — Gemini API pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "note": "Official rate card for Gemini 3.5 Flash"
+    },
+    {
+      "label": "TokenRate — compare prices",
+      "url": "https://tokenrate.dev/tools/compare-prices",
+      "note": "Live input and output rates for every model, side by side"
+    }
+  ],
+  "relatedSlugs": [
+    "gpt-6-release-date-price-features-what-to-expect",
+    "opus-4-8-vs-gpt-5-5-vs-gemini-3-5-flash-price-comparison",
+    "claude-sonnet-5-vs-opus-4-8-sonnet-4-6-fable-5"
+  ]
+}
