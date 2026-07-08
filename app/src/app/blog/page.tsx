@@ -1,9 +1,35 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getPostsGroupedByCategory } from '@/lib/blog'
-import { CATEGORIES } from '@/lib/categories'
+import { getPostsGroupedByCategory, getFeaturedPosts, isNewPost } from '@/lib/blog'
+import { CATEGORIES, getCategory } from '@/lib/categories'
 import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
+
+function NewBadge() {
+  return (
+    <span className="inline-flex items-center rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+      New
+    </span>
+  )
+}
+
+function FeaturedBadge() {
+  return (
+    <span className="inline-flex items-center rounded-full border border-amber-400/70 bg-amber-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">
+      Featured
+    </span>
+  )
+}
+
+function formatDate(publishedAt?: string) {
+  return publishedAt
+    ? new Date(publishedAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : '—'
+}
 
 export const metadata: Metadata = buildMetadata({
   title: 'AI Token & Pricing Blog',
@@ -14,6 +40,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function BlogIndex() {
   const grouped = getPostsGroupedByCategory()
+  const featured = getFeaturedPosts(4)
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-10">
@@ -28,6 +55,47 @@ export default function BlogIndex() {
           Guides and articles for developers and teams building with LLMs, organized by topic.
         </p>
       </div>
+
+      {/* Featured & Latest — newest posts across every category, pinned to the top */}
+      {featured.length > 0 && (
+        <section className="mb-12">
+          <div className="flex items-baseline justify-between mb-4">
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Featured &amp; Latest</h2>
+            <span className="text-xs text-zinc-400 dark:text-zinc-500">Freshest across every topic</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {featured.map((post) => {
+              const cat = getCategory(post.category)
+              return (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.category}/${post.slug}`}
+                  className="group flex flex-col gap-2 px-5 py-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-emerald-400 dark:hover:border-emerald-600 transition-colors"
+                >
+                  <div className="flex items-center gap-1.5">
+                    {isNewPost(post) && <NewBadge />}
+                    <FeaturedBadge />
+                    {cat && (
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 ml-auto">
+                        {cat.label}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed line-clamp-2">
+                    {post.description}
+                  </p>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mt-auto pt-1">
+                    {post.kind === 'guide' ? 'Guide' : 'Article'} · {post.readTime} · {formatDate(post.publishedAt)}
+                  </p>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Category cards — quick jump */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-12">
@@ -77,21 +145,16 @@ export default function BlogIndex() {
                     className="group flex items-start justify-between gap-4 px-5 py-3.5 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-colors"
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
-                        {post.title}
+                      <p className="flex items-center gap-2 text-sm font-medium text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
+                        <span className="min-w-0">{post.title}</span>
+                        {isNewPost(post) && <NewBadge />}
                       </p>
                       <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mt-1">
                         {post.kind === 'guide' ? 'Guide' : 'Article'} · {post.readTime}
                       </p>
                     </div>
                     <p className="text-xs text-zinc-400 dark:text-zinc-500 whitespace-nowrap shrink-0 mt-0.5">
-                      {post.publishedAt
-                        ? new Date(post.publishedAt).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })
-                        : '—'}
+                      {formatDate(post.publishedAt)}
                     </p>
                   </Link>
                 ))}
