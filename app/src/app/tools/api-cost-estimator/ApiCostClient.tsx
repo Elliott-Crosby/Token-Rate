@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { ALL_MODELS } from '@/lib/models'
 import { track } from '@/lib/track'
@@ -126,7 +127,7 @@ export default function ApiCostClient() {
       </div>
       <p className="text-xs text-zinc-400 dark:text-zinc-500 -mt-4">
         Estimates based on static pricing data. Actual costs may vary. See{' '}
-        <a href="/" className="underline hover:text-zinc-600 dark:hover:text-zinc-300">the calculator</a> for live pricing.
+        <Link href="/" className="underline hover:text-zinc-600 dark:hover:text-zinc-300">the calculator</Link> for live pricing.
       </p>
     </div>
   )
