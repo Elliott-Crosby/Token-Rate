@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { ALL_MODELS } from '@/lib/models'
+import { track } from '@/lib/track'
 
 function fmt(n: number): string {
   if (n >= 1000) return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -36,6 +37,18 @@ export default function ApiCostClient() {
 
   const requestsPerMonth = requestsPerDay * 30
 
+  // Only count real slider interactions, not the default estimate on first paint.
+  const interacted = useRef(false)
+
+  // Debounced — one "calculation" event per settled slider adjustment.
+  useEffect(() => {
+    if (!interacted.current) return
+    const id = setTimeout(() => {
+      track('value_entered', { tool: 'api_cost_estimator', mode: 'requests', value: requestsPerMonth })
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [inputTokens, outputTokens, requestsPerMonth])
+
   const results = useMemo(() =>
     ALL_MODELS
       .map((m) => {
@@ -56,21 +69,21 @@ export default function ApiCostClient() {
           label="Avg. input tokens per request"
           value={inputTokens}
           min={100} max={10000} step={100}
-          onChange={setInputTokens}
+          onChange={(n) => { setInputTokens(n); interacted.current = true }}
           display={inputTokens.toLocaleString()}
         />
         <Slider
           label="Avg. output tokens per request"
           value={outputTokens}
           min={50} max={5000} step={50}
-          onChange={setOutputTokens}
+          onChange={(n) => { setOutputTokens(n); interacted.current = true }}
           display={outputTokens.toLocaleString()}
         />
         <Slider
           label="Requests per day"
           value={requestsPerDay}
           min={100} max={100000} step={100}
-          onChange={setRequestsPerDay}
+          onChange={(n) => { setRequestsPerDay(n); interacted.current = true }}
           display={requestsPerDay.toLocaleString()}
         />
 

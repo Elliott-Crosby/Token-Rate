@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { ALL_MODELS, MODELS_UPDATED_AT } from '@/lib/models'
+import { track } from '@/lib/track'
 
 function fmt(n: number): string {
   if (!isFinite(n) || n <= 0) return '$0.00'
@@ -45,6 +46,18 @@ export default function TokenToUsdClient() {
     const n = parseFloat(tokens.replace(/[,\s]/g, ''))
     return isNaN(n) || n < 0 ? 0 : n
   }, [tokens])
+
+  // Only count real interactions, not the default 1M render on first paint.
+  const interacted = useRef(false)
+
+  // Debounced — one "calculation" event per settled token count, not per keystroke.
+  useEffect(() => {
+    if (!interacted.current || count === 0) return
+    const id = setTimeout(() => {
+      track('value_entered', { tool: 'token_to_usd', mode: 'tokens', value: count })
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [count])
 
   const rows = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -100,7 +113,7 @@ export default function TokenToUsdClient() {
             type="text"
             inputMode="numeric"
             value={tokens}
-            onChange={(e) => setTokens(e.target.value)}
+            onChange={(e) => { setTokens(e.target.value); interacted.current = true }}
             placeholder="e.g. 1,000,000"
             className="flex-1 bg-transparent px-4 py-4 text-xl font-mono outline-none text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
           />
@@ -123,7 +136,7 @@ export default function TokenToUsdClient() {
             return (
               <button
                 key={n}
-                onClick={() => setTokens(n.toLocaleString())}
+                onClick={() => { setTokens(n.toLocaleString()); interacted.current = true }}
                 className={`text-xs px-2.5 py-1 rounded-md border font-mono transition-colors ${
                   active
                     ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'

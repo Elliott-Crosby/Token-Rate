@@ -237,7 +237,7 @@ export default function ConverterClient({ providerGroups }: { providerGroups: Pr
   useEffect(() => {
     if (numericValue === 0) return
     const id = setTimeout(() => {
-      track('value_entered', { mode, value: numericValue })
+      track('value_entered', { tool: 'home', mode, value: numericValue })
     }, 1000)
     return () => clearTimeout(id)
   }, [numericValue, mode])

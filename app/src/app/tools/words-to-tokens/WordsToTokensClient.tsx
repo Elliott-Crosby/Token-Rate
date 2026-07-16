@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { ALL_MODELS } from '@/lib/models'
+import { track } from '@/lib/track'
 
 const CHARS_PER_TOKEN = 4
 
@@ -19,6 +20,15 @@ export default function WordsToTokensClient() {
   const tokens = useMemo(() => estimateTokens(text), [text])
   const words = useMemo(() => (text.trim() ? text.trim().split(/\s+/).length : 0), [text])
   const chars = text.length
+
+  // Debounced — one "calculation" event per settled paste, not per keystroke.
+  useEffect(() => {
+    if (tokens === 0) return
+    const id = setTimeout(() => {
+      track('value_entered', { tool: 'words_to_tokens', mode: 'characters', value: tokens })
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [tokens])
 
   return (
     <div className="flex flex-col gap-6">
