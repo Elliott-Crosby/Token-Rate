@@ -35,6 +35,14 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
+  // The dynamically-generated OG/Twitter images read bundled Geist fonts and the
+  // logo mark from disk at render time (see src/lib/og.tsx). Next's file tracer
+  // can't follow reads built from `process.cwd()`, so include them explicitly for
+  // every server-traced route.
+  outputFileTracingIncludes: {
+    '/**': ['assets/fonts/**', 'src/app/icon.png'],
+    '/*': ['assets/fonts/**', 'src/app/icon.png'],
+  },
   async redirects() {
     return [
       {
