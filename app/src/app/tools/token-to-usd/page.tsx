@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import RelatedPages from '@/components/RelatedPages'
+import SideRailAds from '@/components/SideRailAds'
 import TokenToUsdClient from './TokenToUsdClient'
 import JsonLd, { webAppSchema, howToSchema, breadcrumbSchema } from '@/components/JsonLd'
 
@@ -55,6 +57,11 @@ export default function TokenToUsdPage() {
           { name: 'Token to USD', url: 'https://tokenrate.dev/tools/token-to-usd' },
         ])}
       />
+
+      {/* House ads — Nodea rails in the empty page margins (labelled advertising).
+          Placed here because this is the site's #1 traffic page. */}
+      <SideRailAds />
+
       <div className="mx-auto max-w-3xl px-6 py-10">
       <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Tools' }, { label: 'Token → USD' }]} />
 
@@ -68,6 +75,30 @@ export default function TokenToUsdPage() {
       </div>
 
       <TokenToUsdClient />
+
+      {/* Funnel the site's #1 entry page into the fuller calculator. This page ranks
+          because it's lean; the CTA converts that traffic to money/character input,
+          quality scores, value ranking, and compare mode without bloating the tool. */}
+      <Link
+        href="/"
+        className="group mt-8 flex items-center gap-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-5 hover:border-emerald-400 dark:hover:border-emerald-700 hover:shadow-sm transition-all"
+      >
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+            Compare quality and value, not just cost
+          </p>
+          <p className="mt-1 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+            The full calculator adds dollar &amp; character input, quality scores, value-per-dollar
+            ranking, and side-by-side model compare — across every tracked model.
+          </p>
+        </div>
+        <span className="flex shrink-0 items-center gap-1.5 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+          Open
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform group-hover:translate-x-0.5">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </Link>
 
       <div className="mt-12">
         <RelatedPages pages={RELATED} title="Related Tools" />
