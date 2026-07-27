@@ -92,8 +92,8 @@ export const LIVE_PRICING: Record<string, { input: number; output: number; conte
     "context": 131072
   },
   "z-ai/glm-5.2": {
-    "input": 0.7756,
-    "output": 2.4376,
+    "input": 0.7742,
+    "output": 2.4332,
     "context": 1048576
   },
   "moonshotai/kimi-k2.7-code": {
@@ -7391,15 +7391,15 @@ export const EXTRA_MODELS: ModelData[] = [
     "name": "GLM 5.2",
     "provider": "Zhipu AI",
     "providerSlug": "zhipu",
-    "inputPricePerMillion": 0.7756,
-    "outputPricePerMillion": 2.4376,
+    "inputPricePerMillion": 0.7742,
+    "outputPricePerMillion": 2.4332,
     "contextWindow": 1048576,
     "outputLimit": 131072,
     "tier": "balanced",
     "updatedAt": "2026-07-27",
-    "description": "GLM 5.2 is Zhipu AI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.776 per million input tokens with a 1M-token context window.",
+    "description": "GLM 5.2 is Zhipu AI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.774 per million input tokens with a 1M-token context window.",
     "strengths": [
-      "Affordable at $0.78/1M input tokens",
+      "Affordable at $0.77/1M input tokens",
       "Massive 1M-token context window",
       "Strong general-purpose performance"
     ],
@@ -7414,9 +7414,9 @@ export const EXTRA_MODELS: ModelData[] = [
       "Conversational interfaces"
     ],
     "relatedSlugs": [
-      "glm-5",
       "glm-4-5v",
-      "glm-4-5"
+      "glm-4-5",
+      "glm-5"
     ],
     "openRouterIds": [
       "z-ai/glm-5.2"
