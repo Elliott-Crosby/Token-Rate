@@ -52,6 +52,15 @@ const nextConfig: NextConfig = {
       },
       // Guides index → unified blog hub
       { source: '/guides', destination: '/blog', permanent: true },
+      // Gemini 3.1 Pro got a curated entry that claims the OpenRouter
+      // "-preview" id, so the auto-generated preview variant no longer
+      // renders. It was noindex'd and absent from the sitemap, but redirect
+      // rather than 404 in case anything still points at it.
+      {
+        source: '/models/gemini-3-1-pro-preview',
+        destination: '/models/gemini-3-1-pro',
+        permanent: true,
+      },
       // Renamed posts: GPT-6-slugged drafts refocused on GPT-5.6 as the headliner.
       {
         source: '/blog/providers/gpt-6-release-date-price-features-what-to-expect',

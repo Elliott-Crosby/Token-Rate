@@ -551,6 +551,44 @@ const CURATED_MODELS: ModelData[] = [
 
   // ── Google ────────────────────────────────────────────────
   {
+    slug: 'gemini-3-1-pro',
+    name: 'Gemini 3.1 Pro',
+    provider: 'Google',
+    providerSlug: 'google',
+    // $2/$12 confirmed against the live OpenRouter feed. Note Google's tiered
+    // pricing: this is the ≤200K-context rate — it doubles to $4/$18 above that.
+    // OpenRouter only lists the "-preview" id, so this entry claims it and
+    // replaces the noindex'd preview variant with a real, indexable page.
+    inputPricePerMillion: 2,
+    outputPricePerMillion: 12,
+    contextWindow: 1048576,
+    outputLimit: 65536,
+    tier: 'flagship',
+    updatedAt: '2026-07-27',
+    description:
+      "Gemini 3.1 Pro is Google's generally-available flagship (released February 19, 2026) for complex reasoning, long-context work, and native multimodality across text, images, video, audio, and PDFs. It posts 80.6% on SWE-bench Verified, 94.3% on GPQA Diamond, and 77.1% on ARC-AGI-2, with a 1M-token context window at $2/$12 per million tokens — materially cheaper than the Claude and GPT flagships. Despite persistent speculation, there is no Gemini 3.5 Pro: Google shipped only Flash-class models in July 2026, leaving 3.1 Pro as its top Pro tier.",
+    strengths: [
+      'Frontier reasoning at well under flagship pricing ($2/$12 per 1M)',
+      '1M-token context with native video, audio, image and PDF input',
+      '94.3% GPQA Diamond and 77.1% ARC-AGI-2',
+      '80.6% SWE-bench Verified — competitive with far pricier models',
+    ],
+    weaknesses: [
+      'Pricing doubles above 200K context ($4/$18 per 1M)',
+      'Trails the top Claude models on the hardest coding benchmarks',
+      'SWE-bench Pro (~54.2%) falls well short of its Verified score',
+      'Can be confidently wrong — factual output needs verification',
+    ],
+    useCases: [
+      'Long-context analysis over entire codebases or document sets',
+      'Video, audio and multimodal understanding',
+      'Complex multi-step reasoning on a budget',
+      'High-volume workloads where flagship pricing is prohibitive',
+    ],
+    relatedSlugs: ['gemini-3-6-flash', 'gemini-2-5-pro', 'claude-opus-5', 'gpt-5-6-sol'],
+    openRouterIds: ['google/gemini-3.1-pro-preview'],
+  },
+  {
     slug: 'gemini-2-5-pro',
     name: 'Gemini 2.5 Pro',
     provider: 'Google',
