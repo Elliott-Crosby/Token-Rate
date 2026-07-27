@@ -28,12 +28,33 @@ function fmt(n: number) {
   return '$' + n.toFixed(n < 1 ? 3 : 2)
 }
 
+/** Blended cost per representative request, used only to pick the "Cheapest"
+ *  badge. Weights output at 30% of input volume — the same ratio the model
+ *  pages use for their cost examples, so the badge agrees with the figures
+ *  users already see rather than introducing a second, conflicting metric.
+ *  Comparing on input price alone would mislabel models that undercut on
+ *  input but charge far more on output. */
+function blendedCost(m: { inputPricePerMillion: number; outputPricePerMillion: number }): number {
+  return m.inputPricePerMillion + 0.3 * m.outputPricePerMillion
+}
+
+/** Slug of the single cheapest model, or null when there is no strict winner
+ *  (a tie, or fewer than two models) — a badge that can't discriminate is
+ *  noise, and identical pricing is exactly the point of some comparisons. */
+function cheapestSlug(models: { slug: string; inputPricePerMillion: number; outputPricePerMillion: number }[]): string | null {
+  if (models.length < 2) return null
+  const ranked = [...models].sort((a, b) => blendedCost(a) - blendedCost(b))
+  if (blendedCost(ranked[0]) === blendedCost(ranked[1])) return null
+  return ranked[0].slug
+}
+
 export default async function ComparePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const comp = getComparisonBySlug(slug)
   if (!comp) notFound()
 
   const models = getComparisonModels(comp)
+  const cheapest = cheapestSlug(models)
   const breadcrumbs = [
     { name: 'TokenRate', url: 'https://tokenrate.dev' },
     { name: 'Compare', url: 'https://tokenrate.dev/compare' },
@@ -110,12 +131,14 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
                     ? `${(m.contextWindow / 1_000_000).toFixed(0)}M`
                     : `${(m.contextWindow / 1_000).toFixed(0)}K`
                   const isWinner = comp.winnerSlug === m.slug
+                  const isCheapest = cheapest === m.slug
                   return (
                     <tr key={m.slug} className={`${i % 2 === 0 ? 'bg-white dark:bg-zinc-900' : 'bg-zinc-50/60 dark:bg-zinc-800/30'} ${isWinner ? 'ring-1 ring-inset ring-emerald-400 dark:ring-emerald-600' : ''}`}>
                       <td className="px-4 py-3 font-medium">
                         <Link href={`/models/${m.slug}`} className="text-zinc-800 dark:text-zinc-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-2">
                           {m.name}
-                          {isWinner && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400">Best value</span>}
+                          {isWinner && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400">Our pick</span>}
+                          {isCheapest && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-400">Cheapest</span>}
                         </Link>
                       </td>
                       <td className="px-4 py-3 text-zinc-500 dark:text-zinc-400">{m.provider}</td>

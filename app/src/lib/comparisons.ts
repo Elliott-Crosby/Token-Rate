@@ -185,8 +185,9 @@ export const ALL_COMPARISONS: ComparisonData[] = [
     modelSlugs: ['claude-opus-5', 'kimi-k3'],
     verdict:
       "Kimi K3 is dramatically cheaper — $3/$15 per million tokens versus Opus 5's $5/$25, and just $0.30 per million on cache hits — with a slightly larger 1.05M context and open weights you can self-host. It ranked first on Arena's Frontier Code evaluation. But Moonshot itself concedes K3 sits behind Opus 5's frontier tier on overall capability, and Opus 5 leads clearly on long-horizon agentic reliability and alignment. Take K3 for high-volume or self-hosted workloads where cost dominates; take Opus 5 when the hardest 10% of tasks decide the outcome.",
-    // No winnerSlug: K3 is materially cheaper, so a "Best value" badge on
-    // Opus 5 would contradict the verdict. Opus 5 wins on capability only.
+    // Opus 5 is the capability pick ("Our pick"); K3 earns the computed
+    // "Cheapest" badge at $3/$15. The two badges now say different things.
+    winnerSlug: 'claude-opus-5',
     tags: ['anthropic', 'open-source', 'flagship', 'budget'],
     updatedAt: '2026-07-27',
   },
@@ -198,8 +199,9 @@ export const ALL_COMPARISONS: ComparisonData[] = [
     modelSlugs: ['claude-opus-5', 'gemini-3-1-pro'],
     verdict:
       "Opus 5 wins on capability, Gemini 3.1 Pro wins on price — and the gap is wide on both counts. Opus 5 leads SWE-bench Verified (96.0% vs 80.6%), SWE-bench Pro (79.2% vs ~54.2%) and ARC-AGI-2 (90.4% at max effort vs 77.1%), which is unsurprising given Gemini 3.1 Pro shipped five months earlier in February 2026. But Gemini costs $2/$12 per million tokens against Opus 5's $5/$25 — less than half — and matches its 1M context with native video and audio input Opus 5 lacks. Watch Google's tiered pricing though: above 200K context it doubles to $4/$18, which erases much of the advantage on long-context work. Take Opus 5 when the hardest requests decide the outcome; take Gemini 3.1 Pro for high-volume multimodal work under 200K tokens.",
-    // No winnerSlug: that badge reads "Best value", and here the cheaper model
-    // (Gemini) is not the more capable one. The verdict carries the nuance.
+    // winnerSlug drives the neutral "Our pick" badge (capability); the
+    // "Cheapest" badge is computed from price, so Gemini gets that one.
+    winnerSlug: 'claude-opus-5',
     tags: ['anthropic', 'google', 'flagship', 'multimodal'],
     updatedAt: '2026-07-27',
   },
