@@ -153,6 +153,54 @@ export const ALL_COMPARISONS: ComparisonData[] = [
     tags: ['open-source', 'meta', 'openai'],
     updatedAt: U,
   },
+  {
+    slug: 'claude-opus-5-vs-fable-5',
+    title: 'Claude Opus 5 vs Claude Fable 5',
+    description:
+      "Anthropic says Opus 5 comes close to Fable 5's frontier intelligence at half the price. Compare pricing, agentic coding, knowledge work, and where Fable 5 still wins.",
+    modelSlugs: ['claude-opus-5', 'claude-fable-5'],
+    verdict:
+      "Opus 5 costs exactly half of Fable 5 ($5/$25 vs $10/$50 per million tokens) and beats it on most published benchmarks: Frontier-Bench v0.1 43.3% vs 33.7%, and GDPval-AA v2 knowledge work 1,861 vs 1,747 Elo. Fable 5 keeps a narrow edge on SWE-bench Pro (80.0% vs 79.2%) and remains Anthropic's recommendation for the longest multi-day autonomous agent runs. For nearly every workload, Opus 5 is the better buy — Fable 5 only justifies 2x when the task is genuinely frontier.",
+    winnerSlug: 'claude-opus-5',
+    tags: ['anthropic', 'flagship', 'agents', 'coding'],
+    updatedAt: '2026-07-27',
+  },
+  {
+    slug: 'claude-opus-5-vs-gpt-5-6-sol',
+    title: 'Claude Opus 5 vs GPT-5.6 Sol',
+    description:
+      "The two flagship frontier models of July 2026, head to head. Same input price, different output price — compare SWE-bench, ARC-AGI-3, agentic coding, and context windows.",
+    modelSlugs: ['claude-opus-5', 'gpt-5-6-sol'],
+    verdict:
+      "Both charge $5 per million input tokens, but Opus 5 is 17% cheaper on output ($25 vs $30) — and output dominates most bills. Opus 5 leads on SWE-bench Pro (79.2% vs 64.6%), ARC-AGI-3 (30.2% vs 7.8%), Frontier-Bench (43.3% vs 34.4%), OSWorld 2.0 and GDPval-AA v2. GPT-5.6 Sol edges ahead on Terminal-Bench 2.1 and BrowseComp, and offers a slightly larger 1.05M context window plus much faster peak throughput. Opus 5 is the stronger default; Sol wins on raw speed and terminal work.",
+    winnerSlug: 'claude-opus-5',
+    tags: ['anthropic', 'openai', 'flagship', 'coding'],
+    updatedAt: '2026-07-27',
+  },
+  {
+    slug: 'claude-opus-5-vs-kimi-k3',
+    title: 'Claude Opus 5 vs Kimi K3',
+    description:
+      "Anthropic's flagship against Moonshot AI's 2.8-trillion-parameter open-weight giant. Compare price per million tokens, coding benchmarks, context, and self-hosting.",
+    modelSlugs: ['claude-opus-5', 'kimi-k3'],
+    verdict:
+      "Kimi K3 is dramatically cheaper — $3/$15 per million tokens versus Opus 5's $5/$25, and just $0.30 per million on cache hits — with a slightly larger 1.05M context and open weights you can self-host. It ranked first on Arena's Frontier Code evaluation. But Moonshot itself concedes K3 sits behind Opus 5's frontier tier on overall capability, and Opus 5 leads clearly on long-horizon agentic reliability and alignment. Take K3 for high-volume or self-hosted workloads where cost dominates; take Opus 5 when the hardest 10% of tasks decide the outcome.",
+    winnerSlug: 'claude-opus-5',
+    tags: ['anthropic', 'open-source', 'flagship', 'budget'],
+    updatedAt: '2026-07-27',
+  },
+  {
+    slug: 'claude-opus-5-vs-opus-4-8',
+    title: 'Claude Opus 5 vs Claude Opus 4.8',
+    description:
+      'Same price, roughly double the agentic coding score. Compare what changed between Anthropic’s last two Opus releases and whether to upgrade.',
+    modelSlugs: ['claude-opus-5', 'claude-opus-4-8'],
+    verdict:
+      "This is the easiest upgrade decision Anthropic has offered: identical pricing ($5/$25 per million tokens), identical 1M context, and large benchmark gains. Frontier-Bench v0.1 more than doubles (43.3% vs 18.7%), ARC-AGI-3 jumps from 1.5% to 30.2%, and GDPval-AA v2 knowledge work rises 268 Elo (1,593 to 1,861). Opus 5 is also the most aligned Opus model Anthropic has shipped. Unless you have pinned behaviour to Opus 4.8, upgrade.",
+    winnerSlug: 'claude-opus-5',
+    tags: ['anthropic', 'flagship', 'upgrade', 'agents'],
+    updatedAt: '2026-07-27',
+  },
 ]
 
 export function getComparisonBySlug(slug: string): ComparisonData | undefined {

@@ -38,6 +38,43 @@ const U = '2026-06-10'
 const CURATED_MODELS: ModelData[] = [
   // ── Anthropic ─────────────────────────────────────────────
   {
+    slug: 'claude-opus-5',
+    name: 'Claude Opus 5',
+    provider: 'Anthropic',
+    providerSlug: 'anthropic',
+    // $5/$25 — unchanged from Opus 4.8. Confirmed against the live OpenRouter
+    // feed on launch day. "Fast mode" is a separate 2x-priced variant.
+    inputPricePerMillion: 5,
+    outputPricePerMillion: 25,
+    contextWindow: 1000000,
+    outputLimit: 128000,
+    tier: 'flagship',
+    updatedAt: '2026-07-27',
+    description:
+      "Claude Opus 5 is Anthropic's flagship model, released July 24, 2026. It reaches close to Claude Fable 5's frontier intelligence at half the price, and holds the same $5/$25 per-million pricing as Opus 4.8 while more than doubling its agentic coding score. It tops Frontier-Bench v0.1 (43.3%), ARC-AGI-3 (30.2%, roughly 4x the next best model), and Artificial Analysis' GDPval-AA v2 knowledge-work leaderboard (1,861 Elo). It is also Anthropic's most aligned Opus model to date.",
+    strengths: [
+      'Near-Fable-5 frontier quality at half the price ($5/$25 vs $10/$50)',
+      'State of the art on agentic coding, computer use, and knowledge work',
+      'ARC-AGI-3 leader at 30.2% — about 4x GPT-5.6 Sol',
+      'Effort settings trade intelligence against token spend',
+      '1M-token context window; most aligned Opus model yet',
+    ],
+    weaknesses: [
+      'Trails Fable 5 and Mythos 5 slightly on SWE-bench Pro (79.2% vs 80.0% / 80.3%)',
+      'Behind Mythos 5 on cybersecurity exploitation and biology research',
+      'Fast mode costs 2x base pricing ($10/$25 tier)',
+      'Output tokens cost 5x input — output-heavy workloads dominate the bill',
+    ],
+    useCases: [
+      'Long-horizon autonomous coding agents',
+      'Computer use and browser automation at scale',
+      'Complex enterprise workflow automation',
+      'Scientific research and hard reasoning tasks',
+    ],
+    relatedSlugs: ['claude-opus-4-8', 'claude-fable-5', 'claude-sonnet-5'],
+    openRouterIds: ['anthropic/claude-opus-5'],
+  },
+  {
     slug: 'claude-sonnet-5',
     name: 'Claude Sonnet 5',
     provider: 'Anthropic',

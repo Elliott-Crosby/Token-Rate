@@ -92,8 +92,8 @@ export const LIVE_PRICING: Record<string, { input: number; output: number; conte
     "context": 131072
   },
   "z-ai/glm-5.2": {
-    "input": 0.8078,
-    "output": 2.5388,
+    "input": 0.7868,
+    "output": 2.4728,
     "context": 1048576
   },
   "moonshotai/kimi-k2.7-code": {
@@ -247,8 +247,8 @@ export const LIVE_PRICING: Record<string, { input: number; output: number; conte
     "context": 204800
   },
   "google/gemma-4-26b-a4b-it": {
-    "input": 0.12,
-    "output": 0.35,
+    "input": 0.13,
+    "output": 0.4,
     "context": 262144
   },
   "google/gemma-4-31b-it": {
@@ -357,7 +357,7 @@ export const LIVE_PRICING: Record<string, { input: number; output: number; conte
     "context": 65536
   },
   "qwen/qwen3.5-35b-a3b": {
-    "input": 0.15,
+    "input": 0.14,
     "output": 1,
     "context": 262144
   },
@@ -2884,8 +2884,8 @@ export const EXTRA_MODELS: ModelData[] = [
       "Cost-sensitive pipelines"
     ],
     "relatedSlugs": [
-      "gemma-4-26b-a4b-it",
       "gemma-3-27b-it",
+      "gemma-4-26b-a4b-it",
       "gemma-4-31b-it"
     ],
     "openRouterIds": [
@@ -3239,45 +3239,6 @@ export const EXTRA_MODELS: ModelData[] = [
     "variant": false
   },
   {
-    "slug": "gemma-4-26b-a4b-it",
-    "name": "Gemma 4 26B A4B",
-    "provider": "Google",
-    "providerSlug": "google",
-    "inputPricePerMillion": 0.12,
-    "outputPricePerMillion": 0.35,
-    "contextWindow": 262144,
-    "outputLimit": 262144,
-    "tier": "fast",
-    "updatedAt": "2026-07-27",
-    "description": "Gemma 4 26B A4B IT is an instruction-tuned Mixture-of-Experts (MoE) model from Google DeepMind.",
-    "strengths": [
-      "Extremely cheap at $0.120/1M input tokens",
-      "Large 262K-token context window",
-      "Low latency for high-throughput workloads",
-      "Multimodal: understands images as well as text"
-    ],
-    "weaknesses": [
-      "Less capable than flagship models on complex reasoning",
-      "Quality and availability can vary by hosting provider"
-    ],
-    "useCases": [
-      "High-volume classification",
-      "Text extraction and summarization",
-      "Simple chat and Q&A",
-      "Cost-sensitive pipelines"
-    ],
-    "relatedSlugs": [
-      "gemini-2-5-flash-lite",
-      "gemma-4-31b-it",
-      "gemma-3-27b-it"
-    ],
-    "openRouterIds": [
-      "google/gemma-4-26b-a4b-it"
-    ],
-    "auto": true,
-    "variant": false
-  },
-  {
     "slug": "qwen3-30b-a3b",
     "name": "Qwen3 30B A3B",
     "provider": "Qwen",
@@ -3316,6 +3277,45 @@ export const EXTRA_MODELS: ModelData[] = [
     "variant": false
   },
   {
+    "slug": "gemma-4-26b-a4b-it",
+    "name": "Gemma 4 26B A4B",
+    "provider": "Google",
+    "providerSlug": "google",
+    "inputPricePerMillion": 0.13,
+    "outputPricePerMillion": 0.4,
+    "contextWindow": 262144,
+    "outputLimit": 262144,
+    "tier": "fast",
+    "updatedAt": "2026-07-27",
+    "description": "Gemma 4 26B A4B IT is an instruction-tuned Mixture-of-Experts (MoE) model from Google DeepMind.",
+    "strengths": [
+      "Extremely cheap at $0.130/1M input tokens",
+      "Large 262K-token context window",
+      "Low latency for high-throughput workloads",
+      "Multimodal: understands images as well as text"
+    ],
+    "weaknesses": [
+      "Less capable than flagship models on complex reasoning",
+      "Quality and availability can vary by hosting provider"
+    ],
+    "useCases": [
+      "High-volume classification",
+      "Text extraction and summarization",
+      "Simple chat and Q&A",
+      "Cost-sensitive pipelines"
+    ],
+    "relatedSlugs": [
+      "gemma-4-31b-it",
+      "gemini-2-5-flash-lite",
+      "gemma-3-27b-it"
+    ],
+    "openRouterIds": [
+      "google/gemma-4-26b-a4b-it"
+    ],
+    "auto": true,
+    "variant": false
+  },
+  {
     "slug": "qwen3-vl-30b-a3b-thinking",
     "name": "Qwen3 VL 30B A3B Thinking",
     "provider": "Qwen",
@@ -3346,7 +3346,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "relatedSlugs": [
       "qwen3-30b-a3b-thinking-2507",
       "qwen3-6-35b-a3b",
-      "qwen3-30b-a3b"
+      "qwen3-5-35b-a3b"
     ],
     "openRouterIds": [
       "qwen/qwen3-vl-30b-a3b-thinking"
@@ -3384,7 +3384,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "relatedSlugs": [
       "qwen3-vl-30b-a3b-thinking",
       "qwen3-6-35b-a3b",
-      "qwen3-30b-a3b"
+      "qwen3-5-35b-a3b"
     ],
     "openRouterIds": [
       "qwen/qwen3-30b-a3b-thinking-2507"
@@ -3660,6 +3660,45 @@ export const EXTRA_MODELS: ModelData[] = [
     "variant": false
   },
   {
+    "slug": "qwen3-5-35b-a3b",
+    "name": "Qwen3.5-35B-A3B",
+    "provider": "Qwen",
+    "providerSlug": "qwen",
+    "inputPricePerMillion": 0.14,
+    "outputPricePerMillion": 1,
+    "contextWindow": 262144,
+    "outputLimit": 262144,
+    "tier": "fast",
+    "updatedAt": "2026-07-27",
+    "description": "The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency.",
+    "strengths": [
+      "Extremely cheap at $0.140/1M input tokens",
+      "Large 262K-token context window",
+      "Low latency for high-throughput workloads",
+      "Multimodal: understands images as well as text"
+    ],
+    "weaknesses": [
+      "Less capable than flagship models on complex reasoning",
+      "Quality and availability can vary by hosting provider"
+    ],
+    "useCases": [
+      "High-volume classification",
+      "Text extraction and summarization",
+      "Simple chat and Q&A",
+      "Cost-sensitive pipelines"
+    ],
+    "relatedSlugs": [
+      "qwen3-6-35b-a3b",
+      "qwen3-vl-30b-a3b-instruct",
+      "qwen3-vl-30b-a3b-thinking"
+    ],
+    "openRouterIds": [
+      "qwen/qwen3.5-35b-a3b"
+    ],
+    "auto": true,
+    "variant": false
+  },
+  {
     "slug": "hunyuan-a13b-instruct",
     "name": "Hunyuan A13B Instruct",
     "provider": "Tencent",
@@ -3734,45 +3773,6 @@ export const EXTRA_MODELS: ModelData[] = [
     ],
     "auto": true,
     "variant": true
-  },
-  {
-    "slug": "qwen3-5-35b-a3b",
-    "name": "Qwen3.5-35B-A3B",
-    "provider": "Qwen",
-    "providerSlug": "qwen",
-    "inputPricePerMillion": 0.15,
-    "outputPricePerMillion": 1,
-    "contextWindow": 262144,
-    "outputLimit": 262144,
-    "tier": "fast",
-    "updatedAt": "2026-07-27",
-    "description": "The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency.",
-    "strengths": [
-      "Extremely cheap at $0.150/1M input tokens",
-      "Large 262K-token context window",
-      "Low latency for high-throughput workloads",
-      "Multimodal: understands images as well as text"
-    ],
-    "weaknesses": [
-      "Less capable than flagship models on complex reasoning",
-      "Quality and availability can vary by hosting provider"
-    ],
-    "useCases": [
-      "High-volume classification",
-      "Text extraction and summarization",
-      "Simple chat and Q&A",
-      "Cost-sensitive pipelines"
-    ],
-    "relatedSlugs": [
-      "qwen3-vl-30b-a3b-instruct",
-      "qwen3-6-35b-a3b",
-      "qwen3-vl-30b-a3b-thinking"
-    ],
-    "openRouterIds": [
-      "qwen/qwen3.5-35b-a3b"
-    ],
-    "auto": true,
-    "variant": false
   },
   {
     "slug": "minimax-m2-5",
@@ -3948,8 +3948,8 @@ export const EXTRA_MODELS: ModelData[] = [
       "Cost-sensitive pipelines"
     ],
     "relatedSlugs": [
-      "qwen3-5-35b-a3b",
       "qwen3-6-35b-a3b",
+      "qwen3-5-35b-a3b",
       "qwen3-vl-30b-a3b-thinking"
     ],
     "openRouterIds": [
@@ -6968,7 +6968,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "relatedSlugs": [
       "glm-4-5",
       "glm-4-6",
-      "glm-4-7"
+      "glm-5-2"
     ],
     "openRouterIds": [
       "z-ai/glm-4.5v"
@@ -7006,7 +7006,7 @@ export const EXTRA_MODELS: ModelData[] = [
     "relatedSlugs": [
       "glm-4-5v",
       "glm-4-6",
-      "glm-4-7"
+      "glm-5-2"
     ],
     "openRouterIds": [
       "z-ai/glm-4.5"
@@ -7468,6 +7468,44 @@ export const EXTRA_MODELS: ModelData[] = [
     "variant": false
   },
   {
+    "slug": "glm-5-2",
+    "name": "GLM 5.2",
+    "provider": "Zhipu AI",
+    "providerSlug": "zhipu",
+    "inputPricePerMillion": 0.7868,
+    "outputPricePerMillion": 2.4728,
+    "contextWindow": 1048576,
+    "outputLimit": 131072,
+    "tier": "balanced",
+    "updatedAt": "2026-07-27",
+    "description": "GLM 5.2 is Zhipu AI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.787 per million input tokens with a 1M-token context window.",
+    "strengths": [
+      "Affordable at $0.79/1M input tokens",
+      "Massive 1M-token context window",
+      "Strong general-purpose performance"
+    ],
+    "weaknesses": [
+      "Quality and availability can vary by hosting provider",
+      "Quality and availability can vary by hosting provider"
+    ],
+    "useCases": [
+      "Customer-facing AI apps",
+      "Code generation and review",
+      "Content creation at scale",
+      "Conversational interfaces"
+    ],
+    "relatedSlugs": [
+      "glm-5",
+      "glm-5-1",
+      "glm-4-5v"
+    ],
+    "openRouterIds": [
+      "z-ai/glm-5.2"
+    ],
+    "auto": true,
+    "variant": false
+  },
+  {
     "slug": "qwen2-5-vl-72b-instruct",
     "name": "Qwen2.5 VL 72B Instruct",
     "provider": "Qwen",
@@ -7578,44 +7616,6 @@ export const EXTRA_MODELS: ModelData[] = [
     ],
     "openRouterIds": [
       "amazon/nova-pro-v1"
-    ],
-    "auto": true,
-    "variant": false
-  },
-  {
-    "slug": "glm-5-2",
-    "name": "GLM 5.2",
-    "provider": "Zhipu AI",
-    "providerSlug": "zhipu",
-    "inputPricePerMillion": 0.8078,
-    "outputPricePerMillion": 2.5388,
-    "contextWindow": 1048576,
-    "outputLimit": 131072,
-    "tier": "balanced",
-    "updatedAt": "2026-07-27",
-    "description": "GLM 5.2 is Zhipu AI's a balanced model that trades a little peak capability for much lower cost and faster responses. It costs $0.808 per million input tokens with a 1M-token context window.",
-    "strengths": [
-      "Affordable at $0.81/1M input tokens",
-      "Massive 1M-token context window",
-      "Strong general-purpose performance"
-    ],
-    "weaknesses": [
-      "Quality and availability can vary by hosting provider",
-      "Quality and availability can vary by hosting provider"
-    ],
-    "useCases": [
-      "Customer-facing AI apps",
-      "Code generation and review",
-      "Content creation at scale",
-      "Conversational interfaces"
-    ],
-    "relatedSlugs": [
-      "glm-5",
-      "glm-5-1",
-      "glm-4-5v"
-    ],
-    "openRouterIds": [
-      "z-ai/glm-5.2"
     ],
     "auto": true,
     "variant": false
