@@ -1,21 +1,11 @@
-name: Auto Blog Generator
+name: Blog Draft Generator
 
 on:
-  # PAUSED 2026-06-08: Google has indexed only 1 of ~97 pages; the ~178 auto-posts
-  # are "Discovered – currently not indexed" and a daily drip of templated content
-  # dilutes crawl budget and trips scaled-content signals. Daily auto-publishing is
-  # paused while we clean the thin backlog and build authority. Re-enable by
-  # uncommenting the schedule block. Manual runs still work via workflow_dispatch.
-  # schedule:
-  #   # Once a day at 13:00 UTC. The generator researches the day's sharpest
-  #   # rate-comparison angle (live pricing + web search), writes one high-quality
-  #   # article, and publishes only if it clears the quality/novelty gate — so a
-  #   # daily run is plenty and keeps the publish log clean.
-  #   - cron: '0 13 * * *'
+  # Editorial review is required before a draft enters content/blog.
   workflow_dispatch:
     # Allow manual trigger from GitHub Actions UI
 
-# NOTE: This project uses `main` as the default branch. Always push to main, never master.
+# Drafts are committed to main; published posts are not changed by this workflow.
 
 permissions:
   contents: write
@@ -48,7 +38,7 @@ jobs:
             echo "::error::ANTHROPIC_API_KEY secret is empty. Check repo Settings → Secrets and variables → Actions → Repository secrets (NOT Environment secrets) and add ANTHROPIC_API_KEY there."
             exit 1
           fi
-          echo "ANTHROPIC_API_KEY is set (length: ${#ANTHROPIC_API_KEY} chars, prefix: ${ANTHROPIC_API_KEY:0:7}...)"
+          echo "ANTHROPIC_API_KEY is set."
 
       - name: Run blog generator
         working-directory: app
@@ -60,20 +50,16 @@ jobs:
           BLOG_MODEL: ${{ vars.BLOG_MODEL }}
         run: node scripts/blog-generator.mjs
 
-      - name: Rebuild blog catalog
-        working-directory: app
-        run: node scripts/build-blog-catalog.mjs
-
-      - name: Commit post if created
+      - name: Commit draft if created
         run: |
           git config user.name "TokenRate BlogBot"
           git config user.email "bot@tokenrate.dev"
-          git add app/content/ app/src/lib/blog-catalog.generated.ts
+          git add app/content/blog-drafts/ app/content/blog-angles-ledger.json
           if git diff --cached --quiet; then
             echo "No new posts to commit."
           else
-            SLUG=$(git diff --cached --name-only -- 'app/content/blog/*.json' | head -1 | xargs -I{} basename {} .json 2>/dev/null || echo "post")
-            git commit -m "blog: auto-publish — ${SLUG}"
+            SLUG=$(git diff --cached --name-only -- 'app/content/blog-drafts/*.json' | head -1 | xargs -I{} basename {} .json 2>/dev/null || echo "draft")
+            git commit -m "blog: draft — ${SLUG}"
             git pull --rebase origin main
             git push origin main
           fi

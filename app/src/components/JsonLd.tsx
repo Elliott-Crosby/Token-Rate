@@ -112,7 +112,6 @@ export function articleSchema({
   datePublished,
   dateModified,
   imageUrl,
-  authorName = AUTHOR_NAME,
 }: {
   title: string
   description: string
@@ -120,7 +119,6 @@ export function articleSchema({
   datePublished?: string
   dateModified?: string
   imageUrl?: string
-  authorName?: string
 }) {
   const published = datePublished ?? '2026-01-01'
   const modified = dateModified ?? published
@@ -134,7 +132,7 @@ export function articleSchema({
     datePublished: published,
     dateModified: modified,
     image: imageUrl ? [imageUrl] : undefined,
-    author: { '@type': 'Person', '@id': `${SITE_URL}/#author`, name: authorName, url: AUTHOR_URL },
+    author: { '@type': 'Organization', '@id': `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL },
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,

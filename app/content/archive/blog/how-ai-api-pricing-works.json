@@ -1,0 +1,57 @@
+{
+  "slug": "how-ai-api-pricing-works",
+  "category": "fundamentals",
+  "kind": "guide",
+  "title": "How AI API Pricing Works",
+  "description": "A practical guide to understanding per-token pricing, input vs output costs, and how to estimate your AI API bill before it arrives.",
+  "tldr": "AI APIs price by the token, quoted as $/1 million tokens. Input tokens (the text you send) and output tokens (the text the model generates) are billed separately, with output costing 3–5× more. As of May 2026, Claude Sonnet 4 charges $3/1M input and $15/1M output — meaning a 1,000-input/500-output request costs about $0.0105. Batch APIs (Anthropic, OpenAI) cut that 50%, and prompt caching cuts cached input tokens by ~90%.",
+  "readTime": "5 min read",
+  "publishedAt": "2026-01-20",
+  "updatedAt": "2026-05-22",
+  "tags": ["Pricing", "Fundamentals"],
+  "relatedSlugs": ["what-are-ai-tokens", "how-to-reduce-ai-api-costs", "tokens-to-dollars-conversion"],
+  "sources": [
+    { "label": "Anthropic — API pricing", "url": "https://www.anthropic.com/pricing", "note": "Source of Claude Sonnet 4 $3/$15 reference price." },
+    { "label": "OpenAI — API pricing", "url": "https://openai.com/api/pricing/" },
+    { "label": "Google — Gemini API pricing", "url": "https://ai.google.dev/pricing" },
+    { "label": "Anthropic — Batch API (50% discount)", "url": "https://docs.anthropic.com/en/docs/build-with-claude/batch-processing" },
+    { "label": "OpenAI — Batch API (50% discount)", "url": "https://platform.openai.com/docs/guides/batch" }
+  ],
+  "sections": [
+    {
+      "heading": "The Per-Token Model",
+      "body": "Almost every major AI provider prices their API by the token. The standard unit is \"per 1 million tokens\" — usually written as $/1M tokens or $/MTok.\n\nFor example, Claude Sonnet 4 costs:\n• $3.00 per 1M input tokens\n• $15.00 per 1M output tokens\n\nIf you send a 1,000-token prompt and receive a 500-token response, you pay: (1,000 × $3 / 1,000,000) + (500 × $15 / 1,000,000) = $0.003 + $0.0075 = $0.0105 — just over one cent."
+    },
+    {
+      "heading": "Input vs Output Pricing",
+      "body": "Every model charges differently for input (text you send) and output (text the model generates). Output tokens are almost always more expensive — typically 3–5× the input price. This is because generating tokens is computationally more intensive than reading them.\n\nThis asymmetry matters for how you design prompts:\n• Long system prompts with detailed instructions → more input tokens\n• Asking for verbose, detailed answers → more output tokens\n• Caching repeated prompt sections → can dramatically cut input costs"
+    },
+    {
+      "heading": "Context Window and Costs",
+      "body": "The context window limits how much text a model can process at once — and it directly affects your bill. If you send a 100,000 token document plus a 500 token question, you pay for 100,500 input tokens. With Gemini 2.5 Pro at $1.25/1M, that's $0.13 per query.\n\nFor long-context tasks, model choice matters enormously. A cheaper model with a large context window can be dramatically more affordable than a premium model."
+    },
+    {
+      "heading": "Estimating Your Monthly Bill",
+      "body": "To estimate costs:\n1. Estimate average tokens per request (input + output separately)\n2. Multiply by your expected request volume per month\n3. Apply the per-token rate\n\nExample: A chatbot that processes 500 input tokens and generates 300 output tokens per conversation, running 10,000 conversations/month with Claude Haiku 4:\n• Input: 500 × 10,000 × ($0.25/1M) = $1.25\n• Output: 300 × 10,000 × ($1.25/1M) = $3.75\n• Monthly total: ~$5.00\n\nUse the [TokenRate calculator](/) to model this instantly for any model."
+    },
+    {
+      "heading": "Hidden Costs to Watch For",
+      "body": "• System prompts count toward every request — a 2,000-token system prompt on 1M requests is 2B extra tokens\n• Conversation history grows with each turn — consider summarizing or truncating\n• Retries and errors still consume tokens\n• Some providers charge for cached tokens at a discounted rate (Anthropic: 10% of base price)\n• Batch APIs (Anthropic, OpenAI) offer 50% discounts for non-real-time processing"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Why are output tokens more expensive than input tokens?",
+      "answer": "Generating tokens is computationally heavier than reading them — the model runs a full forward pass for each output token. Output is typically 3–5× the input price across Claude, GPT, and Gemini."
+    },
+    {
+      "question": "What's the difference between $/1K tokens and $/1M tokens?",
+      "answer": "They're the same unit at different scales. $3/1M tokens = $0.003/1K tokens. The industry has standardized on $/1M tokens because per-thousand pricing produced unreadably small numbers as models got cheaper."
+    },
+    {
+      "question": "Do system prompts count toward my token bill?",
+      "answer": "Yes — every token you send, including system prompts, counts as input. A 2,000-token system prompt sent across 1M requests adds 2 billion input tokens to your bill. Caching or trimming these is one of the highest-leverage optimizations."
+    }
+  ],
+  "ctaText": "Estimate your monthly AI bill across Claude, GPT-4o, Gemini, and more — paste your typical input/output sizes and see live pricing instantly."
+}

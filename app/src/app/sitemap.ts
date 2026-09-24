@@ -34,7 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/privacy`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/terms`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/tools/words-to-tokens`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/tools/token-to-usd`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/tools`, lastModified: new Date('2026-09-23'), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/tools/token-to-usd`, lastModified: modelsUpdated, changeFrequency: 'daily', priority: 0.95 },
     { url: `${BASE}/tools/api-cost-estimator`, lastModified: HUB_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/tools/compare-prices`, lastModified: modelsUpdated, changeFrequency: 'weekly', priority: 0.8 },
   ]

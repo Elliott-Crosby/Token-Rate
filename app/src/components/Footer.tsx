@@ -4,9 +4,9 @@ const FOOTER_COLS = [
   {
     label: 'Tools',
     links: [
-      { href: '/', label: 'Token Calculator' },
+      { href: '/tools/token-to-usd', label: 'Tokens to USD' },
+      { href: '/tools', label: 'All Tools' },
       { href: '/tools/words-to-tokens', label: 'Words → Tokens' },
-      { href: '/tools/token-to-usd', label: 'Token → USD' },
       { href: '/tools/api-cost-estimator', label: 'API Cost Estimator' },
     ],
   },

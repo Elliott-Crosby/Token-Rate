@@ -245,19 +245,18 @@ async function fetchAAQuality() {
   return map
 }
 
-// Recover previously-baked AA scores from the committed file. Lets a build run
-// WITHOUT AA_API_KEY (Vercel, local dev) keep the gold-standard scores the daily
-// Action baked in, instead of regressing to Arena-only coverage.
-function readPriorAAQuality() {
+// Preserve the last scored snapshot when a leaderboard API is unavailable during
+// a build. Fresh scores overwrite these values below when a feed responds.
+function readPriorQuality() {
   const map = new Map()
   if (!existsSync(OUT)) return map
   try {
     const text = readFileSync(OUT, 'utf8')
-    const m = text.match(/QUALITY_BY_KEY[^=]*=\s*(\{[\s\S]*?\})\s*\n\nexport const EXTRA_MODELS/)
+    const m = text.match(/QUALITY_BY_KEY[^=]*=\s*(\{[\s\S]*?\})\s*\r?\n\r?\nexport const EXTRA_MODELS/)
     if (!m) return map
     const obj = JSON.parse(m[1])
     for (const [k, v] of Object.entries(obj)) {
-      if (v?.source === 'aa' && typeof v.score === 'number') map.set(k, v)
+      if ((v?.source === 'aa' || v?.source === 'arena') && typeof v.score === 'number') map.set(k, v)
     }
   } catch { /* ignore — just means no prior AA data */ }
   return map
@@ -287,9 +286,8 @@ async function main() {
   if (!res.ok) throw new Error(`OpenRouter ${res.status}`)
   const json = await res.json()
 
-  // Merge: prior baked AA (preserved when this run has no key) ← live Arena ←
-  // fresh AA. Fresh AA, when available, overwrites the preserved snapshot.
-  const qualityMap = new Map(readPriorAAQuality())
+  // Merge: previous scores ← live Arena ← fresh AA.
+  const qualityMap = new Map(readPriorQuality())
   for (const [k, v] of arenaQ) qualityMap.set(k, v)
   for (const [k, v] of aaQ) qualityMap.set(k, v)
 

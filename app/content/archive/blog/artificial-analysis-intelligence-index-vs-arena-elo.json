@@ -1,0 +1,62 @@
+{
+  "category": "comparisons",
+  "slug": "artificial-analysis-intelligence-index-vs-arena-elo",
+  "keyword": "Artificial Analysis vs Arena Elo",
+  "title": "Artificial Analysis Intelligence Index vs Arena Elo: Which LLM Benchmark to Trust",
+  "description": "Compare the Artificial Analysis Intelligence Index with Arena AI Elo scores. Learn which LLM benchmark is more reliable for choosing GPT-5, Claude Opus 4, Gemini 2.5 Pro, and DeepSeek R1 in 2026.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T15:10:00.000Z",
+  "tags": [
+    "Artificial Analysis",
+    "Arena AI",
+    "LLM benchmarks",
+    "intelligence index",
+    "Elo rating"
+  ],
+  "sections": [
+    {
+      "heading": "Two Industry-Standard Quality Signals",
+      "body": "By mid-2026 the LLM evaluation landscape has consolidated around two heavyweight signals: the Artificial Analysis Intelligence Index (composite of static benchmarks) and Arena AI Elo (live human voting). Almost every published model comparison — including the Quality column on [TokenRate's calculator](/) — ends up referencing one or both. They measure different things and disagree often enough that understanding the gap matters. Artificial Analysis runs MMLU-Pro, GPQA Diamond, HumanEval, MATH-500, IFEval, and a few private evals through every released model, then publishes a weighted average on a 0–100 scale at [artificialanalysis.ai](https://artificialanalysis.ai). Arena AI's Elo, by contrast, is built from millions of blind pairwise votes by real users and updates continuously. Both feed TokenRate's Quality column, but they often produce different rankings for the same model — and that disagreement is information you can use."
+    },
+    {
+      "heading": "Where the Two Indices Agree (and Where They Don't)",
+      "body": "At the frontier they mostly agree: GPT-5, Claude Opus 4, OpenAI o3, and Grok 4 all land in the 78–85 zone on both. The disagreements emerge in two patterns. First, reasoning models (o1, o3, o3-mini, DeepSeek R1, Claude extended-thinking) tend to score higher on Artificial Analysis than Arena because static math/science evals reward their chain-of-thought, but human voters often prefer the snappier non-reasoning siblings. Second, instruction-tuned 'chatty' models (Claude Sonnet, GPT-4o) tend to score higher on Arena because users like their warmer tone, even when their MMLU-Pro lags. If you're routing production traffic and one signal puts your candidate model 10 points higher than the other, that's a flag to run your own eval before committing — see [how to pick an LLM by quality score and cost](/blog/how-to-pick-llm-by-quality-score-and-cost) for the workflow."
+    },
+    {
+      "heading": "TokenRate's Precedence: Static Fallback → Arena → Artificial Analysis",
+      "body": "When the Quality column shows a number, TokenRate has applied a deterministic precedence: a static fallback table (about 70 curated models) is the baseline, the live Arena AI feed overwrites it for models in Arena's top ~20, and the Artificial Analysis API overwrites Arena for the broadest possible coverage when AA_API_KEY is configured. This order is deliberate — Artificial Analysis has the highest coverage and the most stable methodology, but Arena is the only source for live human preference data. The 'source' indicator in the Quality column tells you which feed the number came from ('arena' or 'aa'), so you can interpret accordingly. For Mistral Small, Qwen 7B, Llama 3.2 1B, and the long tail of open models that neither feed tracks, the static fallback fills the gap with publicly reported benchmark scores. The full implementation lives in [src/lib/quality-index.ts](https://github.com/Elliott-Crosby/Token_Conversion_Rate) and the methodology is documented in [how LLM quality scores are calculated](/blog/how-llm-quality-scores-are-calculated)."
+    },
+    {
+      "heading": "Picking the Right Signal for Your Decision",
+      "body": "Use Arena Elo when your workload is open-ended, conversational, or quality-of-response-driven — customer support chat, creative writing, coding copilots, summarization. Use Artificial Analysis when you need reasoning, math, code correctness, or instruction-following on structured tasks — agent workflows, RAG retrieval reranking, function calling, JSON extraction. In practice, TokenRate's blended Quality column is fine for 90% of filter/sort decisions; you only need to dig into the source-specific scores when you're picking between two finalists. The [Compare Prices tool](/tools/compare-prices) lets you put 3–5 candidates side by side after using the [Filters](/blog/filter-llm-models-by-tier-cost-quality) to narrow the list — that's the right place to make a final call. For deeper context on what each benchmark measures, see [MMLU-Pro vs GPQA vs Elo](/blog/mmlu-pro-gpqa-elo-llm-benchmarks-explained)."
+    },
+    {
+      "heading": "What to Do When the Two Indices Strongly Disagree",
+      "body": "When Artificial Analysis and Arena Elo put a model 15+ points apart on TokenRate's 0–100 scale, treat that gap as a research signal: run a 50-prompt eval on your real workload before shipping. The disagreement usually points to a structural mismatch between what the model is optimized for and what your task needs. Examples we've seen: DeepSeek V3 (high AA score on coding/math, lower Arena because of terse style); Llama 3.1 405B (high Arena from voter familiarity, lower AA from weaker raw benchmarks); Claude 3 Opus (moderate scores on both because it's been overtaken at the frontier despite a strong legacy reputation). The point of the [Quality column on TokenRate](/) is to make these mismatches visible at a glance so you don't have to read three Twitter threads to discover them. For follow-up reading on production routing, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which is more accurate: Artificial Analysis or Arena AI?",
+      "answer": "Neither is uniformly more accurate — they measure different things. Artificial Analysis is more reproducible and better for reasoning-heavy benchmarks. Arena Elo is the only large-scale human preference signal and better for conversational quality. The two are best used together, which is why TokenRate's Quality column blends them."
+    },
+    {
+      "question": "Does the Artificial Analysis Intelligence Index cost money?",
+      "answer": "Public scores are visible on artificialanalysis.ai for free. Programmatic API access requires an AA_API_KEY. TokenRate uses the API when the key is configured and falls back to Arena AI and a static curated map when it isn't, so the calculator works either way."
+    },
+    {
+      "question": "Why do reasoning models like o3 and DeepSeek R1 sometimes score differently on the two leaderboards?",
+      "answer": "Reasoning models invest tokens in internal chain-of-thought before answering. Static benchmarks (Artificial Analysis) reward the resulting accuracy. Live human votes (Arena) sometimes penalize the slower, more verbose responses. Expect a 5–10 point gap on R1, o1, o3, and Claude extended-thinking variants."
+    },
+    {
+      "question": "How often does TokenRate refresh both indices?",
+      "answer": "Both feeds revalidate every 60 minutes, matching the OpenRouter pricing-refresh window. So the Quality column on the calculator and Compare Prices tool is at most one hour stale. The blended cache merges all three sources (static, Arena, AA) on every refresh."
+    }
+  ],
+  "ctaText": "Compare both quality signals side by side on the TokenRate calculator — the source badge in the Quality column tells you whether a model's score came from Arena AI or Artificial Analysis, so you can route accordingly.",
+  "sources": [
+    { "label": "Artificial Analysis", "url": "https://artificialanalysis.ai", "note": "Composite intelligence index" },
+    { "label": "Arena AI Leaderboard", "url": "https://lmarena.ai/leaderboard", "note": "Live human preference voting" },
+    { "label": "MMLU-Pro Paper", "url": "https://arxiv.org/abs/2406.01574", "note": "One of the static benchmarks used by AA" }
+  ]
+}

@@ -19,7 +19,12 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     // Read from localStorage, fall back to system preference
     const stored = localStorage.getItem('theme') as Theme | null
     const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    setTheme(stored ?? system)
+    const initial = stored === 'dark' || stored === 'light' ? stored : system
+    const frame = window.requestAnimationFrame(() => {
+      setTheme(initial)
+      document.documentElement.classList.toggle('dark', initial === 'dark')
+    })
+    return () => window.cancelAnimationFrame(frame)
   }, [])
 
   function toggle() {

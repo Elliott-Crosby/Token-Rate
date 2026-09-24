@@ -1,0 +1,63 @@
+{
+  "slug": "compare-ai-models-cost-per-successful-task",
+  "category": "comparisons",
+  "kind": "guide",
+  "title": "Compare AI Models by Cost per Successful Task",
+  "description": "A practical evaluation method that combines API spend with task pass rate, retries and human review.",
+  "tldr": "Price a model against the outcomes you need. Cost per success = total spend across attempts divided by the number of successful tasks, using a representative test set and consistent scoring.",
+  "readTime": "3 min read",
+  "publishedAt": "2026-09-24",
+  "tags": [
+    "model evaluation",
+    "unit economics",
+    "quality"
+  ],
+  "relatedSlugs": [],
+  "sources": [
+    {
+      "label": "Artificial Analysis methodology",
+      "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking"
+    },
+    {
+      "label": "Arena ranking methodology",
+      "url": "https://arena.ai/blog/arena-rank"
+    },
+    {
+      "label": "OpenAI API pricing",
+      "url": "https://developers.openai.com/api/docs/pricing"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "Define success before testing",
+      "body": "Choose real tasks and a measurable result: valid JSON, correct citation, resolved support request or accepted code change. Build a test set with easy and difficult cases. Keep the prompt, tool setup and evaluation rubric as consistent as possible between candidate models."
+    },
+    {
+      "heading": "Log spend and outcomes",
+      "body": "For every attempt, save the exact model ID, input/output usage, extra tool charges, latency, pass/fail and whether a retry was needed. Price each attempt from the applicable rate sheet. Include human review time if it is a meaningful cost for the product."
+    },
+    {
+      "heading": "Calculate the unit metric",
+      "body": "If 100 attempts at $0.01 each produce 70 successful results, total spend is $1 and cost per success is about $0.0143. If another model costs $0.02 per attempt and succeeds 95 times, its cost per success is about $0.0211. The first wins on API cost per success; the second may still win if failures harm users or create costly rework. These figures are illustrative."
+    },
+    {
+      "heading": "Decide with constraints",
+      "body": "Filter out models that fail required latency, safety, context or data handling constraints. Then compare cost per success, not a public score alone. A benchmark can help you shortlist candidates, but your own test distribution decides which result is useful. [Compare current token rates](/tools/compare-prices) before running a paid evaluation."
+    },
+    {
+      "heading": "Avoid a misleading winner",
+      "body": "A small evaluation can make a narrow pass-rate difference look decisive. Report both successes and attempts, and rerun ambiguous cases with an independent reviewer. Separate tasks that require exact facts from those judged by style. If one model gets 18/20 correct and another gets 19/20, that single-task difference is weak evidence; collect more cases before committing a large migration. Keep the raw outcomes so the decision can be audited when the test set changes."
+    },
+    {
+      "heading": "Include a fallback route",
+      "body": "A two-model workflow can beat either model alone. For example, run a low-cost model first and send only failed validation cases to a stronger one. Record the fraction escalated, both models' token usage and the final pass rate. If 20% of calls escalate, total cost is the cheap model's cost for every call plus 20% of the stronger model's cost. Test whether validation actually catches the failures you care about; otherwise the apparent savings hide user-facing errors."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Why not choose the cheapest per-million-token model?",
+      "answer": "A cheap model can need longer outputs, more retries or human correction. Those costs can outweigh the lower token rate."
+    }
+  ],
+  "ctaText": "Use the TokenRate calculator alongside your provider's usage export to make the calculation reproducible."
+}

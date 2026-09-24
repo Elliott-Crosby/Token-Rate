@@ -61,17 +61,6 @@ const nextConfig: NextConfig = {
         destination: '/models/gemini-3-1-pro',
         permanent: true,
       },
-      // Renamed posts: GPT-6-slugged drafts refocused on GPT-5.6 as the headliner.
-      {
-        source: '/blog/providers/gpt-6-release-date-price-features-what-to-expect',
-        destination: '/blog/providers/gpt-5-6-what-to-expect-release-date-price',
-        permanent: true,
-      },
-      {
-        source: '/blog/comparisons/gpt-6-vs-claude-opus-4-8-and-top-models',
-        destination: '/blog/comparisons/gpt-5-6-vs-claude-fable-5-opus-4-8',
-        permanent: true,
-      },
       ...buildPostRedirects(),
     ]
   },
