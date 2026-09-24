@@ -1,0 +1,80 @@
+{
+  "slug": "openai-api-pricing-guide-2026",
+  "category": "providers",
+  "kind": "guide",
+  "keyword": "OpenAI API pricing",
+  "title": "OpenAI API Pricing in 2026: GPT-5.5 Through Nano, Decoded",
+  "description": "What the GPT-5.x lineup actually costs in June 2026 — GPT-5.5, 5.5 Pro, 5.4, mini, and nano — and how to pick a tier without overpaying.",
+  "tldr": "OpenAI's June 2026 API lineup runs from GPT-5.4-nano ($0.20 in / $1.25 out per 1M tokens) to GPT-5.5 Pro ($30 / $180). The sweet spots are GPT-5.4-mini ($0.75 / $4.50) for volume work and GPT-5.4 ($2.50 / $15) for general production use. GPT-5.5 ($5 / $30) buys frontier quality; 5.5 Pro costs 6x more than 5.5 for the last increment of capability.",
+  "readTime": "7 min read",
+  "publishedAt": "2026-06-11",
+  "tags": ["OpenAI", "GPT-5.5", "Pricing", "Providers"],
+  "comparison": {
+    "caption": "OpenAI API pricing, verified June 10, 2026 (USD per 1M tokens)",
+    "columns": ["Model", "Input / 1M", "Output / 1M", "Context", "Cost per chat message*"],
+    "rows": [
+      ["GPT-5.4", "$2.50", "$15.00", "1M", "$0.0098"],
+      ["GPT-5.4-nano", "$0.20", "$1.25", "400K", "$0.0008"],
+      ["GPT-5.4-mini", "$0.75", "$4.50", "400K", "$0.0029"],
+      ["GPT-5.2", "$1.75", "$14.00", "400K", "$0.0082"],
+      ["GPT-5.5", "$5.00", "$30.00", "1M", "$0.0195"],
+      ["GPT-5.5 Pro", "$30.00", "$180.00", "1M", "$0.117"]
+    ]
+  },
+  "sections": [
+    {
+      "heading": "Reading the OpenAI price list without going cross-eyed",
+      "body": "OpenAI ships more API models than anyone else — my pricing feed counts over forty active GPT variants — but the lineup collapses into a simple shape once you see it: one current generation (5.5), one workhorse generation (5.4) in three sizes, and a long tail of older 5.x models that mostly exist for backward compatibility.\n\nEvery price is quoted per million tokens, input and output billed separately. The per-message column in the table assumes a realistic chat turn: 1,500 tokens in, 400 out. One thing to watch with OpenAI specifically: the output multiplier varies by model — 6x on GPT-5.5 and 5.4, about 8x on GPT-5.2, 6.25x on nano. Claude, by contrast, holds a uniform 5x across the lineup. The multiplier decides which model wins for output-heavy work, a dynamic I unpack in [the output multiplier piece](/blog/cost-optimization/output-multiplier-decides-your-llm-bill)."
+    },
+    {
+      "heading": "GPT-5.5 and 5.5 Pro: the frontier tier",
+      "body": "GPT-5.5 ($5 / $30, roughly 1M context) is OpenAI's mainstream flagship and scores 74 on the Arena leaderboard — statistically tied with Claude Opus 4.8, which costs the same on input and $5 less per million on output.\n\nGPT-5.5 Pro is the price tag that startles people: $30 / $180 per million, six times the cost of regular 5.5. A single long agentic session that consumes 2M input and 200K output tokens runs $96 on Pro versus $16 on standard 5.5. My rule from pricing these out: Pro is for tasks where a single better answer is worth dollars, not cents — deep research synthesis, hard one-shot reasoning — and almost never for anything running in a loop. If you're tempted by Pro for volume work, run the numbers in [the calculator](/) first; the monthly delta is usually a salary line, not a rounding error."
+    },
+    {
+      "heading": "The 5.4 family: where production workloads should start",
+      "body": "GPT-5.4 ($2.50 / $15, 1M context) scores 73 on Arena — one point behind GPT-5.5 at exactly half the price. That one point costs you double. For most production work the quality difference is invisible and the bill difference is not.\n\nGPT-5.4-mini ($0.75 / $4.50, 400K context) is the volume workhorse: drafting, summarization, structured extraction, support replies. GPT-5.4-nano ($0.20 / $1.25) is for classification, routing, and anything where you'd otherwise reach for a fine-tuned small model — at under a tenth of a cent per message, the API call is cheaper than the engineering time to avoid it.\n\nThe pattern worth internalizing: within a generation, each size step down costs roughly 3-4x less. Cascading — try mini first, escalate to 5.4 or 5.5 only when a confidence check fails — captures most of the quality at a fraction of the spend. I sketched that architecture in [the model routing piece](/blog/building/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "Caching and batch: OpenAI's two big discounts",
+      "body": "Cached input — the repeated prefix of your prompts (system message, tool definitions, few-shot examples) — bills at a steep discount off the regular input rate once OpenAI recognizes it. For chat products that resend the same scaffolding every turn, effective input costs often land far below the list price. The general technique is the same as Anthropic's, covered in [the caching guide](/blog/cost-optimization/prompt-caching-save-90-percent-on-ai-costs).\n\nThe Batch API gives a flat 50% off both meters for jobs that can wait up to 24 hours. Evals, embeddings backfills, nightly classification runs — anything asynchronous should be batched by default. Between caching and batch, a pipeline that does both routinely lands at a quarter of naive list price."
+    },
+    {
+      "heading": "What real workloads cost on OpenAI",
+      "body": "Scenarios I've priced at June 2026 rates.\n\nA support chatbot, 10,000 conversations a month (about 9,000 cumulative input tokens and 1,200 output per conversation): roughly $122/month on GPT-5.4-mini, $405 on GPT-5.4, $810 on GPT-5.5.\n\nClassifying 1M short records (300 tokens in, 20 out each) on nano: about $85 per run at list prices, $42.50 with batch.\n\nAn agentic coding workflow burning 2M input and 150K output tokens per session: $7.25 on GPT-5.4, $14.50 on GPT-5.5, $87 on 5.5 Pro. Multiply by your team's session count before picking a default; the spread is the whole story. More scale math in [the 1M-requests cost breakdown](/blog/cost-optimization/llm-cost-at-scale-1m-requests)."
+    },
+    {
+      "heading": "OpenAI vs the field in June 2026",
+      "body": "Head-to-head at the frontier: GPT-5.5 ($5 / $30) versus Claude Opus 4.8 ($5 / $25) versus Gemini 3.1 Pro ($2 / $12). Same input price as Anthropic, but Google undercuts both — Gemini 3.1 Pro scores 75 on Arena at 40% of GPT-5.5's input price.\n\nAt the budget tier the fight is GPT-5.4-mini ($0.75 / $4.50) against Claude Haiku 4.5 ($1 / $5) and Gemini 3.5 Flash ($1.50 / $9) — mini wins on price, Flash punches hardest on quality score (73, frontier-adjacent). And below all of them sits DeepSeek V4 Flash at around $0.10 / $0.20, the subject of [the DeepSeek pricing guide](/blog/providers/deepseek-api-pricing-guide-2026).\n\nThe takeaway: OpenAI is competitive but no longer automatically the value pick at any single tier. Check the [live comparison table](/models) before defaulting."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much does the GPT-5.5 API cost?",
+      "answer": "GPT-5.5 costs $5 per million input tokens and $30 per million output tokens as of June 2026. A typical chat message (1,500 tokens in, 400 out) costs about 2 cents. GPT-5.5 Pro costs 6x more: $30 in / $180 out."
+    },
+    {
+      "question": "What is the cheapest OpenAI model?",
+      "answer": "GPT-5.4-nano, at $0.20 per million input tokens and $1.25 per million output tokens — under a tenth of a cent for a typical message. It's suited to classification, routing, and extraction rather than open-ended generation."
+    },
+    {
+      "question": "Is GPT-5.4 good enough compared to GPT-5.5?",
+      "answer": "GPT-5.4 scores 73 on the Arena leaderboard versus 74 for GPT-5.5, at exactly half the price ($2.50/$15 vs $5/$30 per 1M tokens). For most production workloads the quality gap is hard to detect and the cost gap is not."
+    },
+    {
+      "question": "Does OpenAI offer discounts on API pricing?",
+      "answer": "Two main ones: cached input (repeated prompt prefixes bill at a steep discount automatically) and the Batch API (flat 50% off input and output for jobs that can wait up to 24 hours). Combined, they routinely cut effective costs by 50-75% on high-volume pipelines."
+    }
+  ],
+  "sources": [
+    { "label": "OpenAI — Official API pricing", "url": "https://openai.com/api/pricing/" },
+    { "label": "OpenAI — Batch API documentation", "url": "https://platform.openai.com/docs/guides/batch" },
+    { "label": "OpenRouter — Live OpenAI model pricing feed", "url": "https://openrouter.ai/openai" }
+  ],
+  "ctaText": "Compare your exact workload across GPT-5.5, 5.4, mini, and nano — live prices, no signup.",
+  "relatedSlugs": [
+    "claude-api-pricing-guide-2026",
+    "google-gemini-api-pricing-guide-2026",
+    "how-to-calculate-openai-api-costs",
+    "llm-cost-at-scale-1m-requests"
+  ]
+}

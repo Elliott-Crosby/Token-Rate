@@ -1,0 +1,59 @@
+{
+  "slug": "reconcile-ai-api-invoice",
+  "category": "building",
+  "kind": "guide",
+  "title": "How to Reconcile an AI API Invoice With Usage Logs",
+  "description": "A step-by-step ledger for matching token usage, model rates, discounts, retries and tool charges to a provider invoice.",
+  "tldr": "The fastest way to explain an API bill is to split usage by model and billing category, apply each rate, then compare the result with the invoice period and credits.",
+  "readTime": "3 min read",
+  "publishedAt": "2026-09-24",
+  "tags": [
+    "invoice",
+    "usage logs",
+    "cost monitoring"
+  ],
+  "relatedSlugs": [],
+  "sources": [
+    {
+      "label": "OpenAI API pricing",
+      "url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "label": "Anthropic API pricing",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "Create a usage ledger",
+      "body": "Export one billing period of API usage. Keep timestamp, request ID, exact model ID, input tokens, output tokens, cached read/write tokens if reported, and any tool or non-text units. Add account and project IDs when several teams share a bill. Avoid logging prompt text unless needed; counts and identifiers are enough for cost reconciliation."
+    },
+    {
+      "heading": "Match line items to rates",
+      "body": "Group rows by model, route and billing category. Apply the provider's rate for that period: tokens × dollars per million / one million. Do not apply a standard input rate to cache reads or a text rate to images. If a model changed price mid-period, split the rows by effective date."
+    },
+    {
+      "heading": "Find the mismatch",
+      "body": "Compare your calculated subtotal with the provider dashboard before comparing with a card charge. Check for retries, failed requests with billable usage, asynchronous jobs, service tiers, credits, taxes and a time-zone mismatch at month end. A request omitted from your app log can still appear in the provider dashboard."
+    },
+    {
+      "heading": "Make next month easier",
+      "body": "Store a daily aggregate by model and category, and compare it with a daily provider report. Alert on unusual cost per request and growth in input history. Document exceptions so the finance total can be reproduced without guessing. [Convert token counts](/tools/token-to-usd) or [read the price formula](/blog/fundamentals/tokens-to-dollars-conversion) as a quick check."
+    },
+    {
+      "heading": "Worked reconciliation example",
+      "body": "Suppose the dashboard shows 2 million standard input tokens at $2 per million and 500,000 output tokens at $8 per million. Those text items total $4 + $4 = $8. A further 1 million cached-read tokens at an illustrative $0.20 per million adds $0.20. If the invoice's usage subtotal is $8.20, the ledger matches. If it is $9.20, investigate the remaining dollar by model and category rather than changing a global multiplier. The example rates are invented for arithmetic; use the provider's published rates for the actual billing period."
+    },
+    {
+      "heading": "What to keep in the audit trail",
+      "body": "Save the rate-sheet URL or exported price table, the date it applied, the time zone used for grouping and the provider usage export. Keep a note of credits and taxes outside the usage subtotal. If your own logs and provider records disagree, request IDs make it easier to locate duplicate retries or traffic from another API key. This documentation also makes a future price change visible instead of silently altering your cost history."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Why is my calculator estimate below the invoice?",
+      "answer": "The estimate may omit cached writes, tools, images, audio, retries, taxes or another rate tier. Reconcile each usage category separately."
+    }
+  ],
+  "ctaText": "Use the TokenRate calculator alongside your provider's usage export to make the calculation reproducible."
+}

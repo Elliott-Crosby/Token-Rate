@@ -2,55 +2,50 @@
   "slug": "how-many-tokens-in-1000-words",
   "category": "fundamentals",
   "kind": "guide",
-  "title": "How Many Tokens in 1,000 Words?",
-  "description": "Quick reference guide for converting between words, characters, pages, and AI tokens for any major language model.",
-  "tldr": "1,000 words of English text is approximately 1,333 AI tokens — based on a ratio of ~1.33 tokens per word, or ~4 characters per token. A single page (250 words) is ~333 tokens, a 10-page document (2,500 words) is ~3,333 tokens, and a full novel (80,000 words) is ~106,667 tokens. The ratio varies less than 5% across the major tokenizers used by OpenAI (cl100k_base / o200k_base), Anthropic, and Google.",
+  "title": "How Many Tokens Are in 1,000 Words?",
+  "description": "Use a rough English planning range, then measure tokens with the target model before relying on a cost estimate.",
+  "tldr": "For ordinary English prose, 1,000 words is often roughly 1,300–1,700 tokens. It is only a planning range. Code, lists, other languages and the chosen tokenizer can move the number substantially.",
   "readTime": "3 min read",
   "publishedAt": "2026-02-05",
-  "updatedAt": "2026-05-22",
-  "tags": ["Tokens", "Fundamentals"],
-  "relatedSlugs": ["what-are-ai-tokens", "how-ai-api-pricing-works", "tokens-to-dollars-conversion"],
+  "updatedAt": "2026-09-24",
+  "tags": [
+    "word count",
+    "token estimate"
+  ],
+  "relatedSlugs": [],
   "sources": [
-    { "label": "OpenAI tokenizer (cl100k_base / o200k_base)", "url": "https://platform.openai.com/tokenizer" },
-    { "label": "Anthropic — Token counting", "url": "https://docs.anthropic.com/en/docs/build-with-claude/token-counting" },
-    { "label": "Google — Count tokens with Gemini API", "url": "https://ai.google.dev/gemini-api/docs/tokens" },
-    { "label": "tiktoken (OpenAI tokenizer library)", "url": "https://github.com/openai/tiktoken" }
+    {
+      "label": "Gemini token counting guide",
+      "url": "https://ai.google.dev/gemini-api/docs/tokens"
+    },
+    {
+      "label": "OpenAI API pricing",
+      "url": "https://developers.openai.com/api/docs/pricing"
+    }
   ],
   "sections": [
     {
-      "heading": "The Quick Answer",
-      "body": "1,000 words of English text ≈ 1,333 tokens.\n\nThis is based on the widely-used estimate of 4 characters per token and an average English word length of ~5.3 characters including spaces. The exact number varies by text type: simple, common words tokenize more efficiently than technical jargon or code."
+      "heading": "A useful range, with limits",
+      "body": "A quick budget estimate for 1,000 words of plain English is about 1,300–1,700 tokens. Treat it as a range, not a conversion constant. Text with many numbers, symbols, URLs or code can have more tokens per word. Short common words and familiar phrasing can use fewer."
     },
     {
-      "heading": "Word-to-Token Reference Table",
-      "body": "Here are common conversions for English prose:\n\n• 100 words → ~133 tokens\n• 250 words (1 page) → ~333 tokens\n• 500 words → ~667 tokens\n• 1,000 words → ~1,333 tokens\n• 2,000 words → ~2,667 tokens\n• 5,000 words (short story) → ~6,667 tokens\n• 10,000 words (long article) → ~13,333 tokens\n• 80,000 words (novel) → ~106,667 tokens"
+      "heading": "Why a word count misses billable text",
+      "body": "Your API input includes more than the visible user prompt. System instructions, conversation history, retrieved passages, tool definitions and formatting may all be sent and billed. The model's output adds another count with a separate rate. A document of 1,000 words is therefore not the whole request."
     },
     {
-      "heading": "Character-to-Token Conversion",
-      "body": "For precise estimation: 1 token ≈ 4 characters (including spaces and punctuation).\n\n• 1,000 characters → ~250 tokens\n• 10,000 characters → ~2,500 tokens\n• 100,000 characters → ~25,000 tokens\n\nThis 4:1 ratio holds well for typical English text. Code, markdown, and other structured text often have slightly different ratios."
+      "heading": "Measure before a large run",
+      "body": "Use the target provider's token counting method or inspect a small batch of actual API responses. Record a low, median and high case for your content. Price each with [Tokens to USD](/tools/token-to-usd), then multiply by expected volume. This catches expensive outliers that a single rule of thumb misses."
     },
     {
-      "heading": "Does the Model Affect Token Count?",
-      "body": "Yes — each provider uses a different tokenizer, which means the same text may produce a slightly different token count across models:\n\n• OpenAI uses cl100k_base (GPT-4, GPT-3.5) or o200k_base (GPT-4o)\n• Anthropic uses a custom tokenizer optimized for Claude\n• Google's Gemini uses SentencePiece\n\nIn practice, the differences are small (typically <5%) for standard English text. Our 4 chars/token estimate works as a reliable approximation for all major models."
-    },
-    {
-      "heading": "Token Cost for 1,000 Words",
-      "body": "How much does it cost to send 1,000 words to different models?\n\n• Claude Opus 4: 1,333 tokens × $15/1M = $0.020\n• Claude Sonnet 4: 1,333 tokens × $3/1M = $0.004\n• GPT-4o: 1,333 tokens × $2.50/1M = $0.003\n• Gemini 2.0 Flash: 1,333 tokens × $0.10/1M = $0.0001\n• Claude Haiku 4: 1,333 tokens × $0.25/1M = $0.0003\n\nUse the [TokenRate calculator](/) to compare these costs across all models instantly."
+      "heading": "Worked planning example",
+      "body": "If you budget 1,500 input tokens for a 1,000-word draft and 500 output tokens, illustrative rates of $3 input and $15 output per million yield (1,500 × 3 + 500 × 15) / 1,000,000 = $0.012. Use measured counts and the exact model's current price for a real estimate."
     }
   ],
   "faq": [
     {
-      "question": "Is 1,000 words always exactly 1,333 tokens?",
-      "answer": "No — 1,333 is the average for English prose. Technical writing, code, and non-English text can vary by ±20%. Common short words tokenize more efficiently than rare or compound words."
-    },
-    {
-      "question": "How do I count tokens exactly for my text?",
-      "answer": "Use OpenAI's tiktoken library (cl100k_base for GPT-4, o200k_base for GPT-4o), Anthropic's count_tokens endpoint, or Google's Gemini count_tokens method. For ad-hoc estimation, multiply word count by 1.33."
-    },
-    {
-      "question": "Why do Chinese and Japanese cost more per word?",
-      "answer": "Most tokenizers were trained primarily on English. Non-Latin scripts often use 1–2 tokens per character versus 0.25 tokens per character for English — meaning the same semantic content can cost 4–8× more in tokens."
+      "question": "Is 1,000 words always 1,333 tokens?",
+      "answer": "No. That familiar estimate is a rough heuristic for English text, not a tokenizer result."
     }
   ],
-  "ctaText": "Paste any text and see the exact token count and cost across every major model — Claude, GPT-4o, Gemini, and more."
+  "ctaText": "Use the TokenRate tools to calculate cost from your own usage and the current model rates."
 }

@@ -1,0 +1,59 @@
+{
+  "slug": "ai-api-budget-worksheet",
+  "category": "building",
+  "kind": "guide",
+  "title": "AI API Budget Worksheet: From One Request to a Month",
+  "description": "A reusable calculation for monthly spend that includes request volume, input/output mix, growth and retry allowance.",
+  "tldr": "Budget each feature separately: observed cost per request × expected monthly requests, then add retries, heavy users and non-token charges. Revisit the forecast with real usage each week.",
+  "readTime": "3 min read",
+  "publishedAt": "2026-09-24",
+  "tags": [
+    "budget",
+    "forecast",
+    "API cost"
+  ],
+  "relatedSlugs": [],
+  "sources": [
+    {
+      "label": "OpenAI API pricing",
+      "url": "https://developers.openai.com/api/docs/pricing"
+    },
+    {
+      "label": "Gemini API pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "Build the base case",
+      "body": "For each feature, write down exact model, median input tokens, median output tokens and requests per active user. Multiply the two token counts by their separate per-million rates. If a feature averages $0.012 per call and sees 20,000 monthly calls, its base text cost is $240."
+    },
+    {
+      "heading": "Add a realistic range",
+      "body": "Create low, expected and high cases. In the high case, use a longer conversation or document, more active users and a measured retry allowance. If 10% of calls repeat at the same average cost, the $240 base case becomes roughly $264. A small number of long-context requests may require a separate line rather than one broad multiplier."
+    },
+    {
+      "heading": "Include everything else",
+      "body": "Add cache creation/read charges, batch discounts, tools, image or audio usage, storage, taxes and any provider minimums that apply. Include an engineering or review cost when model errors require human effort. Keep these separate from the core token estimate so you can see which lever changes the forecast."
+    },
+    {
+      "heading": "Review the forecast weekly",
+      "body": "Compare projected cost with the provider dashboard and the number of successful user actions. If spend rises faster than usage, inspect output length, repeated history, routing changes and retry rate. [Use the monthly estimator](/tools/api-cost-estimator) for a quick scenario; retain this worksheet for the complete budget."
+    },
+    {
+      "heading": "A three-scenario worksheet",
+      "body": "Start with 5,000 active users and 4 requests each: 20,000 monthly requests. At an observed $0.012 per request, the expected base is $240. A low case of 12,000 requests at $0.009 is $108. A high case of 35,000 requests at $0.018 is $630. These are different traffic and token-mix assumptions; write them down beside the result. Then add the separately estimated billable categories and taxes. Showing the range prevents a single precise-looking number from being mistaken for a guarantee."
+    },
+    {
+      "heading": "Know when to update the model",
+      "body": "Reforecast after a model change, prompt redesign, cache rollout or new feature. Compare the forecast with real spend by feature, not only the account total. If one feature is responsible for a spike, its input length, output cap and retry policy are the first measurements to inspect. For a free tier, estimate the heaviest plausible user separately and set limits around that behavior. A profitable average does not automatically make every account economical."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much buffer should an AI API budget include?",
+      "answer": "Base the buffer on observed variation in token length, traffic and retries. There is no universal percentage that fits every product."
+    }
+  ],
+  "ctaText": "Use the TokenRate calculator alongside your provider's usage export to make the calculation reproducible."
+}

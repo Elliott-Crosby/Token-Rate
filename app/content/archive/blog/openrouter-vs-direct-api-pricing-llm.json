@@ -1,0 +1,63 @@
+{
+  "category": "cost-optimization",
+  "slug": "openrouter-vs-direct-api-pricing-llm",
+  "keyword": "OpenRouter vs direct API pricing LLM",
+  "title": "OpenRouter vs Direct Provider APIs: Pricing, Markups, and When to Use Each",
+  "description": "Compare OpenRouter's unified LLM API with going direct to Anthropic, OpenAI, Google, DeepSeek, and Mistral. Pricing markups, latency, ecosystem features, and the right pick for your stack.",
+  "readTime": "8 min read",
+  "publishedAt": "2026-05-28T16:55:00.000Z",
+  "tags": [
+    "OpenRouter",
+    "LLM API pricing",
+    "multi-vendor routing",
+    "API markup"
+  ],
+  "sections": [
+    {
+      "heading": "Why OpenRouter Matters for Multi-Model Setups",
+      "body": "OpenRouter is the unified-API layer that aggregates pricing and inference across roughly every major LLM provider — Anthropic, OpenAI, Google, Meta, Mistral, DeepSeek, xAI, Cohere, AI21, and dozens of open-source hosts. One API key, one HTTP endpoint, one response format. That uniformity is why TokenRate's [calculator](/) and [Compare Prices tool](/tools/compare-prices) both pull live pricing from [OpenRouter's models API](https://openrouter.ai/api/v1/models) — it's the only feed in 2026 that consistently lists every model from every credible vendor on the same schema. For developers building [multi-model routing](/blog/multi-model-routing-with-quality-scores), OpenRouter is a serious ecosystem-level convenience. The trade-off is small price markups and an extra hop of latency."
+    },
+    {
+      "heading": "Pricing: How Much Markup Does OpenRouter Add?",
+      "body": "OpenRouter publishes per-token prices that include a small variable markup over each provider's native rate — typically 0–10% on input and similar on output, sometimes 0% on heavily discounted promotional providers. The exact markup is shown per model on OpenRouter's listing and reflected in the live numbers on [TokenRate's calculator](/). For large-volume production users, the markup matters: a $10K/month bill at 5% markup is $500 extra. For small teams and prototyping, the markup is dwarfed by the time saved on multi-vendor integration. Specific examples: Claude Sonnet 4.7 native $3 input vs OpenRouter ~$3.00–$3.15; DeepSeek R1 native $0.55 vs OpenRouter ~$0.55–$0.60; GPT-5 native $1.25 vs OpenRouter ~$1.25–$1.35."
+    },
+    {
+      "heading": "When to Go Direct",
+      "body": "Go direct to a provider when: (a) you're high-volume on a single model and the 5% markup outweighs the integration cost; (b) you need provider-specific features that OpenRouter abstracts away (Anthropic's prompt caching billing, OpenAI's Assistants API, Google's Vertex AI tooling, batch APIs that aren't passed through); (c) you have enterprise contracts or BYOK arrangements; (d) you have latency requirements where the OpenRouter hop is material (usually 10–50ms). For sticking with a single flagship in production, direct-provider almost always wins on cost. For deeper context on caching and batch discounts, see [prompt caching save 90 percent on AI costs](/blog/prompt-caching-save-90-percent-on-ai-costs) and [batch API cut AI costs in half](/blog/batch-api-cut-ai-costs-in-half)."
+    },
+    {
+      "heading": "When to Use OpenRouter",
+      "body": "Use OpenRouter when: (a) you're prototyping and don't want to manage 5+ provider accounts; (b) you're building multi-model routing and the unified-API convenience is worth the markup; (c) you want fallback routing across multiple providers (OpenRouter can auto-failover when one provider rate-limits or errors); (d) you need access to open-weight models without picking a specific host (OpenRouter routes to Together, Fireworks, DeepInfra, etc. under the hood); (e) you want a single billing relationship for finance/accounting reasons. Most early-stage teams should default to OpenRouter for the first 6–12 months of a product, then migrate the highest-volume routes to direct providers as scale justifies it. For the routing pattern, see [multi-model routing with quality scores](/blog/multi-model-routing-with-quality-scores)."
+    },
+    {
+      "heading": "How TokenRate Handles the Pricing Source",
+      "body": "TokenRate's price column reads OpenRouter's models API hourly. Because OpenRouter prices closely track native provider prices (within the 0–10% markup), the calculator's relative rankings — cheapest/most expensive/best value — are accurate even if absolute numbers are slightly above what you'd pay going direct. For accurate budgeting, multiply OpenRouter-displayed prices by your expected volume in [/tools/api-cost-estimator](/tools/api-cost-estimator), then subtract ~5% as your rule-of-thumb direct-API discount estimate. Or, if you've committed to a specific provider, cross-check the OpenRouter number against their pricing page — they're nearly always within a few cents per million tokens. See [how to calculate OpenAI API costs](/blog/how-to-calculate-openai-api-costs) and [how AI API pricing works](/blog/how-ai-api-pricing-works) for the math primer."
+    }
+  ],
+  "faq": [
+    {
+      "question": "How much markup does OpenRouter add to LLM pricing?",
+      "answer": "Usually 0–10% over native provider rates, varying by model and provider. Some providers pay OpenRouter promotional rebates that result in zero markup; others charge the upstream rate plus a small fee. Specific markup per model is shown on OpenRouter's listing — and reflected in TokenRate's live calculator pricing."
+    },
+    {
+      "question": "Does TokenRate show OpenRouter prices or direct-provider prices?",
+      "answer": "Both Quality column and Cost column come from the OpenRouter API. For most decisions the difference vs direct-provider pricing is small (0–10%). For exact budgeting, treat TokenRate's numbers as 'OpenRouter-equivalent' and apply your own discount if you're going direct."
+    },
+    {
+      "question": "Should I use OpenRouter in production?",
+      "answer": "Yes for early-stage and multi-model setups; consider going direct on your highest-volume routes once spend justifies the integration effort. The convenience of a unified API and auto-failover is worth the small markup for most teams under ~$5K/month in LLM spend."
+    },
+    {
+      "question": "Does OpenRouter support prompt caching and batch APIs?",
+      "answer": "Partial — OpenRouter passes through provider features when the underlying provider exposes them on the standard chat completions endpoint. Some provider-specific features (Anthropic's caching billing, OpenAI's Assistants/Batch APIs) are not fully abstracted. For those, going direct is more reliable."
+    }
+  ],
+  "ctaText": "Open TokenRate to browse live LLM pricing pulled from OpenRouter — and use the Compare Prices view to see exactly which models are available and at what markup across every major provider.",
+  "sources": [
+    { "label": "OpenRouter", "url": "https://openrouter.ai", "note": "Unified LLM API" },
+    { "label": "OpenRouter Models API", "url": "https://openrouter.ai/api/v1/models", "note": "Live pricing feed" },
+    { "label": "Anthropic Pricing", "url": "https://www.anthropic.com/pricing", "note": "Direct Anthropic rates" },
+    { "label": "OpenAI Pricing", "url": "https://openai.com/api/pricing", "note": "Direct OpenAI rates" },
+    { "label": "Google Gemini Pricing", "url": "https://ai.google.dev/pricing", "note": "Direct Google rates" }
+  ]
+}

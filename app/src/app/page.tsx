@@ -136,12 +136,12 @@ const RELATED: { href: string; label: string; description: string }[] = [
   { href: '/tools/token-to-usd', label: 'Token → USD Calculator', description: 'Convert a raw token count to dollars for any model.' },
   { href: '/compare/cheapest-ai-models', label: 'Cheapest AI Models 2026', description: 'Ranked list of the most affordable LLMs available via API.' },
   { href: '/blog/fundamentals/what-are-ai-tokens', label: 'What Are AI Tokens?', description: 'A clear explanation of how tokens work and why they matter.' },
-  { href: '/blog/comparisons/quality-per-dollar-llm-ranking-2026', label: 'Quality Per Dollar: Best-Value LLMs', description: 'Which models deliver the most quality for each dollar in 2026.' },
-  { href: '/blog/comparisons/gemini-vs-claude-vs-gpt-cost', label: 'Gemini vs Claude vs GPT Cost', description: 'A full side-by-side cost comparison of the three frontier model families.' },
-  { href: '/blog/providers/llm-pricing-trends-2026', label: 'LLM Pricing Trends 2026', description: 'How AI model costs have shifted across providers this year.' },
-  { href: '/blog/providers/claude-api-pricing-guide-2026', label: 'Claude API Pricing Guide 2026', description: 'Every Claude model and tier with real worked costs.' },
-  { href: '/blog/building/how-much-does-an-ai-chatbot-cost-to-run-2026', label: 'What an AI Chatbot Costs to Run', description: 'The same 10,000-conversation chatbot priced on ten models.' },
-  { href: '/blog/fundamentals/llm-api-pricing-glossary', label: 'LLM Pricing Glossary', description: 'Cached input, output multiplier, TPM limits — every billing term explained.' },
+  { href: '/blog/comparisons/compare-ai-models-cost-per-successful-task', label: 'Cost per Successful Task', description: 'Compare model spending alongside pass rate and retries.' },
+  { href: '/blog/comparisons/artificial-analysis-intelligence-index-vs-arena-elo', label: 'Artificial Analysis vs Arena', description: 'What each benchmark measures and how to use it.' },
+  { href: '/blog/providers/openai-api-pricing-guide-2026', label: 'OpenAI API Pricing Guide', description: 'Calculate a real request using the current price sheet.' },
+  { href: '/blog/providers/claude-api-pricing-guide-2026', label: 'Claude API Pricing Guide', description: 'Price a Claude request and account for cache and batch use.' },
+  { href: '/blog/building/ai-api-budget-worksheet', label: 'AI API Budget Worksheet', description: 'Forecast monthly spend with request volume and retries.' },
+  { href: '/blog/fundamentals/how-ai-api-pricing-works', label: 'How AI API Pricing Works', description: 'Input, output, and other billing categories explained.' },
 ]
 
 export default async function Home() {
@@ -216,9 +216,9 @@ export default async function Home() {
               <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
                 <strong className="text-zinc-900 dark:text-zinc-50">What is an AI token calculator?</strong>{' '}
                 An AI token calculator converts between dollars, token counts, and characters using live API
-                pricing from large language model providers. It answers two questions developers ask before
-                shipping with an LLM: <em>"how much will this prompt cost?"</em> and{' '}
-                <em>"how many tokens does my budget buy?"</em>
+                model rates. It answers two questions developers ask before
+                shipping with an LLM: <em>how much will this prompt cost?</em> and{' '}
+                <em>how many tokens does my budget buy?</em>
               </p>
               <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
                 <strong className="text-zinc-900 dark:text-zinc-50">Current AI API pricing ({formatBlufDate(MODELS_UPDATED_AT)}):</strong>{' '}
@@ -226,12 +226,12 @@ export default async function Home() {
                 {BLUF_REFS.flash && <>Gemini 2.0 Flash costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.flash.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
                 {BLUF_REFS.gpt4oMini && <>GPT-4o mini costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.gpt4oMini.inputPricePerMillion.toFixed(2)}/1M</span>; </>}
                 {BLUF_REFS.haiku && <>Claude Haiku 4 costs <span className="font-mono text-emerald-700 dark:text-emerald-400">${BLUF_REFS.haiku.inputPricePerMillion.toFixed(2)}/1M</span>. </>}
-                Output tokens cost roughly 3–5× the input price across every major provider. A typical 1,000-token
-                request on a balanced model like Claude Sonnet 4 ($3/1M input) costs $0.003 — under a third of a
-                cent. Use the calculator above to convert any amount across {ALL_MODELS.length}+ tracked models.
+                Input and output tokens have separate rates. For example, 1,000 input tokens at an illustrative
+                $3/1M input rate cost $0.003 before any output or other charges. Use the calculator above
+                to estimate both parts across {ALL_MODELS.length}+ tracked models.
               </p>
               <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-500">
-                Prices verified {MODELS_UPDATED_AT} · Live data refreshed hourly from OpenRouter
+                Catalog built {MODELS_UPDATED_AT} · Check the provider price sheet for your exact model and route
               </p>
             </div>
           </section>
@@ -241,7 +241,7 @@ export default async function Home() {
             <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">What Are AI Tokens?</h2>
             <div className="prose-sm text-zinc-600 dark:text-zinc-400 leading-relaxed flex flex-col gap-3 max-w-3xl">
               <p>
-                A <strong className="text-zinc-800 dark:text-zinc-200">token</strong> is the basic unit that AI language models use to process text. Rather than reading word by word, models break text into token fragments — roughly 4 characters each for English. The word "hamburger" is 3 tokens; "hi" is 1 token.
+                A <strong className="text-zinc-800 dark:text-zinc-200">token</strong> is a unit that AI language models use to process text. Tokens may be words, fragments, punctuation or spaces. Their count varies by text and tokenizer.
               </p>
               <p>
                 Every AI API — including Claude, GPT-4o, and Gemini — charges by the token. You pay for the text you <em>send</em> (input tokens) and the text the model <em>generates</em> (output tokens). Understanding tokens is the key to predicting and controlling your AI costs.

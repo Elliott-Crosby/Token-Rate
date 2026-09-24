@@ -3,6 +3,8 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { ALL_MODELS, MODELS_UPDATED_AT } from '@/lib/models'
 import { track } from '@/lib/track'
+import Link from 'next/link'
+import { parseTokenCount, tokenCost } from '@/lib/token-cost.mjs'
 
 function fmt(n: number): string {
   if (!isFinite(n) || n <= 0) return '$0.00'
@@ -33,31 +35,34 @@ const PILL_PROVIDERS = ['Anthropic', 'OpenAI', 'Google', 'Meta', 'Mistral', 'Dee
 
 const PRESETS = [1000, 10000, 100000, 1000000, 10000000]
 
-type SortKey = 'name' | 'provider' | 'input' | 'output'
+type SortKey = 'name' | 'provider' | 'input' | 'output' | 'total'
 
 export default function TokenToUsdClient() {
   const [tokens, setTokens] = useState('1,000,000')
+  const [mode, setMode] = useState<'single' | 'combined'>('single')
+  const [inputTokens, setInputTokens] = useState('2,000')
+  const [outputTokens, setOutputTokens] = useState('500')
   const [search, setSearch] = useState('')
   const [provider, setProvider] = useState('All')
   const [sortKey, setSortKey] = useState<SortKey>('input')
   const [sortAsc, setSortAsc] = useState(true)
 
-  const count = useMemo(() => {
-    const n = parseFloat(tokens.replace(/[,\s]/g, ''))
-    return isNaN(n) || n < 0 ? 0 : n
-  }, [tokens])
+  const count = parseTokenCount(tokens)
+  const inputCount = mode === 'single' ? count : parseTokenCount(inputTokens)
+  const outputCount = mode === 'single' ? count : parseTokenCount(outputTokens)
+  const valid = inputCount !== null && outputCount !== null
 
   // Only count real interactions, not the default 1M render on first paint.
   const interacted = useRef(false)
 
   // Debounced — one "calculation" event per settled token count, not per keystroke.
   useEffect(() => {
-    if (!interacted.current || count === 0) return
+    if (!interacted.current || !valid) return
     const id = setTimeout(() => {
-      track('value_entered', { tool: 'token_to_usd', mode: 'tokens', value: count })
+      track('value_entered', { tool: 'token_to_usd', mode, input_tokens: inputCount, output_tokens: outputCount })
     }, 1000)
     return () => clearTimeout(id)
-  }, [count])
+  }, [inputCount, outputCount, mode, valid])
 
   const rows = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -76,9 +81,11 @@ export default function TokenToUsdClient() {
           return dir * (a.inputPricePerMillion - b.inputPricePerMillion)
         case 'output':
           return dir * (a.outputPricePerMillion - b.outputPricePerMillion)
+        case 'total':
+          return dir * (tokenCost(inputCount ?? 0, outputCount ?? 0, a.inputPricePerMillion, a.outputPricePerMillion) - tokenCost(inputCount ?? 0, outputCount ?? 0, b.inputPricePerMillion, b.outputPricePerMillion))
       }
     })
-  }, [search, provider, sortKey, sortAsc])
+  }, [search, provider, sortKey, sortAsc, inputCount, outputCount])
 
   function toggleSort(key: SortKey) {
     if (sortKey === key) {
@@ -100,9 +107,14 @@ export default function TokenToUsdClient() {
 
   return (
     <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Calculation mode">
+        {([{ value: 'single', label: 'Single token count' }, { value: 'combined', label: 'Input + output' }] as const).map(option => <button key={option.value} aria-pressed={mode === option.value} onClick={() => { setMode(option.value); setSortKey(option.value === 'combined' ? 'total' : 'input'); setSortAsc(true); interacted.current = true }} className={`rounded-lg border px-4 py-2.5 text-sm font-semibold ${mode === option.value ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-zinc-300 text-zinc-600 dark:border-zinc-700 dark:text-zinc-300'}`}>{option.label}</button>)}
+      </div>
+      <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{mode === 'single' ? 'See what your token count would cost as input or as output. These are two separate estimates. Use Input + output to calculate a complete request.' : 'Enter the two usage counts from your API response. The total combines their separate rates.'}</p>
       {/* ── Input ── */}
+      {mode === 'single' ? (
       <div className="flex flex-col gap-3">
-        <label className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+        <label htmlFor="token-count" className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
           Token Count
         </label>
         <div className="relative flex items-center rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all">
@@ -110,12 +122,15 @@ export default function TokenToUsdClient() {
             #
           </span>
           <input
+            id="token-count"
             type="text"
             inputMode="numeric"
             value={tokens}
             onChange={(e) => { setTokens(e.target.value); interacted.current = true }}
             placeholder="e.g. 1,000,000"
-            className="flex-1 bg-transparent px-4 py-4 text-xl font-mono outline-none text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
+            aria-invalid={count === null}
+            aria-describedby="token-count-help"
+            className="min-w-0 w-full flex-1 bg-transparent px-4 py-4 text-xl font-mono outline-none text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
           />
           {tokens && (
             <button
@@ -149,6 +164,15 @@ export default function TokenToUsdClient() {
           })}
         </div>
       </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[{ id: 'input-tokens', label: 'Input tokens', value: inputTokens, set: setInputTokens, valid: inputCount !== null }, { id: 'output-tokens', label: 'Output tokens', value: outputTokens, set: setOutputTokens, valid: outputCount !== null }].map(field => <div key={field.id}>
+            <label htmlFor={field.id} className="mb-2 block text-sm font-semibold text-zinc-700 dark:text-zinc-300">{field.label}</label>
+            <input id={field.id} type="text" inputMode="numeric" value={field.value} aria-invalid={!field.valid} aria-describedby="token-count-help" onChange={event => { field.set(event.target.value); interacted.current = true }} className="w-full min-w-0 rounded-xl border border-zinc-300 bg-white p-4 font-mono text-xl text-zinc-900 focus:border-emerald-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50" />
+          </div>)}
+        </div>
+      )}
+      <p id="token-count-help" className={`text-xs ${valid ? 'text-zinc-500 dark:text-zinc-400' : 'text-red-600 dark:text-red-400'}`} role={valid ? undefined : 'alert'}>{valid ? 'Use whole token counts. Commas are fine. Zero is allowed.' : 'Enter a valid whole number of tokens (0 or more). Letters, decimals, and negative counts are not supported.'}</p>
 
       {/* ── Search + provider filter ── */}
       <div className="flex flex-col gap-3">
@@ -164,6 +188,7 @@ export default function TokenToUsdClient() {
             <path d="M9.5 9.5L13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
           <input
+            aria-label="Search models"
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -207,54 +232,56 @@ export default function TokenToUsdClient() {
             <thead className="sticky top-0 z-10">
               <tr className="bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
                 <th
-                  onClick={() => toggleSort('name')}
-                  className="group px-4 py-3 font-semibold text-zinc-600 dark:text-zinc-300 text-left text-xs uppercase tracking-wider cursor-pointer select-none hover:text-zinc-900 dark:hover:text-zinc-100"
+                  aria-sort={sortKey === 'name' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+                  className="group px-4 py-3 font-semibold text-zinc-600 dark:text-zinc-300 text-left text-xs uppercase tracking-wider select-none hover:text-zinc-900 dark:hover:text-zinc-100"
                 >
-                  Model{caret('name')}
+                  <button onClick={() => toggleSort('name')} className="font-semibold">Model{caret('name')}</button>
                 </th>
                 <th
-                  onClick={() => toggleSort('provider')}
-                  className="group px-4 py-3 font-semibold text-zinc-500 dark:text-zinc-400 text-left text-xs uppercase tracking-wider cursor-pointer select-none hidden sm:table-cell hover:text-zinc-900 dark:hover:text-zinc-100"
+                  aria-sort={sortKey === 'provider' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+                  className="group px-4 py-3 font-semibold text-zinc-500 dark:text-zinc-400 text-left text-xs uppercase tracking-wider select-none hidden sm:table-cell hover:text-zinc-900 dark:hover:text-zinc-100"
                 >
-                  Provider{caret('provider')}
+                  <button onClick={() => toggleSort('provider')} className="font-semibold">Provider{caret('provider')}</button>
                 </th>
                 <th
-                  onClick={() => toggleSort('input')}
-                  className="group px-4 py-3 font-semibold text-emerald-700 dark:text-emerald-400 text-right text-xs uppercase tracking-wider cursor-pointer select-none whitespace-nowrap hover:text-emerald-900 dark:hover:text-emerald-300"
+                  aria-sort={sortKey === 'input' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+                  className="group px-4 py-3 font-semibold text-emerald-700 dark:text-emerald-400 text-right text-xs uppercase tracking-wider select-none whitespace-nowrap hover:text-emerald-900 dark:hover:text-emerald-300"
                 >
-                  Input Cost{caret('input')}
+                  <button onClick={() => toggleSort('input')} className="font-semibold">Input Cost{caret('input')}</button>
                 </th>
                 <th
-                  onClick={() => toggleSort('output')}
-                  className="group px-4 py-3 font-semibold text-sky-700 dark:text-sky-400 text-right text-xs uppercase tracking-wider cursor-pointer select-none whitespace-nowrap hover:text-sky-900 dark:hover:text-sky-300"
+                  aria-sort={sortKey === 'output' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+                  className="group px-4 py-3 font-semibold text-sky-700 dark:text-sky-400 text-right text-xs uppercase tracking-wider select-none whitespace-nowrap hover:text-sky-900 dark:hover:text-sky-300"
                 >
-                  Output Cost{caret('output')}
+                  <button onClick={() => toggleSort('output')} className="font-semibold">Output Cost{caret('output')}</button>
                 </th>
+                {mode === 'combined' && <th scope="col" aria-sort={sortKey === 'total' ? (sortAsc ? 'ascending' : 'descending') : 'none'} className="px-4 py-3 text-right text-xs text-zinc-900 dark:text-zinc-100"><button onClick={() => toggleSort('total')} className="whitespace-nowrap font-bold">Total USD{caret('total')}</button></th>}
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
               {rows.map((m, i) => {
-                const inputCost = count > 0 ? (count * m.inputPricePerMillion) / 1_000_000 : 0
-                const outputCost = count > 0 ? (count * m.outputPricePerMillion) / 1_000_000 : 0
+                const inputCost = tokenCost(inputCount ?? 0, 0, m.inputPricePerMillion, 0)
+                const outputCost = tokenCost(0, outputCount ?? 0, 0, m.outputPricePerMillion)
                 return (
                   <tr
                     key={m.slug}
                     className={`${i % 2 === 0 ? 'bg-white dark:bg-zinc-900' : 'bg-zinc-50/60 dark:bg-zinc-800/30'} hover:bg-emerald-50/40 dark:hover:bg-emerald-950/10 transition-colors`}
                   >
-                    <td className="px-4 py-3 font-medium text-zinc-800 dark:text-zinc-200 whitespace-nowrap">{m.name}</td>
+                    <td className="px-4 py-3 font-medium text-zinc-800 dark:text-zinc-200"><Link href={`/models/${m.slug}`} className="hover:underline">{m.name}</Link><span className="mt-1 block text-[11px] font-normal text-zinc-500">${m.inputPricePerMillion}/1M in · ${m.outputPricePerMillion}/1M out</span></td>
                     <td className="px-4 py-3 text-zinc-400 dark:text-zinc-500 hidden sm:table-cell">{m.provider}</td>
                     <td className="px-4 py-3 text-right font-mono text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
-                      {count > 0 ? fmt(inputCost) : <span className="text-zinc-300 dark:text-zinc-600">—</span>}
+                      {valid ? fmt(inputCost) : '—'}
                     </td>
                     <td className="px-4 py-3 text-right font-mono text-sky-700 dark:text-sky-400 whitespace-nowrap">
-                      {count > 0 ? fmt(outputCost) : <span className="text-zinc-300 dark:text-zinc-600">—</span>}
+                      {valid ? fmt(outputCost) : '—'}
                     </td>
+                    {mode === 'combined' && <td className="px-4 py-3 text-right font-mono font-bold text-zinc-900 dark:text-zinc-50">{valid ? fmt(inputCost + outputCost) : '—'}</td>}
                   </tr>
                 )
               })}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-4 py-10 text-center text-sm text-zinc-400 dark:text-zinc-500">
+                  <td colSpan={mode === 'combined' ? 5 : 4} className="px-4 py-10 text-center text-sm text-zinc-400 dark:text-zinc-500">
                     No models match “{search}”.{' '}
                     <button
                       onClick={() => {
@@ -276,11 +303,9 @@ export default function TokenToUsdClient() {
       {/* ── Footer note ── */}
       <div className="flex items-center justify-between gap-3 flex-wrap text-xs text-zinc-400 dark:text-zinc-500">
         <span>
-          Showing <span className="font-semibold text-zinc-600 dark:text-zinc-300">{rows.length}</span> models · cost
-          for <span className="font-semibold text-zinc-600 dark:text-zinc-300">{count > 0 ? count.toLocaleString() : '—'}</span> tokens ·
-          input and output priced separately.
+          Showing <span className="font-semibold text-zinc-600 dark:text-zinc-300">{rows.length}</span> models · {mode === 'single' ? 'input and output are alternatives' : 'total = input cost + output cost'}.
         </span>
-        <span>Live pricing · updated {MODELS_UPDATED_AT}</span>
+        <span>Catalogue rates · updated {MODELS_UPDATED_AT}</span>
       </div>
     </div>
   )

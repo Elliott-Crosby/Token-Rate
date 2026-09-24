@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Daily high-quality blog generator for TokenRate.dev.
- * Called by .github/workflows/blog-generator.yml once a day.
+ * Draft generator for TokenRate.dev.
+ * Manually triggered by .github/workflows/blog-generator.yml.
  *
- * GOAL: publish ONE genuinely excellent, timely, rate-focused comparison
- * article per run — the quality bar of a hand-written piece, not templated
+ * GOAL: draft ONE timely, rate-focused comparison
+ * article per run — for human verification before moving to content/blog.
  * filler. (The previous version emitted cheap single-model template posts and
  * was retired; see scripts/blog-generator.legacy.mjs.bak in git history.)
  *
@@ -37,7 +37,7 @@
  *   ANTHROPIC_BASE_URL  optional API base override (defaults to api.anthropic.com).
  *
  * Usage:
- *   node scripts/blog-generator.mjs            # research → write → publish
+ *   node scripts/blog-generator.mjs            # research → write a draft
  *   node scripts/blog-generator.mjs --dry-run  # show leads + selection + table + prompts; no API calls past selection, no writes
  */
 
@@ -47,7 +47,8 @@ import { fileURLToPath } from 'node:url'
 import { validateBlogPost } from './_lib/validate-blog-post.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const BLOG_DIR = path.join(__dirname, '..', 'content', 'blog')
+const BLOG_DIR = path.join(__dirname, '..', 'content', 'blog-drafts')
+const PUBLISHED_BLOG_DIR = path.join(__dirname, '..', 'content', 'blog')
 const ANGLES_LEDGER_PATH = path.join(__dirname, '..', 'content', 'blog-angles-ledger.json')
 const API_KEY = process.env.ANTHROPIC_API_KEY
 const BASE_URL = (process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/+$/, '')
@@ -180,12 +181,13 @@ function dedupeModels(live) {
 // Existing content (for de-duplication)
 // ─────────────────────────────────────────────────────────────────────────────
 function getExistingPosts() {
-  if (!fs.existsSync(BLOG_DIR)) return []
+  if (!fs.existsSync(BLOG_DIR) && !fs.existsSync(PUBLISHED_BLOG_DIR)) return []
   const out = []
-  for (const f of fs.readdirSync(BLOG_DIR)) {
+  for (const f of [...(fs.existsSync(BLOG_DIR) ? fs.readdirSync(BLOG_DIR) : []), ...(fs.existsSync(PUBLISHED_BLOG_DIR) ? fs.readdirSync(PUBLISHED_BLOG_DIR) : [])]) {
     if (!f.endsWith('.json')) continue
     try {
-      const data = JSON.parse(fs.readFileSync(path.join(BLOG_DIR, f), 'utf-8'))
+      const dir = fs.existsSync(path.join(BLOG_DIR, f)) ? BLOG_DIR : PUBLISHED_BLOG_DIR
+      const data = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf-8'))
       out.push({ slug: data.slug || f.replace(/\.json$/, ''), title: data.title || '', category: data.category || '' })
     } catch { /* skip unreadable */ }
   }
