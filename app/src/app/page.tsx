@@ -4,7 +4,6 @@ import ConverterClient from '@/components/ConverterClient'
 import MobileConverter from '@/components/MobileConverter'
 import FAQSection from '@/components/FAQSection'
 import RelatedPages from '@/components/RelatedPages'
-import SideRailAds from '@/components/SideRailAds'
 import JsonLd, { webAppSchema, faqSchema } from '@/components/JsonLd'
 import { HOME_FAQS } from '@/lib/faqs'
 import { ALL_MODELS, MODELS_UPDATED_AT, PROVIDER_PREFIXES, getCheapestModels, getModelBySlug } from '@/lib/models'
@@ -151,9 +150,6 @@ export default async function Home() {
     <>
       <JsonLd data={webAppSchema()} />
       <JsonLd data={faqSchema(HOME_FAQS)} />
-
-      {/* House ads — Nodea half-page banners in the side margins (labelled advertising) */}
-      <SideRailAds />
 
       <div className="mx-auto max-w-5xl px-6 py-10">
         {/* Hero */}

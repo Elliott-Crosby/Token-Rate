@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { buildMetadata } from '@/lib/seo'
 import Breadcrumb from '@/components/Breadcrumb'
 import RelatedPages from '@/components/RelatedPages'
-import SideRailAds from '@/components/SideRailAds'
 import TokenToUsdClient from './TokenToUsdClient'
 import JsonLd, { webAppSchema, howToSchema, breadcrumbSchema } from '@/components/JsonLd'
 
@@ -57,10 +56,6 @@ export default function TokenToUsdPage() {
           { name: 'Token to USD', url: 'https://tokenrate.dev/tools/token-to-usd' },
         ])}
       />
-
-      {/* House ads — Nodea rails in the empty page margins (labelled advertising).
-          Placed here because this is the site's #1 traffic page. */}
-      <SideRailAds />
 
       <div className="mx-auto max-w-3xl px-6 py-10">
       <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tokens to USD' }]} />
